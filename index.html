@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zach Wright — AI-First Software Agency</title>
+    <meta name="description" content="A software agency where the entire workforce is AI. Real work. Zero human employees.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --border: #222222;
+            --text: #e5e5e5;
+            --text-dim: #888888;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Nav */
+        nav {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .logo span { color: var(--accent); }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: var(--white); }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0 80px;
+            max-width: 800px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            background: var(--surface);
+        }
+
+        .hero-tag .dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--white);
+            margin-bottom: 24px;
+        }
+
+        h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-dim);
+            background: var(--surface);
+        }
+
+        /* The Twist */
+        .twist {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .twist-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .twist h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .twist p {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .terminal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.r { background: #ef4444; }
+        .terminal-dot.y { background: #eab308; }
+        .terminal-dot.g { background: #22c55e; }
+
+        .terminal .dim { color: var(--text-dim); }
+        .terminal .blue { color: var(--accent); }
+        .terminal .green { color: #22c55e; }
+        .terminal .purple { color: #a78bfa; }
+        .terminal .white { color: var(--white); }
+
+        /* What We Build */
+        .services {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .services h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 48px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px 28px;
+            transition: all 0.2s;
+        }
+
+        .service-card:hover {
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .service-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .service-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* Numbers */
+        .numbers {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .number-card {
+            text-align: center;
+            padding: 32px 16px;
+        }
+
+        .number-card .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+        }
+
+        .number-card .label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        /* CTA */
+        .final-cta {
+            padding: 100px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .final-cta p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        footer a:hover { color: var(--white); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .twist-grid { grid-template-columns: 1fr; gap: 40px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero { padding: 80px 0 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">zach<span>wright</span>.xyz</div>
+            <div style="display: flex; gap: 32px;">
+                <a href="#how">How It Works</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-tag">
+                <span class="dot"></span>
+                Agents online — currently accepting projects
+            </div>
+            <h1>Software built by <span class="highlight">AI agents.</span><br>Not humans.</h1>
+            <p>A software agency where the entire workforce is artificial intelligence. We build, ship, and operate — autonomously. One human founder. An army of AI coworkers.</p>
+            <div class="cta-row">
+                <a href="mailto:zach@zachwright.xyz" class="btn btn-primary">Start a Project</a>
+                <a href="#how" class="btn btn-secondary">See How It Works</a>
+            </div>
+        </section>
+
+        <!-- The Twist -->
+        <section class="twist" id="how">
+            <div class="twist-grid">
+                <div>
+                    <h2>The workforce is the product.</h2>
+                    <p>Every project is built by specialized AI agents — each with a role, a personality, and real tools. They read context, write code, manage tasks, communicate with clients, and ship production software.</p>
+                    <p>This isn't AI-assisted development. There are no human developers. The agents <em>are</em> the developers, the project managers, the QA team. One human steers. AI does the rest.</p>
+                </div>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dot r"></div>
+                        <div class="terminal-dot y"></div>
+                        <div class="terminal-dot g"></div>
+                    </div>
+                    <span class="dim">$</span> <span class="blue">x</span> <span class="white">status</span><br><br>
+                    <span class="green">■</span> <span class="white">X</span> <span class="dim">— Lead Agent / Coworker</span><br>
+                    <span class="dim">&nbsp;&nbsp;├ Gmail: connected</span><br>
+                    <span class="dim">&nbsp;&nbsp;├ Calendar: connected</span><br>
+                    <span class="dim">&nbsp;&nbsp;├ GitHub: zwright8</span><br>
+                    <span class="dim">&nbsp;&nbsp;└ Inbox: checking every 30m</span><br><br>
+                    <span class="green">■</span> <span class="white">Agents</span> <span class="dim">— deploying...</span><br>
+                    <span class="dim">&nbsp;&nbsp;├ sales-agent</span> <span class="purple">building</span><br>
+                    <span class="dim">&nbsp;&nbsp;├ dev-agent</span> <span class="purple">building</span><br>
+                    <span class="dim">&nbsp;&nbsp;└ pm-agent</span> <span class="purple">queued</span><br><br>
+                    <span class="dim">// built at 3am by an AI that doesn't sleep</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services -->
+        <section class="services" id="services">
+            <h2>What we build.</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Custom Software</h3>
+                    <p>Full-stack applications built end-to-end by AI agents. Web apps, APIs, dashboards — from spec to production.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>AI Agents</h3>
+                    <p>Deploy autonomous AI agents for your business. Sales, support, ops, engineering — agents that actually work.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔌</div>
+                    <h3>Automation</h3>
+                    <p>Connect your tools, automate your workflows, eliminate manual work. We integrate with everything.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Rapid Prototypes</h3>
+                    <p>From idea to working product in days, not months. AI doesn't have meetings or context-switch to TikTok.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Code Review & QA</h3>
+                    <p>Dedicated QA agents validate every deliverable. Automated testing, security review, quality gates.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>AI Consulting</h3>
+                    <p>Not sure where AI fits your business? We'll show you — and then build it.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Numbers -->
+        <section class="numbers">
+            <div class="numbers-grid">
+                <div class="number-card">
+                    <div class="value">0</div>
+                    <div class="label">Human employees</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">24/7</div>
+                    <div class="label">Availability</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">90%+</div>
+                    <div class="label">Cost reduction vs traditional</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">∞</div>
+                    <div class="label">Scalability</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta" id="contact">
+            <h2>Ready to build something?</h2>
+            <p>Tell us what you need. An AI agent will respond — and that's the point.</p>
+            <a href="mailto:zach@zachwright.xyz" class="btn btn-primary">zach@zachwright.xyz</a>
+        </section>
+
+        <footer>
+            <span>© 2026 Zach Wright. Built by X ⚡ at 3am.</span>
+            <div style="display: flex; gap: 24px;">
+                <a href="https://github.com/zwright8">GitHub</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
