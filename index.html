@@ -4,29 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenClaw Agentic Systems | Zach Wright</title>
-    <meta name="description" content="Deploy agentic AI systems that automate revenue, operations, and delivery with measurable business outcomes.">
+    <meta name="description" content="Agentic AI systems for revenue, operations, and delivery teams with measurable business impact.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050a10;
-            --bg-soft: #0a121b;
-            --surface: #0d1722;
-            --surface-alt: #101d2b;
-            --line: #1d3040;
-            --line-strong: #2f4558;
-            --text: #d6e3f0;
-            --muted: #89a0b6;
-            --accent: #4ce39f;
-            --accent-strong: #2ecb84;
-            --accent-soft: rgba(76, 227, 159, 0.16);
-            --danger: #f06a6a;
-            --radius-xl: 24px;
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --shadow-lg: 0 26px 70px rgba(0, 0, 0, 0.45);
-            --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.25);
+            --bg: #ecece8;
+            --panel: #f6f6f3;
+            --surface: #ffffff;
+            --ink: #111315;
+            --muted: #61686f;
+            --line: #d2d4d2;
+            --line-strong: #b9bdbd;
+            --dark: #121a22;
+            --dark-soft: #19232f;
+            --green: #169952;
+            --radius-xl: 22px;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+            --shadow: 0 18px 42px rgba(17, 19, 21, 0.08);
             --font-sans: "Sora", sans-serif;
             --font-mono: "IBM Plex Mono", monospace;
         }
@@ -43,13 +40,9 @@
 
         body {
             font-family: var(--font-sans);
-            background:
-                radial-gradient(950px 560px at 12% -10%, rgba(76, 227, 159, 0.09), transparent 62%),
-                radial-gradient(900px 500px at 88% -8%, rgba(76, 227, 159, 0.06), transparent 64%),
-                linear-gradient(180deg, var(--bg) 0%, #04080d 100%);
-            color: var(--text);
+            color: var(--ink);
+            background: linear-gradient(180deg, #f0f0ed 0%, var(--bg) 100%);
             line-height: 1.55;
-            min-height: 100vh;
             overflow-x: hidden;
         }
 
@@ -58,12 +51,12 @@
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 58px 58px;
+                linear-gradient(rgba(17, 19, 21, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(17, 19, 21, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
             pointer-events: none;
             z-index: 0;
-            mask-image: radial-gradient(circle at center, black, transparent 78%);
+            mask-image: radial-gradient(circle at center, black 38%, transparent 82%);
         }
 
         a {
@@ -71,126 +64,106 @@
             text-decoration: none;
         }
 
-        .frame {
-            max-width: 1220px;
+        .shell {
+            width: min(1240px, 100% - 48px);
             margin: 0 auto;
-            padding: 18px 24px 70px;
             position: relative;
             z-index: 1;
-            isolation: isolate;
+            padding-bottom: 64px;
         }
 
-        .frame::before,
-        .frame::after {
-            content: "";
-            position: absolute;
-            border-radius: 999px;
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(6px);
-        }
-
-        .frame::before {
-            width: 360px;
-            height: 360px;
-            top: 90px;
-            right: -160px;
-            background: radial-gradient(circle, rgba(76, 227, 159, 0.22), transparent 70%);
-        }
-
-        .frame::after {
-            width: 300px;
-            height: 300px;
-            top: 620px;
-            left: -140px;
-            background: radial-gradient(circle, rgba(76, 227, 159, 0.15), transparent 72%);
-        }
-
-        .topnav {
+        .nav {
             position: sticky;
-            top: 14px;
+            top: 12px;
             z-index: 20;
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(248, 248, 246, 0.88);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 16px;
-            border: 1px solid rgba(47, 69, 88, 0.75);
-            border-radius: 999px;
-            background: rgba(6, 12, 18, 0.82);
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            padding: 12px 18px;
+            padding: 11px 16px;
         }
 
         .brand {
-            font-size: 1.02rem;
-            letter-spacing: -0.02em;
+            font-size: 1.03rem;
             font-weight: 700;
-            color: var(--text);
+            letter-spacing: -0.02em;
             white-space: nowrap;
         }
 
         .brand span {
-            color: var(--accent);
+            color: var(--green);
         }
 
-        .navlinks {
+        .nav-links {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 18px;
+            gap: 16px;
         }
 
-        .navlinks a {
-            font-size: 0.74rem;
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.11em;
             color: var(--muted);
-            font-weight: 600;
             transition: color 0.2s ease;
         }
 
-        .navlinks a:hover {
-            color: var(--text);
+        .nav-links a:hover {
+            color: var(--ink);
         }
 
         .hero {
-            padding-top: 56px;
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 18px;
-            align-items: stretch;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 14px;
+            padding-top: 50px;
+        }
+
+        .hero-copy {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-xl);
+            background: var(--surface);
+            padding: 28px;
+            box-shadow: var(--shadow);
         }
 
         .kicker {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.11em;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #8fe3bb;
-            margin-bottom: 14px;
+            color: #4f5b65;
+            margin-bottom: 12px;
         }
 
         h1 {
-            font-size: clamp(2.25rem, 5vw, 4.5rem);
-            line-height: 1.02;
-            letter-spacing: -0.035em;
-            margin-bottom: 18px;
+            font-size: clamp(2rem, 4.8vw, 4.15rem);
+            line-height: 1.03;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+            max-width: 840px;
         }
 
-        h1 .accent {
-            color: var(--accent);
+        h1 .hit {
+            color: var(--green);
         }
 
         .hero-copy p {
             color: var(--muted);
-            max-width: 640px;
-            font-size: 1.03rem;
+            font-size: 1rem;
+            max-width: 660px;
         }
 
         .cta-row {
-            margin-top: 26px;
+            margin-top: 24px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -200,240 +173,243 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
             border-radius: 999px;
-            padding: 12px 20px;
-            font-size: 0.88rem;
+            padding: 11px 18px;
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         .btn-primary {
-            background: linear-gradient(140deg, var(--accent), var(--accent-strong));
-            color: #042213;
-            box-shadow: 0 12px 30px rgba(46, 203, 132, 0.28);
+            background: #101820;
+            color: #f1f5f9;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 36px rgba(46, 203, 132, 0.34);
+            filter: brightness(1.1);
         }
 
         .btn-secondary {
+            background: transparent;
             border: 1px solid var(--line-strong);
-            background: rgba(10, 18, 27, 0.7);
-            color: var(--text);
+            color: var(--ink);
         }
 
         .btn-secondary:hover {
             transform: translateY(-2px);
-            border-color: #4a657d;
         }
 
-        .hero-tags {
-            margin-top: 20px;
+        .micro {
+            margin-top: 18px;
             list-style: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 9px;
+            gap: 8px;
         }
 
-        .hero-tags li {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            color: #9cb5c9;
+        .micro li {
             border: 1px solid var(--line);
             border-radius: 999px;
-            padding: 7px 10px;
-            background: rgba(13, 23, 34, 0.7);
+            background: var(--panel);
+            padding: 6px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.66rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #55636f;
         }
 
         .hero-panel {
-            border: 1px solid var(--line);
+            border: 1px solid #26313c;
             border-radius: var(--radius-xl);
-            background: linear-gradient(168deg, rgba(13, 23, 34, 0.98), rgba(8, 14, 21, 0.98));
-            box-shadow: var(--shadow-lg);
-            padding: 20px;
+            background: linear-gradient(160deg, var(--dark) 0%, var(--dark-soft) 100%);
+            color: #dbe7f3;
+            padding: 22px;
+            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .panel-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
         }
 
         .panel-head p {
             font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
+            font-size: 0.66rem;
             text-transform: uppercase;
-            color: #9db3c6;
+            letter-spacing: 0.11em;
+            color: #9db3c8;
         }
 
-        .status-pill {
+        .status {
             display: inline-flex;
             align-items: center;
             gap: 7px;
             border-radius: 999px;
-            border: 1px solid rgba(76, 227, 159, 0.45);
-            background: rgba(76, 227, 159, 0.13);
-            color: #8ff1c4;
+            border: 1px solid rgba(22, 153, 82, 0.55);
+            background: rgba(22, 153, 82, 0.2);
+            color: #8fe1b2;
             font-family: var(--font-mono);
-            font-size: 0.66rem;
+            font-size: 0.62rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 5px 8px;
+            padding: 4px 8px;
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 0 0 rgba(76, 227, 159, 0.55);
-            animation: pulse 2.1s ease-in-out infinite;
+            background: #46d285;
+            box-shadow: 0 0 0 0 rgba(70, 210, 133, 0.45);
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .metric-grid {
+        .telemetry {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-        }
-
-        .metric {
-            border: 1px solid var(--line);
-            border-radius: var(--radius-md);
-            background: rgba(16, 29, 43, 0.7);
-            padding: 10px;
-        }
-
-        .metric strong {
-            display: block;
-            font-size: 1.1rem;
-            line-height: 1.1;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .metric span {
-            font-family: var(--font-mono);
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.09em;
-            color: #8ba2b8;
-        }
-
-        .activity-list {
-            display: grid;
             gap: 8px;
         }
 
-        .activity-item {
-            border: 1px solid var(--line);
-            border-radius: 10px;
+        .telemetry-item {
+            border: 1px solid #2f3d4c;
+            border-radius: var(--radius-md);
+            background: rgba(15, 24, 33, 0.72);
+            padding: 9px;
+        }
+
+        .telemetry-item strong {
+            display: block;
+            font-size: 1.08rem;
+            line-height: 1.1;
+            margin-bottom: 4px;
+            color: #f3f8fd;
+        }
+
+        .telemetry-item span {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #98b0c5;
+        }
+
+        .log {
+            display: grid;
+            gap: 7px;
+        }
+
+        .log-item {
+            border: 1px solid #2f3d4c;
+            border-radius: var(--radius-md);
+            background: rgba(15, 24, 33, 0.64);
             padding: 8px 10px;
-            background: rgba(16, 29, 43, 0.55);
             display: flex;
             justify-content: space-between;
-            gap: 12px;
             align-items: center;
+            gap: 10px;
         }
 
-        .activity-item p {
-            font-size: 0.84rem;
-            color: var(--text);
+        .log-item p {
+            font-size: 0.81rem;
+            color: #dce8f4;
         }
 
-        .activity-item span {
+        .log-item span {
             font-family: var(--font-mono);
-            font-size: 0.64rem;
-            color: #86a2ba;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
+            color: #8fa9bf;
             white-space: nowrap;
         }
 
         .section {
-            padding-top: 86px;
+            padding-top: 76px;
         }
 
         .section h2 {
-            font-size: clamp(1.65rem, 3.8vw, 2.95rem);
+            font-size: clamp(1.55rem, 3vw, 2.65rem);
             line-height: 1.08;
             letter-spacing: -0.03em;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            max-width: 860px;
         }
 
-        .section p.lead {
+        .section .lead {
             color: var(--muted);
-            max-width: 760px;
-            font-size: 1rem;
+            max-width: 720px;
+            font-size: 0.97rem;
         }
 
-        .cap-grid {
-            margin-top: 24px;
+        .modules {
+            margin-top: 18px;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
+            gap: 10px;
         }
 
-        .cap-card {
+        .module {
             border: 1px solid var(--line);
             border-radius: var(--radius-lg);
-            background: linear-gradient(180deg, rgba(13, 23, 34, 0.95), rgba(9, 16, 24, 0.95));
-            padding: 18px;
-            box-shadow: var(--shadow-sm);
+            background: var(--surface);
+            padding: 16px;
+            box-shadow: var(--shadow);
         }
 
-        .cap-card .label {
+        .module .tag {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #85ab95;
-            margin-bottom: 10px;
+            color: #51606c;
+            margin-bottom: 8px;
         }
 
-        .cap-card h3 {
-            font-size: 1.08rem;
-            margin-bottom: 9px;
+        .module h3 {
+            font-size: 1rem;
+            line-height: 1.2;
             letter-spacing: -0.02em;
+            margin-bottom: 8px;
         }
 
-        .cap-card p {
+        .module p {
             color: var(--muted);
-            font-size: 0.9rem;
+            font-size: 0.87rem;
             margin-bottom: 10px;
         }
 
-        .cap-card ul {
+        .module ul {
             list-style: none;
             display: grid;
             gap: 6px;
         }
 
-        .cap-card li {
-            border: 1px solid #24394a;
+        .module li {
+            border: 1px solid var(--line);
             border-radius: 8px;
+            background: var(--panel);
             padding: 6px 8px;
             font-family: var(--font-mono);
-            font-size: 0.66rem;
-            color: #9ab3c8;
-            background: rgba(16, 29, 43, 0.6);
+            font-size: 0.62rem;
+            letter-spacing: 0.03em;
+            color: #4f5b67;
         }
 
         .matrix-shell {
-            margin-top: 22px;
+            margin-top: 18px;
             border: 1px solid var(--line);
             border-radius: var(--radius-lg);
-            background: rgba(13, 23, 34, 0.92);
+            background: var(--surface);
             overflow-x: auto;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow);
         }
 
         .matrix {
@@ -445,19 +421,19 @@
         .matrix th,
         .matrix td {
             border-bottom: 1px solid var(--line);
-            padding: 13px 14px;
+            padding: 12px 14px;
             text-align: left;
             vertical-align: top;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
         }
 
         .matrix th {
-            background: rgba(16, 29, 43, 0.95);
-            color: #9db6cb;
             font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
+            font-size: 0.63rem;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #536370;
+            background: var(--panel);
         }
 
         .matrix td {
@@ -465,7 +441,7 @@
         }
 
         .matrix td:first-child {
-            color: var(--text);
+            color: var(--ink);
             font-weight: 600;
         }
 
@@ -473,147 +449,191 @@
             border-bottom: none;
         }
 
-        .flow-grid {
-            margin-top: 20px;
+        .flow {
+            margin-top: 18px;
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 10px;
         }
 
-        .flow-card {
+        .flow-item {
             border: 1px solid var(--line);
-            border-radius: 14px;
-            background: rgba(13, 23, 34, 0.95);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
             padding: 14px;
+            box-shadow: var(--shadow);
         }
 
-        .flow-card .step {
+        .flow-item .step {
+            display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.66rem;
+            font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #8aa7bf;
-            margin-bottom: 8px;
-            display: inline-block;
+            color: #57656f;
+            margin-bottom: 7px;
         }
 
-        .flow-card h3 {
-            font-size: 1rem;
+        .flow-item h3 {
+            font-size: 0.97rem;
             margin-bottom: 7px;
             letter-spacing: -0.02em;
         }
 
-        .flow-card p {
+        .flow-item p {
             color: var(--muted);
-            font-size: 0.86rem;
+            font-size: 0.84rem;
         }
 
-        .proof-grid {
-            margin-top: 20px;
+        .proof {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .proof-item {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            padding: 16px;
+            min-height: 190px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .proof-item h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .proof-item p {
+            color: var(--muted);
+            font-size: 0.86rem;
+            flex: 1;
+        }
+
+        .proof-item a {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2f465a;
+        }
+
+        .proof-item a:hover {
+            text-decoration: underline;
+        }
+
+        .dual-cta {
+            margin-top: 82px;
+            padding-top: 6px;
+            border-top: 1px solid var(--line-strong);
+        }
+
+        .tiles {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .tile {
+            border-radius: var(--radius-lg);
+            min-height: 160px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .tile h3 {
+            font-size: clamp(1.6rem, 3vw, 2.1rem);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            max-width: 420px;
+        }
+
+        .tile .arrow {
+            font-size: 2rem;
+            line-height: 1;
+            opacity: 0.8;
+        }
+
+        .tile.light {
+            background: #e6e6e3;
+            color: #111315;
+            border: 1px solid #d0d0cc;
+        }
+
+        .tile.dark {
+            background: linear-gradient(150deg, #121a22, #1a2531);
+            color: #edf3f9;
+            border: 1px solid #273542;
+        }
+
+        .tile:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.02);
+        }
+
+        footer {
+            margin-top: 34px;
+            border-top: 1px solid var(--line-strong);
+            padding-top: 18px;
+            display: grid;
+            grid-template-columns: 1.2fr 2fr;
+            gap: 18px;
+        }
+
+        .footer-meta {
+            color: var(--muted);
+            font-size: 0.86rem;
+            line-height: 1.5;
+        }
+
+        .footer-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
         }
 
-        .proof-card {
-            border: 1px solid var(--line);
-            border-radius: var(--radius-lg);
-            background: linear-gradient(165deg, rgba(13, 23, 34, 0.95), rgba(8, 14, 21, 0.95));
-            padding: 18px;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-sm);
+        .footer-col h4 {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #535f69;
+            margin-bottom: 8px;
         }
 
-        .proof-card h3 {
-            font-size: 1.06rem;
-            margin-bottom: 9px;
-            letter-spacing: -0.02em;
+        .footer-col a {
+            display: block;
+            font-size: 0.9rem;
+            color: #303942;
+            margin-bottom: 6px;
         }
 
-        .proof-card p {
-            color: var(--muted);
-            font-size: 0.88rem;
-            flex: 1;
-        }
-
-        .proof-card a {
-            margin-top: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #96e9c2;
-        }
-
-        .cta {
-            margin-top: 84px;
-            border: 1px solid rgba(76, 227, 159, 0.4);
-            border-radius: 22px;
-            background:
-                radial-gradient(520px 220px at 15% -25%, rgba(76, 227, 159, 0.18), transparent 75%),
-                linear-gradient(150deg, rgba(13, 23, 34, 0.98), rgba(7, 12, 18, 0.98));
-            padding: 36px 30px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .cta h2 {
-            font-size: clamp(1.7rem, 3.8vw, 2.85rem);
-            line-height: 1.08;
-            letter-spacing: -0.03em;
-            max-width: 900px;
-            margin-bottom: 10px;
-        }
-
-        .cta p {
-            color: var(--muted);
-            max-width: 680px;
-            font-size: 0.98rem;
-        }
-
-        .cta .cta-row {
-            margin-top: 20px;
-        }
-
-        footer {
-            margin-top: 34px;
-            padding-top: 16px;
-            border-top: 1px solid var(--line);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            color: #7f98af;
-            font-size: 0.77rem;
-        }
-
-        footer .links {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        footer .links a {
-            color: #99afc3;
-            font-weight: 600;
+        .footer-col a:hover {
+            text-decoration: underline;
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(16px);
-            animation: enter 0.65s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+            transform: translateY(14px);
+            animation: enter 0.6s cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
         }
 
-        .hero-copy.reveal { animation-delay: 0.06s; }
-        .hero-panel.reveal { animation-delay: 0.14s; }
+        .hero-copy.reveal { animation-delay: 0.05s; }
+        .hero-panel.reveal { animation-delay: 0.12s; }
         .section.reveal:nth-of-type(1) { animation-delay: 0.08s; }
-        .section.reveal:nth-of-type(2) { animation-delay: 0.16s; }
-        .section.reveal:nth-of-type(3) { animation-delay: 0.24s; }
-        .section.reveal:nth-of-type(4) { animation-delay: 0.32s; }
-        .cta.reveal { animation-delay: 0.18s; }
+        .section.reveal:nth-of-type(2) { animation-delay: 0.14s; }
+        .section.reveal:nth-of-type(3) { animation-delay: 0.2s; }
+        .section.reveal:nth-of-type(4) { animation-delay: 0.26s; }
+        .dual-cta.reveal { animation-delay: 0.16s; }
 
         @keyframes enter {
             to {
@@ -623,58 +643,68 @@
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(76, 227, 159, 0.55); }
-            50% { box-shadow: 0 0 0 8px rgba(76, 227, 159, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(70, 210, 133, 0.45); }
+            50% { box-shadow: 0 0 0 8px rgba(70, 210, 133, 0); }
         }
 
-        @media (max-width: 1120px) {
+        @media (max-width: 1080px) {
             .hero {
                 grid-template-columns: 1fr;
             }
 
-            .cap-grid {
+            .modules {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            .flow-grid {
+            .flow {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            .proof-grid {
+            .proof {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            footer {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 760px) {
-            .frame {
-                padding: 14px 16px 54px;
+            .shell {
+                width: calc(100% - 32px);
             }
 
-            .topnav {
+            .nav {
                 border-radius: 18px;
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .navlinks {
+            .nav-links {
                 width: 100%;
-                gap: 12px;
+                gap: 10px;
             }
 
             .hero {
-                padding-top: 38px;
+                padding-top: 34px;
             }
 
-            .cap-grid,
-            .flow-grid,
-            .proof-grid,
-            .metric-grid {
+            .hero-copy,
+            .hero-panel {
+                padding: 18px 14px;
+            }
+
+            .modules,
+            .flow,
+            .proof,
+            .telemetry,
+            .tiles,
+            .footer-grid {
                 grid-template-columns: 1fr;
             }
 
-            .cta {
-                padding: 28px 18px;
-                margin-top: 64px;
+            .tile {
+                min-height: 140px;
             }
         }
 
@@ -693,10 +723,10 @@
     </style>
 </head>
 <body>
-    <div class="frame">
-        <nav class="topnav">
+    <div class="shell">
+        <nav class="nav">
             <a class="brand" href="/">zach<span>wright</span>.xyz</a>
-            <div class="navlinks">
+            <div class="nav-links">
                 <a href="#capabilities">Capabilities</a>
                 <a href="#value">Value</a>
                 <a href="#delivery">Delivery</a>
@@ -705,103 +735,101 @@
             </div>
         </nav>
 
-        <header class="hero" id="top">
+        <header class="hero">
             <div class="hero-copy reveal">
-                <p class="kicker">OpenClaw Agentic Operations Platform</p>
-                <h1>Deploy <span class="accent">autonomous agent systems</span> that deliver outcomes you can measure.</h1>
-                <p>We build and operate agentic workflows for revenue, operations, and delivery teams. Every deployment is instrumented with guardrails, approvals, and KPI reporting from day one.</p>
+                <p class="kicker">OpenClaw Agentic Operations</p>
+                <h1>Agent systems that move from <span class="hit">idea to execution</span> without bottlenecks.</h1>
+                <p>We design, deploy, and optimize agentic workflows for sales, operations, and delivery teams. Every deployment is tied to a baseline KPI and reviewed weekly.</p>
                 <div class="cta-row">
                     <a class="btn btn-primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book a Strategy Session</a>
                     <a class="btn btn-secondary" href="dashboard.html">View Live Operations</a>
                 </div>
-                <ul class="hero-tags">
-                    <li>10-day pilot scope</li>
-                    <li>Weekly optimization cycle</li>
-                    <li>Human approvals where needed</li>
+                <ul class="micro">
+                    <li>10-day pilot plan</li>
+                    <li>weekly performance tuning</li>
+                    <li>human approvals where needed</li>
                 </ul>
             </div>
 
             <aside class="hero-panel reveal">
                 <div class="panel-head">
                     <p>Mission Control</p>
-                    <span class="status-pill"><span class="status-dot"></span>Agents Active</span>
+                    <span class="status"><span class="status-dot"></span>Agents Active</span>
                 </div>
-                <div class="metric-grid">
-                    <div class="metric"><strong>02:13</strong><span>Median First Response</span></div>
-                    <div class="metric"><strong>91%</strong><span>Workflow Completion</span></div>
-                    <div class="metric"><strong>37%</strong><span>Manual Ops Reduced</span></div>
-                    <div class="metric"><strong>24/7</strong><span>Execution Window</span></div>
+                <div class="telemetry">
+                    <div class="telemetry-item"><strong>02:13</strong><span>Median first response</span></div>
+                    <div class="telemetry-item"><strong>91%</strong><span>Workflow completion</span></div>
+                    <div class="telemetry-item"><strong>37%</strong><span>Manual ops reduced</span></div>
+                    <div class="telemetry-item"><strong>24/7</strong><span>Execution window</span></div>
                 </div>
-                <div class="activity-list">
-                    <div class="activity-item"><p>Lead triage routed to sales owner</p><span>2m ago</span></div>
-                    <div class="activity-item"><p>Proposal agent generated draft v3</p><span>9m ago</span></div>
-                    <div class="activity-item"><p>Delivery status summary sent</p><span>17m ago</span></div>
+                <div class="log">
+                    <div class="log-item"><p>Lead triage routed to sales owner</p><span>2m ago</span></div>
+                    <div class="log-item"><p>Proposal agent generated draft v3</p><span>9m ago</span></div>
+                    <div class="log-item"><p>Delivery summary sent to client</p><span>17m ago</span></div>
                 </div>
             </aside>
         </header>
 
         <section class="section reveal" id="capabilities">
             <p class="kicker">Capabilities</p>
-            <h2>Production agent modules built around business bottlenecks</h2>
-            <p class="lead">Your stack is configured as specialized agent units with explicit scope, tool access, and quality controls.</p>
-
-            <div class="cap-grid">
-                <article class="cap-card">
-                    <span class="label">Revenue</span>
+            <h2>Focused modules built around your highest-friction workflows</h2>
+            <p class="lead">Each module has clear scope, tool permissions, and success criteria so teams can trust what runs in production.</p>
+            <div class="modules">
+                <article class="module">
+                    <span class="tag">Revenue</span>
                     <h3>Lead Qualification and Routing</h3>
-                    <p>Capture inbound interest, score qualification, and route qualified opportunities in near real time.</p>
+                    <p>Capture inbound demand, score fit, and route opportunities to the right owner in minutes.</p>
                     <ul>
                         <li>Inputs: forms, inbox, CRM events</li>
-                        <li>Actions: scoring, enrichment, owner routing</li>
-                        <li>Result: faster response and cleaner pipeline</li>
+                        <li>Actions: scoring, enrichment, routing</li>
+                        <li>Result: faster response and better pipeline quality</li>
                     </ul>
                 </article>
-                <article class="cap-card">
-                    <span class="label">Sales Ops</span>
+                <article class="module">
+                    <span class="tag">Sales Ops</span>
                     <h3>Follow-Up and Proposal Velocity</h3>
-                    <p>Automate deal momentum with sequence logic, proposal iterations, and next-step task orchestration.</p>
+                    <p>Maintain deal momentum with sequence logic, revision loops, and next-step prompts.</p>
                     <ul>
-                        <li>Inputs: stage changes, meetings, replies</li>
-                        <li>Actions: reminders, proposal updates, nudges</li>
+                        <li>Inputs: stage movement, meetings, replies</li>
+                        <li>Actions: reminders, draft updates, nudges</li>
                         <li>Result: fewer stalled opportunities</li>
                     </ul>
                 </article>
-                <article class="cap-card">
-                    <span class="label">Delivery</span>
+                <article class="module">
+                    <span class="tag">Delivery</span>
                     <h3>Execution and Client Visibility</h3>
-                    <p>Track commitments, summarize status, and surface delivery risks before they become escalations.</p>
+                    <p>Track commitments, summarize status, and surface risks before they become escalations.</p>
                     <ul>
-                        <li>Inputs: tickets, notes, team updates</li>
-                        <li>Actions: sync checks, blockers, summaries</li>
-                        <li>Result: reliable throughput and confidence</li>
+                        <li>Inputs: tickets, docs, team updates</li>
+                        <li>Actions: sync checks, risk flags, summaries</li>
+                        <li>Result: reliable throughput and clear reporting</li>
                     </ul>
                 </article>
             </div>
         </section>
 
         <section class="section reveal" id="value">
-            <p class="kicker">Value Map</p>
-            <h2>Each deployment maps directly to an operational KPI</h2>
-            <p class="lead">The system is not measured by prompt quality. It is measured by business movement across response time, cycle time, and conversion.</p>
-
+            <p class="kicker">Value Matrix</p>
+            <h2>Every workflow maps to a measurable KPI shift</h2>
+            <p class="lead">The system is evaluated by operating impact, not prompt quality.</p>
             <div class="matrix-shell">
                 <table class="matrix">
                     <thead>
                         <tr>
-                            <th>Operational Constraint</th>
+                            <th>Constraint</th>
                             <th>Agentic Intervention</th>
-                            <th>Measured Outcome</th>
+                            <th>Outcome</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Leads wait too long for first response</td>
-                            <td>Autonomous triage plus owner assignment in minutes</td>
+                            <td>Slow lead response</td>
+                            <td>Instant triage plus owner assignment</td>
                             <td>Higher qualified meeting rate</td>
                         </tr>
                         <tr>
-                            <td>Deals stall between calls and proposals</td>
-                            <td>Proposal iteration and follow-up loops with task sync</td>
+                            <td>Deals stall post-call</td>
+                            <td>Follow-up loops with proposal iteration</td>
                             <td>Improved close velocity</td>
                         </tr>
                         <tr>
@@ -810,7 +838,7 @@
                             <td>Lower escalation volume</td>
                         </tr>
                         <tr>
-                            <td>Leadership lacks reliable visibility</td>
+                            <td>Leadership lacks visibility</td>
                             <td>Weekly KPI digest with recommended next actions</td>
                             <td>Faster decision cycles</td>
                         </tr>
@@ -821,73 +849,91 @@
 
         <section class="section reveal" id="delivery">
             <p class="kicker">Delivery Model</p>
-            <h2>A compact rollout framework built for speed and control</h2>
-            <p class="lead">We start with one high-leverage workflow, establish a measurable baseline, and expand only after the first lane is stable.</p>
-
-            <div class="flow-grid">
-                <article class="flow-card">
+            <h2>Compact rollout framework with strict control points</h2>
+            <p class="lead">Start with one lane, prove value, then scale.</p>
+            <div class="flow">
+                <article class="flow-item">
                     <span class="step">01 Diagnose</span>
-                    <h3>Map the process</h3>
-                    <p>Identify breakdown points, baseline metrics, and decision gates.</p>
+                    <h3>Map process and baseline</h3>
+                    <p>Identify friction points, owners, and current cycle times.</p>
                 </article>
-                <article class="flow-card">
+                <article class="flow-item">
                     <span class="step">02 Architect</span>
-                    <h3>Define agent roles</h3>
-                    <p>Set tool permissions, prompts, memory, and escalation paths.</p>
+                    <h3>Define agent responsibilities</h3>
+                    <p>Set permissions, approvals, and escalation behavior.</p>
                 </article>
-                <article class="flow-card">
+                <article class="flow-item">
                     <span class="step">03 Deploy</span>
-                    <h3>Run in production</h3>
-                    <p>Launch the workflow with observability and approval controls.</p>
+                    <h3>Launch with observability</h3>
+                    <p>Ship into production with telemetry and rollback controls.</p>
                 </article>
-                <article class="flow-card">
+                <article class="flow-item">
                     <span class="step">04 Optimize</span>
-                    <h3>Tune every week</h3>
-                    <p>Review telemetry, refine prompts, and increase throughput safely.</p>
+                    <h3>Tune weekly against KPIs</h3>
+                    <p>Refine performance and expand once stable.</p>
                 </article>
             </div>
         </section>
 
         <section class="section reveal" id="proof">
             <p class="kicker">Proof</p>
-            <h2>Transparent operations with live evidence and ongoing shipping logs</h2>
-            <p class="lead">If the system is working, you should be able to see it immediately. No black-box claims.</p>
-
-            <div class="proof-grid">
-                <article class="proof-card">
+            <h2>Transparent operations with visible evidence</h2>
+            <p class="lead">No black box claims. See what is running and what changed.</p>
+            <div class="proof">
+                <article class="proof-item">
                     <h3>Live Operations Dashboard</h3>
-                    <p>Inspect uptime, activity streams, and pipeline movement in one operational interface.</p>
+                    <p>Inspect uptime, activity, pipeline movement, and skills in one view.</p>
                     <a href="dashboard.html">Open dashboard -></a>
                 </article>
-                <article class="proof-card">
+                <article class="proof-item">
                     <h3>Weekly Build Updates</h3>
-                    <p>Track exactly what shipped, what improved, and what is being tuned next.</p>
+                    <p>Track shipped improvements and implementation notes every week.</p>
                     <a href="updates/2026-02-17.html">Read latest update -></a>
                 </article>
-                <article class="proof-card">
+                <article class="proof-item">
                     <h3>Direct Strategy Access</h3>
-                    <p>Collaborate directly on priorities while the agent workforce executes continuously.</p>
+                    <p>Collaborate on scope, guardrails, and priority queue directly.</p>
                     <a href="mailto:zach@zachwright.xyz">Contact Zach -></a>
                 </article>
             </div>
         </section>
 
-        <section class="cta reveal" id="contact">
-            <p class="kicker">Start a Pilot</p>
-            <h2>Bring one workflow. Leave with a deployed agentic system and a clear KPI target.</h2>
-            <p>Book a short strategy session and we will define scope, timeline, safeguards, and expected impact before development starts.</p>
-            <div class="cta-row">
-                <a class="btn btn-primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book 30-Minute Call</a>
-                <a class="btn btn-secondary" href="mailto:zach@zachwright.xyz">zach@zachwright.xyz</a>
+        <section class="dual-cta reveal" id="contact">
+            <div class="tiles">
+                <a class="tile light" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">
+                    <h3>Request a Demo</h3>
+                    <span class="arrow">-></span>
+                </a>
+                <a class="tile dark" href="mailto:zach@zachwright.xyz">
+                    <h3>Start Building</h3>
+                    <span class="arrow">-></span>
+                </a>
             </div>
         </section>
 
         <footer>
-            <span>Built by Z on OpenClaw agent infrastructure.</span>
-            <div class="links">
-                <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="updates/2026-02-17.html">Updates</a>
+            <div class="footer-meta">
+                <p>Built by Z on OpenClaw infrastructure.</p>
+                <p>Agentic systems for revenue, operations, and delivery teams.</p>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <a href="#capabilities">Capabilities</a>
+                    <a href="#value">Value Matrix</a>
+                    <a href="#delivery">Delivery Model</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Proof</h4>
+                    <a href="dashboard.html">Live Dashboard</a>
+                    <a href="updates/2026-02-17.html">Weekly Updates</a>
+                    <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Session</a>
+                    <a href="mailto:zach@zachwright.xyz">zach@zachwright.xyz</a>
+                </div>
             </div>
         </footer>
     </div>
