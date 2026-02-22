@@ -4,29 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenClaw Operations Dashboard | Zach Wright</title>
-    <meta name="description" content="Live OpenClaw dashboard for activity, pipeline, outbound metrics, and skills delivery.">
+    <meta name="description" content="Live telemetry for OpenClaw agentic operations, sales pipeline, and delivery execution.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f5f8f2;
-            --bg-alt: #e6f1e5;
-            --surface: #ffffff;
-            --surface-soft: #eff7ee;
-            --line: #cfe0d3;
-            --ink: #11261b;
-            --ink-muted: #496257;
-            --accent: #1f9d53;
-            --accent-strong: #14763c;
-            --accent-soft: rgba(31, 157, 83, 0.16);
-            --red: #d14545;
-            --yellow: #9d7400;
-            --radius-lg: 20px;
-            --radius-md: 14px;
-            --shadow-lg: 0 24px 72px rgba(17, 38, 27, 0.1);
-            --shadow-sm: 0 10px 28px rgba(17, 38, 27, 0.08);
-            --font-sans: "Space Grotesk", sans-serif;
+            --bg: #050a10;
+            --bg-soft: #0a121b;
+            --surface: #0d1722;
+            --surface-alt: #101d2b;
+            --line: #1d3040;
+            --line-strong: #2f4558;
+            --text: #d6e3f0;
+            --muted: #89a0b6;
+            --accent: #4ce39f;
+            --accent-strong: #2ecb84;
+            --accent-soft: rgba(76, 227, 159, 0.16);
+            --danger: #f06a6a;
+            --radius-xl: 22px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow-lg: 0 26px 70px rgba(0, 0, 0, 0.45);
+            --shadow-sm: 0 12px 28px rgba(0, 0, 0, 0.25);
+            --font-sans: "Sora", sans-serif;
             --font-mono: "IBM Plex Mono", monospace;
         }
 
@@ -38,13 +39,13 @@
 
         body {
             font-family: var(--font-sans);
-            color: var(--ink);
+            background:
+                radial-gradient(950px 560px at 12% -10%, rgba(76, 227, 159, 0.09), transparent 62%),
+                radial-gradient(900px 500px at 88% -8%, rgba(76, 227, 159, 0.06), transparent 64%),
+                linear-gradient(180deg, var(--bg) 0%, #04080d 100%);
+            color: var(--text);
             line-height: 1.5;
             min-height: 100vh;
-            background:
-                radial-gradient(1100px 520px at 12% -10%, #d9efdd 0%, transparent 62%),
-                radial-gradient(900px 520px at 90% 0%, #d4ebd7 0%, transparent 58%),
-                linear-gradient(160deg, var(--bg) 0%, #edf5ea 62%, var(--bg-alt) 100%);
             overflow-x: hidden;
         }
 
@@ -53,158 +54,156 @@
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(17, 38, 27, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(17, 38, 27, 0.035) 1px, transparent 1px);
-            background-size: 64px 64px;
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 58px 58px;
             pointer-events: none;
             z-index: 0;
+            mask-image: radial-gradient(circle at center, black, transparent 78%);
         }
 
         a {
-            text-decoration: none;
             color: inherit;
+            text-decoration: none;
         }
 
-        .shell {
-            max-width: 1180px;
+        .frame {
+            max-width: 1220px;
             margin: 0 auto;
-            padding: 18px 24px 44px;
+            padding: 18px 24px 54px;
             position: relative;
             z-index: 1;
             isolation: isolate;
         }
 
-        .shell::before,
-        .shell::after {
+        .frame::before,
+        .frame::after {
             content: "";
             position: absolute;
             border-radius: 999px;
             pointer-events: none;
             z-index: -1;
-            filter: blur(2px);
+            filter: blur(6px);
         }
 
-        .shell::before {
-            width: 290px;
-            height: 290px;
+        .frame::before {
+            width: 320px;
+            height: 320px;
             top: 84px;
-            right: -120px;
-            background: radial-gradient(circle at center, rgba(31, 157, 83, 0.24), transparent 68%);
-            animation: float-one 9s ease-in-out infinite;
+            right: -140px;
+            background: radial-gradient(circle, rgba(76, 227, 159, 0.22), transparent 70%);
         }
 
-        .shell::after {
-            width: 220px;
-            height: 220px;
+        .frame::after {
+            width: 260px;
+            height: 260px;
             top: 520px;
-            left: -100px;
-            background: radial-gradient(circle at center, rgba(17, 38, 27, 0.12), transparent 68%);
-            animation: float-two 11s ease-in-out infinite;
+            left: -120px;
+            background: radial-gradient(circle, rgba(76, 227, 159, 0.14), transparent 72%);
         }
 
-        .site-nav {
+        .topnav {
             position: sticky;
             top: 14px;
             z-index: 20;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            padding: 12px 18px;
-            border: 1px solid rgba(207, 224, 211, 0.9);
+            gap: 16px;
+            border: 1px solid rgba(47, 69, 88, 0.75);
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.78);
+            background: rgba(6, 12, 18, 0.82);
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow-sm);
+            padding: 12px 18px;
         }
 
         .brand {
-            font-size: 1.04rem;
-            font-weight: 700;
+            font-size: 1.02rem;
             letter-spacing: -0.02em;
-            color: var(--ink);
-            flex-shrink: 0;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
         }
 
         .brand span {
             color: var(--accent);
         }
 
-        .nav-links {
+        .navlinks {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
             gap: 18px;
         }
 
-        .nav-links a {
-            font-size: 0.78rem;
-            letter-spacing: 0.08em;
+        .navlinks a {
+            font-size: 0.74rem;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
             font-weight: 600;
-            color: var(--ink-muted);
             transition: color 0.2s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--ink);
+        .navlinks a:hover {
+            color: var(--text);
         }
 
         #app {
-            margin-top: 28px;
+            margin-top: 26px;
         }
 
         .hero {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-xl);
+            background: linear-gradient(168deg, rgba(13, 23, 34, 0.98), rgba(8, 14, 21, 0.98));
+            box-shadow: var(--shadow-lg);
+            padding: 24px;
             display: grid;
             grid-template-columns: 1fr auto;
-            gap: 16px;
+            gap: 12px;
             align-items: end;
-            background: linear-gradient(152deg, #fbfffb 0%, #edf8ec 100%);
-            border: 1px solid #c7dccd;
-            border-radius: 26px;
-            padding: 30px 30px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .kicker {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             letter-spacing: 0.11em;
             text-transform: uppercase;
-            color: var(--accent-strong);
+            color: #8fe3bb;
             margin-bottom: 10px;
         }
 
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            line-height: 1.03;
+            font-size: clamp(1.9rem, 4.2vw, 3rem);
+            line-height: 1.04;
             letter-spacing: -0.03em;
-            color: var(--ink);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .hero-sub {
-            color: var(--ink-muted);
-            font-size: 1rem;
-            max-width: 640px;
+        .hero p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 620px;
         }
 
         .status-pill {
-            margin-top: 15px;
+            margin-top: 12px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             border-radius: 999px;
-            border: 1px solid #7fbd94;
-            background: rgba(31, 157, 83, 0.14);
-            color: #0f5e31;
+            border: 1px solid rgba(76, 227, 159, 0.45);
+            background: rgba(76, 227, 159, 0.13);
+            color: #8ff1c4;
             font-family: var(--font-mono);
-            font-size: 0.72rem;
-            letter-spacing: 0.07em;
+            font-size: 0.64rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 6px 10px;
+            padding: 5px 8px;
         }
 
         .status-dot {
@@ -212,116 +211,99 @@
             height: 8px;
             border-radius: 50%;
             background: var(--accent);
-            box-shadow: 0 0 0 0 rgba(31, 157, 83, 0.5);
-            animation: pulse-dot 2.2s ease-in-out infinite;
-        }
-
-        .status-sep {
-            width: 1px;
-            height: 12px;
-            background: rgba(15, 94, 49, 0.25);
+            box-shadow: 0 0 0 0 rgba(76, 227, 159, 0.55);
+            animation: pulse 2.1s ease-in-out infinite;
         }
 
         .hero-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--line);
+            border: 1px solid var(--line-strong);
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--ink);
-            font-size: 0.86rem;
+            background: rgba(10, 18, 27, 0.72);
+            color: var(--text);
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 10px 14px;
+            padding: 10px 12px;
             white-space: nowrap;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .hero-link:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
+            border-color: #4a657d;
         }
 
-        .metrics {
+        .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 14px;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
-        .metric-card {
-            background: var(--surface);
+        .kpi {
             border: 1px solid var(--line);
             border-radius: var(--radius-md);
-            padding: 14px 14px;
+            background: rgba(16, 29, 43, 0.78);
+            padding: 10px;
             box-shadow: var(--shadow-sm);
         }
 
-        .metric-card .value {
-            font-size: 1.6rem;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            font-weight: 700;
-            color: var(--ink);
+        .kpi strong {
+            display: block;
+            font-size: 1.2rem;
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 4px;
         }
 
-        .metric-card .value.good {
-            color: var(--accent-strong);
-        }
-
-        .metric-card .value.bad {
-            color: var(--red);
-        }
-
-        .metric-card .label {
-            margin-top: 7px;
-            font-size: 0.72rem;
+        .kpi span {
             font-family: var(--font-mono);
-            letter-spacing: 0.08em;
+            font-size: 0.62rem;
             text-transform: uppercase;
-            color: #355548;
+            letter-spacing: 0.08em;
+            color: #8ba2b8;
         }
 
         .layout-grid {
             display: grid;
-            grid-template-columns: 1.45fr 1fr;
-            gap: 14px;
-            margin-bottom: 14px;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         .panel {
-            background: var(--surface);
             border: 1px solid var(--line);
             border-radius: var(--radius-lg);
+            background: linear-gradient(180deg, rgba(13, 23, 34, 0.95), rgba(8, 14, 21, 0.95));
             box-shadow: var(--shadow-sm);
-            padding: 18px;
+            padding: 16px;
         }
 
         .panel-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 11px;
         }
 
         .panel-head h2 {
-            font-size: 1.1rem;
-            line-height: 1.1;
+            font-size: 1rem;
             letter-spacing: -0.02em;
-            color: var(--ink);
         }
 
-        .panel-head span {
+        .panel-head .tag {
             font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.08em;
+            font-size: 0.64rem;
             text-transform: uppercase;
-            color: #426252;
-            background: var(--surface-soft);
-            border: 1px solid #d4e5d8;
+            letter-spacing: 0.09em;
+            color: #8ba7bf;
+            border: 1px solid var(--line);
             border-radius: 999px;
-            padding: 5px 8px;
+            background: rgba(16, 29, 43, 0.7);
+            padding: 4px 7px;
             white-space: nowrap;
         }
 
@@ -331,125 +313,132 @@
         }
 
         .feed-item {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(16, 29, 43, 0.62);
+            padding: 9px 10px;
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 10px;
-            border: 1px solid #d6e7da;
-            border-radius: 12px;
-            background: var(--surface-soft);
-            padding: 10px 11px;
+            align-items: start;
         }
 
-        .feed-type {
+        .event-type {
             font-family: var(--font-mono);
-            font-size: 0.67rem;
-            letter-spacing: 0.08em;
+            font-size: 0.62rem;
             text-transform: uppercase;
-            color: #2f5945;
-            background: rgba(31, 157, 83, 0.12);
-            border: 1px solid rgba(31, 157, 83, 0.18);
+            letter-spacing: 0.08em;
+            color: #8cdab6;
+            border: 1px solid rgba(76, 227, 159, 0.28);
             border-radius: 999px;
-            height: fit-content;
-            padding: 4px 7px;
+            background: rgba(76, 227, 159, 0.1);
+            padding: 4px 6px;
+            white-space: nowrap;
         }
 
         .feed-note {
-            font-size: 0.9rem;
-            color: var(--ink);
-            margin-bottom: 2px;
+            font-size: 0.85rem;
+            color: var(--text);
+            margin-bottom: 3px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
         .feed-meta {
-            font-size: 0.78rem;
-            color: var(--ink-muted);
+            font-size: 0.74rem;
+            color: var(--muted);
         }
 
-        .split-grid {
+        .stat-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
         }
 
-        .mini-card {
-            background: var(--surface-soft);
-            border: 1px solid #d4e5d8;
-            border-radius: 12px;
-            padding: 10px;
+        .stat-card {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(16, 29, 43, 0.68);
+            padding: 9px;
         }
 
-        .mini-card .value {
-            font-size: 1.2rem;
+        .stat-card .value {
+            font-size: 1.04rem;
             line-height: 1.1;
             font-weight: 700;
-            color: var(--ink);
+            color: var(--text);
         }
 
-        .mini-card .label {
-            margin-top: 4px;
+        .stat-card .value.good {
+            color: #97efc6;
+        }
+
+        .stat-card .value.bad {
+            color: var(--danger);
+        }
+
+        .stat-card .label {
+            margin-top: 3px;
             font-family: var(--font-mono);
-            font-size: 0.64rem;
+            font-size: 0.6rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: #3f5e4f;
+            color: #8aa2b8;
         }
 
         .stage-grid {
+            margin-top: 10px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-top: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+            gap: 8px;
         }
 
-        .stage-card {
-            border: 1px solid #d5e6d9;
-            border-radius: 12px;
-            background: var(--surface-soft);
-            padding: 10px;
+        .stage {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(16, 29, 43, 0.62);
+            padding: 8px;
             text-align: center;
         }
 
-        .stage-card .count {
-            font-size: 1.2rem;
-            line-height: 1.05;
-            font-weight: 700;
-            color: var(--ink);
+        .stage strong {
+            font-size: 1.04rem;
+            line-height: 1.1;
+            display: block;
+            margin-bottom: 3px;
         }
 
-        .stage-card .name {
-            margin-top: 4px;
+        .stage span {
             font-family: var(--font-mono);
-            font-size: 0.66rem;
+            font-size: 0.58rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: #3f5e4f;
+            color: #8aa2b8;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 8px;
         }
 
         .skill-card {
-            background: var(--surface-soft);
-            border: 1px solid #d4e5d8;
-            border-radius: 12px;
-            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(16, 29, 43, 0.62);
+            padding: 10px;
         }
 
-        .skill-card .name {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--ink);
+        .skill-card h3 {
+            font-size: 0.9rem;
             margin-bottom: 4px;
+            letter-spacing: -0.01em;
         }
 
-        .skill-card .desc {
-            color: var(--ink-muted);
-            font-size: 0.82rem;
+        .skill-card p {
+            color: var(--muted);
+            font-size: 0.79rem;
             line-height: 1.45;
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -457,124 +446,117 @@
             overflow: hidden;
         }
 
-        .updates-list {
+        .updates {
             display: grid;
-            gap: 9px;
+            gap: 8px;
         }
 
         .update-item {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(16, 29, 43, 0.62);
+            padding: 9px 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            border: 1px solid #d4e5d8;
-            border-radius: 12px;
-            background: var(--surface-soft);
-            padding: 11px 12px;
+            gap: 10px;
             transition: transform 0.18s ease, border-color 0.18s ease;
         }
 
         .update-item:hover {
-            border-color: #9ecdb0;
             transform: translateY(-1px);
+            border-color: #3a5266;
         }
 
-        .update-title {
-            font-size: 0.9rem;
+        .update-item .title {
+            font-size: 0.84rem;
             font-weight: 600;
-            color: var(--ink);
+            color: var(--text);
         }
 
-        .update-date {
+        .update-item .date {
             font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.08em;
+            font-size: 0.62rem;
+            color: #8ba2b8;
             text-transform: uppercase;
-            color: #426252;
-            flex-shrink: 0;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
         }
 
         .empty {
-            border: 1px dashed #c6dccd;
-            border-radius: 12px;
-            background: var(--surface-soft);
-            padding: 14px;
+            border: 1px dashed var(--line-strong);
+            border-radius: 10px;
+            background: rgba(16, 29, 43, 0.5);
+            color: var(--muted);
+            font-size: 0.8rem;
             text-align: center;
-            color: #4d675c;
-            font-size: 0.85rem;
+            padding: 13px;
         }
 
         .loading {
             text-align: center;
-            padding: 90px 0;
-            color: var(--ink-muted);
-            font-size: 0.95rem;
+            padding: 88px 0;
+            color: var(--muted);
+            font-size: 0.92rem;
         }
 
         .spinner {
             width: 26px;
             height: 26px;
-            margin: 0 auto 12px;
             border-radius: 50%;
-            border: 2px solid #c6ddcc;
+            border: 2px solid #284152;
             border-top-color: var(--accent);
-            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+            animation: spin 0.85s linear infinite;
+        }
+
+        footer {
+            margin-top: 24px;
+            padding-top: 15px;
+            border-top: 1px solid var(--line);
+            text-align: center;
+            color: #7f98af;
+            font-size: 0.74rem;
+        }
+
+        footer a {
+            color: #9ad7bb;
+            font-weight: 600;
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            animation: rise-in 0.72s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            transform: translateY(16px);
+            animation: enter 0.65s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
         }
 
-        #app > .reveal:nth-child(1) { animation-delay: 0.06s; }
-        #app > .reveal:nth-child(2) { animation-delay: 0.14s; }
-        #app > .reveal:nth-child(3) { animation-delay: 0.22s; }
-        #app > .reveal:nth-child(4) { animation-delay: 0.3s; }
-        #app > .reveal:nth-child(5) { animation-delay: 0.38s; }
-        #app > .reveal:nth-child(6) { animation-delay: 0.46s; }
+        #app > .reveal:nth-child(1) { animation-delay: 0.04s; }
+        #app > .reveal:nth-child(2) { animation-delay: 0.1s; }
+        #app > .reveal:nth-child(3) { animation-delay: 0.16s; }
+        #app > .reveal:nth-child(4) { animation-delay: 0.22s; }
+        #app > .reveal:nth-child(5) { animation-delay: 0.28s; }
 
-        footer {
-            margin-top: 26px;
-            border-top: 1px solid rgba(156, 190, 165, 0.65);
-            padding-top: 16px;
-            text-align: center;
-            color: #486254;
-            font-size: 0.78rem;
-        }
-
-        footer a {
-            color: var(--accent-strong);
-            font-weight: 600;
-        }
-
-        @keyframes rise-in {
+        @keyframes enter {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        @keyframes pulse-dot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(31, 157, 83, 0.5); }
-            50% { box-shadow: 0 0 0 8px rgba(31, 157, 83, 0); }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(76, 227, 159, 0.55); }
+            50% { box-shadow: 0 0 0 8px rgba(76, 227, 159, 0); }
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        @keyframes float-one {
-            0%, 100% { transform: translate3d(0, 0, 0); }
-            50% { transform: translate3d(-12px, 16px, 0); }
-        }
+        @media (max-width: 1080px) {
+            .kpi-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
 
-        @keyframes float-two {
-            0%, 100% { transform: translate3d(0, 0, 0); }
-            50% { transform: translate3d(18px, -14px, 0); }
-        }
-
-        @media (max-width: 980px) {
             .layout-grid {
                 grid-template-columns: 1fr;
             }
@@ -589,27 +571,31 @@
         }
 
         @media (max-width: 760px) {
-            .shell {
-                padding: 14px 16px 40px;
+            .frame {
+                padding: 14px 16px 44px;
             }
 
-            .site-nav {
-                border-radius: 20px;
-                align-items: flex-start;
+            .topnav {
+                border-radius: 18px;
                 flex-direction: column;
+                align-items: flex-start;
             }
 
-            .nav-links {
+            .navlinks {
                 width: 100%;
                 gap: 12px;
             }
 
-            .split-grid {
-                grid-template-columns: 1fr;
+            .kpi-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .feed-note {
                 white-space: normal;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -624,10 +610,10 @@
     </style>
 </head>
 <body>
-    <div class="shell">
-        <nav class="site-nav">
-            <a href="/" class="brand">zach<span>wright</span>.xyz</a>
-            <div class="nav-links">
+    <div class="frame">
+        <nav class="topnav">
+            <a class="brand" href="/">zach<span>wright</span>.xyz</a>
+            <div class="navlinks">
                 <a href="/">Home</a>
                 <a href="/dashboard.html">Dashboard</a>
                 <a href="/updates/2026-02-17.html">Updates</a>
@@ -637,133 +623,147 @@
         <div id="app">
             <div class="loading">
                 <div class="spinner"></div>
-                <p>Loading dashboard data...</p>
+                <p>Loading dashboard telemetry...</p>
             </div>
         </div>
 
         <footer>
-            <p>Built and operated by Z on <a href="https://openclaw.com" target="_blank" rel="noopener noreferrer">OpenClaw</a>.</p>
+            Built by Z on <a href="https://openclaw.com" target="_blank" rel="noopener noreferrer">OpenClaw</a>.
         </footer>
     </div>
 
     <script>
     const TYPE_LABELS = { email: "Email", call: "Call", meeting: "Meeting", note: "Note" };
-    const STAGE_LABELS = { "new": "New", "qualified": "Qualified", "proposal": "Proposal", "negotiation": "Negotiation", "closed-won": "Won", "closed-lost": "Lost" };
+    const STAGE_LABELS = {
+        "new": "New",
+        "qualified": "Qualified",
+        "proposal": "Proposal",
+        "negotiation": "Negotiation",
+        "closed-won": "Won",
+        "closed-lost": "Lost"
+    };
     const STAGE_ORDER = ["new", "qualified", "proposal", "negotiation", "closed-won", "closed-lost"];
+
+    function esc(value) {
+        if (value === null || value === undefined) return "";
+        const el = document.createElement("span");
+        el.textContent = String(value);
+        return el.innerHTML;
+    }
+
+    function num(value) {
+        return Number(value || 0).toLocaleString();
+    }
+
+    function money(value) {
+        return "$" + Number(value || 0).toLocaleString();
+    }
 
     function relativeTime(dateStr) {
         const now = Date.now();
         const then = new Date(dateStr).getTime();
         const diff = Math.max(0, now - then);
         const mins = Math.floor(diff / 60000);
+
         if (mins < 1) return "just now";
         if (mins < 60) return `${mins}m ago`;
+
         const hrs = Math.floor(mins / 60);
         if (hrs < 24) return `${hrs}h ago`;
+
         const days = Math.floor(hrs / 24);
         if (days === 1) return "yesterday";
         if (days < 30) return `${days}d ago`;
+
         return new Date(dateStr).toLocaleDateString();
     }
 
-    function fmt$(n) {
-        return "$" + Number(n || 0).toLocaleString();
-    }
-
-    function fmtNum(n) {
-        return Number(n || 0).toLocaleString();
-    }
-
-    function formatGeneratedAt(dateStr) {
-        if (!dateStr) return "Unknown";
-        const d = new Date(dateStr);
-        if (Number.isNaN(d.getTime())) return "Unknown";
+    function formatGeneratedAt(value) {
+        if (!value) return "unknown";
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return "unknown";
         return d.toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
     }
 
-    function esc(s) {
-        if (!s) return "";
-        const el = document.createElement("span");
-        el.textContent = s;
-        return el.innerHTML;
-    }
-
-    function stageSort(a, b) {
+    function sortStages(a, b) {
         const ai = STAGE_ORDER.indexOf(a[0]);
         const bi = STAGE_ORDER.indexOf(b[0]);
         return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
     }
 
-    function render(d) {
+    function render(data) {
         const app = document.getElementById("app");
-        const activities = Array.isArray(d.activities) ? d.activities : [];
-        const skills = Array.isArray(d.skills) ? d.skills : [];
-        const updates = Array.isArray(d.updates) ? d.updates : [];
-        const stageEntries = Object.entries((d.pipeline && d.pipeline.byStage) || {}).sort(stageSort);
-        const generatedAt = formatGeneratedAt(d.generatedAt);
+        const uptime = data.uptime || {};
+        const pipeline = data.pipeline || { byStage: {} };
+        const outbound = data.outbound || {};
+        const activities = Array.isArray(data.activities) ? data.activities : [];
+        const skills = Array.isArray(data.skills) ? data.skills : [];
+        const updates = Array.isArray(data.updates) ? data.updates : [];
+        const stageEntries = Object.entries(pipeline.byStage || {}).sort(sortStages);
 
         app.innerHTML = `
             <section class="hero reveal">
                 <div>
                     <p class="kicker">OpenClaw Telemetry</p>
                     <h1>Operations Dashboard</h1>
-                    <p class="hero-sub">Live view of execution, pipeline movement, and outbound activity.</p>
+                    <p>Live execution stream across activity, pipeline movement, and outbound performance.</p>
                     <div class="status-pill">
                         <span class="status-dot"></span>
                         Agent online
-                        <span class="status-sep"></span>
-                        Updated ${esc(generatedAt)}
+                        <span>Updated ${esc(formatGeneratedAt(data.generatedAt))}</span>
                     </div>
                 </div>
-                <a class="hero-link" href="/">Back to landing page -></a>
+                <a class="hero-link" href="/">Back to landing page</a>
             </section>
 
-            <section class="metrics reveal">
-                <article class="metric-card"><div class="value">${fmtNum(d.uptime.daysAlive)}</div><div class="label">Days Alive</div></article>
-                <article class="metric-card"><div class="value">${fmtNum(d.uptime.totalContacts)}</div><div class="label">CRM Contacts</div></article>
-                <article class="metric-card"><div class="value">${fmtNum(d.uptime.totalActivities)}</div><div class="label">Activities Logged</div></article>
-                <article class="metric-card"><div class="value">${fmtNum(d.outbound.signalsScanned)}</div><div class="label">Signals Scanned</div></article>
-                <article class="metric-card"><div class="value">${fmtNum(d.uptime.skillsCount)}</div><div class="label">Skills Built</div></article>
-                <article class="metric-card"><div class="value">${fmtNum(d.outbound.conversionRate)}%</div><div class="label">Lead Conversion</div></article>
+            <section class="kpi-grid reveal">
+                <article class="kpi"><strong>${num(uptime.daysAlive)}</strong><span>Days Alive</span></article>
+                <article class="kpi"><strong>${num(uptime.totalContacts)}</strong><span>CRM Contacts</span></article>
+                <article class="kpi"><strong>${num(uptime.totalActivities)}</strong><span>Activities Logged</span></article>
+                <article class="kpi"><strong>${num(outbound.signalsScanned)}</strong><span>Signals Scanned</span></article>
+                <article class="kpi"><strong>${num(uptime.skillsCount)}</strong><span>Skills Built</span></article>
+                <article class="kpi"><strong>${num(outbound.conversionRate)}%</strong><span>Lead Conversion</span></article>
             </section>
 
             <section class="layout-grid reveal">
                 <article class="panel">
                     <div class="panel-head">
                         <h2>Recent Activity</h2>
-                        <span>${fmtNum(activities.length)} events</span>
+                        <span class="tag">${num(activities.length)} events</span>
                     </div>
                     <div class="feed">
-                        ${activities.length ? activities.map(a => `
+                        ${activities.length ? activities.map((item) => `
                             <div class="feed-item">
-                                <div class="feed-type">${esc(TYPE_LABELS[a.type] || "Event")}</div>
+                                <div class="event-type">${esc(TYPE_LABELS[item.type] || "Event")}</div>
                                 <div>
-                                    <div class="feed-note">${esc(a.note) || "Untitled activity"}</div>
-                                    <div class="feed-meta">${esc(a.contact) || "Unknown contact"} | ${relativeTime(a.date)}</div>
+                                    <div class="feed-note">${esc(item.note) || "Untitled activity"}</div>
+                                    <div class="feed-meta">${esc(item.contact) || "Unknown contact"} | ${relativeTime(item.date)}</div>
                                 </div>
                             </div>
-                        `).join("") : `<div class="empty">No recent activity found.</div>`}
+                        `).join("") : `<div class="empty">No activity has been logged yet.</div>`}
                     </div>
                 </article>
 
                 <article class="panel">
                     <div class="panel-head">
                         <h2>Pipeline Snapshot</h2>
-                        <span>Deals</span>
+                        <span class="tag">Deals</span>
                     </div>
-                    <div class="split-grid">
-                        <div class="mini-card"><div class="value">${fmtNum(d.pipeline.totalDeals)}</div><div class="label">Total Deals</div></div>
-                        <div class="mini-card"><div class="value">${fmt$(d.pipeline.totalValue)}</div><div class="label">Pipeline Value</div></div>
-                        <div class="mini-card"><div class="value" style="color:var(--accent-strong)">${fmtNum(d.pipeline.wins)}</div><div class="label">Wins</div></div>
-                        <div class="mini-card"><div class="value" style="color:var(--red)">${fmtNum(d.pipeline.losses)}</div><div class="label">Losses</div></div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card"><div class="value">${num(pipeline.totalDeals)}</div><div class="label">Total Deals</div></div>
+                        <div class="stat-card"><div class="value">${money(pipeline.totalValue)}</div><div class="label">Pipeline Value</div></div>
+                        <div class="stat-card"><div class="value good">${num(pipeline.wins)}</div><div class="label">Wins</div></div>
+                        <div class="stat-card"><div class="value bad">${num(pipeline.losses)}</div><div class="label">Losses</div></div>
                     </div>
+
                     <div class="stage-grid">
                         ${stageEntries.length ? stageEntries.map(([stage, count]) => `
-                            <div class="stage-card">
-                                <div class="count">${fmtNum(count)}</div>
-                                <div class="name">${esc(STAGE_LABELS[stage] || stage)}</div>
+                            <div class="stage">
+                                <strong>${num(count)}</strong>
+                                <span>${esc(STAGE_LABELS[stage] || stage)}</span>
                             </div>
-                        `).join("") : `<div class="empty">No stage data available.</div>`}
+                        `).join("") : `<div class="empty">No stage distribution available.</div>`}
                     </div>
                 </article>
             </section>
@@ -771,26 +771,26 @@
             <section class="panel reveal">
                 <div class="panel-head">
                     <h2>Outbound Sales</h2>
-                    <span>Performance</span>
+                    <span class="tag">Performance</span>
                 </div>
-                <div class="metrics">
-                    <article class="metric-card"><div class="value">${fmtNum(d.outbound.signalsScanned)}</div><div class="label">Signals Scanned</div></article>
-                    <article class="metric-card"><div class="value">${fmtNum(d.outbound.leadsTotal)}</div><div class="label">Leads Found</div></article>
-                    <article class="metric-card"><div class="value">${fmtNum(d.outbound.leadsQualified)}</div><div class="label">Leads Qualified</div></article>
-                    <article class="metric-card"><div class="value">${fmtNum(d.outbound.leadsContacted)}</div><div class="label">Leads Contacted</div></article>
+                <div class="kpi-grid" style="margin-bottom:0;">
+                    <article class="kpi"><strong>${num(outbound.signalsScanned)}</strong><span>Signals Scanned</span></article>
+                    <article class="kpi"><strong>${num(outbound.leadsTotal)}</strong><span>Leads Found</span></article>
+                    <article class="kpi"><strong>${num(outbound.leadsQualified)}</strong><span>Leads Qualified</span></article>
+                    <article class="kpi"><strong>${num(outbound.leadsContacted)}</strong><span>Leads Contacted</span></article>
                 </div>
             </section>
 
             <section class="panel reveal">
                 <div class="panel-head">
                     <h2>Skills Built</h2>
-                    <span>${fmtNum(skills.length)} skills</span>
+                    <span class="tag">${num(skills.length)} skills</span>
                 </div>
                 <div class="skills-grid">
-                    ${skills.length ? skills.map(skill => `
+                    ${skills.length ? skills.map((skill) => `
                         <article class="skill-card">
-                            <div class="name">${esc(skill.name) || "Untitled skill"}</div>
-                            <div class="desc">${esc(skill.description) || "No description available."}</div>
+                            <h3>${esc(skill.name) || "Untitled skill"}</h3>
+                            <p>${esc(skill.description) || "No description available."}</p>
                         </article>
                     `).join("") : `<div class="empty">No skills found.</div>`}
                 </div>
@@ -800,30 +800,31 @@
             <section class="panel reveal">
                 <div class="panel-head">
                     <h2>Weekly Updates</h2>
-                    <span>${fmtNum(updates.length)} posts</span>
+                    <span class="tag">${num(updates.length)} posts</span>
                 </div>
-                <div class="updates-list">
-                    ${updates.map(update => `
+                <div class="updates">
+                    ${updates.map((update) => `
                         <a class="update-item" href="/updates/${update.slug}.html">
-                            <span class="update-title">${esc(update.title) || "Untitled update"}</span>
-                            <span class="update-date">${esc(update.date)}</span>
+                            <span class="title">${esc(update.title) || "Untitled update"}</span>
+                            <span class="date">${esc(update.date)}</span>
                         </a>
                     `).join("")}
                 </div>
-            </section>` : ""}
+            </section>
+            ` : ""}
         `;
     }
 
     fetch("dashboard-data.json")
         .then((response) => {
-            if (!response.ok) throw new Error(response.status);
+            if (!response.ok) throw new Error(String(response.status));
             return response.json();
         })
         .then(render)
         .catch(() => {
             document.getElementById("app").innerHTML = `
                 <div class="loading">
-                    <p>Dashboard data unavailable. Try refreshing.</p>
+                    <p>Dashboard telemetry is currently unavailable. Try refreshing.</p>
                 </div>
             `;
         });
