@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zach Wright | AgenticCoding Control Plane</title>
-    <meta name="description" content="Zach Wright's personal control plane for AgenticCoding: autonomous agent systems, live operations, weekly updates, and active experiments.">
+    <title>Zach Wright | AgenticCoding Studio</title>
+    <meta name="description" content="AgenticCoding studio by Zach Wright. Build autonomous workflow systems, deploy with guardrails, and scale with measurable outcomes.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050a10;
-            --bg-soft: #0b131c;
-            --surface: #101a26;
-            --surface-soft: #141f2d;
-            --line: #26384d;
+            --bg: #060a0f;
+            --bg-soft: #0d1320;
+            --surface: #121a28;
+            --surface-soft: #172233;
+            --line: #26374f;
             --line-strong: #355173;
             --text: #edf5ff;
-            --muted: #9db0c5;
+            --muted: #9fb2c8;
             --green: #2ee182;
-            --green-strong: #1da160;
-            --cyan: #44d7f2;
-            --danger: #f16f6f;
-            --radius-xl: 30px;
-            --radius-lg: 20px;
-            --radius-md: 14px;
-            --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.45);
-            --shadow-sm: 0 14px 38px rgba(0, 0, 0, 0.32);
+            --green-strong: #1ea965;
+            --cyan: #4fd8f4;
+            --danger: #f37272;
+            --radius-xl: 28px;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --shadow-lg: 0 28px 70px rgba(0, 0, 0, 0.42);
+            --shadow-sm: 0 14px 34px rgba(0, 0, 0, 0.3);
             --font-display: "Space Grotesk", sans-serif;
             --font-body: "Manrope", sans-serif;
             --font-mono: "IBM Plex Mono", monospace;
@@ -47,11 +47,11 @@
             font-family: var(--font-body);
             color: var(--text);
             background:
-                radial-gradient(1100px 560px at -8% -12%, rgba(46, 225, 130, 0.24), transparent 62%),
-                radial-gradient(900px 500px at 110% -16%, rgba(68, 215, 242, 0.22), transparent 64%),
-                linear-gradient(180deg, #04080e 0%, #06101a 46%, #050a10 100%);
+                radial-gradient(980px 520px at -8% -14%, rgba(46, 225, 130, 0.22), transparent 62%),
+                radial-gradient(860px 480px at 108% -12%, rgba(79, 216, 244, 0.18), transparent 64%),
+                linear-gradient(180deg, #05090e 0%, #07101a 46%, #060a0f 100%);
             overflow-x: hidden;
-            line-height: 1.62;
+            line-height: 1.58;
         }
 
         body::before {
@@ -60,21 +60,12 @@
             inset: 0;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.58;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
             background-size: 48px 48px;
-            mask-image: radial-gradient(circle at center, black 28%, transparent 78%);
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            background: linear-gradient(transparent 0%, rgba(8, 14, 22, 0.24) 100%);
+            mask-image: radial-gradient(circle at center, black 28%, transparent 80%);
         }
 
         a {
@@ -83,9 +74,9 @@
         }
 
         .shell {
-            width: min(1280px, calc(100% - 48px));
+            width: min(1240px, calc(100% - 48px));
             margin: 0 auto;
-            padding-bottom: 84px;
+            padding-bottom: 80px;
             position: relative;
             z-index: 1;
         }
@@ -95,11 +86,11 @@
             top: 12px;
             z-index: 30;
             margin-top: 14px;
-            border: 1px solid rgba(53, 81, 115, 0.78);
+            border: 1px solid rgba(53, 81, 115, 0.76);
             border-radius: 999px;
-            background: rgba(8, 14, 22, 0.84);
-            backdrop-filter: blur(12px) saturate(130%);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.36);
+            background: rgba(9, 15, 24, 0.84);
+            backdrop-filter: blur(11px) saturate(130%);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.34);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -128,64 +119,50 @@
 
         .nav-links a {
             font-family: var(--font-mono);
-            font-size: 0.63rem;
+            font-size: 0.62rem;
             letter-spacing: 0.11em;
             text-transform: uppercase;
-            color: #a6b7c9;
+            color: #a8b8ca;
             transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: #f2f8ff;
+            color: #f4f9ff;
         }
 
         .nav-cta {
             border: 1px solid rgba(46, 225, 130, 0.45);
             border-radius: 999px;
-            background: linear-gradient(145deg, rgba(46, 225, 130, 0.24), rgba(24, 138, 82, 0.34));
-            color: #e2ffe9;
-            font-size: 0.71rem;
+            background: linear-gradient(145deg, rgba(46, 225, 130, 0.22), rgba(23, 131, 77, 0.34));
+            color: #e3ffeb;
+            padding: 9px 14px;
+            font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 0.03em;
-            padding: 9px 14px;
             white-space: nowrap;
             transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         .nav-cta:hover {
             transform: translateY(-1px);
-            filter: brightness(1.06);
+            filter: brightness(1.07);
         }
 
         .hero {
-            margin-top: 54px;
+            margin-top: 52px;
             display: grid;
             grid-template-columns: 1.08fr 0.92fr;
             gap: 12px;
         }
 
-        .hero-copy {
+        .hero-main {
             border: 1px solid rgba(53, 81, 115, 0.84);
             border-radius: var(--radius-xl);
             background:
                 radial-gradient(600px 260px at 88% -10%, rgba(46, 225, 130, 0.2), transparent 70%),
-                linear-gradient(160deg, rgba(16, 26, 38, 0.94), rgba(12, 19, 30, 0.96));
+                linear-gradient(160deg, rgba(16, 25, 37, 0.95), rgba(12, 19, 30, 0.96));
             box-shadow: var(--shadow-lg);
-            padding: 36px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .hero-copy::before {
-            content: "";
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            border-radius: 50%;
-            right: -210px;
-            top: -220px;
-            background: radial-gradient(circle, rgba(46, 225, 130, 0.24), transparent 72%);
-            pointer-events: none;
+            padding: 34px;
         }
 
         .kicker {
@@ -194,10 +171,10 @@
             gap: 7px;
             margin-bottom: 12px;
             font-family: var(--font-mono);
-            font-size: 0.67rem;
-            letter-spacing: 0.13em;
+            font-size: 0.66rem;
             text-transform: uppercase;
-            color: #97adbf;
+            letter-spacing: 0.12em;
+            color: #98adbf;
         }
 
         .kicker::before {
@@ -206,17 +183,17 @@
             height: 8px;
             border-radius: 50%;
             background: var(--green);
-            box-shadow: 0 0 0 0 rgba(46, 225, 130, 0.46);
+            box-shadow: 0 0 0 0 rgba(46, 225, 130, 0.42);
             animation: pulse 2.2s ease-in-out infinite;
         }
 
         h1 {
             font-family: var(--font-display);
-            font-size: clamp(2.3rem, 5.2vw, 5.2rem);
-            line-height: 0.96;
-            letter-spacing: -0.055em;
-            margin-bottom: 16px;
-            max-width: 840px;
+            font-size: clamp(2.2rem, 5vw, 4.9rem);
+            line-height: 0.97;
+            letter-spacing: -0.05em;
+            margin-bottom: 14px;
+            max-width: 820px;
             text-wrap: balance;
         }
 
@@ -224,10 +201,10 @@
             color: var(--green);
         }
 
-        .hero-lead {
-            max-width: 710px;
+        .hero-main p {
             color: var(--muted);
-            font-size: 1.05rem;
+            font-size: 1.01rem;
+            max-width: 700px;
         }
 
         .hero-actions {
@@ -243,21 +220,21 @@
             justify-content: center;
             border-radius: 999px;
             padding: 12px 18px;
-            font-size: 0.82rem;
+            font-size: 0.81rem;
             font-weight: 700;
             transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         .btn-primary {
             border: 1px solid rgba(46, 225, 130, 0.46);
-            background: linear-gradient(145deg, rgba(46, 225, 130, 0.24), rgba(25, 141, 85, 0.34));
-            color: #e5ffed;
+            background: linear-gradient(145deg, rgba(46, 225, 130, 0.24), rgba(24, 139, 83, 0.34));
+            color: #e8fff0;
         }
 
         .btn-secondary {
             border: 1px solid var(--line-strong);
-            background: rgba(14, 22, 32, 0.86);
-            color: #dfebf7;
+            background: rgba(13, 21, 32, 0.86);
+            color: #e1ebf6;
         }
 
         .btn:hover {
@@ -265,115 +242,69 @@
             filter: brightness(1.07);
         }
 
-        .pill-row {
-            margin-top: 18px;
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .pill-row li {
-            border: 1px solid rgba(53, 81, 115, 0.86);
-            border-radius: 999px;
-            background: rgba(12, 20, 30, 0.88);
-            padding: 6px 10px;
-            font-family: var(--font-mono);
-            font-size: 0.61rem;
-            letter-spacing: 0.09em;
-            text-transform: uppercase;
-            color: #96adbf;
-        }
-
-        .hero-console {
+        .hero-side {
             border: 1px solid rgba(53, 81, 115, 0.84);
             border-radius: var(--radius-xl);
-            background:
-                radial-gradient(440px 210px at 100% -8%, rgba(68, 215, 242, 0.2), transparent 72%),
-                linear-gradient(160deg, rgba(15, 25, 37, 0.92), rgba(10, 17, 27, 0.96));
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
             box-shadow: var(--shadow-sm);
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            padding: 20px;
+            display: grid;
+            gap: 9px;
+            align-content: start;
         }
 
-        .console-head {
+        .side-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
         }
 
-        .console-head p {
+        .side-head p {
             font-family: var(--font-mono);
-            font-size: 0.62rem;
-            text-transform: uppercase;
+            font-size: 0.6rem;
             letter-spacing: 0.11em;
+            text-transform: uppercase;
             color: #96adc0;
         }
 
         .status {
-            border: 1px solid rgba(46, 225, 130, 0.46);
+            border: 1px solid rgba(46, 225, 130, 0.44);
             border-radius: 999px;
-            background: rgba(46, 225, 130, 0.16);
-            color: #9ff0c1;
-            padding: 4px 8px;
+            background: rgba(46, 225, 130, 0.14);
+            color: #a2f2c2;
             font-family: var(--font-mono);
-            font-size: 0.56rem;
-            letter-spacing: 0.09em;
+            font-size: 0.55rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            white-space: nowrap;
+            padding: 4px 8px;
         }
 
-        .feed {
-            display: grid;
-            gap: 7px;
-        }
-
-        .feed-item {
+        .signal {
             border: 1px solid rgba(53, 81, 115, 0.84);
             border-radius: 12px;
             background: rgba(10, 17, 27, 0.9);
-            padding: 8px 9px;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 9px;
-            align-items: center;
+            padding: 10px;
         }
 
-        .feed-tag {
-            border: 1px solid rgba(46, 225, 130, 0.4);
-            border-radius: 999px;
-            background: rgba(46, 225, 130, 0.13);
-            color: #a8f5ca;
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 4px 6px;
-            white-space: nowrap;
+        .signal strong {
+            display: block;
+            margin-bottom: 5px;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
         }
 
-        .feed-text {
+        .signal p {
+            color: var(--muted);
             font-size: 0.78rem;
-            color: #dbe6f2;
-        }
-
-        .feed-time {
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #8fa5b8;
-            white-space: nowrap;
         }
 
         .marquee {
             margin-top: 14px;
             border: 1px solid rgba(53, 81, 115, 0.76);
             border-radius: 999px;
-            background: rgba(9, 16, 25, 0.82);
+            background: rgba(10, 17, 26, 0.82);
             overflow: hidden;
         }
 
@@ -385,226 +316,121 @@
             white-space: nowrap;
             padding: 11px 16px;
             font-family: var(--font-mono);
-            font-size: 0.64rem;
+            font-size: 0.63rem;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: #93a9bc;
-            animation: marquee 18s linear infinite;
+            color: #94a9bc;
+            animation: ticker 18s linear infinite;
         }
 
         .marquee-track strong {
-            color: #9cf0c0;
+            color: #a3f2c4;
+        }
+
+        .trust {
+            margin-top: 20px;
+            border: 1px solid rgba(53, 81, 115, 0.82);
+            border-radius: var(--radius-lg);
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
+            box-shadow: var(--shadow-sm);
+            padding: 12px;
+        }
+
+        .trust p {
+            font-family: var(--font-mono);
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 0.11em;
+            color: #90a5b9;
+            margin-bottom: 10px;
+        }
+
+        .logo-row {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .logo-chip {
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            border-radius: 10px;
+            background: rgba(10, 17, 27, 0.9);
+            padding: 8px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: #94a9bc;
         }
 
         .section {
-            padding-top: 86px;
+            padding-top: 84px;
         }
 
         .section-head {
-            max-width: 860px;
+            max-width: 840px;
             display: grid;
             gap: 10px;
         }
 
         .section-head h2 {
             font-family: var(--font-display);
-            font-size: clamp(1.7rem, 3.2vw, 3rem);
-            line-height: 1.07;
+            font-size: clamp(1.65rem, 3.1vw, 2.95rem);
+            line-height: 1.08;
             letter-spacing: -0.03em;
             text-wrap: balance;
         }
 
         .section-head p {
             color: var(--muted);
-            font-size: 0.96rem;
+            font-size: 0.95rem;
         }
 
-        .agent-grid {
+        .service-grid {
             margin-top: 20px;
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
         }
 
-        .agent-card {
+        .card {
             border: 1px solid rgba(53, 81, 115, 0.84);
             border-radius: var(--radius-lg);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
             box-shadow: var(--shadow-sm);
             padding: 16px;
-            min-height: 238px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: transform 0.22s ease, border-color 0.22s ease;
         }
 
-        .agent-card:hover {
-            transform: translateY(-3px);
-            border-color: #4d6583;
-        }
-
-        .agent-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .agent-id {
-            border: 1px solid rgba(53, 81, 115, 0.86);
-            border-radius: 999px;
-            padding: 4px 8px;
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #8ea3b7;
-            background: rgba(9, 16, 25, 0.84);
-        }
-
-        .agent-state {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            letter-spacing: 0.09em;
-            text-transform: uppercase;
-            color: #9ff0c1;
-        }
-
-        .agent-card h3 {
+        .card h3 {
             font-family: var(--font-display);
-            font-size: 1.08rem;
+            font-size: 1.06rem;
             letter-spacing: -0.02em;
+            margin-bottom: 8px;
             line-height: 1.2;
         }
 
-        .agent-card p {
+        .card p {
             color: var(--muted);
-            font-size: 0.85rem;
-            flex: 1;
-        }
-
-        .autonomy {
-            border: 1px solid rgba(53, 81, 115, 0.82);
-            border-radius: 10px;
-            background: rgba(9, 16, 25, 0.88);
-            padding: 7px;
-        }
-
-        .autonomy-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-mono);
-            font-size: 0.54rem;
-            letter-spacing: 0.09em;
-            text-transform: uppercase;
-            color: #8ea3b7;
-            margin-bottom: 6px;
-        }
-
-        .autonomy-bar {
-            height: 6px;
-            border-radius: 999px;
-            background: rgba(53, 81, 115, 0.76);
-            overflow: hidden;
-        }
-
-        .autonomy-fill {
-            height: 100%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, rgba(68, 215, 242, 0.9), rgba(46, 225, 130, 0.95));
-        }
-
-        .control-layout {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: 1.06fr 0.94fr;
-            gap: 10px;
-        }
-
-        .control-main,
-        .control-side {
-            border: 1px solid rgba(53, 81, 115, 0.84);
-            border-radius: var(--radius-lg);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
-            box-shadow: var(--shadow-sm);
-        }
-
-        .control-main {
-            padding: 18px;
-        }
-
-        .control-main h3 {
-            font-family: var(--font-display);
-            font-size: 1.2rem;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
+            font-size: 0.84rem;
             margin-bottom: 10px;
         }
 
-        .control-main p {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-        }
-
-        .matrix {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-        }
-
-        .matrix th,
-        .matrix td {
-            border-bottom: 1px solid rgba(53, 81, 115, 0.74);
-            padding: 10px 8px;
-            text-align: left;
-            vertical-align: top;
-            font-size: 0.82rem;
-        }
-
-        .matrix th {
-            font-family: var(--font-mono);
-            font-size: 0.57rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #8ea3b7;
-        }
-
-        .matrix td {
-            color: #d8e4f0;
-        }
-
-        .matrix tr:last-child td {
-            border-bottom: none;
-        }
-
-        .control-side {
-            padding: 16px;
+        .card ul {
+            list-style: none;
             display: grid;
-            gap: 9px;
-            align-content: start;
+            gap: 6px;
         }
 
-        .policy {
-            border: 1px solid rgba(53, 81, 115, 0.84);
-            border-radius: 12px;
+        .card li {
+            border: 1px solid rgba(53, 81, 115, 0.82);
+            border-radius: 9px;
             background: rgba(9, 16, 25, 0.88);
-            padding: 10px;
-        }
-
-        .policy strong {
-            display: block;
-            margin-bottom: 6px;
-            font-family: var(--font-display);
-            font-size: 0.92rem;
-            letter-spacing: -0.01em;
-        }
-
-        .policy p {
-            color: var(--muted);
-            font-size: 0.79rem;
+            padding: 6px 8px;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.03em;
+            color: #8ea3b7;
         }
 
         .process-grid {
@@ -614,10 +440,10 @@
             gap: 10px;
         }
 
-        .step-card {
+        .step {
             border: 1px solid rgba(53, 81, 115, 0.84);
             border-radius: var(--radius-lg);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
             box-shadow: var(--shadow-sm);
             padding: 14px;
         }
@@ -631,12 +457,12 @@
             color: #a8f5ca;
             font-family: var(--font-mono);
             font-size: 0.56rem;
-            text-transform: uppercase;
             letter-spacing: 0.09em;
+            text-transform: uppercase;
             padding: 4px 8px;
         }
 
-        .step-card h3 {
+        .step h3 {
             font-family: var(--font-display);
             font-size: 1rem;
             letter-spacing: -0.02em;
@@ -644,119 +470,100 @@
             line-height: 1.2;
         }
 
-        .step-card p {
+        .step p {
             color: var(--muted);
-            font-size: 0.82rem;
+            font-size: 0.81rem;
         }
 
-        .compare-shell {
-            margin-top: 20px;
-            border: 1px solid rgba(53, 81, 115, 0.84);
-            border-radius: var(--radius-lg);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
-            box-shadow: var(--shadow-sm);
-            overflow-x: auto;
-        }
-
-        .compare-table {
-            width: 100%;
-            min-width: 760px;
-            border-collapse: collapse;
-        }
-
-        .compare-table th,
-        .compare-table td {
-            border-bottom: 1px solid rgba(53, 81, 115, 0.74);
-            text-align: left;
-            vertical-align: top;
-            padding: 11px 12px;
-        }
-
-        .compare-table th {
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #8ea3b7;
-            background: rgba(10, 17, 27, 0.84);
-        }
-
-        .compare-table td {
-            font-size: 0.83rem;
-            color: #d8e4f0;
-        }
-
-        .compare-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .proof-grid {
+        .integration-grid {
             margin-top: 20px;
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 10px;
         }
 
-        .proof-card {
-            border: 1px solid rgba(53, 81, 115, 0.82);
+        .integration-list {
+            border: 1px solid rgba(53, 81, 115, 0.84);
             border-radius: var(--radius-lg);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
             box-shadow: var(--shadow-sm);
             padding: 16px;
-            min-height: 206px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
         }
 
-        .proof-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.03rem;
-            letter-spacing: -0.02em;
-        }
-
-        .proof-card p {
-            color: var(--muted);
-            font-size: 0.86rem;
-            flex: 1;
-        }
-
-        .proof-card a {
-            width: fit-content;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: #b6f5d0;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s ease;
-        }
-
-        .proof-card a:hover {
-            border-color: rgba(182, 245, 208, 0.68);
-        }
-
-        .score-strip {
-            margin-top: 12px;
+        .chip-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 8px;
+            margin-top: 12px;
         }
 
-        .score {
-            border: 1px solid rgba(53, 81, 115, 0.8);
-            border-radius: 12px;
+        .chip {
+            border: 1px solid rgba(53, 81, 115, 0.82);
+            border-radius: 10px;
             background: rgba(9, 16, 25, 0.9);
-            padding: 10px;
+            padding: 8px;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.59rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: #90a6ba;
         }
 
-        .score strong {
+        .integration-notes {
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            border-radius: var(--radius-lg);
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+            display: grid;
+            gap: 8px;
+            align-content: start;
+        }
+
+        .note {
+            border: 1px solid rgba(53, 81, 115, 0.82);
+            border-radius: 10px;
+            background: rgba(9, 16, 25, 0.9);
+            padding: 9px;
+        }
+
+        .note strong {
             display: block;
+            margin-bottom: 5px;
             font-family: var(--font-display);
-            font-size: 1.2rem;
-            line-height: 1.05;
-            margin-bottom: 4px;
+            font-size: 0.9rem;
+            letter-spacing: -0.01em;
         }
 
-        .score span {
+        .note p {
+            color: var(--muted);
+            font-size: 0.79rem;
+        }
+
+        .pricing {
+            margin-top: 20px;
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            border-radius: var(--radius-lg);
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+        }
+
+        .billing-toggle {
+            width: fit-content;
+            margin: 0 auto 14px;
+            border: 1px solid rgba(53, 81, 115, 0.82);
+            border-radius: 999px;
+            background: rgba(9, 16, 25, 0.9);
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .billing-toggle span {
+            padding: 6px 11px;
+            border-radius: 999px;
             font-family: var(--font-mono);
             font-size: 0.56rem;
             letter-spacing: 0.09em;
@@ -764,39 +571,126 @@
             color: #8ea3b7;
         }
 
-        .now-grid {
-            margin-top: 20px;
+        .billing-toggle span.active {
+            background: rgba(46, 225, 130, 0.16);
+            color: #a7f4c9;
+            border: 1px solid rgba(46, 225, 130, 0.42);
+        }
+
+        .plan-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
         }
 
-        .now-card {
-            border: 1px solid rgba(53, 81, 115, 0.82);
-            border-radius: var(--radius-lg);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
-            box-shadow: var(--shadow-sm);
-            padding: 16px;
+        .plan {
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            border-radius: 14px;
+            background: rgba(9, 16, 25, 0.9);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .now-card h3 {
+        .plan.highlight {
+            border-color: rgba(46, 225, 130, 0.55);
+            box-shadow: 0 0 0 1px rgba(46, 225, 130, 0.22) inset;
+            position: relative;
+        }
+
+        .plan-badge {
+            width: fit-content;
+            margin-bottom: 8px;
+            border: 1px solid rgba(46, 225, 130, 0.44);
+            border-radius: 999px;
+            background: rgba(46, 225, 130, 0.14);
+            color: #a8f5ca;
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 8px;
+        }
+
+        .plan h3 {
             font-family: var(--font-display);
-            font-size: 1.04rem;
+            font-size: 1.03rem;
             letter-spacing: -0.02em;
+            margin-bottom: 7px;
+        }
+
+        .price {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            line-height: 1;
+            letter-spacing: -0.03em;
             margin-bottom: 8px;
         }
 
-        .now-card ul {
-            list-style: none;
-            display: grid;
-            gap: 8px;
+        .price small {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8ea3b7;
+            margin-left: 4px;
         }
 
-        .now-card li {
-            border-left: 3px solid var(--green);
-            padding-left: 8px;
-            color: #d1deea;
-            font-size: 0.85rem;
+        .plan ul {
+            list-style: none;
+            display: grid;
+            gap: 6px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            flex: 1;
+        }
+
+        .plan li {
+            color: #d4e1ee;
+            font-size: 0.8rem;
+        }
+
+        .plan a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 999px;
+            border: 1px solid rgba(46, 225, 130, 0.42);
+            background: rgba(46, 225, 130, 0.14);
+            color: #dbffe8;
+            padding: 10px 12px;
+            font-size: 0.74rem;
+            font-weight: 700;
+        }
+
+        .testimonial-grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .quote {
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            border-radius: var(--radius-lg);
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .quote p {
+            color: #d8e4f0;
+            font-size: 0.84rem;
+        }
+
+        .quote footer {
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8ea3b7;
         }
 
         .faq-list {
@@ -808,7 +702,7 @@
         .faq-item {
             border: 1px solid rgba(53, 81, 115, 0.82);
             border-radius: 14px;
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
             box-shadow: var(--shadow-sm);
             padding: 12px 14px;
         }
@@ -817,7 +711,7 @@
             cursor: pointer;
             list-style: none;
             font-family: var(--font-display);
-            font-size: 1rem;
+            font-size: 0.99rem;
             letter-spacing: -0.01em;
         }
 
@@ -827,13 +721,57 @@
 
         .faq-item p {
             color: var(--muted);
-            font-size: 0.87rem;
+            font-size: 0.86rem;
             margin-top: 8px;
-            max-width: 900px;
+            max-width: 860px;
+        }
+
+        .proof-grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .proof-card {
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            border-radius: var(--radius-lg);
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.94), rgba(11, 18, 28, 0.96));
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+            min-height: 188px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .proof-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.02rem;
+            letter-spacing: -0.02em;
+        }
+
+        .proof-card p {
+            color: var(--muted);
+            font-size: 0.84rem;
+            flex: 1;
+        }
+
+        .proof-card a {
+            width: fit-content;
+            font-size: 0.77rem;
+            font-weight: 700;
+            color: #baf6d3;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .proof-card a:hover {
+            border-color: rgba(186, 246, 211, 0.6);
         }
 
         .cta {
-            margin-top: 88px;
+            margin-top: 86px;
             border-top: 1px solid rgba(53, 81, 115, 0.74);
             padding-top: 16px;
         }
@@ -847,8 +785,8 @@
 
         .cta-card {
             border-radius: var(--radius-lg);
-            min-height: 172px;
-            padding: 20px;
+            min-height: 164px;
+            padding: 18px;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -858,30 +796,30 @@
 
         .cta-card h3 {
             font-family: var(--font-display);
-            font-size: clamp(1.6rem, 3vw, 2.2rem);
-            line-height: 1.04;
+            font-size: clamp(1.5rem, 3vw, 2.05rem);
+            line-height: 1.05;
             letter-spacing: -0.03em;
             max-width: 420px;
             text-wrap: balance;
         }
 
         .cta-card .arrow {
-            font-size: 2rem;
+            font-size: 1.9rem;
             opacity: 0.82;
         }
 
         .cta-card.primary {
-            border: 1px solid rgba(53, 81, 115, 0.82);
-            background: linear-gradient(160deg, rgba(17, 27, 39, 0.92), rgba(12, 20, 31, 0.95));
+            border: 1px solid rgba(53, 81, 115, 0.84);
+            background: linear-gradient(160deg, rgba(16, 25, 37, 0.95), rgba(11, 18, 28, 0.96));
             color: #edf4fb;
         }
 
         .cta-card.secondary {
             border: 1px solid rgba(46, 225, 130, 0.4);
             background:
-                radial-gradient(420px 200px at 16% 6%, rgba(46, 225, 130, 0.22), transparent 62%),
+                radial-gradient(420px 180px at 16% 8%, rgba(46, 225, 130, 0.2), transparent 60%),
                 linear-gradient(160deg, rgba(15, 29, 21, 0.96), rgba(10, 22, 16, 0.96));
-            color: #e9fff0;
+            color: #ebfff2;
         }
 
         .cta-card:hover {
@@ -889,8 +827,8 @@
             filter: brightness(1.05);
         }
 
-        footer {
-            margin-top: 36px;
+        footer.site {
+            margin-top: 34px;
             border-top: 1px solid rgba(53, 81, 115, 0.74);
             padding-top: 18px;
             display: grid;
@@ -900,7 +838,7 @@
 
         .footer-meta {
             color: var(--muted);
-            font-size: 0.86rem;
+            font-size: 0.85rem;
             line-height: 1.54;
         }
 
@@ -922,7 +860,7 @@
         .footer-col a {
             display: block;
             margin-bottom: 6px;
-            font-size: 0.9rem;
+            font-size: 0.89rem;
             color: #d4dfea;
         }
 
@@ -932,17 +870,18 @@
 
         .reveal {
             opacity: 0;
-            transform: translateY(18px);
-            animation: reveal 0.72s cubic-bezier(0.18, 0.7, 0.23, 1) forwards;
+            transform: translateY(16px);
+            animation: reveal 0.7s cubic-bezier(0.2, 0.72, 0.24, 1) forwards;
         }
 
-        .hero-copy.reveal { animation-delay: 0.04s; }
-        .hero-console.reveal { animation-delay: 0.12s; }
+        .hero-main.reveal { animation-delay: 0.04s; }
+        .hero-side.reveal { animation-delay: 0.1s; }
         .section.reveal:nth-of-type(1) { animation-delay: 0.08s; }
-        .section.reveal:nth-of-type(2) { animation-delay: 0.14s; }
-        .section.reveal:nth-of-type(3) { animation-delay: 0.2s; }
-        .section.reveal:nth-of-type(4) { animation-delay: 0.26s; }
-        .cta.reveal { animation-delay: 0.16s; }
+        .section.reveal:nth-of-type(2) { animation-delay: 0.12s; }
+        .section.reveal:nth-of-type(3) { animation-delay: 0.16s; }
+        .section.reveal:nth-of-type(4) { animation-delay: 0.2s; }
+        .section.reveal:nth-of-type(5) { animation-delay: 0.24s; }
+        .cta.reveal { animation-delay: 0.18s; }
 
         @keyframes reveal {
             to {
@@ -952,28 +891,34 @@
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(46, 225, 130, 0.46); }
-            50% { box-shadow: 0 0 0 9px rgba(46, 225, 130, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(46, 225, 130, 0.42); }
+            50% { box-shadow: 0 0 0 8px rgba(46, 225, 130, 0); }
         }
 
-        @keyframes marquee {
+        @keyframes ticker {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
 
-        @media (max-width: 1120px) {
+        @media (max-width: 1110px) {
             .hero,
-            .control-layout {
+            .integration-grid {
                 grid-template-columns: 1fr;
             }
 
-            .agent-grid,
+            .service-grid,
             .process-grid,
+            .plan-grid,
+            .testimonial-grid,
             .proof-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            footer {
+            .logo-row {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            footer.site {
                 grid-template-columns: 1fr;
             }
         }
@@ -999,27 +944,28 @@
                 margin-top: 34px;
             }
 
-            .hero-copy,
-            .hero-console {
+            .hero-main,
+            .hero-side {
                 padding: 18px 14px;
             }
 
-            .feed-item {
-                grid-template-columns: 1fr;
-            }
-
-            .agent-grid,
+            .service-grid,
             .process-grid,
-            .now-grid,
+            .chip-grid,
+            .plan-grid,
+            .testimonial-grid,
             .proof-grid,
-            .score-strip,
             .cta-grid,
             .footer-links {
                 grid-template-columns: 1fr;
             }
 
+            .logo-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             .cta-card {
-                min-height: 142px;
+                min-height: 138px;
             }
         }
 
@@ -1042,56 +988,45 @@
         <nav class="nav">
             <a class="brand" href="/">zach<span>wright</span>.xyz</a>
             <div class="nav-links">
-                <a href="#now">Now</a>
-                <a href="#agents">Agent Lanes</a>
-                <a href="#control">Control Layer</a>
+                <a href="#services">Services</a>
                 <a href="#process">Process</a>
-                <a href="#proof">Proof</a>
+                <a href="#integrations">Integrations</a>
+                <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
                 <a href="dashboard.html">Dashboard</a>
             </div>
             <a class="nav-cta" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Call</a>
         </nav>
 
-        <header class="hero" id="now">
-            <article class="hero-copy reveal">
-                <p class="kicker">Agentic Personal Control Plane</p>
-                <h1>Autonomous <span class="accent">agents</span> executing real work with human-owned outcomes.</h1>
+        <header class="hero">
+            <article class="hero-main reveal">
+                <p class="kicker">AgenticCoding Studio</p>
+                <h1>Deploy <span class="accent">agentic AI workflows</span> that reduce bottlenecks and increase execution speed.</h1>
+                <p>I build operational AI systems for revenue, delivery, and internal workflows. Every deployment has control layers, ownership boundaries, and KPI visibility.</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="#agents">See Agent Lanes</a>
-                    <a class="btn btn-secondary" href="dashboard.html">Open Live Dashboard</a>
+                    <a class="btn btn-primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book a Strategy Session</a>
+                    <a class="btn btn-secondary" href="dashboard.html">View Live Dashboard</a>
                     <a class="btn btn-secondary" href="updates/2026-02-22.html">Read Latest Update</a>
                 </div>
-                <ul class="pill-row">
-                    <li>autonomous intake</li>
-                    <li>proposal generation</li>
-                    <li>execution telemetry</li>
-                    <li>guardrailed actions</li>
-                </ul>
             </article>
 
-            <aside class="hero-console reveal">
-                <div class="console-head">
-                    <p>Live Signals</p>
-                    <span class="status">Agents online</span>
+            <aside class="hero-side reveal">
+                <div class="side-head">
+                    <p>Control Snapshot</p>
+                    <span class="status">Agents Active</span>
                 </div>
-                <div class="feed">
-                    <article class="feed-item">
-                        <span class="feed-tag">route.agent</span>
-                        <p class="feed-text">Inbound lead scored and routed to qualified owner with context pack.</p>
-                        <span class="feed-time">00:02</span>
-                    </article>
-                    <article class="feed-item">
-                        <span class="feed-tag">proposal.agent</span>
-                        <p class="feed-text">Draft proposal generated from discovery notes and pricing constraints.</p>
-                        <span class="feed-time">00:08</span>
-                    </article>
-                    <article class="feed-item">
-                        <span class="feed-tag">ops.agent</span>
-                        <p class="feed-text">Delivery checkpoint variance detected and escalation summary published.</p>
-                        <span class="feed-time">00:11</span>
-                    </article>
-                </div>
+                <article class="signal">
+                    <strong>Lead Routing Agent</strong>
+                    <p>Qualifies inbound requests and routes opportunities to the correct owner queue.</p>
+                </article>
+                <article class="signal">
+                    <strong>Proposal Agent</strong>
+                    <p>Generates scoped proposals from discovery notes with approval checkpoints.</p>
+                </article>
+                <article class="signal">
+                    <strong>Delivery Ops Agent</strong>
+                    <p>Tracks execution drift, flags risk early, and publishes status summaries.</p>
+                </article>
             </aside>
         </header>
 
@@ -1112,243 +1047,191 @@
             </div>
         </div>
 
-        <section class="section reveal" id="agents">
-            <div class="section-head">
-                <p class="kicker">Agent Lanes</p>
-                <h2>Specialized agents with clear owners, actions, and boundaries</h2>
-                <p>Agentic systems only work when each lane has explicit responsibility, measurable output, and clear escalation paths.</p>
-            </div>
-            <div class="agent-grid">
-                <article class="agent-card">
-                    <div class="agent-top">
-                        <span class="agent-id">A-01</span>
-                        <span class="agent-state">routing</span>
-                    </div>
-                    <h3>Intake and Qualification Agent</h3>
-                    <p>Interprets inbound requests, enriches context, and routes opportunities to the correct queue in minutes.</p>
-                    <div class="autonomy">
-                        <div class="autonomy-head"><span>Autonomy</span><span>88%</span></div>
-                        <div class="autonomy-bar"><div class="autonomy-fill" style="width:88%"></div></div>
-                    </div>
-                </article>
-                <article class="agent-card">
-                    <div class="agent-top">
-                        <span class="agent-id">A-02</span>
-                        <span class="agent-state">writing</span>
-                    </div>
-                    <h3>Proposal Generation Agent</h3>
-                    <p>Turns discovery data into structured scopes, milestones, and draft proposals with approval checkpoints.</p>
-                    <div class="autonomy">
-                        <div class="autonomy-head"><span>Autonomy</span><span>81%</span></div>
-                        <div class="autonomy-bar"><div class="autonomy-fill" style="width:81%"></div></div>
-                    </div>
-                </article>
-                <article class="agent-card">
-                    <div class="agent-top">
-                        <span class="agent-id">A-03</span>
-                        <span class="agent-state">ops</span>
-                    </div>
-                    <h3>Delivery Operations Agent</h3>
-                    <p>Monitors progress and risk across active engagements, then issues summaries and intervention prompts.</p>
-                    <div class="autonomy">
-                        <div class="autonomy-head"><span>Autonomy</span><span>76%</span></div>
-                        <div class="autonomy-bar"><div class="autonomy-fill" style="width:76%"></div></div>
-                    </div>
-                </article>
-                <article class="agent-card">
-                    <div class="agent-top">
-                        <span class="agent-id">A-04</span>
-                        <span class="agent-state">outbound</span>
-                    </div>
-                    <h3>Signal and Outreach Agent</h3>
-                    <p>Scans triggers, builds lead hypotheses, and launches outbound sequences tuned to fit and timing.</p>
-                    <div class="autonomy">
-                        <div class="autonomy-head"><span>Autonomy</span><span>84%</span></div>
-                        <div class="autonomy-bar"><div class="autonomy-fill" style="width:84%"></div></div>
-                    </div>
-                </article>
+        <section class="trust reveal">
+            <p>integrates with your current stack</p>
+            <div class="logo-row">
+                <div class="logo-chip">HubSpot</div>
+                <div class="logo-chip">Salesforce</div>
+                <div class="logo-chip">Notion</div>
+                <div class="logo-chip">Slack</div>
+                <div class="logo-chip">Gmail</div>
+                <div class="logo-chip">Airtable</div>
             </div>
         </section>
 
-        <section class="section reveal" id="control">
+        <section class="section reveal" id="services">
             <div class="section-head">
-                <p class="kicker">Control Layer</p>
-                <h2>Automation without control is a liability. This stack is designed for governed execution.</h2>
-                <p>The architecture enforces who can act, when approvals trigger, and how workflows degrade safely under uncertainty.</p>
+                <p class="kicker">Services</p>
+                <h2>Landio-style service blocks, tuned for your AgenticCoding offer</h2>
+                <p>Choose one lane first, prove value fast, then scale into adjacent workflows.</p>
             </div>
-            <div class="control-layout">
-                <article class="control-main">
-                    <h3>Operational design matrix</h3>
-                    <p>Every workflow is modeled with boundaries first, then automation depth, then optimization loops.</p>
-                    <table class="matrix">
-                        <thead>
-                            <tr>
-                                <th>Layer</th>
-                                <th>Agentic function</th>
-                                <th>Human control</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Intake</td>
-                                <td>Capture, classify, route, enrich</td>
-                                <td>Approve edge-case routing</td>
-                            </tr>
-                            <tr>
-                                <td>Proposal</td>
-                                <td>Draft scope, timeline, pricing versions</td>
-                                <td>Final signoff before send</td>
-                            </tr>
-                            <tr>
-                                <td>Delivery</td>
-                                <td>Track risk, summarize progress, flag drift</td>
-                                <td>Escalation and priority override</td>
-                            </tr>
-                            <tr>
-                                <td>Optimization</td>
-                                <td>Weekly KPI analysis and tuning suggestions</td>
-                                <td>Accept or reject model changes</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="service-grid">
+                <article class="card">
+                    <h3>AI Readiness Audit</h3>
+                    <p>Map bottlenecks, baseline current performance, and identify highest-ROI automation targets.</p>
+                    <ul>
+                        <li>workflow mapping</li>
+                        <li>risk + ROI scoring</li>
+                        <li>90-day priority stack</li>
+                    </ul>
                 </article>
-                <aside class="control-side">
-                    <article class="policy">
-                        <strong>Permission scopes</strong>
-                        <p>Agents get least-privilege access by lane and can only execute preapproved tool actions.</p>
-                    </article>
-                    <article class="policy">
-                        <strong>Fallback behavior</strong>
-                        <p>Uncertain states route to human review with reason traces and suggested next steps.</p>
-                    </article>
-                    <article class="policy">
-                        <strong>Auditability</strong>
-                        <p>Every action and decision path is logged for review, tuning, and accountability.</p>
-                    </article>
-                    <article class="policy">
-                        <strong>Iteration cadence</strong>
-                        <p>Performance is reviewed weekly against baseline metrics before autonomy levels increase.</p>
-                    </article>
-                </aside>
+                <article class="card">
+                    <h3>Workflow Blueprint Generator</h3>
+                    <p>Convert process notes into deployable architecture with actions, permissions, and fallback logic.</p>
+                    <ul>
+                        <li>agent responsibility matrix</li>
+                        <li>approval checkpoints</li>
+                        <li>KPI instrumentation plan</li>
+                    </ul>
+                </article>
+                <article class="card">
+                    <h3>Proposal Agent Landing Flow</h3>
+                    <p>Install an intake-to-proposal system that shortens cycle time and improves close velocity.</p>
+                    <ul>
+                        <li>structured discovery intake</li>
+                        <li>proposal generation loop</li>
+                        <li>handoff to delivery</li>
+                    </ul>
+                </article>
             </div>
         </section>
 
         <section class="section reveal" id="process">
             <div class="section-head">
                 <p class="kicker">Process</p>
-                <h2>How an agentic engagement moves from idea to production</h2>
-                <p>This workflow mirrors how high-end AI automation teams execute: narrow scope first, controlled rollout, then scale.</p>
+                <h2>How deployment works from first call to stable operations</h2>
+                <p>This follows the same high-conversion structure used in modern Framer agency templates.</p>
             </div>
             <div class="process-grid">
-                <article class="step-card">
+                <article class="step">
                     <span class="step-index">Step 01</span>
-                    <h3>Workflow Intake</h3>
-                    <p>Define business objective, constraints, tools, and ownership boundaries before any automation work starts.</p>
+                    <h3>Discovery</h3>
+                    <p>Define objective, constraints, and stakeholders across the target workflow.</p>
                 </article>
-                <article class="step-card">
+                <article class="step">
                     <span class="step-index">Step 02</span>
-                    <h3>Agent Blueprint</h3>
-                    <p>Map responsibilities, action permissions, escalation logic, and KPI instrumentation for each lane.</p>
+                    <h3>Architecture</h3>
+                    <p>Design agent lanes, tools, permissions, and escalation paths before build.</p>
                 </article>
-                <article class="step-card">
+                <article class="step">
                     <span class="step-index">Step 03</span>
-                    <h3>Controlled Deployment</h3>
-                    <p>Launch with human checkpoints and trace logging so behavior is observable from day one.</p>
+                    <h3>Launch</h3>
+                    <p>Deploy one lane with telemetry and human approvals at key decision points.</p>
                 </article>
-                <article class="step-card">
+                <article class="step">
                     <span class="step-index">Step 04</span>
-                    <h3>Weekly Optimization</h3>
-                    <p>Review baseline vs outcome metrics, tune agent logic, and increase autonomy only when stability is proven.</p>
+                    <h3>Optimize</h3>
+                    <p>Run weekly KPI reviews, tune agent behavior, and scale coverage gradually.</p>
                 </article>
-            </div>
-            <div class="compare-shell">
-                <table class="compare-table">
-                    <thead>
-                        <tr>
-                            <th>Dimension</th>
-                            <th>Generic AI agency</th>
-                            <th>AgenticCoding approach</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Project framing</td>
-                            <td>Tool-first experimentation</td>
-                            <td>Workflow-first architecture and risk design</td>
-                        </tr>
-                        <tr>
-                            <td>Autonomy model</td>
-                            <td>All-or-nothing automation</td>
-                            <td>Progressive autonomy with checkpoints</td>
-                        </tr>
-                        <tr>
-                            <td>Visibility</td>
-                            <td>Periodic status updates</td>
-                            <td>Live telemetry and action-level logs</td>
-                        </tr>
-                        <tr>
-                            <td>Optimization cadence</td>
-                            <td>Ad hoc tuning</td>
-                            <td>Weekly metric-based iteration loop</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </section>
 
-        <section class="section reveal" id="proof">
+        <section class="section reveal" id="integrations">
             <div class="section-head">
-                <p class="kicker">Proof</p>
-                <h2>Active surfaces that show what is running right now</h2>
-                <p>If it cannot be inspected, it does not count. These are live proof points for work in motion.</p>
+                <p class="kicker">Integrations</p>
+                <h2>Built to run inside the tools you already use</h2>
+                <p>No forced rip-and-replace. The system connects into your existing stack and ownership model.</p>
             </div>
-            <div class="proof-grid">
-                <article class="proof-card">
-                    <h3>Live Operations Dashboard</h3>
-                    <p>View agent telemetry, activity feed, pipeline movement, and runtime state in a single control view.</p>
-                    <a href="dashboard.html">Open dashboard -></a>
+            <div class="integration-grid">
+                <article class="integration-list">
+                    <h3 style="font-family: var(--font-display); font-size: 1.12rem; letter-spacing: -0.02em;">Connected Stack</h3>
+                    <div class="chip-grid">
+                        <span class="chip">crm</span>
+                        <span class="chip">email</span>
+                        <span class="chip">calendar</span>
+                        <span class="chip">support</span>
+                        <span class="chip">pm tools</span>
+                        <span class="chip">docs</span>
+                        <span class="chip">voice</span>
+                        <span class="chip">slack</span>
+                        <span class="chip">custom api</span>
+                    </div>
                 </article>
-                <article class="proof-card">
-                    <h3>Weekly Build Updates</h3>
-                    <p>Track shipped improvements, architecture changes, and strategy pivots week by week.</p>
-                    <a href="updates/2026-02-22.html">Read latest update -></a>
-                </article>
-                <article class="proof-card">
-                    <h3>Source and Experiments</h3>
-                    <p>Inspect repositories and artifacts tied to current builds, experiments, and automation tracks.</p>
-                    <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">View GitHub -></a>
-                </article>
-            </div>
-            <div class="score-strip">
-                <article class="score"><strong>24/7</strong><span>Execution window</span></article>
-                <article class="score"><strong>Weekly</strong><span>Optimization cycle</span></article>
-                <article class="score"><strong>Role-based</strong><span>Agent permissions</span></article>
-                <article class="score"><strong>Human-led</strong><span>Outcome ownership</span></article>
+                <aside class="integration-notes">
+                    <article class="note">
+                        <strong>Role-based actions</strong>
+                        <p>Each agent lane only gets the minimum capabilities required for its workflow role.</p>
+                    </article>
+                    <article class="note">
+                        <strong>Traceable execution</strong>
+                        <p>Actions and decision trails are logged for review, tuning, and accountability.</p>
+                    </article>
+                    <article class="note">
+                        <strong>Human override</strong>
+                        <p>Critical actions require approval and can be interrupted by assigned operators.</p>
+                    </article>
+                </aside>
             </div>
         </section>
 
-        <section class="section reveal" id="thinking">
+        <section class="section reveal" id="pricing">
             <div class="section-head">
-                <p class="kicker">Now and Next</p>
-                <h2>What I am building, testing, and learning in this cycle</h2>
-                <p>This keeps the site personal while staying execution-focused.</p>
+                <p class="kicker">Pricing</p>
+                <h2>Flexible plans for different implementation depth</h2>
+                <p>Use this as a starting structure. We can finalize exact pricing and packaging next.</p>
             </div>
-            <div class="now-grid">
-                <article class="now-card">
-                    <h3>Current Questions</h3>
-                    <ul>
-                        <li>Where should autonomy stop and handoff begin by workflow risk tier?</li>
-                        <li>Which KPI signals most reliably forecast real customer value?</li>
-                        <li>How can proposal agents preserve nuance while increasing speed?</li>
-                    </ul>
+            <div class="pricing">
+                <div class="billing-toggle" aria-hidden="true">
+                    <span class="active">Monthly</span>
+                    <span>Yearly</span>
+                </div>
+                <div class="plan-grid">
+                    <article class="plan">
+                        <h3>Starter</h3>
+                        <div class="price">$2.5k<small>/month</small></div>
+                        <ul>
+                            <li>1 workflow lane</li>
+                            <li>Baseline instrumentation</li>
+                            <li>Email + Slack integration</li>
+                            <li>Monthly optimization review</li>
+                        </ul>
+                        <a href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Get Started</a>
+                    </article>
+                    <article class="plan highlight">
+                        <span class="plan-badge">Popular</span>
+                        <h3>Growth</h3>
+                        <div class="price">$5k<small>/month</small></div>
+                        <ul>
+                            <li>3 workflow lanes</li>
+                            <li>Proposal and delivery agents</li>
+                            <li>CRM + PM integrations</li>
+                            <li>Bi-weekly optimization</li>
+                        </ul>
+                        <a href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Get Started</a>
+                    </article>
+                    <article class="plan">
+                        <h3>Enterprise</h3>
+                        <div class="price">Custom</div>
+                        <ul>
+                            <li>Multi-team deployment</li>
+                            <li>Advanced governance model</li>
+                            <li>Private integrations + APIs</li>
+                            <li>Dedicated operating partner</li>
+                        </ul>
+                        <a href="mailto:zach@zachwright.xyz">Talk to Zach</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section reveal" id="testimonials">
+            <div class="section-head">
+                <p class="kicker">Social Proof</p>
+                <h2>Testimonials section structure from the template style</h2>
+                <p>Replace these with real client quotes as they come in.</p>
+            </div>
+            <div class="testimonial-grid">
+                <article class="quote">
+                    <p>"The handoff from intake to proposal finally stopped breaking. We went from hours of manual context gathering to one clean pipeline."</p>
+                    <footer>COO, Services Firm</footer>
                 </article>
-                <article class="now-card">
-                    <h3>In Progress</h3>
-                    <ul>
-                        <li>AgenticCoding offer packaging with tighter conversion pathways</li>
-                        <li>Voice and messaging orchestration for inbound workflows</li>
-                        <li>Better bridge from strategy docs to production-ready agent plans</li>
-                    </ul>
+                <article class="quote">
+                    <p>"What stood out was governance. We could actually trust what the agents were allowed to do and where human control kicked in."</p>
+                    <footer>Head of Ops, B2B Team</footer>
+                </article>
+                <article class="quote">
+                    <p>"Within two weeks we had measurable movement in response speed and proposal throughput, not just demo output."</p>
+                    <footer>Founder, Automation Agency</footer>
                 </article>
             </div>
         </section>
@@ -1356,34 +1239,59 @@
         <section class="section reveal" id="faq">
             <div class="section-head">
                 <p class="kicker">FAQ</p>
-                <h2>Common questions before teams adopt agentic workflows</h2>
-                <p>These are the decisions that usually determine whether an implementation succeeds in production.</p>
+                <h2>Frequently asked questions</h2>
+                <p>Core concerns answered clearly for potential clients.</p>
             </div>
             <div class="faq-list">
                 <details class="faq-item">
-                    <summary>How is this different from basic prompt automation?</summary>
-                    <p>Prompt automation generates outputs. Agentic systems own workflow stages with permissions, memory, escalation rules, and KPI accountability.</p>
+                    <summary>What types of workflows can you automate?</summary>
+                    <p>Revenue operations, lead routing, proposal generation, client delivery summaries, and internal execution workflows are all common starting points.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>How do you keep agent actions safe?</summary>
-                    <p>Each lane uses least-privilege tool access, explicit approval checkpoints, and fail-safe handoff conditions for uncertain or high-risk states.</p>
+                    <summary>Do we need technical expertise internally?</summary>
+                    <p>No. I handle architecture and deployment. Your team contributes process context, approvals, and success criteria.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>How quickly can we see business value?</summary>
-                    <p>Most engagements start with one constrained lane so baseline shifts are visible quickly. Then autonomy and coverage expand only after stability is confirmed.</p>
+                    <summary>How long does implementation usually take?</summary>
+                    <p>Most teams see a first lane live in 1-2 weeks, depending on integration complexity and approval requirements.</p>
                 </details>
                 <details class="faq-item">
-                    <summary>Can this work with existing tools and teams?</summary>
-                    <p>Yes. The build pattern is integration-first. The system wraps around current CRM, inbox, docs, and delivery tooling with clear ownership and approvals.</p>
+                    <summary>How do you manage risk and compliance?</summary>
+                    <p>Role-based permissions, action logs, explicit approval gates, and fallback escalation are built into the workflow design.</p>
                 </details>
+            </div>
+        </section>
+
+        <section class="section reveal" id="proof">
+            <div class="section-head">
+                <p class="kicker">Proof</p>
+                <h2>Public surfaces that show real execution</h2>
+                <p>These links connect your landing page to live operating artifacts.</p>
+            </div>
+            <div class="proof-grid">
+                <article class="proof-card">
+                    <h3>Live Operations Dashboard</h3>
+                    <p>Track activity, pipeline movement, outbound metrics, and skill inventory in one view.</p>
+                    <a href="dashboard.html">Open dashboard -></a>
+                </article>
+                <article class="proof-card">
+                    <h3>Weekly Build Updates</h3>
+                    <p>See what shipped, what changed, and what is next across your build cadence.</p>
+                    <a href="updates/2026-02-22.html">Read latest update -></a>
+                </article>
+                <article class="proof-card">
+                    <h3>Source + Experiments</h3>
+                    <p>View repositories and implementation artifacts tied to your active work streams.</p>
+                    <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">View GitHub -></a>
+                </article>
             </div>
         </section>
 
         <section class="cta reveal" id="contact">
             <div class="section-head">
-                <p class="kicker">Collaborate</p>
-                <h2>Send a real workflow problem. I will map an agentic execution plan.</h2>
-                <p>If you have an operational bottleneck, include your constraints, tools, and success metrics.</p>
+                <p class="kicker">Contact</p>
+                <h2>Ready to deploy your first agentic workflow lane?</h2>
+                <p>Send your workflow, constraints, and success metric. I will map the fastest safe deployment path.</p>
             </div>
             <div class="cta-grid">
                 <a class="cta-card primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">
@@ -1397,24 +1305,22 @@
             </div>
         </section>
 
-        <footer>
+        <footer class="site">
             <div class="footer-meta">
                 <p>Personal site of Zach Wright.</p>
-                <p>Building AgenticCoding systems, publishing weekly updates, and shipping public experiments.</p>
+                <p>AgenticCoding systems for real-world execution: revenue, operations, and delivery.</p>
             </div>
             <div class="footer-links">
                 <div class="footer-col">
-                    <h4>Explore</h4>
-                    <a href="#agents">Agent Lanes</a>
-                    <a href="#control">Control Layer</a>
+                    <h4>Sections</h4>
+                    <a href="#services">Services</a>
                     <a href="#process">Process</a>
-                    <a href="#proof">Proof</a>
+                    <a href="#pricing">Pricing</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Surfaces</h4>
+                    <h4>Proof</h4>
                     <a href="dashboard.html">Live Dashboard</a>
                     <a href="updates/2026-02-22.html">Weekly Updates</a>
-                    <a href="#faq">FAQ</a>
                     <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">GitHub</a>
                 </div>
                 <div class="footer-col">
