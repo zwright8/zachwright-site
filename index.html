@@ -326,53 +326,6 @@
             white-space: nowrap;
         }
 
-        .mesh {
-            border: 1px solid rgba(53, 81, 115, 0.84);
-            border-radius: 16px;
-            background: rgba(10, 17, 27, 0.84);
-            min-height: 170px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mesh::before {
-            content: "";
-            position: absolute;
-            inset: -120% 0 auto 0;
-            height: 220%;
-            background: linear-gradient(180deg, transparent, rgba(46, 225, 130, 0.09), transparent);
-            animation: scan 6s linear infinite;
-        }
-
-        .line {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(68, 215, 242, 0.42), transparent);
-            transform-origin: left center;
-            opacity: 0.7;
-        }
-
-        .line.a { left: 16%; top: 26%; width: 52%; transform: rotate(14deg); }
-        .line.b { left: 22%; top: 54%; width: 48%; transform: rotate(-11deg); }
-        .line.c { left: 38%; top: 34%; width: 44%; transform: rotate(36deg); }
-
-        .node {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 1px solid rgba(46, 225, 130, 0.7);
-            background: rgba(46, 225, 130, 0.2);
-            box-shadow: 0 0 0 0 rgba(46, 225, 130, 0.46);
-            animation: node 2.6s ease-in-out infinite;
-        }
-
-        .node.n1 { left: 16%; top: 22%; }
-        .node.n2 { left: 36%; top: 40%; animation-delay: 0.4s; }
-        .node.n3 { left: 59%; top: 27%; animation-delay: 0.8s; }
-        .node.n4 { left: 70%; top: 58%; animation-delay: 1.2s; }
-        .node.n5 { left: 28%; top: 67%; animation-delay: 1.6s; }
-
         .feed {
             display: grid;
             gap: 7px;
@@ -1003,16 +956,6 @@
             50% { box-shadow: 0 0 0 9px rgba(46, 225, 130, 0); }
         }
 
-        @keyframes node {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(46, 225, 130, 0.46); }
-            50% { box-shadow: 0 0 0 10px rgba(46, 225, 130, 0); }
-        }
-
-        @keyframes scan {
-            from { transform: translateY(-52%); }
-            to { transform: translateY(52%); }
-        }
-
         @keyframes marquee {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
@@ -1114,7 +1057,6 @@
             <article class="hero-copy reveal">
                 <p class="kicker">Agentic Personal Control Plane</p>
                 <h1>Autonomous <span class="accent">agents</span> executing real work with human-owned outcomes.</h1>
-                <p class="hero-lead">This is my live operating surface for AgenticCoding. I design agent systems, instrument every workflow, and ship updates weekly. OpenClaw Bots are one execution layer inside the broader architecture.</p>
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="#agents">See Agent Lanes</a>
                     <a class="btn btn-secondary" href="dashboard.html">Open Live Dashboard</a>
@@ -1130,18 +1072,8 @@
 
             <aside class="hero-console reveal">
                 <div class="console-head">
-                    <p>Runtime Mesh</p>
+                    <p>Live Signals</p>
                     <span class="status">Agents online</span>
-                </div>
-                <div class="mesh" aria-hidden="true">
-                    <span class="line a"></span>
-                    <span class="line b"></span>
-                    <span class="line c"></span>
-                    <span class="node n1"></span>
-                    <span class="node n2"></span>
-                    <span class="node n3"></span>
-                    <span class="node n4"></span>
-                    <span class="node n5"></span>
                 </div>
                 <div class="feed">
                     <article class="feed-item">
@@ -1165,13 +1097,13 @@
 
         <div class="marquee" aria-hidden="true">
             <div class="marquee-track">
-                <span><strong>agent mesh</strong> orchestration</span>
+                <span><strong>agent operations</strong> orchestration</span>
                 <span>workflow guardrails</span>
                 <span>human approval checkpoints</span>
                 <span>weekly performance tuning</span>
                 <span>proposal acceleration</span>
                 <span>voice plus messaging pilots</span>
-                <span><strong>agent mesh</strong> orchestration</span>
+                <span><strong>agent operations</strong> orchestration</span>
                 <span>workflow guardrails</span>
                 <span>human approval checkpoints</span>
                 <span>weekly performance tuning</span>
