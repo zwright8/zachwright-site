@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw Agentic Systems | Zach Wright</title>
-    <meta name="description" content="Agentic AI systems for revenue, operations, and delivery teams with measurable business impact.">
+    <title>Zach Wright | AgenticCoding, Systems, and Notes</title>
+    <meta name="description" content="Personal website of Zach Wright. Building AgenticCoding systems, running OpenClaw bots, writing weekly updates, and shipping experiments in public.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #ecece8;
-            --panel: #f6f6f3;
+            --bg: #eceee8;
+            --bg-soft: #f4f5f1;
             --surface: #ffffff;
-            --ink: #111315;
-            --muted: #61686f;
-            --line: #d2d4d2;
-            --line-strong: #b9bdbd;
-            --dark: #121a22;
-            --dark-soft: #19232f;
+            --surface-soft: #eef1eb;
+            --ink: #0f1311;
+            --muted: #5a665d;
+            --line: #cfd6cd;
+            --line-strong: #afb8af;
+            --dark: #101712;
+            --dark-soft: #17211a;
             --green: #169952;
+            --green-soft: rgba(22, 153, 82, 0.12);
             --radius-xl: 22px;
-            --radius-lg: 14px;
-            --radius-md: 10px;
-            --shadow: 0 18px 42px rgba(17, 19, 21, 0.08);
+            --radius-lg: 16px;
+            --radius-md: 11px;
+            --shadow-lg: 0 26px 58px rgba(15, 19, 17, 0.08);
+            --shadow-sm: 0 12px 30px rgba(15, 19, 17, 0.06);
             --font-sans: "Sora", sans-serif;
             --font-mono: "IBM Plex Mono", monospace;
         }
@@ -41,8 +44,11 @@
         body {
             font-family: var(--font-sans);
             color: var(--ink);
-            background: linear-gradient(180deg, #f0f0ed 0%, var(--bg) 100%);
-            line-height: 1.55;
+            background:
+                radial-gradient(1200px 720px at 8% -10%, rgba(22, 153, 82, 0.09), transparent 65%),
+                radial-gradient(850px 560px at 92% -8%, rgba(22, 153, 82, 0.06), transparent 65%),
+                linear-gradient(180deg, #f2f3ee 0%, var(--bg) 100%);
+            line-height: 1.58;
             overflow-x: hidden;
         }
 
@@ -51,12 +57,12 @@
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(17, 19, 21, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(17, 19, 21, 0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(rgba(15, 19, 17, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 19, 17, 0.03) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(circle at center, black 35%, transparent 82%);
             pointer-events: none;
             z-index: 0;
-            mask-image: radial-gradient(circle at center, black 38%, transparent 82%);
         }
 
         a {
@@ -65,11 +71,11 @@
         }
 
         .shell {
-            width: min(1240px, 100% - 48px);
+            width: min(1260px, calc(100% - 48px));
             margin: 0 auto;
+            padding-bottom: 72px;
             position: relative;
             z-index: 1;
-            padding-bottom: 64px;
         }
 
         .nav {
@@ -79,17 +85,17 @@
             margin-top: 16px;
             border: 1px solid var(--line);
             border-radius: 999px;
-            background: rgba(248, 248, 246, 0.88);
+            background: rgba(245, 246, 242, 0.9);
             backdrop-filter: blur(8px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             padding: 11px 16px;
         }
 
         .brand {
-            font-size: 1.03rem;
+            font-size: 1.04rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             white-space: nowrap;
@@ -103,7 +109,7 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 15px;
         }
 
         .nav-links a {
@@ -121,35 +127,35 @@
 
         .hero {
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 14px;
-            padding-top: 50px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 12px;
+            padding-top: 52px;
         }
 
         .hero-copy {
             border: 1px solid var(--line);
             border-radius: var(--radius-xl);
             background: var(--surface);
-            padding: 28px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
         }
 
         .kicker {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
+            font-size: 0.69rem;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #4f5b65;
+            color: #4d5b52;
             margin-bottom: 12px;
         }
 
         h1 {
-            font-size: clamp(2rem, 4.8vw, 4.15rem);
+            font-size: clamp(2.1rem, 4.9vw, 4.35rem);
             line-height: 1.03;
-            letter-spacing: -0.04em;
-            margin-bottom: 16px;
-            max-width: 840px;
+            letter-spacing: -0.045em;
+            margin-bottom: 14px;
+            max-width: 860px;
         }
 
         h1 .hit {
@@ -159,7 +165,7 @@
         .hero-copy p {
             color: var(--muted);
             font-size: 1rem;
-            max-width: 660px;
+            max-width: 700px;
         }
 
         .cta-row {
@@ -175,24 +181,25 @@
             justify-content: center;
             border-radius: 999px;
             padding: 11px 18px;
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             font-weight: 600;
             transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         .btn-primary {
-            background: #101820;
-            color: #f1f5f9;
+            background: linear-gradient(145deg, #0f1712, #19251d);
+            color: #ecf3ee;
+            border: 1px solid #1e3125;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            filter: brightness(1.1);
+            filter: brightness(1.08);
         }
 
         .btn-secondary {
-            background: transparent;
             border: 1px solid var(--line-strong);
+            background: transparent;
             color: var(--ink);
         }
 
@@ -200,7 +207,7 @@
             transform: translateY(-2px);
         }
 
-        .micro {
+        .chips {
             margin-top: 18px;
             list-style: none;
             display: flex;
@@ -208,43 +215,43 @@
             gap: 8px;
         }
 
-        .micro li {
+        .chips li {
             border: 1px solid var(--line);
             border-radius: 999px;
-            background: var(--panel);
+            background: var(--bg-soft);
             padding: 6px 10px;
             font-family: var(--font-mono);
-            font-size: 0.66rem;
-            letter-spacing: 0.06em;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: #55636f;
+            color: #536258;
         }
 
-        .hero-panel {
-            border: 1px solid #26313c;
+        .hero-board {
+            border: 1px solid #243329;
             border-radius: var(--radius-xl);
-            background: linear-gradient(160deg, var(--dark) 0%, var(--dark-soft) 100%);
-            color: #dbe7f3;
+            background: linear-gradient(155deg, var(--dark) 0%, var(--dark-soft) 100%);
+            color: #dbe7df;
+            box-shadow: var(--shadow-sm);
             padding: 22px;
-            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .panel-head {
+        .board-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .panel-head p {
+        .board-head p {
             font-family: var(--font-mono);
             font-size: 0.66rem;
             text-transform: uppercase;
             letter-spacing: 0.11em;
-            color: #9db3c8;
+            color: #9eb9a8;
         }
 
         .status {
@@ -252,9 +259,9 @@
             align-items: center;
             gap: 7px;
             border-radius: 999px;
-            border: 1px solid rgba(22, 153, 82, 0.55);
-            background: rgba(22, 153, 82, 0.2);
-            color: #8fe1b2;
+            border: 1px solid rgba(22, 153, 82, 0.58);
+            background: rgba(22, 153, 82, 0.22);
+            color: #8be4b3;
             font-family: var(--font-mono);
             font-size: 0.62rem;
             letter-spacing: 0.08em;
@@ -266,226 +273,249 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #46d285;
-            box-shadow: 0 0 0 0 rgba(70, 210, 133, 0.45);
+            background: #42d27f;
+            box-shadow: 0 0 0 0 rgba(66, 210, 127, 0.4);
             animation: pulse 2s ease-in-out infinite;
         }
 
-        .telemetry {
+        .now-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: 1fr;
             gap: 8px;
         }
 
-        .telemetry-item {
-            border: 1px solid #2f3d4c;
+        .now-item {
+            border: 1px solid #2c4032;
             border-radius: var(--radius-md);
-            background: rgba(15, 24, 33, 0.72);
+            background: rgba(18, 28, 22, 0.66);
+            padding: 10px;
+        }
+
+        .now-item span {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #96b7a3;
+            margin-bottom: 5px;
+        }
+
+        .now-item p {
+            font-size: 0.84rem;
+            color: #e0ede5;
+        }
+
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        .metric {
+            border: 1px solid #2c4032;
+            border-radius: var(--radius-md);
+            background: rgba(18, 28, 22, 0.62);
             padding: 9px;
         }
 
-        .telemetry-item strong {
+        .metric strong {
             display: block;
-            font-size: 1.08rem;
-            line-height: 1.1;
+            color: #f2f8f4;
+            font-size: 1.02rem;
+            line-height: 1.08;
             margin-bottom: 4px;
-            color: #f3f8fd;
         }
 
-        .telemetry-item span {
+        .metric span {
             font-family: var(--font-mono);
-            font-size: 0.6rem;
+            font-size: 0.57rem;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #98b0c5;
-        }
-
-        .log {
-            display: grid;
-            gap: 7px;
-        }
-
-        .log-item {
-            border: 1px solid #2f3d4c;
-            border-radius: var(--radius-md);
-            background: rgba(15, 24, 33, 0.64);
-            padding: 8px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .log-item p {
-            font-size: 0.81rem;
-            color: #dce8f4;
-        }
-
-        .log-item span {
-            font-family: var(--font-mono);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #8fa9bf;
-            white-space: nowrap;
+            color: #95b29f;
         }
 
         .section {
-            padding-top: 76px;
+            padding-top: 78px;
         }
 
         .section h2 {
-            font-size: clamp(1.55rem, 3vw, 2.65rem);
+            font-size: clamp(1.55rem, 3vw, 2.7rem);
             line-height: 1.08;
             letter-spacing: -0.03em;
             margin-bottom: 10px;
-            max-width: 860px;
+            max-width: 900px;
         }
 
         .section .lead {
             color: var(--muted);
-            max-width: 720px;
-            font-size: 0.97rem;
+            max-width: 760px;
+            font-size: 0.96rem;
         }
 
-        .modules {
+        .stream-grid {
             margin-top: 18px;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
         }
 
-        .module {
+        .stream {
             border: 1px solid var(--line);
             border-radius: var(--radius-lg);
             background: var(--surface);
             padding: 16px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            min-height: 230px;
         }
 
-        .module .tag {
+        .stream .tag {
             display: inline-block;
             font-family: var(--font-mono);
             font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #51606c;
+            color: #526258;
             margin-bottom: 8px;
         }
 
-        .module h3 {
-            font-size: 1rem;
+        .stream h3 {
+            font-size: 1.04rem;
             line-height: 1.2;
             letter-spacing: -0.02em;
             margin-bottom: 8px;
         }
 
-        .module p {
+        .stream p {
             color: var(--muted);
             font-size: 0.87rem;
             margin-bottom: 10px;
+            flex: 1;
         }
 
-        .module ul {
+        .stream ul {
             list-style: none;
             display: grid;
             gap: 6px;
         }
 
-        .module li {
+        .stream li {
             border: 1px solid var(--line);
             border-radius: 8px;
-            background: var(--panel);
+            background: var(--surface-soft);
             padding: 6px 8px;
             font-family: var(--font-mono);
             font-size: 0.62rem;
             letter-spacing: 0.03em;
-            color: #4f5b67;
+            color: #4f5f55;
         }
 
-        .matrix-shell {
-            margin-top: 18px;
-            border: 1px solid var(--line);
-            border-radius: var(--radius-lg);
-            background: var(--surface);
-            overflow-x: auto;
-            box-shadow: var(--shadow);
-        }
-
-        .matrix {
-            width: 100%;
-            min-width: 740px;
-            border-collapse: collapse;
-        }
-
-        .matrix th,
-        .matrix td {
-            border-bottom: 1px solid var(--line);
-            padding: 12px 14px;
-            text-align: left;
-            vertical-align: top;
-            font-size: 0.86rem;
-        }
-
-        .matrix th {
-            font-family: var(--font-mono);
-            font-size: 0.63rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #536370;
-            background: var(--panel);
-        }
-
-        .matrix td {
-            color: var(--muted);
-        }
-
-        .matrix td:first-child {
-            color: var(--ink);
-            font-weight: 600;
-        }
-
-        .matrix tr:last-child td {
-            border-bottom: none;
-        }
-
-        .flow {
+        .agentic-layout {
             margin-top: 18px;
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 10px;
         }
 
-        .flow-item {
+        .agentic-main {
             border: 1px solid var(--line);
             border-radius: var(--radius-lg);
             background: var(--surface);
-            padding: 14px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-sm);
+            padding: 20px;
         }
 
-        .flow-item .step {
-            display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #57656f;
-            margin-bottom: 7px;
-        }
-
-        .flow-item h3 {
-            font-size: 0.97rem;
-            margin-bottom: 7px;
+        .agentic-main h3 {
+            font-size: 1.1rem;
+            line-height: 1.2;
             letter-spacing: -0.02em;
+            margin-bottom: 10px;
         }
 
-        .flow-item p {
+        .agentic-main p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .agentic-main ul {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .agentic-main li {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface-soft);
+            padding: 9px 10px;
+            font-size: 0.85rem;
+            color: #314036;
+        }
+
+        .offer-stack {
+            display: grid;
+            gap: 10px;
+        }
+
+        .offer {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+        }
+
+        .offer strong {
+            display: block;
+            font-size: 0.94rem;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+        }
+
+        .offer p {
             color: var(--muted);
             font-size: 0.84rem;
         }
 
-        .proof {
+        .think-grid {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .think-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            box-shadow: var(--shadow-sm);
+            padding: 16px;
+        }
+
+        .think-card h3 {
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 9px;
+        }
+
+        .think-card ul {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+
+        .think-card li {
+            border-left: 3px solid var(--green);
+            padding-left: 9px;
+            color: #334239;
+            font-size: 0.87rem;
+        }
+
+        .proof-grid {
             margin-top: 18px;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -496,22 +526,22 @@
             border: 1px solid var(--line);
             border-radius: var(--radius-lg);
             background: var(--surface);
+            box-shadow: var(--shadow-sm);
             padding: 16px;
-            min-height: 190px;
-            box-shadow: var(--shadow);
+            min-height: 200px;
             display: flex;
             flex-direction: column;
         }
 
         .proof-item h3 {
             font-size: 1rem;
-            margin-bottom: 8px;
             letter-spacing: -0.02em;
+            margin-bottom: 8px;
         }
 
         .proof-item p {
             color: var(--muted);
-            font-size: 0.86rem;
+            font-size: 0.87rem;
             flex: 1;
         }
 
@@ -519,7 +549,7 @@
             margin-top: 10px;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #2f465a;
+            color: #2b3d32;
         }
 
         .proof-item a:hover {
@@ -527,8 +557,8 @@
         }
 
         .dual-cta {
-            margin-top: 82px;
-            padding-top: 6px;
+            margin-top: 84px;
+            padding-top: 8px;
             border-top: 1px solid var(--line-strong);
         }
 
@@ -541,8 +571,8 @@
 
         .tile {
             border-radius: var(--radius-lg);
-            min-height: 160px;
-            padding: 18px;
+            min-height: 170px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -551,10 +581,10 @@
         }
 
         .tile h3 {
-            font-size: clamp(1.6rem, 3vw, 2.1rem);
-            line-height: 1.05;
+            font-size: clamp(1.65rem, 3vw, 2.15rem);
+            line-height: 1.04;
             letter-spacing: -0.03em;
-            max-width: 420px;
+            max-width: 450px;
         }
 
         .tile .arrow {
@@ -564,24 +594,24 @@
         }
 
         .tile.light {
-            background: #e6e6e3;
-            color: #111315;
-            border: 1px solid #d0d0cc;
+            background: #e5e8e1;
+            color: #111612;
+            border: 1px solid #c9d1c7;
         }
 
         .tile.dark {
-            background: linear-gradient(150deg, #121a22, #1a2531);
-            color: #edf3f9;
-            border: 1px solid #273542;
+            background: linear-gradient(148deg, #101712, #1a261d);
+            color: #ebf3ed;
+            border: 1px solid #2a3b2e;
         }
 
         .tile:hover {
             transform: translateY(-2px);
-            filter: brightness(1.02);
+            filter: brightness(1.03);
         }
 
         footer {
-            margin-top: 34px;
+            margin-top: 36px;
             border-top: 1px solid var(--line-strong);
             padding-top: 18px;
             display: grid;
@@ -606,14 +636,14 @@
             font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #535f69;
+            color: #506157;
             margin-bottom: 8px;
         }
 
         .footer-col a {
             display: block;
-            font-size: 0.9rem;
-            color: #303942;
+            font-size: 0.89rem;
+            color: #304038;
             margin-bottom: 6px;
         }
 
@@ -627,8 +657,8 @@
             animation: enter 0.6s cubic-bezier(0.2, 0.75, 0.25, 1) forwards;
         }
 
-        .hero-copy.reveal { animation-delay: 0.05s; }
-        .hero-panel.reveal { animation-delay: 0.12s; }
+        .hero-copy.reveal { animation-delay: 0.06s; }
+        .hero-board.reveal { animation-delay: 0.12s; }
         .section.reveal:nth-of-type(1) { animation-delay: 0.08s; }
         .section.reveal:nth-of-type(2) { animation-delay: 0.14s; }
         .section.reveal:nth-of-type(3) { animation-delay: 0.2s; }
@@ -643,24 +673,18 @@
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(70, 210, 133, 0.45); }
-            50% { box-shadow: 0 0 0 8px rgba(70, 210, 133, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(66, 210, 127, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(66, 210, 127, 0); }
         }
 
-        @media (max-width: 1080px) {
-            .hero {
+        @media (max-width: 1100px) {
+            .hero,
+            .agentic-layout {
                 grid-template-columns: 1fr;
             }
 
-            .modules {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .flow {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .proof {
+            .stream-grid,
+            .proof-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
@@ -669,7 +693,7 @@
             }
         }
 
-        @media (max-width: 760px) {
+        @media (max-width: 780px) {
             .shell {
                 width: calc(100% - 32px);
             }
@@ -690,21 +714,24 @@
             }
 
             .hero-copy,
-            .hero-panel {
+            .hero-board {
                 padding: 18px 14px;
             }
 
-            .modules,
-            .flow,
-            .proof,
-            .telemetry,
+            .metric-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stream-grid,
+            .think-grid,
+            .proof-grid,
             .tiles,
             .footer-grid {
                 grid-template-columns: 1fr;
             }
 
             .tile {
-                min-height: 140px;
+                min-height: 142px;
             }
         }
 
@@ -727,173 +754,178 @@
         <nav class="nav">
             <a class="brand" href="/">zach<span>wright</span>.xyz</a>
             <div class="nav-links">
-                <a href="#capabilities">Capabilities</a>
-                <a href="#value">Value</a>
-                <a href="#delivery">Delivery</a>
-                <a href="#proof">Proof</a>
+                <a href="#now">Now</a>
+                <a href="#tracks">Work Streams</a>
+                <a href="#agenticoding">AgenticCoding</a>
+                <a href="#thinking">Thinking</a>
+                <a href="#shipping">Shipping</a>
                 <a href="dashboard.html">Dashboard</a>
             </div>
         </nav>
 
-        <header class="hero">
+        <header class="hero" id="now">
             <div class="hero-copy reveal">
-                <p class="kicker">OpenClaw Agentic Operations</p>
-                <h1>Agent systems that move from <span class="hit">idea to execution</span> without bottlenecks.</h1>
-                <p>We design, deploy, and optimize agentic workflows for sales, operations, and delivery teams. Every deployment is tied to a baseline KPI and reviewed weekly.</p>
+                <p class="kicker">Personal Operating Site</p>
+                <h1>I build <span class="hit">agentic software</span>, document the process, and ship in public.</h1>
+                <p>
+                    This is my landing page for everything I am working on, thinking about, and testing. AgenticCoding is now its own core section, with OpenClaw Bots as one part of that broader system.
+                </p>
                 <div class="cta-row">
-                    <a class="btn btn-primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book a Strategy Session</a>
-                    <a class="btn btn-secondary" href="dashboard.html">View Live Operations</a>
+                    <a class="btn btn-primary" href="#agenticoding">Explore AgenticCoding</a>
+                    <a class="btn btn-secondary" href="updates/2026-02-22.html">Read Latest Update</a>
+                    <a class="btn btn-secondary" href="dashboard.html">Open Live Dashboard</a>
                 </div>
-                <ul class="micro">
-                    <li>10-day pilot plan</li>
-                    <li>weekly performance tuning</li>
-                    <li>human approvals where needed</li>
+                <ul class="chips">
+                    <li>weekly build logs</li>
+                    <li>workflow experiments</li>
+                    <li>operator playbooks</li>
                 </ul>
             </div>
 
-            <aside class="hero-panel reveal">
-                <div class="panel-head">
-                    <p>Mission Control</p>
-                    <span class="status"><span class="status-dot"></span>Agents Active</span>
+            <aside class="hero-board reveal">
+                <div class="board-head">
+                    <p>Current Snapshot</p>
+                    <span class="status"><span class="status-dot"></span>Building</span>
                 </div>
-                <div class="telemetry">
-                    <div class="telemetry-item"><strong>02:13</strong><span>Median first response</span></div>
-                    <div class="telemetry-item"><strong>91%</strong><span>Workflow completion</span></div>
-                    <div class="telemetry-item"><strong>37%</strong><span>Manual ops reduced</span></div>
-                    <div class="telemetry-item"><strong>24/7</strong><span>Execution window</span></div>
+                <div class="now-grid">
+                    <div class="now-item">
+                        <span>Working On</span>
+                        <p>AgenticCoding service stack, voice and outbound systems, and client workflow automation.</p>
+                    </div>
+                    <div class="now-item">
+                        <span>Thinking About</span>
+                        <p>How to make AI services measurable with better baselines, operational guardrails, and ownership rules.</p>
+                    </div>
+                    <div class="now-item">
+                        <span>Doing This Week</span>
+                        <p>Shipping dashboard upgrades, publishing updates, and refining discovery to proposal conversion.</p>
+                    </div>
                 </div>
-                <div class="log">
-                    <div class="log-item"><p>Lead triage routed to sales owner</p><span>2m ago</span></div>
-                    <div class="log-item"><p>Proposal agent generated draft v3</p><span>9m ago</span></div>
-                    <div class="log-item"><p>Delivery summary sent to client</p><span>17m ago</span></div>
+                <div class="metric-row">
+                    <div class="metric"><strong>1 Site</strong><span>Personal home base</span></div>
+                    <div class="metric"><strong>3 Tracks</strong><span>Build, write, experiment</span></div>
+                    <div class="metric"><strong>Weekly</strong><span>Public shipping cadence</span></div>
                 </div>
             </aside>
         </header>
 
-        <section class="section reveal" id="capabilities">
-            <p class="kicker">Capabilities</p>
-            <h2>Focused modules built around your highest-friction workflows</h2>
-            <p class="lead">Each module has clear scope, tool permissions, and success criteria so teams can trust what runs in production.</p>
-            <div class="modules">
-                <article class="module">
-                    <span class="tag">Revenue</span>
-                    <h3>Lead Qualification and Routing</h3>
-                    <p>Capture inbound demand, score fit, and route opportunities to the right owner in minutes.</p>
+        <section class="section reveal" id="tracks">
+            <p class="kicker">Work Streams</p>
+            <h2>Three lanes that show what I am building and why it matters</h2>
+            <p class="lead">The site now reflects my full scope, not just one offer. Visitors can immediately understand product work, writing, and experimentation.</p>
+            <div class="stream-grid">
+                <article class="stream">
+                    <span class="tag">Build</span>
+                    <h3>AgenticCoding Products</h3>
+                    <p>Service frameworks and automation systems that improve revenue execution, delivery quality, and operating speed.</p>
                     <ul>
-                        <li>Inputs: forms, inbox, CRM events</li>
-                        <li>Actions: scoring, enrichment, routing</li>
-                        <li>Result: faster response and better pipeline quality</li>
+                        <li>audits, blueprints, and implementation</li>
+                        <li>openclaw bots as production operators</li>
+                        <li>dashboards tied to KPI outcomes</li>
                     </ul>
                 </article>
-                <article class="module">
-                    <span class="tag">Sales Ops</span>
-                    <h3>Follow-Up and Proposal Velocity</h3>
-                    <p>Maintain deal momentum with sequence logic, revision loops, and next-step prompts.</p>
+                <article class="stream">
+                    <span class="tag">Write</span>
+                    <h3>Thinking in Public</h3>
+                    <p>Weekly notes on what worked, what broke, and how strategy changes after real implementation.</p>
                     <ul>
-                        <li>Inputs: stage movement, meetings, replies</li>
-                        <li>Actions: reminders, draft updates, nudges</li>
-                        <li>Result: fewer stalled opportunities</li>
+                        <li>weekly updates and postmortems</li>
+                        <li>architecture and workflow notes</li>
+                        <li>positioning and business lessons</li>
                     </ul>
                 </article>
-                <article class="module">
-                    <span class="tag">Delivery</span>
-                    <h3>Execution and Client Visibility</h3>
-                    <p>Track commitments, summarize status, and surface risks before they become escalations.</p>
+                <article class="stream">
+                    <span class="tag">Experiment</span>
+                    <h3>Rapid Prototypes</h3>
+                    <p>Small bets to test new agent workflows, tools, and channel strategies before scaling them into client offerings.</p>
                     <ul>
-                        <li>Inputs: tickets, docs, team updates</li>
-                        <li>Actions: sync checks, risk flags, summaries</li>
-                        <li>Result: reliable throughput and clear reporting</li>
+                        <li>voice and messaging pilots</li>
+                        <li>proposal and outbound experiments</li>
+                        <li>internal tooling accelerators</li>
                     </ul>
                 </article>
             </div>
         </section>
 
-        <section class="section reveal" id="value">
-            <p class="kicker">Value Matrix</p>
-            <h2>Every workflow maps to a measurable KPI shift</h2>
-            <p class="lead">The system is evaluated by operating impact, not prompt quality.</p>
-            <div class="matrix-shell">
-                <table class="matrix">
-                    <thead>
-                        <tr>
-                            <th>Constraint</th>
-                            <th>Agentic Intervention</th>
-                            <th>Outcome</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Slow lead response</td>
-                            <td>Instant triage plus owner assignment</td>
-                            <td>Higher qualified meeting rate</td>
-                        </tr>
-                        <tr>
-                            <td>Deals stall post-call</td>
-                            <td>Follow-up loops with proposal iteration</td>
-                            <td>Improved close velocity</td>
-                        </tr>
-                        <tr>
-                            <td>Status updates are fragmented</td>
-                            <td>Cross-source progress synthesis and risk flags</td>
-                            <td>Lower escalation volume</td>
-                        </tr>
-                        <tr>
-                            <td>Leadership lacks visibility</td>
-                            <td>Weekly KPI digest with recommended next actions</td>
-                            <td>Faster decision cycles</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <section class="section reveal" id="agenticoding">
+            <p class="kicker">AgenticCoding</p>
+            <h2>A dedicated section for my core build system</h2>
+            <p class="lead">AgenticCoding is now represented as one major pillar of zachwright.xyz, with clear value pathways from discovery to implementation.</p>
+            <div class="agentic-layout">
+                <article class="agentic-main">
+                    <h3>What AgenticCoding means here</h3>
+                    <p>
+                        AgenticCoding is my framework for designing and deploying practical AI workflow systems. OpenClaw Bots are part of this stack, but this page shows the full layer: strategy, architecture, and execution.
+                    </p>
+                    <p>
+                        The goal is not "use AI". The goal is operational lift with clear owner handoff and measurable business value.
+                    </p>
+                    <ul>
+                        <li>Scope workflows before building agents</li>
+                        <li>Define guardrails, permissions, and approval checkpoints</li>
+                        <li>Ship with telemetry and weekly optimization loops</li>
+                    </ul>
+                </article>
+                <div class="offer-stack">
+                    <article class="offer">
+                        <strong>AI Readiness Audit</strong>
+                        <p>Assess your current process, identify high-friction lanes, and prioritize automation opportunities by ROI and implementation risk.</p>
+                    </article>
+                    <article class="offer">
+                        <strong>Workflow Blueprint Generator</strong>
+                        <p>Turn raw process notes into a deployable blueprint: actors, tools, approvals, fallback logic, and KPI tracking plan.</p>
+                    </article>
+                    <article class="offer">
+                        <strong>Proposal Agent Landing Flow</strong>
+                        <p>Install an agent-assisted intake and proposal workflow that shortens cycle time from first contact to scoped offer.</p>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <section class="section reveal" id="delivery">
-            <p class="kicker">Delivery Model</p>
-            <h2>Compact rollout framework with strict control points</h2>
-            <p class="lead">Start with one lane, prove value, then scale.</p>
-            <div class="flow">
-                <article class="flow-item">
-                    <span class="step">01 Diagnose</span>
-                    <h3>Map process and baseline</h3>
-                    <p>Identify friction points, owners, and current cycle times.</p>
+        <section class="section reveal" id="thinking">
+            <p class="kicker">Thinking</p>
+            <h2>What I am studying, writing, and refining right now</h2>
+            <p class="lead">This keeps the site personal and current. It signals direction, not just finished services.</p>
+            <div class="think-grid">
+                <article class="think-card">
+                    <h3>Current Questions</h3>
+                    <ul>
+                        <li>How should agent permission models adapt across sales, operations, and delivery?</li>
+                        <li>Which workflow KPIs predict real value earliest?</li>
+                        <li>What level of human approval is necessary for each automation class?</li>
+                    </ul>
                 </article>
-                <article class="flow-item">
-                    <span class="step">02 Architect</span>
-                    <h3>Define agent responsibilities</h3>
-                    <p>Set permissions, approvals, and escalation behavior.</p>
-                </article>
-                <article class="flow-item">
-                    <span class="step">03 Deploy</span>
-                    <h3>Launch with observability</h3>
-                    <p>Ship into production with telemetry and rollback controls.</p>
-                </article>
-                <article class="flow-item">
-                    <span class="step">04 Optimize</span>
-                    <h3>Tune weekly against KPIs</h3>
-                    <p>Refine performance and expand once stable.</p>
+                <article class="think-card">
+                    <h3>In the Queue</h3>
+                    <ul>
+                        <li>Agentic service packaging and repeatable onboarding</li>
+                        <li>Voice + message orchestration patterns</li>
+                        <li>A cleaner bridge between strategy docs and runnable agents</li>
+                    </ul>
                 </article>
             </div>
         </section>
 
-        <section class="section reveal" id="proof">
-            <p class="kicker">Proof</p>
-            <h2>Transparent operations with visible evidence</h2>
-            <p class="lead">No black box claims. See what is running and what changed.</p>
-            <div class="proof">
+        <section class="section reveal" id="shipping">
+            <p class="kicker">Shipping</p>
+            <h2>Evidence, updates, and active surfaces</h2>
+            <p class="lead">If it is not visible, it does not count. This is where you can inspect what is active and what changed.</p>
+            <div class="proof-grid">
                 <article class="proof-item">
                     <h3>Live Operations Dashboard</h3>
-                    <p>Inspect uptime, activity, pipeline movement, and skills in one view.</p>
+                    <p>See active telemetry, workflow activity, CRM snapshots, and running skill inventory.</p>
                     <a href="dashboard.html">Open dashboard -></a>
                 </article>
                 <article class="proof-item">
                     <h3>Weekly Build Updates</h3>
-                    <p>Track shipped improvements and implementation notes every week.</p>
+                    <p>Follow implementation notes, shipped features, and direction changes week by week.</p>
                     <a href="updates/2026-02-22.html">Read latest update -></a>
                 </article>
                 <article class="proof-item">
-                    <h3>Direct Strategy Access</h3>
-                    <p>Collaborate on scope, guardrails, and priority queue directly.</p>
-                    <a href="mailto:zach@zachwright.xyz">Contact Zach -></a>
+                    <h3>Source and Artifacts</h3>
+                    <p>Review repos, experiments, and technical outputs tied to what is being built.</p>
+                    <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">View GitHub -></a>
                 </article>
             </div>
         </section>
@@ -901,11 +933,11 @@
         <section class="dual-cta reveal" id="contact">
             <div class="tiles">
                 <a class="tile light" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">
-                    <h3>Request a Demo</h3>
+                    <h3>Work With Me on Agentic Systems</h3>
                     <span class="arrow">-></span>
                 </a>
                 <a class="tile dark" href="mailto:zach@zachwright.xyz">
-                    <h3>Start Building</h3>
+                    <h3>Send Me What You Are Building</h3>
                     <span class="arrow">-></span>
                 </a>
             </div>
@@ -913,15 +945,15 @@
 
         <footer>
             <div class="footer-meta">
-                <p>Built by Z on OpenClaw infrastructure.</p>
-                <p>Agentic systems for revenue, operations, and delivery teams.</p>
+                <p>Personal site of Zach Wright.</p>
+                <p>Building AgenticCoding systems, writing weekly updates, and shipping public experiments.</p>
             </div>
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4>Platform</h4>
-                    <a href="#capabilities">Capabilities</a>
-                    <a href="#value">Value Matrix</a>
-                    <a href="#delivery">Delivery Model</a>
+                    <h4>Explore</h4>
+                    <a href="#tracks">Work Streams</a>
+                    <a href="#agenticoding">AgenticCoding</a>
+                    <a href="#thinking">Thinking</a>
                 </div>
                 <div class="footer-col">
                     <h4>Proof</h4>
@@ -931,7 +963,7 @@
                 </div>
                 <div class="footer-col">
                     <h4>Contact</h4>
-                    <a href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Session</a>
+                    <a href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book 30 Min Session</a>
                     <a href="mailto:zach@zachwright.xyz">zach@zachwright.xyz</a>
                 </div>
             </div>
