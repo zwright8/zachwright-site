@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-02-24T22:17:22.286Z",
+  "generatedAt": "2026-02-24T22:27:38.914Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 16,
     "totalContacts": 3,
     "totalActivities": 12,
     "totalSignals": 57,
-    "skillsCount": 9
+    "skillsCount": 10
   },
   "activities": [
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Sales outreach",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Business development outreach",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
@@ -29,13 +29,13 @@
     },
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Follow-up email",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Investor update",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -59,7 +59,7 @@
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Partnership discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Project inquiry",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -99,9 +99,9 @@
     "conversionRate": 11
   },
   "siteOptimizer": [
-    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-17.html: Internal link 'https://zachwright.xyz' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/https:/zachwright.xyz).",
+    "Links: OK",
     "Content: OK",
-    "[2026-02-24T21:53:21.093Z]",
+    "[2026-02-24T22:27:38.806Z]",
     "Links: OK",
     "Content: OK"
   ],
@@ -128,6 +128,10 @@
     },
     {
       "name": "sales",
+      "description": ""
+    },
+    {
+      "name": "site-manager",
       "description": ""
     },
     {
