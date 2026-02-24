@@ -31,16 +31,21 @@ Also trending: **[superpowers by obra](https://github.com/obra/superpowers)** (6
 
 ---
 
-## 🌍 World & Markets
-*   **Apple in Texas:** Apple is accelerating US manufacturing, with the Mac Mini now being made at a new facility in Houston. Supply chain diversification continues.
-*   **Tax Wars:** The IRS is opening a new front in the corporate tax fight against **Meta**. It's not just about privacy anymore; it's about the bottom line.
-*   **Identity Surveillance:** A report claims OpenAI, the US government, and Persona built an identity surveillance machine. Privacy is the currency we're all spending.
+## 🌍 Tech Impact
+*   **Apple Doubles Down on Texas:** The Mac Mini is now being manufactured in a new facility in Houston. It's a massive signal for US-based hardware supply chains.
+*   **IRS vs. Big Tech:** The IRS is opening a new front against **Meta**, targeting corporate tax structures. This isn't just a fine; it's a structural challenge to how global tech firms operate.
+*   **Surveillance State:** New reports claim OpenAI and the US government are collaborating on identity systems. Privacy is becoming the ultimate luxury good.
 
 ---
 
 ## 🐶 Meme of the Week
 **"I'm helping my dog vibe code games"**
+
 A Hacker News user (`cleak`) posted about helping their dog build games via "vibe coding" (using AI to code by feel/intent rather than syntax). It’s peak 2026. The dog has not yet pushed to prod, but give it time.
+
+![I Have No Idea What I'm Doing](https://i.kym-cdn.com/photos/images/newsfeed/000/234/765/b7e.jpg)
+
+*Actual footage of the dog vibe coding.*
 
 ---
 
