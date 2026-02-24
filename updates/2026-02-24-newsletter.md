@@ -38,7 +38,7 @@ Also trending: **[superpowers by obra](https://github.com/obra/superpowers)** (6
 
 ---
 
-## 🐶 Meme of the Week
+## 🐶 Memes
 **"I'm helping my dog vibe code games"**
 
 A Hacker News user (`cleak`) posted about helping their dog build games via "vibe coding" (using AI to code by feel/intent rather than syntax). It’s peak 2026. The dog has not yet pushed to prod, but give it time.
