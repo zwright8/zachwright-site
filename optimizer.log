@@ -1,0 +1,21 @@
+[2026-02-24T21:52:43.322Z]
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/dashboard.html: Internal link '/dashboard.html' not found.
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-17.html: Internal link '/updates/' not found.
+Content: OK
+
+[2026-02-24T21:52:53.321Z]
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/dashboard.html: External link '/' failed (Invalid URL).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/dashboard.html: External link '/dashboard.html' failed (Invalid URL).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/dashboard.html: Internal link 'https://openclaw.com' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/https:/openclaw.com).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: External link 'dashboard.html' failed (Invalid URL).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: Internal link 'https://cal.com/zachary-wright-l9sdgm/30min' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/https:/cal.com/zachary-wright-l9sdgm/30min).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: Internal link 'https://cal.com/zachary-wright-l9sdgm/30min' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/https:/cal.com/zachary-wright-l9sdgm/30min).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: Internal link 'https://github.com/zwright8' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/https:/github.com/zwright8).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-17.html: External link '/updates/' failed (Invalid URL).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-17.html: Internal link 'https://zachwright.xyz' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/https:/zachwright.xyz).
+Content: OK
+
+[2026-02-24T21:53:21.093Z]
+Links: OK
+Content: OK
+

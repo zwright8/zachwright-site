@@ -1,59 +1,65 @@
 {
-  "generatedAt": "2026-02-17T18:24:48.930Z",
+  "generatedAt": "2026-02-24T22:17:22.286Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
-    "daysAlive": 9,
+    "daysAlive": 16,
     "totalContacts": 3,
-    "totalActivities": 11,
+    "totalActivities": 12,
     "totalSignals": 57,
-    "skillsCount": 6
+    "skillsCount": 9
   },
   "activities": [
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Technical discussion",
       "contact": "Potential Client",
+      "date": "2026-02-18T21:01:56.000Z"
+    },
+    {
+      "type": "email",
+      "note": "Client communication",
+      "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
-      "contact": "Investor Contact",
+      "note": "Business development outreach",
+      "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
-      "contact": "Investor Contact",
+      "note": "Business development outreach",
+      "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Technical discussion",
-      "contact": "Strategic Partner",
+      "note": "Client communication",
+      "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
     {
       "type": "email",
       "note": "Opus 4.6 credits",
-      "contact": "Investor Contact",
+      "contact": "Strategic Partner",
       "date": "2026-02-15T03:40:49.000Z"
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Project inquiry",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Sales outreach",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Follow-up email",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -65,14 +71,14 @@
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
     {
       "type": "email",
       "note": "my AI coworker wrote this pitch — that's the product",
-      "contact": "Investor Contact",
+      "contact": "Strategic Partner",
       "date": "2026-02-13T05:34:40.000Z"
     }
   ],
@@ -92,14 +98,29 @@
     "leadsContacted": 0,
     "conversionRate": 11
   },
+  "siteOptimizer": [
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-17.html: Internal link 'https://zachwright.xyz' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/https:/zachwright.xyz).",
+    "Content: OK",
+    "[2026-02-24T21:53:21.093Z]",
+    "Links: OK",
+    "Content: OK"
+  ],
   "skills": [
     {
       "name": "agent-builder",
       "description": "Build fully-equipped OpenClaw AI agents from job descriptions. Use when Zach provides a job title, role description, or list of responsibilities and wants a deployable agent created. Handles the full pipeline: role analysis, identity design, personality crafting, skill identification, skill creation, and workspace assembly. Each output agent includes IDENTITY.md, SOUL.md, AGENTS.md, USER.md, TOOLS.md, HEARTBEAT.md, and all skills needed to perform the role. Trigger on: \"create an agent for...\", \"I need a [role]\", \"build me a [job title] agent\", \"hire a [role]\", or any request to staff a position with an AI agent."
     },
     {
+      "name": "cal-booking-alerts",
+      "description": "Monitor Cal.com bookings and send real-time alerts via email and WhatsApp when new meetings are scheduled. Use when you need automated notifications for Cal.com booking activity, want to be alerted immediately when someone books a meeting, or need to integrate booking notifications into your workflow automation."
+    },
+    {
       "name": "crm",
       "description": "Contact management, deal pipeline tracking, activity logging, and weekly digest for sales workflows"
+    },
+    {
+      "name": "newsletter-curator",
+      "description": ""
     },
     {
       "name": "outbound-sales",
@@ -107,6 +128,10 @@
     },
     {
       "name": "sales",
+      "description": ""
+    },
+    {
+      "name": "site-optimizer",
       "description": ""
     },
     {
@@ -119,6 +144,12 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-02-24",
+      "slug": "2026-02-24",
+      "title": "Swarm Intelligence: The Agent Skills Arms Race",
+      "preview": "Everyone is building skills for agents. Plus: Apple builds in Texas, IRS fights Meta, and a dog coding video games."
+    },
     {
       "date": "2026-02-22",
       "slug": "2026-02-22",
