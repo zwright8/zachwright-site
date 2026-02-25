@@ -9,6 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: "FS Pixel Sans";
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url("assets/pixel-agents/FSPixelSansUnicode-Regular.ttf") format("truetype");
+        }
+
         :root {
             --sand: #f7f0e7;
             --sand-soft: #fefaf3;
@@ -961,14 +969,16 @@
         }
 
         .agent-floor {
-            margin-bottom: 14px;
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(24, 32, 42, 0.18);
+            border-radius: 16px;
+            border: 2px solid #4a4a6a;
             background:
-                radial-gradient(420px 160px at 0% 100%, rgba(45, 207, 159, 0.15), transparent 70%),
-                linear-gradient(160deg, rgba(255, 255, 255, 0.84), rgba(250, 244, 235, 0.86));
-            box-shadow: var(--shadow-sm);
+                radial-gradient(460px 200px at -4% -26%, rgba(90, 140, 255, 0.18), transparent 72%),
+                linear-gradient(180deg, #1e1e2e 0%, #1a1a2b 100%);
+            box-shadow:
+                8px 8px 0 rgba(10, 10, 20, 0.5),
+                0 18px 40px rgba(9, 10, 22, 0.5);
             padding: 14px;
+            color: rgba(230, 235, 255, 0.92);
         }
 
         .agent-floor-head {
@@ -980,50 +990,49 @@
         }
 
         .agent-floor-head h3 {
-            font-family: var(--font-display);
-            font-size: 1.14rem;
-            letter-spacing: -0.02em;
+            font-family: "FS Pixel Sans", var(--font-display);
+            font-size: 1.05rem;
+            letter-spacing: 0.01em;
             line-height: 1.05;
+            color: rgba(245, 249, 255, 0.94);
         }
 
         .agent-floor-head p {
-            font-size: 0.84rem;
-            color: rgba(24, 32, 42, 0.68);
-            max-width: 470px;
+            font-size: 0.78rem;
+            color: rgba(186, 199, 233, 0.9);
+            max-width: 540px;
         }
 
         .agent-stage {
             position: relative;
-            border-radius: 14px;
-            border: 1px solid rgba(24, 32, 42, 0.24);
+            border-radius: 2px;
+            border: 2px solid #4a4a6a;
             overflow: hidden;
-            background: #1a2130;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+            background: #0f1221;
         }
 
         .agent-stage canvas {
             display: block;
             width: 100%;
             height: auto;
-            aspect-ratio: 16 / 7;
+            aspect-ratio: 1308 / 555;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
 
         .agent-stage-label {
             position: absolute;
-            left: 10px;
-            top: 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            background: rgba(8, 12, 18, 0.52);
-            padding: 5px 8px;
-            font-family: var(--font-mono);
-            font-size: 0.53rem;
+            left: 8px;
+            top: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            background: rgba(8, 10, 20, 0.68);
+            padding: 4px 7px;
+            font-family: "FS Pixel Sans", var(--font-mono);
+            font-size: 0.46rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(235, 244, 255, 0.92);
-            backdrop-filter: blur(3px);
+            letter-spacing: 0.12em;
+            color: rgba(236, 243, 255, 0.9);
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
         }
 
         .agent-floor-grid {
@@ -1040,418 +1049,90 @@
         }
 
         .agent-card {
-            border-radius: 11px;
-            border: 1px solid rgba(24, 32, 42, 0.14);
-            background: rgba(255, 255, 255, 0.84);
+            border: 2px solid #4a4a6a;
+            background: rgba(255, 255, 255, 0.06);
             padding: 8px;
             display: grid;
-            gap: 4px;
+            gap: 5px;
         }
 
         .agent-card strong {
-            font-family: var(--font-display);
-            font-size: 0.9rem;
-            letter-spacing: -0.02em;
+            font-family: "FS Pixel Sans", var(--font-display);
+            font-size: 0.78rem;
+            letter-spacing: 0.02em;
             line-height: 1.05;
+            color: rgba(245, 249, 255, 0.94);
         }
 
         .agent-card p {
-            color: rgba(24, 32, 42, 0.74);
-            font-size: 0.73rem;
-            line-height: 1.3;
+            color: rgba(190, 202, 235, 0.86);
+            font-size: 0.68rem;
+            line-height: 1.35;
             min-height: 1.9em;
         }
 
         .agent-state {
             width: fit-content;
-            border-radius: 999px;
-            border: 1px solid rgba(24, 32, 42, 0.2);
-            padding: 3px 7px;
-            font-family: var(--font-mono);
-            font-size: 0.52rem;
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            padding: 2px 6px;
+            font-family: "FS Pixel Sans", var(--font-mono);
+            font-size: 0.48rem;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: rgba(24, 32, 42, 0.72);
-            background: rgba(255, 255, 255, 0.74);
+            letter-spacing: 0.1em;
+            color: rgba(231, 240, 255, 0.94);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .agent-state.moving {
-            border-color: rgba(220, 122, 55, 0.45);
-            background: rgba(255, 189, 146, 0.34);
-            color: #65361f;
+            border-color: rgba(252, 187, 128, 0.72);
+            background: rgba(236, 134, 66, 0.24);
+            color: #ffdcbf;
         }
 
         .agent-state.working {
-            border-color: rgba(33, 146, 124, 0.42);
-            background: rgba(150, 231, 216, 0.35);
-            color: #184a3f;
+            border-color: rgba(124, 223, 180, 0.76);
+            background: rgba(57, 174, 122, 0.26);
+            color: #dcffe9;
         }
 
         .agent-state.syncing {
-            border-color: rgba(73, 128, 203, 0.4);
-            background: rgba(165, 206, 255, 0.34);
-            color: #24406d;
+            border-color: rgba(131, 177, 255, 0.76);
+            background: rgba(89, 129, 214, 0.25);
+            color: #deebff;
         }
 
         .agent-log {
-            border-radius: 11px;
-            border: 1px solid rgba(24, 32, 42, 0.14);
-            background: rgba(255, 255, 255, 0.82);
+            border: 2px solid #4a4a6a;
+            background: rgba(255, 255, 255, 0.06);
             padding: 10px;
             display: grid;
             gap: 8px;
         }
 
         .agent-log-head {
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
+            font-family: "FS Pixel Sans", var(--font-mono);
+            font-size: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(24, 32, 42, 0.7);
+            letter-spacing: 0.11em;
+            color: rgba(210, 223, 255, 0.9);
         }
 
         .agent-log ul {
             list-style: none;
             display: grid;
             gap: 6px;
-            max-height: 150px;
+            max-height: 168px;
             overflow: auto;
             padding-right: 2px;
         }
 
         .agent-log li {
-            border-radius: 9px;
-            border: 1px solid rgba(24, 32, 42, 0.12);
-            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.08);
             padding: 6px 8px;
-            color: rgba(24, 32, 42, 0.76);
-            font-size: 0.76rem;
-            line-height: 1.28;
-        }
-
-        .game-layout {
-            display: grid;
-            gap: 12px;
-            grid-template-columns: 1.02fr 0.98fr;
-        }
-
-        .game-card,
-        .game-rules {
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(24, 32, 42, 0.16);
-            background: rgba(255, 255, 255, 0.78);
-            padding: 16px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .game-top {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .game-stat {
-            border-radius: 12px;
-            border: 1px solid rgba(24, 32, 42, 0.14);
-            background: rgba(255, 255, 255, 0.86);
-            padding: 9px 10px;
-        }
-
-        .game-stat span {
-            display: block;
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
-            text-transform: uppercase;
-            letter-spacing: 0.11em;
-            color: rgba(24, 32, 42, 0.66);
-        }
-
-        .game-stat strong {
-            display: block;
-            margin-top: 2px;
-            font-family: var(--font-display);
-            font-size: 1.35rem;
-            line-height: 1;
-            letter-spacing: -0.03em;
-            color: #121d2a;
-        }
-
-        .game-track {
-            display: grid;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .track-item {
-            display: grid;
-            gap: 5px;
-        }
-
-        .track-item span {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(24, 32, 42, 0.66);
-        }
-
-        .game-bar {
-            height: 8px;
-            border-radius: 999px;
-            border: 1px solid rgba(24, 32, 42, 0.14);
-            background: rgba(255, 255, 255, 0.76);
-            overflow: hidden;
-        }
-
-        .game-bar span {
-            display: block;
-            width: 100%;
-            height: 100%;
-            transform-origin: left center;
-            transform: scaleX(1);
-            transition: transform 0.12s linear, background 0.2s ease;
-            background: linear-gradient(90deg, var(--teal), var(--mint));
-        }
-
-        .game-bar.integrity span {
-            background: linear-gradient(90deg, #2dcf9f, #f8b363);
-        }
-
-        .game-arena {
-            position: relative;
-            min-height: 260px;
-            border-radius: 16px;
-            border: 1px solid rgba(24, 32, 42, 0.2);
-            background:
-                radial-gradient(520px 180px at 50% -20%, rgba(45, 207, 159, 0.17), transparent 72%),
-                repeating-linear-gradient(0deg, rgba(24, 32, 42, 0.04) 0 1px, transparent 1px 36px),
-                repeating-linear-gradient(90deg, rgba(24, 32, 42, 0.04) 0 1px, transparent 1px 36px),
-                linear-gradient(180deg, rgba(247, 255, 251, 0.84), rgba(255, 250, 240, 0.92));
-            overflow: hidden;
-        }
-
-        .game-arena.is-running {
-            cursor: crosshair;
-        }
-
-        .game-arena.is-hit {
-            box-shadow: inset 0 0 0 2px rgba(45, 207, 159, 0.6);
-        }
-
-        .game-arena.is-miss {
-            box-shadow: inset 0 0 0 2px rgba(220, 89, 46, 0.55);
-        }
-
-        .pulse-target {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 58px;
-            height: 58px;
-            border: 1px solid rgba(238, 93, 32, 0.45);
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.84), rgba(255, 186, 145, 0.82) 42%, rgba(238, 93, 32, 0.82) 72%);
-            transform: translate(-50%, -50%) scale(0.9);
-            opacity: 0;
-            pointer-events: none;
-            cursor: pointer;
-            box-shadow: 0 12px 20px rgba(220, 89, 46, 0.26);
-            transition: transform 0.16s ease, opacity 0.16s ease;
-        }
-
-        .pulse-target::before,
-        .pulse-target::after {
-            content: "";
-            position: absolute;
-            inset: 50%;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .pulse-target::before {
-            width: 68%;
-            height: 68%;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        .pulse-target::after {
-            width: 26%;
-            height: 26%;
-            background: rgba(255, 255, 255, 0.85);
-        }
-
-        .pulse-target.is-live {
-            opacity: 1;
-            pointer-events: auto;
-            animation: pulse-target 1s ease-in-out infinite;
-        }
-
-        .game-overlay {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: min(86%, 420px);
-            text-align: center;
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            letter-spacing: -0.02em;
-            color: rgba(24, 32, 42, 0.74);
-            transition: opacity 0.2s ease;
-        }
-
-        .game-arena.is-running .game-overlay {
-            opacity: 0;
-        }
-
-        .game-feedback {
-            position: absolute;
-            left: 50%;
-            top: 16px;
-            transform: translate(-50%, -8px);
-            border-radius: 999px;
-            border: 1px solid transparent;
-            padding: 6px 10px;
-            font-family: var(--font-mono);
-            font-size: 0.56rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .game-feedback.is-show {
-            opacity: 1;
-            transform: translate(-50%, 0);
-        }
-
-        .game-feedback.hit {
-            border-color: rgba(19, 128, 105, 0.42);
-            background: rgba(45, 207, 159, 0.2);
-            color: #0c5446;
-        }
-
-        .game-feedback.miss {
-            border-color: rgba(220, 89, 46, 0.4);
-            background: rgba(255, 150, 122, 0.2);
-            color: #703017;
-        }
-
-        .game-actions {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .game-btn {
-            border: none;
-            cursor: pointer;
-        }
-
-        .game-btn:focus-visible,
-        .pulse-target:focus-visible {
-            outline: 2px solid rgba(15, 123, 125, 0.55);
-            outline-offset: 2px;
-        }
-
-        .game-note {
-            font-family: var(--font-mono);
-            font-size: 0.62rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(24, 32, 42, 0.7);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .game-note strong {
-            font-family: var(--font-display);
-            font-size: 0.95rem;
-            letter-spacing: -0.03em;
-            color: rgba(24, 32, 42, 0.9);
-        }
-
-        .game-note span {
-            border-radius: 999px;
-            border: 1px solid rgba(24, 32, 42, 0.16);
-            padding: 2px 7px;
-            font-size: 0.53rem;
-            letter-spacing: 0.08em;
-            color: rgba(24, 32, 42, 0.7);
-        }
-
-        .game-rules h3 {
-            font-family: var(--font-display);
-            font-size: 1.14rem;
-            letter-spacing: -0.02em;
-            margin-bottom: 10px;
-        }
-
-        .game-rules p {
-            color: var(--ink-soft);
-            font-size: 0.93rem;
-            margin-bottom: 11px;
-        }
-
-        .intel-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .intel-item {
-            border-radius: 12px;
-            border: 1px solid rgba(24, 32, 42, 0.15);
-            background: rgba(255, 255, 255, 0.84);
-            padding: 8px 10px;
-        }
-
-        .intel-item span {
-            display: block;
-            font-family: var(--font-mono);
-            font-size: 0.54rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(24, 32, 42, 0.66);
-        }
-
-        .intel-item strong {
-            display: block;
-            margin-top: 3px;
-            font-family: var(--font-display);
-            font-size: 1.08rem;
-            letter-spacing: -0.03em;
-            color: rgba(24, 32, 42, 0.92);
-        }
-
-        .game-rules ul {
-            list-style: none;
-            display: grid;
-            gap: 8px;
-        }
-
-        .game-rules li {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(24, 32, 42, 0.86);
-            font-size: 0.88rem;
-        }
-
-        .game-rules li::before {
-            content: "";
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, var(--mint), var(--teal));
-            flex-shrink: 0;
+            color: rgba(201, 214, 245, 0.9);
+            font-size: 0.7rem;
+            line-height: 1.32;
         }
 
         .contact-band {
@@ -1624,23 +1305,6 @@
             }
         }
 
-        @keyframes pulse-target {
-            0% {
-                box-shadow: 0 0 0 0 rgba(238, 93, 32, 0.35), 0 12px 20px rgba(220, 89, 46, 0.26);
-                transform: translate(-50%, -50%) scale(0.91);
-            }
-
-            70% {
-                box-shadow: 0 0 0 18px rgba(238, 93, 32, 0), 0 12px 20px rgba(220, 89, 46, 0.18);
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(238, 93, 32, 0), 0 12px 20px rgba(220, 89, 46, 0.22);
-                transform: translate(-50%, -50%) scale(0.96);
-            }
-        }
-
         @media (hover: hover) and (pointer: fine) {
             .service-card:hover,
             .step-card:hover,
@@ -1657,8 +1321,7 @@
 
         @media (max-width: 1080px) {
             .hero,
-            .integration-layout,
-            .game-layout {
+            .integration-layout {
                 grid-template-columns: 1fr;
             }
 
@@ -1728,18 +1391,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .game-top,
-            .intel-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
             .agent-status-list {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .game-actions {
-                align-items: flex-start;
-                flex-direction: column;
             }
 
             .trust-strip {
@@ -1764,10 +1417,6 @@
             .contact-card h3 {
                 max-width: 250px;
                 font-size: 1.05rem;
-            }
-
-            .game-arena {
-                min-height: 220px;
             }
         }
 
@@ -2101,17 +1750,17 @@
         <section class="playground" id="playground" data-reveal>
             <div class="section-head">
                 <p class="kicker">Playground</p>
-                <h2>Agent Floor + Signal Sprint</h2>
-                <p>Watch a pixel agent office run in the background, then jump into a focused operator sprint.</p>
+                <h2>Pixel Agent Floor</h2>
+                <p>A visual mirror of the Pixel Agents office experience, adapted to showcase your background orchestration.</p>
             </div>
             <section class="agent-floor">
                 <div class="agent-floor-head">
-                    <h3>Live Agent Floor Simulation</h3>
-                    <p>Modeled after your operating lanes: agents route, draft, validate, sync, and hand off in real time.</p>
+                    <h3>Live Office View</h3>
+                    <p>Agent lanes move, collaborate, and report in a persistent pixel workspace inspired by `pixel-agents`.</p>
                 </div>
                 <div class="agent-stage">
-                    <canvas id="agent-floor-canvas" width="192" height="84" aria-label="Animated pixel office with AI agents collaborating"></canvas>
-                    <p class="agent-stage-label">Simulated orchestration</p>
+                    <canvas id="agent-floor-canvas" width="1308" height="555" aria-label="Animated pixel office with AI agents collaborating"></canvas>
+                    <p class="agent-stage-label">Pixel agents mode</p>
                 </div>
                 <div class="agent-floor-grid">
                     <div class="agent-status-list" id="agent-status-list" aria-live="polite"></div>
@@ -2121,70 +1770,6 @@
                     </aside>
                 </div>
             </section>
-            <div class="game-layout">
-                <article class="game-card" data-tilt>
-                    <div class="game-top">
-                        <div class="game-stat">
-                            <span>Score</span>
-                            <strong id="game-score">0</strong>
-                        </div>
-                        <div class="game-stat">
-                            <span>Time</span>
-                            <strong id="game-time">20.0s</strong>
-                        </div>
-                        <div class="game-stat">
-                            <span>Integrity</span>
-                            <strong id="game-integrity">3/3</strong>
-                        </div>
-                        <div class="game-stat">
-                            <span>Combo</span>
-                            <strong id="game-combo">0x</strong>
-                        </div>
-                    </div>
-                    <div class="game-track">
-                        <div class="track-item">
-                            <span>Round Clock</span>
-                            <div class="game-bar"><span id="game-timer-bar"></span></div>
-                        </div>
-                        <div class="track-item">
-                            <span>System Integrity</span>
-                            <div class="game-bar integrity"><span id="game-integrity-bar"></span></div>
-                        </div>
-                    </div>
-                    <div class="game-arena" id="game-arena">
-                        <button class="pulse-target" id="pulse-target" type="button" aria-label="Catch pulse"></button>
-                        <p class="game-feedback" id="game-feedback" aria-live="polite"></p>
-                        <p class="game-overlay" id="game-overlay">Press start and catch every pulse before it expires.</p>
-                    </div>
-                    <div class="game-actions">
-                        <button class="btn btn-primary game-btn" id="game-start" type="button">Start Sprint</button>
-                        <p class="game-note">Best run <strong id="game-best">0</strong> <span id="game-best-rank">--</span></p>
-                    </div>
-                </article>
-                <aside class="game-rules">
-                    <h3>Session Intel</h3>
-                    <div class="intel-grid">
-                        <div class="intel-item">
-                            <span>Accuracy</span>
-                            <strong id="game-accuracy">0%</strong>
-                        </div>
-                        <div class="intel-item">
-                            <span>Max Combo</span>
-                            <strong id="game-max-combo">0x</strong>
-                        </div>
-                        <div class="intel-item">
-                            <span>Rank</span>
-                            <strong id="game-rank">--</strong>
-                        </div>
-                    </div>
-                    <p>You are the operator. Keep system integrity from dropping to zero before time runs out.</p>
-                    <ul>
-                        <li>Click each pulse as soon as it appears for higher quality points.</li>
-                        <li>Misses reduce integrity by one.</li>
-                        <li>Hit streaks increase pace, combo, and your final rank.</li>
-                    </ul>
-                </aside>
-            </div>
         </section>
 
         <section class="contact-band" id="contact" data-reveal>
@@ -2309,7 +1894,6 @@
             }
 
             setupAgentFloor();
-            setupSignalSprint();
 
             function setupAgentFloor() {
                 var canvas = document.getElementById("agent-floor-canvas");
@@ -2327,29 +1911,49 @@
 
                 var worldWidth = canvas.width;
                 var worldHeight = canvas.height;
-                var hub = { x: 96, y: 44 };
-                var desks = [
-                    { name: "Intake", x: 20, y: 18 },
-                    { name: "Proposal", x: 58, y: 14 },
-                    { name: "Testing", x: 96, y: 12 },
-                    { name: "Ops", x: 134, y: 14 },
-                    { name: "Delivery", x: 172, y: 18 }
+                var floorImage = new Image();
+                floorImage.src = "assets/pixel-agents/screenshot.jpg";
+
+                var spriteSources = [
+                    "assets/pixel-agents/char_0.png",
+                    "assets/pixel-agents/char_1.png",
+                    "assets/pixel-agents/char_2.png",
+                    "assets/pixel-agents/char_3.png",
+                    "assets/pixel-agents/char_4.png",
+                    "assets/pixel-agents/char_5.png"
+                ];
+
+                var spriteImages = spriteSources.map(function (src) {
+                    var img = new Image();
+                    img.src = src;
+                    return img;
+                });
+
+                var routes = [
+                    [{ x: 420, y: 395 }, { x: 540, y: 375 }, { x: 540, y: 262 }, { x: 418, y: 254 }],
+                    [{ x: 800, y: 168 }, { x: 882, y: 164 }, { x: 948, y: 242 }, { x: 854, y: 246 }],
+                    [{ x: 980, y: 422 }, { x: 908, y: 426 }, { x: 830, y: 374 }, { x: 910, y: 352 }],
+                    [{ x: 274, y: 140 }, { x: 376, y: 136 }, { x: 456, y: 182 }, { x: 368, y: 208 }],
+                    [{ x: 618, y: 164 }, { x: 668, y: 220 }, { x: 612, y: 280 }, { x: 560, y: 214 }],
+                    [{ x: 768, y: 410 }, { x: 716, y: 372 }, { x: 666, y: 410 }, { x: 716, y: 448 }]
                 ];
 
                 var taskMap = {
-                    router: ["Routing inbound opportunities", "Qualifying lead context", "Prioritizing queue weights"],
-                    proposal: ["Drafting scoped proposal", "Syncing pricing assumptions", "Packaging executive summary"],
-                    qa: ["Validating generated output", "Running compliance checks", "Reviewing confidence scores"],
-                    ops: ["Publishing status digest", "Monitoring execution drift", "Escalating risk signals"],
-                    founder: ["Approving release gates", "Reassigning workflow lane", "Reviewing weekly KPI delta"]
+                    router: ["Routing inbound requests", "Triaging lead queue", "Assigning lane owner"],
+                    proposal: ["Drafting proposal packet", "Composing scoped estimate", "Revising offer terms"],
+                    qa: ["Reviewing generated copy", "Running quality checks", "Confirming compliance gates"],
+                    ops: ["Posting ops summary", "Syncing daily dashboard", "Flagging execution drift"],
+                    founder: ["Approving release gate", "Reviewing throughput metrics", "Setting weekly priorities"],
+                    support: ["Resolving support loop", "Updating client timeline", "Closing feedback cycle"]
                 };
 
                 var agents = [
-                    { id: "router", label: "Lead Router", color: "#ff9359", x: 18, y: 63, speed: 0.032, state: "syncing", stateTimer: 1100, desk: 0, targetDesk: 0, targetX: 20, targetY: 31, task: "Booting lane controls" },
-                    { id: "proposal", label: "Proposal", color: "#ffc46a", x: 52, y: 67, speed: 0.03, state: "moving", stateTimer: 0, desk: 1, targetDesk: 1, targetX: 58, targetY: 27, task: "Moving to proposal desk" },
-                    { id: "qa", label: "QA", color: "#7db6ff", x: 86, y: 65, speed: 0.029, state: "working", stateTimer: 1500, desk: 2, targetDesk: 2, targetX: 96, targetY: 25, task: "Validating generated output" },
-                    { id: "ops", label: "Delivery Ops", color: "#72e4ba", x: 122, y: 67, speed: 0.03, state: "moving", stateTimer: 0, desk: 3, targetDesk: 3, targetX: 134, targetY: 27, task: "Moving to ops desk" },
-                    { id: "founder", label: "Founder", color: "#f59dc0", x: 158, y: 64, speed: 0.033, state: "syncing", stateTimer: 980, desk: 4, targetDesk: 4, targetX: 172, targetY: 31, task: "Syncing strategy context" }
+                    { id: "router", label: "Lead Router", sprite: 2, route: 0, node: 0, x: 420, y: 395, targetX: 540, targetY: 375, speed: 96, state: "moving", stateTimer: 0, dir: "down", flip: false, task: "Routing inbound requests" },
+                    { id: "proposal", label: "Proposal", sprite: 0, route: 1, node: 0, x: 800, y: 168, targetX: 882, targetY: 164, speed: 90, state: "working", stateTimer: 1200, dir: "right", flip: false, task: "Drafting proposal packet" },
+                    { id: "qa", label: "QA", sprite: 1, route: 2, node: 0, x: 980, y: 422, targetX: 908, targetY: 426, speed: 88, state: "syncing", stateTimer: 980, dir: "left", flip: true, task: "Running quality checks" },
+                    { id: "ops", label: "Delivery Ops", sprite: 4, route: 3, node: 0, x: 274, y: 140, targetX: 376, targetY: 136, speed: 94, state: "moving", stateTimer: 0, dir: "right", flip: false, task: "Posting ops summary" },
+                    { id: "founder", label: "Founder", sprite: 3, route: 4, node: 0, x: 618, y: 164, targetX: 668, targetY: 220, speed: 92, state: "working", stateTimer: 1500, dir: "down", flip: false, task: "Approving release gate" },
+                    { id: "support", label: "Support", sprite: 5, route: 5, node: 0, x: 768, y: 410, targetX: 716, targetY: 372, speed: 86, state: "moving", stateTimer: 0, dir: "left", flip: true, task: "Resolving support loop" }
                 ];
 
                 var logRows = [];
@@ -2371,50 +1975,48 @@
                 }
 
                 function taskFor(agent) {
-                    return randomItem(taskMap[agent.id] || ["Executing workflow task"]);
+                    return randomItem(taskMap[agent.id] || ["Processing workflow task"]);
                 }
 
                 function stateClass(agent) {
-                    if (agent.state === "moving") {
-                        return "moving";
-                    }
-                    if (agent.state === "syncing") {
-                        return "syncing";
-                    }
-                    return "working";
+                    return agent.state === "working" ? "working" : (agent.state === "syncing" ? "syncing" : "moving");
                 }
 
-                function chooseNextDesk(agent, silent) {
-                    var next = Math.floor(Math.random() * desks.length);
-                    if (next === agent.desk) {
-                        next = (next + 1 + Math.floor(Math.random() * (desks.length - 1))) % desks.length;
-                    }
-
-                    agent.targetDesk = next;
-                    agent.targetX = desks[next].x;
-                    agent.targetY = desks[next].y + 13;
+                function moveToNextNode(agent, silent) {
+                    var path = routes[agent.route];
+                    agent.node = (agent.node + 1) % path.length;
+                    agent.targetX = path[agent.node].x;
+                    agent.targetY = path[agent.node].y;
                     agent.state = "moving";
-                    agent.task = "Moving to " + desks[next].name + " lane";
-
+                    agent.task = "Moving to lane checkpoint";
                     if (!silent) {
-                        addLog(agent.label + " rerouted to " + desks[next].name + ".");
+                        addLog(agent.label + " moved to next lane checkpoint.");
                     }
                 }
 
-                function beginWork(agent) {
-                    agent.desk = agent.targetDesk;
-                    if (Math.random() < 0.25) {
+                function enterWorkState(agent) {
+                    if (Math.random() < 0.22) {
                         agent.state = "syncing";
-                        agent.stateTimer = 900 + Math.random() * 1200;
+                        agent.stateTimer = 900 + Math.random() * 1500;
                         agent.task = "Syncing context across agents";
-                        addLog(agent.label + " syncing shared context.");
+                        addLog(agent.label + " syncing context with team.");
                         return;
                     }
 
                     agent.state = "working";
-                    agent.stateTimer = 1200 + Math.random() * 2100;
+                    agent.stateTimer = 1150 + Math.random() * 2000;
                     agent.task = taskFor(agent);
                     addLog(agent.label + " started " + agent.task.toLowerCase() + ".");
+                }
+
+                function updateDirection(agent, dx, dy) {
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        agent.dir = "right";
+                        agent.flip = dx < 0;
+                        return;
+                    }
+                    agent.dir = dy < 0 ? "up" : "down";
+                    agent.flip = false;
                 }
 
                 function updateAgent(agent, dtMs) {
@@ -2422,15 +2024,16 @@
                         var dx = agent.targetX - agent.x;
                         var dy = agent.targetY - agent.y;
                         var distance = Math.hypot(dx, dy);
-                        var step = agent.speed * dtMs;
+                        var step = (agent.speed * dtMs) / 1000;
 
                         if (distance <= step || distance === 0) {
                             agent.x = agent.targetX;
                             agent.y = agent.targetY;
-                            beginWork(agent);
+                            enterWorkState(agent);
                             return;
                         }
 
+                        updateDirection(agent, dx, dy);
                         agent.x += (dx / distance) * step;
                         agent.y += (dy / distance) * step;
                         return;
@@ -2443,121 +2046,78 @@
 
                     if (agent.state === "syncing") {
                         agent.state = "working";
-                        agent.stateTimer = 1000 + Math.random() * 1800;
+                        agent.stateTimer = 800 + Math.random() * 1600;
                         agent.task = taskFor(agent);
                         addLog(agent.label + " resumed " + agent.task.toLowerCase() + ".");
                         return;
                     }
 
-                    chooseNextDesk(agent, false);
+                    moveToNextNode(agent, false);
                 }
 
-                function activityForDesk(index) {
-                    var level = 0;
-                    agents.forEach(function (agent) {
-                        if (agent.desk !== index) {
-                            return;
-                        }
-                        if (agent.state === "working") {
-                            level = Math.max(level, 2);
-                        }
-                        if (agent.state === "syncing") {
-                            level = Math.max(level, 1);
-                        }
-                    });
-                    return level;
-                }
-
-                function drawDesk(desk, activity, nowMs) {
-                    var x = desk.x;
-                    var y = desk.y;
-                    ctx.fillStyle = "#405775";
-                    ctx.fillRect(x - 10, y - 4, 20, 6);
-                    ctx.fillStyle = "#31455f";
-                    ctx.fillRect(x - 8, y + 1, 16, 4);
-
-                    if (activity === 2) {
-                        ctx.fillStyle = nowMs % 420 < 220 ? "#b1f6eb" : "#7fd8ca";
-                    } else if (activity === 1) {
-                        ctx.fillStyle = "#8fc0ff";
+                function drawBackdrop() {
+                    if (floorImage.complete && floorImage.naturalWidth > 0) {
+                        ctx.drawImage(floorImage, 0, 0, worldWidth, worldHeight);
                     } else {
-                        ctx.fillStyle = "#5c769a";
+                        ctx.fillStyle = "#1a1f30";
+                        ctx.fillRect(0, 0, worldWidth, worldHeight);
                     }
-                    ctx.fillRect(x - 6, y - 3, 12, 2);
+
+                    ctx.fillStyle = "rgba(8, 10, 20, 0.2)";
+                    ctx.fillRect(0, 0, worldWidth, worldHeight);
+                }
+
+                function spriteRow(agent) {
+                    if (agent.dir === "up") {
+                        return 1;
+                    }
+                    if (agent.dir === "right") {
+                        return 2;
+                    }
+                    return 0;
                 }
 
                 function drawAgent(agent, nowMs) {
-                    var x = Math.round(agent.x);
-                    var y = Math.round(agent.y);
-                    var bob = agent.state === "moving" ? ((nowMs / 70 + x) % 2 < 1 ? 0 : 1) : 0;
-                    var bodyY = y + bob;
+                    var img = spriteImages[agent.sprite];
+                    if (!img || !img.complete || img.naturalWidth === 0) {
+                        return;
+                    }
 
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.34)";
-                    ctx.fillRect(x - 2, bodyY + 5, 6, 1);
+                    var frame = agent.state === "moving" ? (Math.floor(nowMs / 100) % 6) : 0;
+                    var sx = frame * 16;
+                    var sy = spriteRow(agent) * 16;
+                    var dw = 34;
+                    var dh = 34;
+                    var x = Math.round(agent.x - dw / 2);
+                    var y = Math.round(agent.y - dh * 0.82);
 
-                    ctx.fillStyle = "#f5cfb5";
-                    ctx.fillRect(x - 1, bodyY - 5, 3, 2);
-                    ctx.fillStyle = agent.color;
-                    ctx.fillRect(x - 2, bodyY - 3, 5, 4);
-                    ctx.fillStyle = "#101726";
-                    ctx.fillRect(x - 2, bodyY + 1, 2, 3);
-                    ctx.fillRect(x + 1, bodyY + 1, 2, 3);
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.32)";
+                    ctx.fillRect(Math.round(agent.x - 9), Math.round(agent.y + 7), 18, 3);
 
-                    if (agent.state === "syncing" && nowMs % 360 < 180) {
-                        ctx.fillStyle = "#9ad1ff";
-                        ctx.fillRect(x + 3, bodyY - 6, 2, 2);
+                    ctx.save();
+                    if (agent.flip) {
+                        ctx.translate(x + dw, y);
+                        ctx.scale(-1, 1);
+                        ctx.drawImage(img, sx, sy, 16, 16, 0, 0, dw, dh);
+                    } else {
+                        ctx.drawImage(img, sx, sy, 16, 16, x, y, dw, dh);
+                    }
+                    ctx.restore();
+
+                    if (agent.state === "syncing" && nowMs % 360 < 190) {
+                        ctx.fillStyle = "rgba(145, 198, 255, 0.9)";
+                        ctx.fillRect(Math.round(agent.x + 10), Math.round(agent.y - 20), 4, 4);
                     }
                 }
 
                 function drawScene(nowMs) {
-                    ctx.fillStyle = "#151e2f";
-                    ctx.fillRect(0, 0, worldWidth, worldHeight);
-                    ctx.fillStyle = "#202c42";
-                    ctx.fillRect(0, 0, worldWidth, 15);
-                    ctx.fillStyle = "#23334b";
-                    ctx.fillRect(0, 50, worldWidth, worldHeight - 50);
-
-                    ctx.strokeStyle = "rgba(160, 198, 245, 0.08)";
-                    ctx.lineWidth = 1;
-                    for (var gx = 0; gx < worldWidth; gx += 8) {
-                        ctx.beginPath();
-                        ctx.moveTo(gx + 0.5, 16);
-                        ctx.lineTo(gx + 0.5, worldHeight);
-                        ctx.stroke();
-                    }
-                    for (var gy = 16; gy < worldHeight; gy += 8) {
-                        ctx.beginPath();
-                        ctx.moveTo(0, gy + 0.5);
-                        ctx.lineTo(worldWidth, gy + 0.5);
-                        ctx.stroke();
-                    }
-
-                    ctx.strokeStyle = "rgba(132, 182, 255, 0.2)";
-                    desks.forEach(function (desk) {
-                        ctx.beginPath();
-                        ctx.moveTo(hub.x + 0.5, hub.y + 0.5);
-                        ctx.lineTo(desk.x + 0.5, desk.y + 9.5);
-                        ctx.stroke();
+                    drawBackdrop();
+                    var sorted = agents.slice().sort(function (a, b) {
+                        return a.y - b.y;
                     });
-
-                    desks.forEach(function (desk, index) {
-                        drawDesk(desk, activityForDesk(index), nowMs);
-                    });
-
-                    ctx.fillStyle = "#f08b4b";
-                    ctx.fillRect(hub.x - 5, hub.y - 3, 10, 6);
-                    ctx.fillStyle = "#ffd3ac";
-                    ctx.fillRect(hub.x - 2, hub.y - 1, 4, 2);
-
-                    agents.forEach(function (agent) {
+                    sorted.forEach(function (agent) {
                         drawAgent(agent, nowMs);
                     });
-
-                    ctx.fillStyle = "rgba(235, 244, 255, 0.9)";
-                    ctx.font = "5px 'IBM Plex Mono', monospace";
-                    ctx.fillText("INGEST", 8, 11);
-                    ctx.fillText("ORCHESTRATE", 74, 11);
-                    ctx.fillText("DELIVER", 164, 11);
                 }
 
                 function renderHud() {
@@ -2614,8 +2174,8 @@
                     rafId = null;
                 }
 
-                addLog("Agent floor online.");
-                addLog("All workflow lanes initialized.");
+                addLog("Pixel office online.");
+                addLog("Agents synced with shared workspace.");
                 renderHud();
                 drawScene(performance.now());
 
@@ -2652,397 +2212,6 @@
                         startLoop();
                     }
                 });
-            }
-
-            function setupSignalSprint() {
-                var arena = document.getElementById("game-arena");
-                var target = document.getElementById("pulse-target");
-                var startButton = document.getElementById("game-start");
-                var overlay = document.getElementById("game-overlay");
-                var feedback = document.getElementById("game-feedback");
-                var scoreEl = document.getElementById("game-score");
-                var timeEl = document.getElementById("game-time");
-                var integrityEl = document.getElementById("game-integrity");
-                var comboEl = document.getElementById("game-combo");
-                var bestEl = document.getElementById("game-best");
-                var bestRankEl = document.getElementById("game-best-rank");
-                var timerBar = document.getElementById("game-timer-bar");
-                var integrityBar = document.getElementById("game-integrity-bar");
-                var accuracyEl = document.getElementById("game-accuracy");
-                var maxComboEl = document.getElementById("game-max-combo");
-                var rankEl = document.getElementById("game-rank");
-
-                if (!arena || !target || !startButton || !overlay || !feedback || !scoreEl || !timeEl || !integrityEl || !comboEl || !bestEl || !bestRankEl || !timerBar || !integrityBar || !accuracyEl || !maxComboEl || !rankEl) {
-                    return;
-                }
-
-                var storageKey = "zachwright-signal-sprint-best";
-                var storageRankKey = "zachwright-signal-sprint-rank";
-                var state = {
-                    running: false,
-                    durationMs: 20000,
-                    remainingMs: 20000,
-                    score: 0,
-                    integrity: 3,
-                    integrityMax: 3,
-                    combo: 0,
-                    maxCombo: 0,
-                    hits: 0,
-                    misses: 0,
-                    best: 0,
-                    bestRank: "--",
-                    currentRank: "--",
-                    baseWindow: 1060,
-                    pulseWindow: 1060,
-                    pulseSpawnAt: 0,
-                    pulseToken: 0,
-                    lastTickAt: 0,
-                    rafId: null,
-                    spawnTimer: null,
-                    expireTimer: null,
-                    targetLive: false,
-                    moodTimer: null,
-                    feedbackTimer: null
-                };
-
-                try {
-                    var storedBest = parseInt(window.localStorage.getItem(storageKey), 10);
-                    if (!Number.isNaN(storedBest) && storedBest > 0) {
-                        state.best = storedBest;
-                    }
-                    var storedRank = window.localStorage.getItem(storageRankKey);
-                    if (storedRank) {
-                        state.bestRank = storedRank;
-                    }
-                } catch (error) {
-                    state.best = 0;
-                    state.bestRank = "--";
-                }
-
-                function getAccuracy() {
-                    var total = state.hits + state.misses;
-                    if (!total) {
-                        return 0;
-                    }
-                    return state.hits / total;
-                }
-
-                function rankFor(score, accuracy) {
-                    if (score >= 760 && accuracy >= 0.86) {
-                        return "S";
-                    }
-                    if (score >= 560 && accuracy >= 0.76) {
-                        return "A";
-                    }
-                    if (score >= 380 && accuracy >= 0.66) {
-                        return "B";
-                    }
-                    if (score >= 220) {
-                        return "C";
-                    }
-                    return "D";
-                }
-
-                function updateStats() {
-                    var timeRatio = Math.max(0, Math.min(1, state.remainingMs / state.durationMs));
-                    var integrityRatio = Math.max(0, Math.min(1, state.integrity / state.integrityMax));
-                    var accuracy = getAccuracy();
-                    scoreEl.textContent = String(state.score);
-                    timeEl.textContent = (state.remainingMs / 1000).toFixed(1) + "s";
-                    integrityEl.textContent = String(Math.max(state.integrity, 0)) + "/3";
-                    comboEl.textContent = String(state.combo) + "x";
-                    bestEl.textContent = String(state.best);
-                    bestRankEl.textContent = state.bestRank;
-                    timerBar.style.transform = "scaleX(" + timeRatio.toFixed(4) + ")";
-                    integrityBar.style.transform = "scaleX(" + integrityRatio.toFixed(4) + ")";
-                    integrityBar.style.background = integrityRatio < 0.35
-                        ? "linear-gradient(90deg, #d85d2f, #f8b363)"
-                        : "linear-gradient(90deg, #2dcf9f, #f8b363)";
-                    accuracyEl.textContent = String(Math.round(accuracy * 100)) + "%";
-                    maxComboEl.textContent = String(state.maxCombo) + "x";
-                    rankEl.textContent = state.currentRank;
-                }
-
-                function clearTimers() {
-                    if (state.rafId) {
-                        window.cancelAnimationFrame(state.rafId);
-                        state.rafId = null;
-                    }
-                    if (state.spawnTimer) {
-                        window.clearTimeout(state.spawnTimer);
-                        state.spawnTimer = null;
-                    }
-                    if (state.expireTimer) {
-                        window.clearTimeout(state.expireTimer);
-                        state.expireTimer = null;
-                    }
-                    if (state.moodTimer) {
-                        window.clearTimeout(state.moodTimer);
-                        state.moodTimer = null;
-                    }
-                    if (state.feedbackTimer) {
-                        window.clearTimeout(state.feedbackTimer);
-                        state.feedbackTimer = null;
-                    }
-                }
-
-                function flashArena(mode) {
-                    arena.classList.remove("is-hit", "is-miss");
-                    if (!mode) {
-                        return;
-                    }
-
-                    arena.classList.add(mode);
-                    state.moodTimer = window.setTimeout(function () {
-                        arena.classList.remove("is-hit", "is-miss");
-                    }, 140);
-                }
-
-                function setFeedback(message, tone) {
-                    feedback.textContent = message;
-                    feedback.classList.remove("hit", "miss", "is-show");
-                    if (tone) {
-                        feedback.classList.add(tone);
-                    }
-
-                    window.requestAnimationFrame(function () {
-                        feedback.classList.add("is-show");
-                    });
-
-                    state.feedbackTimer = window.setTimeout(function () {
-                        feedback.classList.remove("is-show");
-                    }, 460);
-                }
-
-                function setOverlay(message) {
-                    overlay.textContent = message;
-                }
-
-                function hidePulse() {
-                    state.targetLive = false;
-                    target.classList.remove("is-live");
-                }
-
-                function placePulse() {
-                    var size = 62;
-                    var width = arena.clientWidth;
-                    var height = arena.clientHeight;
-                    var min = size * 0.6;
-                    var left = min + Math.random() * Math.max(8, width - min * 2);
-                    var top = min + Math.random() * Math.max(8, height - min * 2);
-                    target.style.left = left.toFixed(0) + "px";
-                    target.style.top = top.toFixed(0) + "px";
-                }
-
-                function nextPulseWindow() {
-                    var elapsedRatio = 1 - (state.remainingMs / state.durationMs);
-                    var comboPressure = Math.min(state.combo * 15, 230);
-                    return Math.max(360, state.baseWindow - comboPressure - Math.floor(elapsedRatio * 280));
-                }
-
-                function queuePulse(delay) {
-                    if (!state.running) {
-                        return;
-                    }
-
-                    if (state.spawnTimer) {
-                        window.clearTimeout(state.spawnTimer);
-                    }
-
-                    state.spawnTimer = window.setTimeout(function () {
-                        if (!state.running) {
-                            return;
-                        }
-
-                        state.pulseToken += 1;
-                        placePulse();
-                        state.targetLive = true;
-                        state.pulseSpawnAt = performance.now();
-                        state.pulseWindow = nextPulseWindow();
-                        target.classList.add("is-live");
-
-                        if (state.expireTimer) {
-                            window.clearTimeout(state.expireTimer);
-                        }
-
-                        (function (token) {
-                            state.expireTimer = window.setTimeout(function () {
-                                handleMiss(token);
-                            }, state.pulseWindow);
-                        })(state.pulseToken);
-                    }, delay);
-                }
-
-                function saveBest() {
-                    try {
-                        window.localStorage.setItem(storageKey, String(state.best));
-                        window.localStorage.setItem(storageRankKey, state.bestRank);
-                    } catch (error) {
-                        // Ignore localStorage write failure and continue game flow.
-                    }
-                }
-
-                function endGame(message) {
-                    state.running = false;
-                    clearTimers();
-                    hidePulse();
-                    arena.classList.remove("is-running");
-                    state.currentRank = rankFor(state.score, getAccuracy());
-
-                    if (state.score > state.best) {
-                        state.best = state.score;
-                        state.bestRank = state.currentRank;
-                        saveBest();
-                    }
-
-                    updateStats();
-                    setOverlay(message + " Rank " + state.currentRank + ".");
-                }
-
-                function pointsForReaction(reactionMs) {
-                    var grade = "Good";
-                    var multiplier = 1.05;
-
-                    if (reactionMs < 250) {
-                        grade = "Perfect";
-                        multiplier = 1.55;
-                    } else if (reactionMs < 430) {
-                        grade = "Sharp";
-                        multiplier = 1.28;
-                    }
-
-                    var timeBonus = Math.floor((state.remainingMs / 1000) * 1.2);
-                    var comboBonus = Math.min(state.combo * 3, 60);
-                    var points = Math.floor((14 + timeBonus) * multiplier + comboBonus);
-
-                    return {
-                        grade: grade,
-                        points: points
-                    };
-                }
-
-                function handleHit() {
-                    if (!state.running || !state.targetLive) {
-                        return;
-                    }
-
-                    var reaction = performance.now() - state.pulseSpawnAt;
-                    var result = pointsForReaction(reaction);
-                    state.score += result.points;
-                    state.hits += 1;
-                    state.combo += 1;
-                    state.maxCombo = Math.max(state.maxCombo, state.combo);
-                    state.currentRank = rankFor(state.score, getAccuracy());
-                    hidePulse();
-                    flashArena("is-hit");
-                    setFeedback(result.grade + " +" + result.points, "hit");
-                    updateStats();
-                    queuePulse(130 + Math.random() * 280);
-                }
-
-                function handleMiss(token) {
-                    if (!state.running || !state.targetLive || token !== state.pulseToken) {
-                        return;
-                    }
-
-                    hidePulse();
-                    state.misses += 1;
-                    state.combo = 0;
-                    state.integrity -= 1;
-                    flashArena("is-miss");
-                    setFeedback("Miss -1 integrity", "miss");
-                    updateStats();
-
-                    if (state.integrity <= 0) {
-                        endGame("System integrity failed.");
-                        return;
-                    }
-
-                    queuePulse(220 + Math.random() * 320);
-                }
-
-                function tick(now) {
-                    if (!state.running) {
-                        return;
-                    }
-
-                    if (!state.lastTickAt) {
-                        state.lastTickAt = now;
-                    }
-
-                    var delta = now - state.lastTickAt;
-                    state.lastTickAt = now;
-                    state.remainingMs = Math.max(0, state.remainingMs - delta);
-                    updateStats();
-
-                    if (state.remainingMs <= 0) {
-                        endGame("Sprint complete.");
-                        return;
-                    }
-
-                    state.rafId = window.requestAnimationFrame(tick);
-                }
-
-                function startGame() {
-                    clearTimers();
-                    hidePulse();
-                    state.running = true;
-                    state.remainingMs = state.durationMs;
-                    state.score = 0;
-                    state.integrity = state.integrityMax;
-                    state.combo = 0;
-                    state.maxCombo = 0;
-                    state.hits = 0;
-                    state.misses = 0;
-                    state.pulseWindow = state.baseWindow;
-                    state.lastTickAt = 0;
-                    state.currentRank = "C";
-                    arena.classList.remove("is-hit", "is-miss");
-                    arena.classList.add("is-running");
-                    startButton.textContent = "Restart Sprint";
-                    setOverlay("");
-                    updateStats();
-                    queuePulse(520);
-                    state.rafId = window.requestAnimationFrame(tick);
-                }
-
-                startButton.addEventListener("click", function () {
-                    startGame();
-                });
-
-                target.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    handleHit();
-                });
-
-                arena.addEventListener("click", function (event) {
-                    if (!state.running || event.target === target) {
-                        return;
-                    }
-
-                    handleMiss(state.pulseToken);
-                });
-
-                document.addEventListener("keydown", function (event) {
-                    var key = event.key;
-                    var targetTag = event.target && event.target.tagName;
-                    if (targetTag === "INPUT" || targetTag === "TEXTAREA" || targetTag === "SELECT" || targetTag === "BUTTON") {
-                        return;
-                    }
-                    if (event.repeat) {
-                        return;
-                    }
-
-                    if (key === " " || key === "Enter") {
-                        event.preventDefault();
-                        if (!state.running) {
-                            startGame();
-                        }
-                    }
-                });
-
-                updateStats();
-                setOverlay("Press start and catch every pulse before it expires.");
             }
         })();
     </script>
