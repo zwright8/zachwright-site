@@ -2011,8 +2011,8 @@
 
                 function updateDirection(agent, dx, dy) {
                     if (Math.abs(dx) > Math.abs(dy)) {
-                        agent.dir = "right";
-                        agent.flip = dx < 0;
+                        agent.dir = dx < 0 ? "left" : "right";
+                        agent.flip = false;
                         return;
                     }
                     agent.dir = dy < 0 ? "up" : "down";
@@ -2068,6 +2068,9 @@
                 }
 
                 function spriteRow(agent) {
+                    if (agent.dir === "left") {
+                        return 3;
+                    }
                     if (agent.dir === "up") {
                         return 1;
                     }
@@ -2083,30 +2086,24 @@
                         return;
                     }
 
-                    var frame = agent.state === "moving" ? (Math.floor(nowMs / 100) % 6) : 0;
-                    var sx = frame * 16;
-                    var sy = spriteRow(agent) * 16;
+                    var frameWidth = 16;
+                    var frameHeight = 24;
+                    var frame = agent.state === "moving" ? ((Math.floor(nowMs / 110) % 6) + 1) : 0;
+                    var sx = frame * frameWidth;
+                    var sy = spriteRow(agent) * frameHeight;
                     var dw = 34;
-                    var dh = 34;
+                    var dh = 51;
                     var x = Math.round(agent.x - dw / 2);
-                    var y = Math.round(agent.y - dh * 0.82);
+                    var y = Math.round(agent.y - dh + 8);
 
                     ctx.fillStyle = "rgba(0, 0, 0, 0.32)";
                     ctx.fillRect(Math.round(agent.x - 9), Math.round(agent.y + 7), 18, 3);
 
-                    ctx.save();
-                    if (agent.flip) {
-                        ctx.translate(x + dw, y);
-                        ctx.scale(-1, 1);
-                        ctx.drawImage(img, sx, sy, 16, 16, 0, 0, dw, dh);
-                    } else {
-                        ctx.drawImage(img, sx, sy, 16, 16, x, y, dw, dh);
-                    }
-                    ctx.restore();
+                    ctx.drawImage(img, sx, sy, frameWidth, frameHeight, x, y, dw, dh);
 
                     if (agent.state === "syncing" && nowMs % 360 < 190) {
                         ctx.fillStyle = "rgba(145, 198, 255, 0.9)";
-                        ctx.fillRect(Math.round(agent.x + 10), Math.round(agent.y - 20), 4, 4);
+                        ctx.fillRect(Math.round(agent.x + 11), Math.round(y - 6), 4, 4);
                     }
                 }
 
