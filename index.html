@@ -960,6 +960,175 @@
             margin-bottom: 14px;
         }
 
+        .agent-floor {
+            margin-bottom: 14px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(24, 32, 42, 0.18);
+            background:
+                radial-gradient(420px 160px at 0% 100%, rgba(45, 207, 159, 0.15), transparent 70%),
+                linear-gradient(160deg, rgba(255, 255, 255, 0.84), rgba(250, 244, 235, 0.86));
+            box-shadow: var(--shadow-sm);
+            padding: 14px;
+        }
+
+        .agent-floor-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .agent-floor-head h3 {
+            font-family: var(--font-display);
+            font-size: 1.14rem;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+        }
+
+        .agent-floor-head p {
+            font-size: 0.84rem;
+            color: rgba(24, 32, 42, 0.68);
+            max-width: 470px;
+        }
+
+        .agent-stage {
+            position: relative;
+            border-radius: 14px;
+            border: 1px solid rgba(24, 32, 42, 0.24);
+            overflow: hidden;
+            background: #1a2130;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        .agent-stage canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 7;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .agent-stage-label {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(8, 12, 18, 0.52);
+            padding: 5px 8px;
+            font-family: var(--font-mono);
+            font-size: 0.53rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(235, 244, 255, 0.92);
+            backdrop-filter: blur(3px);
+        }
+
+        .agent-floor-grid {
+            margin-top: 10px;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1.05fr 0.95fr;
+        }
+
+        .agent-status-list {
+            display: grid;
+            gap: 8px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .agent-card {
+            border-radius: 11px;
+            border: 1px solid rgba(24, 32, 42, 0.14);
+            background: rgba(255, 255, 255, 0.84);
+            padding: 8px;
+            display: grid;
+            gap: 4px;
+        }
+
+        .agent-card strong {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+        }
+
+        .agent-card p {
+            color: rgba(24, 32, 42, 0.74);
+            font-size: 0.73rem;
+            line-height: 1.3;
+            min-height: 1.9em;
+        }
+
+        .agent-state {
+            width: fit-content;
+            border-radius: 999px;
+            border: 1px solid rgba(24, 32, 42, 0.2);
+            padding: 3px 7px;
+            font-family: var(--font-mono);
+            font-size: 0.52rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(24, 32, 42, 0.72);
+            background: rgba(255, 255, 255, 0.74);
+        }
+
+        .agent-state.moving {
+            border-color: rgba(220, 122, 55, 0.45);
+            background: rgba(255, 189, 146, 0.34);
+            color: #65361f;
+        }
+
+        .agent-state.working {
+            border-color: rgba(33, 146, 124, 0.42);
+            background: rgba(150, 231, 216, 0.35);
+            color: #184a3f;
+        }
+
+        .agent-state.syncing {
+            border-color: rgba(73, 128, 203, 0.4);
+            background: rgba(165, 206, 255, 0.34);
+            color: #24406d;
+        }
+
+        .agent-log {
+            border-radius: 11px;
+            border: 1px solid rgba(24, 32, 42, 0.14);
+            background: rgba(255, 255, 255, 0.82);
+            padding: 10px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .agent-log-head {
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(24, 32, 42, 0.7);
+        }
+
+        .agent-log ul {
+            list-style: none;
+            display: grid;
+            gap: 6px;
+            max-height: 150px;
+            overflow: auto;
+            padding-right: 2px;
+        }
+
+        .agent-log li {
+            border-radius: 9px;
+            border: 1px solid rgba(24, 32, 42, 0.12);
+            background: rgba(255, 255, 255, 0.88);
+            padding: 6px 8px;
+            color: rgba(24, 32, 42, 0.76);
+            font-size: 0.76rem;
+            line-height: 1.28;
+        }
+
         .game-layout {
             display: grid;
             gap: 12px;
@@ -1493,6 +1662,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .agent-floor-grid {
+                grid-template-columns: 1fr;
+            }
+
             .services-grid,
             .pricing-grid,
             .testimonial-grid,
@@ -1560,6 +1733,10 @@
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
+            .agent-status-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             .game-actions {
                 align-items: flex-start;
                 flex-direction: column;
@@ -1572,6 +1749,16 @@
 
             .section {
                 margin-top: 48px;
+            }
+
+            .agent-floor-head {
+                align-items: flex-start;
+                flex-direction: column;
+                margin-bottom: 9px;
+            }
+
+            .agent-status-list {
+                grid-template-columns: 1fr;
             }
 
             .contact-card h3 {
@@ -1914,9 +2101,26 @@
         <section class="playground" id="playground" data-reveal>
             <div class="section-head">
                 <p class="kicker">Playground</p>
-                <h2>Signal Sprint: stabilize the system in 20 seconds</h2>
-                <p>A compact mini-game to keep this page fun without turning it into visual clutter.</p>
+                <h2>Agent Floor + Signal Sprint</h2>
+                <p>Watch a pixel agent office run in the background, then jump into a focused operator sprint.</p>
             </div>
+            <section class="agent-floor">
+                <div class="agent-floor-head">
+                    <h3>Live Agent Floor Simulation</h3>
+                    <p>Modeled after your operating lanes: agents route, draft, validate, sync, and hand off in real time.</p>
+                </div>
+                <div class="agent-stage">
+                    <canvas id="agent-floor-canvas" width="192" height="84" aria-label="Animated pixel office with AI agents collaborating"></canvas>
+                    <p class="agent-stage-label">Simulated orchestration</p>
+                </div>
+                <div class="agent-floor-grid">
+                    <div class="agent-status-list" id="agent-status-list" aria-live="polite"></div>
+                    <aside class="agent-log">
+                        <p class="agent-log-head">Recent activity</p>
+                        <ul id="agent-event-log"></ul>
+                    </aside>
+                </div>
+            </section>
             <div class="game-layout">
                 <article class="game-card" data-tilt>
                     <div class="game-top">
@@ -2104,7 +2308,351 @@
                 });
             }
 
+            setupAgentFloor();
             setupSignalSprint();
+
+            function setupAgentFloor() {
+                var canvas = document.getElementById("agent-floor-canvas");
+                var statusList = document.getElementById("agent-status-list");
+                var eventLog = document.getElementById("agent-event-log");
+
+                if (!canvas || !statusList || !eventLog) {
+                    return;
+                }
+
+                var ctx = canvas.getContext("2d");
+                if (!ctx) {
+                    return;
+                }
+
+                var worldWidth = canvas.width;
+                var worldHeight = canvas.height;
+                var hub = { x: 96, y: 44 };
+                var desks = [
+                    { name: "Intake", x: 20, y: 18 },
+                    { name: "Proposal", x: 58, y: 14 },
+                    { name: "Testing", x: 96, y: 12 },
+                    { name: "Ops", x: 134, y: 14 },
+                    { name: "Delivery", x: 172, y: 18 }
+                ];
+
+                var taskMap = {
+                    router: ["Routing inbound opportunities", "Qualifying lead context", "Prioritizing queue weights"],
+                    proposal: ["Drafting scoped proposal", "Syncing pricing assumptions", "Packaging executive summary"],
+                    qa: ["Validating generated output", "Running compliance checks", "Reviewing confidence scores"],
+                    ops: ["Publishing status digest", "Monitoring execution drift", "Escalating risk signals"],
+                    founder: ["Approving release gates", "Reassigning workflow lane", "Reviewing weekly KPI delta"]
+                };
+
+                var agents = [
+                    { id: "router", label: "Lead Router", color: "#ff9359", x: 18, y: 63, speed: 0.032, state: "syncing", stateTimer: 1100, desk: 0, targetDesk: 0, targetX: 20, targetY: 31, task: "Booting lane controls" },
+                    { id: "proposal", label: "Proposal", color: "#ffc46a", x: 52, y: 67, speed: 0.03, state: "moving", stateTimer: 0, desk: 1, targetDesk: 1, targetX: 58, targetY: 27, task: "Moving to proposal desk" },
+                    { id: "qa", label: "QA", color: "#7db6ff", x: 86, y: 65, speed: 0.029, state: "working", stateTimer: 1500, desk: 2, targetDesk: 2, targetX: 96, targetY: 25, task: "Validating generated output" },
+                    { id: "ops", label: "Delivery Ops", color: "#72e4ba", x: 122, y: 67, speed: 0.03, state: "moving", stateTimer: 0, desk: 3, targetDesk: 3, targetX: 134, targetY: 27, task: "Moving to ops desk" },
+                    { id: "founder", label: "Founder", color: "#f59dc0", x: 158, y: 64, speed: 0.033, state: "syncing", stateTimer: 980, desk: 4, targetDesk: 4, targetX: 172, targetY: 31, task: "Syncing strategy context" }
+                ];
+
+                var logRows = [];
+                var maxLogRows = 6;
+                var rafId = null;
+                var lastTs = 0;
+                var hudElapsed = 0;
+                var isVisible = true;
+
+                function randomItem(arr) {
+                    return arr[Math.floor(Math.random() * arr.length)];
+                }
+
+                function addLog(text) {
+                    logRows.unshift(text);
+                    if (logRows.length > maxLogRows) {
+                        logRows.length = maxLogRows;
+                    }
+                }
+
+                function taskFor(agent) {
+                    return randomItem(taskMap[agent.id] || ["Executing workflow task"]);
+                }
+
+                function stateClass(agent) {
+                    if (agent.state === "moving") {
+                        return "moving";
+                    }
+                    if (agent.state === "syncing") {
+                        return "syncing";
+                    }
+                    return "working";
+                }
+
+                function chooseNextDesk(agent, silent) {
+                    var next = Math.floor(Math.random() * desks.length);
+                    if (next === agent.desk) {
+                        next = (next + 1 + Math.floor(Math.random() * (desks.length - 1))) % desks.length;
+                    }
+
+                    agent.targetDesk = next;
+                    agent.targetX = desks[next].x;
+                    agent.targetY = desks[next].y + 13;
+                    agent.state = "moving";
+                    agent.task = "Moving to " + desks[next].name + " lane";
+
+                    if (!silent) {
+                        addLog(agent.label + " rerouted to " + desks[next].name + ".");
+                    }
+                }
+
+                function beginWork(agent) {
+                    agent.desk = agent.targetDesk;
+                    if (Math.random() < 0.25) {
+                        agent.state = "syncing";
+                        agent.stateTimer = 900 + Math.random() * 1200;
+                        agent.task = "Syncing context across agents";
+                        addLog(agent.label + " syncing shared context.");
+                        return;
+                    }
+
+                    agent.state = "working";
+                    agent.stateTimer = 1200 + Math.random() * 2100;
+                    agent.task = taskFor(agent);
+                    addLog(agent.label + " started " + agent.task.toLowerCase() + ".");
+                }
+
+                function updateAgent(agent, dtMs) {
+                    if (agent.state === "moving") {
+                        var dx = agent.targetX - agent.x;
+                        var dy = agent.targetY - agent.y;
+                        var distance = Math.hypot(dx, dy);
+                        var step = agent.speed * dtMs;
+
+                        if (distance <= step || distance === 0) {
+                            agent.x = agent.targetX;
+                            agent.y = agent.targetY;
+                            beginWork(agent);
+                            return;
+                        }
+
+                        agent.x += (dx / distance) * step;
+                        agent.y += (dy / distance) * step;
+                        return;
+                    }
+
+                    agent.stateTimer -= dtMs;
+                    if (agent.stateTimer > 0) {
+                        return;
+                    }
+
+                    if (agent.state === "syncing") {
+                        agent.state = "working";
+                        agent.stateTimer = 1000 + Math.random() * 1800;
+                        agent.task = taskFor(agent);
+                        addLog(agent.label + " resumed " + agent.task.toLowerCase() + ".");
+                        return;
+                    }
+
+                    chooseNextDesk(agent, false);
+                }
+
+                function activityForDesk(index) {
+                    var level = 0;
+                    agents.forEach(function (agent) {
+                        if (agent.desk !== index) {
+                            return;
+                        }
+                        if (agent.state === "working") {
+                            level = Math.max(level, 2);
+                        }
+                        if (agent.state === "syncing") {
+                            level = Math.max(level, 1);
+                        }
+                    });
+                    return level;
+                }
+
+                function drawDesk(desk, activity, nowMs) {
+                    var x = desk.x;
+                    var y = desk.y;
+                    ctx.fillStyle = "#405775";
+                    ctx.fillRect(x - 10, y - 4, 20, 6);
+                    ctx.fillStyle = "#31455f";
+                    ctx.fillRect(x - 8, y + 1, 16, 4);
+
+                    if (activity === 2) {
+                        ctx.fillStyle = nowMs % 420 < 220 ? "#b1f6eb" : "#7fd8ca";
+                    } else if (activity === 1) {
+                        ctx.fillStyle = "#8fc0ff";
+                    } else {
+                        ctx.fillStyle = "#5c769a";
+                    }
+                    ctx.fillRect(x - 6, y - 3, 12, 2);
+                }
+
+                function drawAgent(agent, nowMs) {
+                    var x = Math.round(agent.x);
+                    var y = Math.round(agent.y);
+                    var bob = agent.state === "moving" ? ((nowMs / 70 + x) % 2 < 1 ? 0 : 1) : 0;
+                    var bodyY = y + bob;
+
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.34)";
+                    ctx.fillRect(x - 2, bodyY + 5, 6, 1);
+
+                    ctx.fillStyle = "#f5cfb5";
+                    ctx.fillRect(x - 1, bodyY - 5, 3, 2);
+                    ctx.fillStyle = agent.color;
+                    ctx.fillRect(x - 2, bodyY - 3, 5, 4);
+                    ctx.fillStyle = "#101726";
+                    ctx.fillRect(x - 2, bodyY + 1, 2, 3);
+                    ctx.fillRect(x + 1, bodyY + 1, 2, 3);
+
+                    if (agent.state === "syncing" && nowMs % 360 < 180) {
+                        ctx.fillStyle = "#9ad1ff";
+                        ctx.fillRect(x + 3, bodyY - 6, 2, 2);
+                    }
+                }
+
+                function drawScene(nowMs) {
+                    ctx.fillStyle = "#151e2f";
+                    ctx.fillRect(0, 0, worldWidth, worldHeight);
+                    ctx.fillStyle = "#202c42";
+                    ctx.fillRect(0, 0, worldWidth, 15);
+                    ctx.fillStyle = "#23334b";
+                    ctx.fillRect(0, 50, worldWidth, worldHeight - 50);
+
+                    ctx.strokeStyle = "rgba(160, 198, 245, 0.08)";
+                    ctx.lineWidth = 1;
+                    for (var gx = 0; gx < worldWidth; gx += 8) {
+                        ctx.beginPath();
+                        ctx.moveTo(gx + 0.5, 16);
+                        ctx.lineTo(gx + 0.5, worldHeight);
+                        ctx.stroke();
+                    }
+                    for (var gy = 16; gy < worldHeight; gy += 8) {
+                        ctx.beginPath();
+                        ctx.moveTo(0, gy + 0.5);
+                        ctx.lineTo(worldWidth, gy + 0.5);
+                        ctx.stroke();
+                    }
+
+                    ctx.strokeStyle = "rgba(132, 182, 255, 0.2)";
+                    desks.forEach(function (desk) {
+                        ctx.beginPath();
+                        ctx.moveTo(hub.x + 0.5, hub.y + 0.5);
+                        ctx.lineTo(desk.x + 0.5, desk.y + 9.5);
+                        ctx.stroke();
+                    });
+
+                    desks.forEach(function (desk, index) {
+                        drawDesk(desk, activityForDesk(index), nowMs);
+                    });
+
+                    ctx.fillStyle = "#f08b4b";
+                    ctx.fillRect(hub.x - 5, hub.y - 3, 10, 6);
+                    ctx.fillStyle = "#ffd3ac";
+                    ctx.fillRect(hub.x - 2, hub.y - 1, 4, 2);
+
+                    agents.forEach(function (agent) {
+                        drawAgent(agent, nowMs);
+                    });
+
+                    ctx.fillStyle = "rgba(235, 244, 255, 0.9)";
+                    ctx.font = "5px 'IBM Plex Mono', monospace";
+                    ctx.fillText("INGEST", 8, 11);
+                    ctx.fillText("ORCHESTRATE", 74, 11);
+                    ctx.fillText("DELIVER", 164, 11);
+                }
+
+                function renderHud() {
+                    statusList.innerHTML = agents.map(function (agent) {
+                        return "<article class=\"agent-card\"><strong>" + agent.label + "</strong><p>" + agent.task + "</p><span class=\"agent-state " + stateClass(agent) + "\">" + stateClass(agent) + "</span></article>";
+                    }).join("");
+
+                    eventLog.innerHTML = logRows.map(function (row) {
+                        return "<li>" + row + "</li>";
+                    }).join("");
+                }
+
+                function frame(ts) {
+                    if (!isVisible) {
+                        rafId = null;
+                        return;
+                    }
+
+                    if (!lastTs) {
+                        lastTs = ts;
+                    }
+
+                    var dtMs = Math.min(48, ts - lastTs);
+                    lastTs = ts;
+                    hudElapsed += dtMs;
+
+                    agents.forEach(function (agent) {
+                        updateAgent(agent, dtMs);
+                    });
+
+                    drawScene(ts);
+
+                    if (hudElapsed > 260) {
+                        renderHud();
+                        hudElapsed = 0;
+                    }
+
+                    rafId = window.requestAnimationFrame(frame);
+                }
+
+                function startLoop() {
+                    if (rafId !== null || reduceMotion) {
+                        return;
+                    }
+                    lastTs = 0;
+                    rafId = window.requestAnimationFrame(frame);
+                }
+
+                function stopLoop() {
+                    if (rafId === null) {
+                        return;
+                    }
+                    window.cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+
+                addLog("Agent floor online.");
+                addLog("All workflow lanes initialized.");
+                renderHud();
+                drawScene(performance.now());
+
+                if (reduceMotion) {
+                    addLog("Reduced motion mode: animation paused.");
+                    renderHud();
+                    return;
+                }
+
+                startLoop();
+
+                if ("IntersectionObserver" in window) {
+                    var floorObserver = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            isVisible = entry.isIntersecting;
+                            if (isVisible) {
+                                startLoop();
+                            } else {
+                                stopLoop();
+                            }
+                        });
+                    }, { threshold: 0.15 });
+
+                    floorObserver.observe(canvas);
+                }
+
+                document.addEventListener("visibilitychange", function () {
+                    if (document.hidden) {
+                        stopLoop();
+                        return;
+                    }
+
+                    if (isVisible) {
+                        startLoop();
+                    }
+                });
+            }
 
             function setupSignalSprint() {
                 var arena = document.getElementById("game-arena");
