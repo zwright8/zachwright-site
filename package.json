@@ -1,0 +1,16 @@
+{
+  "name": "zachwright-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "zachwright.xyz site and serverless newsletter APIs",
+  "scripts": {
+    "check:newsletter": "node scripts/newsletter-smoke-check.js"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.18"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}

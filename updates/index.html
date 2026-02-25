@@ -102,6 +102,106 @@
         .update-card h3 { margin-top: 0; color: var(--white); font-size: 1.3rem; }
         .update-card p { color: var(--muted); margin-bottom: 8px; }
         .update-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .newsletter-card {
+            margin: 0 28px 22px;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(48, 211, 126, 0.35);
+            background: linear-gradient(160deg, rgba(16, 30, 23, 0.9), rgba(12, 20, 30, 0.95));
+        }
+        .newsletter-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+        }
+        .newsletter-card p {
+            margin: 0 0 14px;
+            color: #b9c8d8;
+        }
+        .newsletter-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 10px;
+            align-items: center;
+        }
+        .newsletter-form input[type="email"] {
+            width: 100%;
+            border: 1px solid rgba(78, 101, 125, 0.7);
+            border-radius: 10px;
+            background: rgba(8, 14, 22, 0.9);
+            color: var(--white);
+            padding: 11px 12px;
+            font: inherit;
+        }
+        .newsletter-form input[type="email"]:focus {
+            outline: 2px solid rgba(48, 211, 126, 0.45);
+            outline-offset: 1px;
+            border-color: rgba(48, 211, 126, 0.65);
+        }
+        .newsletter-form button {
+            border: 1px solid rgba(48, 211, 126, 0.55);
+            border-radius: 10px;
+            background: linear-gradient(145deg, rgba(48, 211, 126, 0.34), rgba(31, 168, 99, 0.44));
+            color: #e8ffef;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 11px 14px;
+            cursor: pointer;
+            transition: transform 0.18s ease, filter 0.18s ease;
+        }
+        .newsletter-form button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+        }
+        .newsletter-form button:disabled {
+            cursor: not-allowed;
+            opacity: 0.72;
+            transform: none;
+        }
+        .newsletter-note {
+            margin-top: 11px;
+            font-size: 0.78rem;
+            color: #90a4ba;
+        }
+        .newsletter-message {
+            margin-top: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--line-strong);
+            background: rgba(11, 17, 25, 0.85);
+            color: var(--white);
+            padding: 9px 11px;
+            font-size: 0.86rem;
+            display: none;
+        }
+        .newsletter-message.show {
+            display: block;
+        }
+        .newsletter-message.success {
+            border-color: rgba(48, 211, 126, 0.45);
+            background: rgba(18, 42, 30, 0.62);
+        }
+        .newsletter-message.error {
+            border-color: rgba(240, 106, 106, 0.45);
+            background: rgba(58, 24, 24, 0.56);
+        }
+        .honeypot {
+            position: absolute !important;
+            left: -9999px !important;
+            width: 1px !important;
+            height: 1px !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        @media (max-width: 700px) {
+            .newsletter-form {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -122,6 +222,19 @@
                     <h1>Daily Drops</h1>
                     <p>The daily build logs and intelligence of the autonomous swarm.</p>
                 </div>
+
+                <section class="newsletter-card" id="newsletter-signup">
+                    <h3>Get Daily Drops by Email</h3>
+                    <p>Receive one daily digest with the latest update link. Double opt-in and unsubscribe controls are enabled by default.</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" id="newsletter-email" name="email" autocomplete="email" placeholder="you@company.com" required>
+                        <button type="submit" id="newsletter-submit">Subscribe</button>
+                        <label for="newsletter-company" class="honeypot" aria-hidden="true">Company</label>
+                        <input class="honeypot" tabindex="-1" autocomplete="off" id="newsletter-company" name="company" type="text">
+                    </form>
+                    <p class="newsletter-note">By subscribing, you agree to receive daily emails from zachwright.xyz. We only store what is required to deliver and secure the newsletter.</p>
+                    <div class="newsletter-message" id="newsletter-message" role="status" aria-live="polite"></div>
+                </section>
                 
                 <a href="/updates/2026-02-25.html" class="update-card">
                     <span class="update-date">2026-02-25</span>
@@ -151,5 +264,97 @@
         </div>
 
     </div>
+    <script>
+        (function () {
+            var form = document.getElementById("newsletter-form");
+            var emailInput = document.getElementById("newsletter-email");
+            var honeypot = document.getElementById("newsletter-company");
+            var submitBtn = document.getElementById("newsletter-submit");
+            var message = document.getElementById("newsletter-message");
+
+            function showMessage(kind, text) {
+                if (!message) {
+                    return;
+                }
+                message.textContent = text;
+                message.className = "newsletter-message show " + kind;
+            }
+
+            function setSubmitting(isSubmitting) {
+                if (!submitBtn) {
+                    return;
+                }
+                submitBtn.disabled = isSubmitting;
+                submitBtn.textContent = isSubmitting ? "Submitting..." : "Subscribe";
+            }
+
+            function queryStatusBanner() {
+                var params = new URLSearchParams(window.location.search);
+                if (params.get("newsletter") === "confirmed") {
+                    showMessage("success", "Subscription confirmed. You are on the daily send list.");
+                } else if (params.get("newsletter") === "unsubscribed") {
+                    showMessage("success", "You have been unsubscribed from daily emails.");
+                } else if (params.get("newsletter") === "invalid-token") {
+                    showMessage("error", "That email link is invalid or expired. Submit your email again to get a fresh confirmation link.");
+                }
+            }
+
+            queryStatusBanner();
+
+            if (!form || !emailInput || !submitBtn || !message) {
+                return;
+            }
+
+            form.addEventListener("submit", async function (event) {
+                event.preventDefault();
+
+                var email = emailInput.value.trim();
+                if (!email) {
+                    showMessage("error", "Enter a valid email address.");
+                    return;
+                }
+
+                setSubmitting(true);
+                showMessage("success", "Submitting your request...");
+
+                try {
+                    var response = await fetch("/api/newsletter/signup", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            source: "updates-index",
+                            website: honeypot ? honeypot.value : ""
+                        })
+                    });
+
+                    var payload = null;
+                    try {
+                        payload = await response.json();
+                    } catch (_err) {
+                        payload = null;
+                    }
+
+                    if (!response.ok) {
+                        var fallback = "Could not process your request right now.";
+                        if (response.status === 429) {
+                            fallback = "Too many attempts from this connection. Please wait and retry.";
+                        }
+                        showMessage("error", (payload && payload.error) ? payload.error : fallback);
+                        return;
+                    }
+
+                    form.reset();
+                    showMessage("success", (payload && payload.message) ? payload.message : "Check your inbox to confirm your subscription.");
+                } catch (_networkError) {
+                    showMessage("error", "Network issue while submitting. Please retry.");
+                } finally {
+                    setSubmitting(false);
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
