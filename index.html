@@ -90,9 +90,10 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
+            height: 3px;
             z-index: 90;
             pointer-events: none;
+            opacity: 0.92;
         }
 
         .scroll-progress span {
@@ -103,6 +104,7 @@
             transform: scaleX(0);
             background: linear-gradient(90deg, var(--sun), var(--sun-strong), var(--teal));
             box-shadow: 0 2px 12px rgba(238, 93, 32, 0.32);
+            transition: transform 0.14s linear;
         }
 
         a {
@@ -132,6 +134,20 @@
             background: rgba(255, 250, 241, 0.82);
             backdrop-filter: blur(14px) saturate(130%);
             box-shadow: 0 10px 32px rgba(24, 32, 42, 0.09);
+            transition:
+                top 0.3s ease,
+                padding 0.3s ease,
+                box-shadow 0.3s ease,
+                background-color 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .site-nav.is-scrolled {
+            top: 8px;
+            padding: 10px 14px 10px 18px;
+            border-color: rgba(24, 32, 42, 0.21);
+            background: rgba(255, 250, 241, 0.94);
+            box-shadow: 0 18px 40px rgba(24, 32, 42, 0.11);
         }
 
         .brand {
@@ -961,9 +977,9 @@
 
         .game-top {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .game-stat {
@@ -992,6 +1008,47 @@
             color: #121d2a;
         }
 
+        .game-track {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .track-item {
+            display: grid;
+            gap: 5px;
+        }
+
+        .track-item span {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(24, 32, 42, 0.66);
+        }
+
+        .game-bar {
+            height: 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(24, 32, 42, 0.14);
+            background: rgba(255, 255, 255, 0.76);
+            overflow: hidden;
+        }
+
+        .game-bar span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform-origin: left center;
+            transform: scaleX(1);
+            transition: transform 0.12s linear, background 0.2s ease;
+            background: linear-gradient(90deg, var(--teal), var(--mint));
+        }
+
+        .game-bar.integrity span {
+            background: linear-gradient(90deg, #2dcf9f, #f8b363);
+        }
+
         .game-arena {
             position: relative;
             min-height: 260px;
@@ -1003,6 +1060,10 @@
                 repeating-linear-gradient(90deg, rgba(24, 32, 42, 0.04) 0 1px, transparent 1px 36px),
                 linear-gradient(180deg, rgba(247, 255, 251, 0.84), rgba(255, 250, 240, 0.92));
             overflow: hidden;
+        }
+
+        .game-arena.is-running {
+            cursor: crosshair;
         }
 
         .game-arena.is-hit {
@@ -1031,6 +1092,27 @@
             transition: transform 0.16s ease, opacity 0.16s ease;
         }
 
+        .pulse-target::before,
+        .pulse-target::after {
+            content: "";
+            position: absolute;
+            inset: 50%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .pulse-target::before {
+            width: 68%;
+            height: 68%;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .pulse-target::after {
+            width: 26%;
+            height: 26%;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
         .pulse-target.is-live {
             opacity: 1;
             pointer-events: auto;
@@ -1055,6 +1137,40 @@
             opacity: 0;
         }
 
+        .game-feedback {
+            position: absolute;
+            left: 50%;
+            top: 16px;
+            transform: translate(-50%, -8px);
+            border-radius: 999px;
+            border: 1px solid transparent;
+            padding: 6px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .game-feedback.is-show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .game-feedback.hit {
+            border-color: rgba(19, 128, 105, 0.42);
+            background: rgba(45, 207, 159, 0.2);
+            color: #0c5446;
+        }
+
+        .game-feedback.miss {
+            border-color: rgba(220, 89, 46, 0.4);
+            background: rgba(255, 150, 122, 0.2);
+            color: #703017;
+        }
+
         .game-actions {
             margin-top: 12px;
             display: flex;
@@ -1068,12 +1184,21 @@
             cursor: pointer;
         }
 
+        .game-btn:focus-visible,
+        .pulse-target:focus-visible {
+            outline: 2px solid rgba(15, 123, 125, 0.55);
+            outline-offset: 2px;
+        }
+
         .game-note {
             font-family: var(--font-mono);
             font-size: 0.62rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: rgba(24, 32, 42, 0.7);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .game-note strong {
@@ -1081,7 +1206,15 @@
             font-size: 0.95rem;
             letter-spacing: -0.03em;
             color: rgba(24, 32, 42, 0.9);
-            margin-left: 4px;
+        }
+
+        .game-note span {
+            border-radius: 999px;
+            border: 1px solid rgba(24, 32, 42, 0.16);
+            padding: 2px 7px;
+            font-size: 0.53rem;
+            letter-spacing: 0.08em;
+            color: rgba(24, 32, 42, 0.7);
         }
 
         .game-rules h3 {
@@ -1094,7 +1227,39 @@
         .game-rules p {
             color: var(--ink-soft);
             font-size: 0.93rem;
-            margin-bottom: 10px;
+            margin-bottom: 11px;
+        }
+
+        .intel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .intel-item {
+            border-radius: 12px;
+            border: 1px solid rgba(24, 32, 42, 0.15);
+            background: rgba(255, 255, 255, 0.84);
+            padding: 8px 10px;
+        }
+
+        .intel-item span {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.54rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(24, 32, 42, 0.66);
+        }
+
+        .intel-item strong {
+            display: block;
+            margin-top: 3px;
+            font-family: var(--font-display);
+            font-size: 1.08rem;
+            letter-spacing: -0.03em;
+            color: rgba(24, 32, 42, 0.92);
         }
 
         .game-rules ul {
@@ -1388,6 +1553,11 @@
             .footer-links,
             .trust-logos {
                 grid-template-columns: 1fr;
+            }
+
+            .game-top,
+            .intel-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .game-actions {
@@ -1762,23 +1932,52 @@
                             <span>Integrity</span>
                             <strong id="game-integrity">3/3</strong>
                         </div>
+                        <div class="game-stat">
+                            <span>Combo</span>
+                            <strong id="game-combo">0x</strong>
+                        </div>
+                    </div>
+                    <div class="game-track">
+                        <div class="track-item">
+                            <span>Round Clock</span>
+                            <div class="game-bar"><span id="game-timer-bar"></span></div>
+                        </div>
+                        <div class="track-item">
+                            <span>System Integrity</span>
+                            <div class="game-bar integrity"><span id="game-integrity-bar"></span></div>
+                        </div>
                     </div>
                     <div class="game-arena" id="game-arena">
                         <button class="pulse-target" id="pulse-target" type="button" aria-label="Catch pulse"></button>
+                        <p class="game-feedback" id="game-feedback" aria-live="polite"></p>
                         <p class="game-overlay" id="game-overlay">Press start and catch every pulse before it expires.</p>
                     </div>
                     <div class="game-actions">
                         <button class="btn btn-primary game-btn" id="game-start" type="button">Start Sprint</button>
-                        <p class="game-note">Best run: <strong id="game-best">0</strong></p>
+                        <p class="game-note">Best run <strong id="game-best">0</strong> <span id="game-best-rank">--</span></p>
                     </div>
                 </article>
                 <aside class="game-rules">
-                    <h3>How to play</h3>
+                    <h3>Session Intel</h3>
+                    <div class="intel-grid">
+                        <div class="intel-item">
+                            <span>Accuracy</span>
+                            <strong id="game-accuracy">0%</strong>
+                        </div>
+                        <div class="intel-item">
+                            <span>Max Combo</span>
+                            <strong id="game-max-combo">0x</strong>
+                        </div>
+                        <div class="intel-item">
+                            <span>Rank</span>
+                            <strong id="game-rank">--</strong>
+                        </div>
+                    </div>
                     <p>You are the operator. Keep system integrity from dropping to zero before time runs out.</p>
                     <ul>
-                        <li>Click each pulse as soon as it appears.</li>
+                        <li>Click each pulse as soon as it appears for higher quality points.</li>
                         <li>Misses reduce integrity by one.</li>
-                        <li>Hit streaks increase pace and raise your score.</li>
+                        <li>Hit streaks increase pace, combo, and your final rank.</li>
                     </ul>
                 </aside>
             </div>
@@ -1832,14 +2031,18 @@
     <script>
         (function () {
             var docEl = document.documentElement;
+            var nav = document.querySelector(".site-nav");
             var revealItems = document.querySelectorAll("[data-reveal]");
             var tiltItems = document.querySelectorAll("[data-tilt]");
             var progressFill = document.querySelector(".scroll-progress span");
             var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-            function updateScrollProgress() {
+            function updateScrollUi() {
                 if (!progressFill) {
+                    if (nav) {
+                        nav.classList.toggle("is-scrolled", window.scrollY > 16);
+                    }
                     return;
                 }
 
@@ -1847,11 +2050,15 @@
                 var ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
                 ratio = Math.max(0, Math.min(1, ratio));
                 progressFill.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+
+                if (nav) {
+                    nav.classList.toggle("is-scrolled", window.scrollY > 16);
+                }
             }
 
-            updateScrollProgress();
-            window.addEventListener("scroll", updateScrollProgress, { passive: true });
-            window.addEventListener("resize", updateScrollProgress);
+            updateScrollUi();
+            window.addEventListener("scroll", updateScrollUi, { passive: true });
+            window.addEventListener("resize", updateScrollUi);
 
             if (reduceMotion || !("IntersectionObserver" in window)) {
                 revealItems.forEach(function (item) {
@@ -1904,28 +2111,50 @@
                 var target = document.getElementById("pulse-target");
                 var startButton = document.getElementById("game-start");
                 var overlay = document.getElementById("game-overlay");
+                var feedback = document.getElementById("game-feedback");
                 var scoreEl = document.getElementById("game-score");
                 var timeEl = document.getElementById("game-time");
                 var integrityEl = document.getElementById("game-integrity");
+                var comboEl = document.getElementById("game-combo");
                 var bestEl = document.getElementById("game-best");
+                var bestRankEl = document.getElementById("game-best-rank");
+                var timerBar = document.getElementById("game-timer-bar");
+                var integrityBar = document.getElementById("game-integrity-bar");
+                var accuracyEl = document.getElementById("game-accuracy");
+                var maxComboEl = document.getElementById("game-max-combo");
+                var rankEl = document.getElementById("game-rank");
 
-                if (!arena || !target || !startButton || !overlay || !scoreEl || !timeEl || !integrityEl || !bestEl) {
+                if (!arena || !target || !startButton || !overlay || !feedback || !scoreEl || !timeEl || !integrityEl || !comboEl || !bestEl || !bestRankEl || !timerBar || !integrityBar || !accuracyEl || !maxComboEl || !rankEl) {
                     return;
                 }
 
                 var storageKey = "zachwright-signal-sprint-best";
+                var storageRankKey = "zachwright-signal-sprint-rank";
                 var state = {
                     running: false,
+                    durationMs: 20000,
+                    remainingMs: 20000,
                     score: 0,
-                    timeLeft: 20,
                     integrity: 3,
+                    integrityMax: 3,
+                    combo: 0,
+                    maxCombo: 0,
+                    hits: 0,
+                    misses: 0,
                     best: 0,
-                    hitWindow: 1050,
-                    roundTimer: null,
+                    bestRank: "--",
+                    currentRank: "--",
+                    baseWindow: 1060,
+                    pulseWindow: 1060,
+                    pulseSpawnAt: 0,
+                    pulseToken: 0,
+                    lastTickAt: 0,
+                    rafId: null,
                     spawnTimer: null,
-                    missTimer: null,
+                    expireTimer: null,
                     targetLive: false,
-                    moodTimer: null
+                    moodTimer: null,
+                    feedbackTimer: null
                 };
 
                 try {
@@ -1933,33 +2162,79 @@
                     if (!Number.isNaN(storedBest) && storedBest > 0) {
                         state.best = storedBest;
                     }
+                    var storedRank = window.localStorage.getItem(storageRankKey);
+                    if (storedRank) {
+                        state.bestRank = storedRank;
+                    }
                 } catch (error) {
                     state.best = 0;
+                    state.bestRank = "--";
+                }
+
+                function getAccuracy() {
+                    var total = state.hits + state.misses;
+                    if (!total) {
+                        return 0;
+                    }
+                    return state.hits / total;
+                }
+
+                function rankFor(score, accuracy) {
+                    if (score >= 760 && accuracy >= 0.86) {
+                        return "S";
+                    }
+                    if (score >= 560 && accuracy >= 0.76) {
+                        return "A";
+                    }
+                    if (score >= 380 && accuracy >= 0.66) {
+                        return "B";
+                    }
+                    if (score >= 220) {
+                        return "C";
+                    }
+                    return "D";
                 }
 
                 function updateStats() {
+                    var timeRatio = Math.max(0, Math.min(1, state.remainingMs / state.durationMs));
+                    var integrityRatio = Math.max(0, Math.min(1, state.integrity / state.integrityMax));
+                    var accuracy = getAccuracy();
                     scoreEl.textContent = String(state.score);
-                    timeEl.textContent = state.timeLeft.toFixed(1) + "s";
+                    timeEl.textContent = (state.remainingMs / 1000).toFixed(1) + "s";
                     integrityEl.textContent = String(Math.max(state.integrity, 0)) + "/3";
+                    comboEl.textContent = String(state.combo) + "x";
                     bestEl.textContent = String(state.best);
+                    bestRankEl.textContent = state.bestRank;
+                    timerBar.style.transform = "scaleX(" + timeRatio.toFixed(4) + ")";
+                    integrityBar.style.transform = "scaleX(" + integrityRatio.toFixed(4) + ")";
+                    integrityBar.style.background = integrityRatio < 0.35
+                        ? "linear-gradient(90deg, #d85d2f, #f8b363)"
+                        : "linear-gradient(90deg, #2dcf9f, #f8b363)";
+                    accuracyEl.textContent = String(Math.round(accuracy * 100)) + "%";
+                    maxComboEl.textContent = String(state.maxCombo) + "x";
+                    rankEl.textContent = state.currentRank;
                 }
 
                 function clearTimers() {
-                    if (state.roundTimer) {
-                        window.clearInterval(state.roundTimer);
-                        state.roundTimer = null;
+                    if (state.rafId) {
+                        window.cancelAnimationFrame(state.rafId);
+                        state.rafId = null;
                     }
                     if (state.spawnTimer) {
                         window.clearTimeout(state.spawnTimer);
                         state.spawnTimer = null;
                     }
-                    if (state.missTimer) {
-                        window.clearTimeout(state.missTimer);
-                        state.missTimer = null;
+                    if (state.expireTimer) {
+                        window.clearTimeout(state.expireTimer);
+                        state.expireTimer = null;
                     }
                     if (state.moodTimer) {
                         window.clearTimeout(state.moodTimer);
                         state.moodTimer = null;
+                    }
+                    if (state.feedbackTimer) {
+                        window.clearTimeout(state.feedbackTimer);
+                        state.feedbackTimer = null;
                     }
                 }
 
@@ -1975,6 +2250,22 @@
                     }, 140);
                 }
 
+                function setFeedback(message, tone) {
+                    feedback.textContent = message;
+                    feedback.classList.remove("hit", "miss", "is-show");
+                    if (tone) {
+                        feedback.classList.add(tone);
+                    }
+
+                    window.requestAnimationFrame(function () {
+                        feedback.classList.add("is-show");
+                    });
+
+                    state.feedbackTimer = window.setTimeout(function () {
+                        feedback.classList.remove("is-show");
+                    }, 460);
+                }
+
                 function setOverlay(message) {
                     overlay.textContent = message;
                 }
@@ -1985,14 +2276,20 @@
                 }
 
                 function placePulse() {
-                    var size = 58;
+                    var size = 62;
                     var width = arena.clientWidth;
                     var height = arena.clientHeight;
-                    var min = size * 0.56;
+                    var min = size * 0.6;
                     var left = min + Math.random() * Math.max(8, width - min * 2);
                     var top = min + Math.random() * Math.max(8, height - min * 2);
                     target.style.left = left.toFixed(0) + "px";
                     target.style.top = top.toFixed(0) + "px";
+                }
+
+                function nextPulseWindow() {
+                    var elapsedRatio = 1 - (state.remainingMs / state.durationMs);
+                    var comboPressure = Math.min(state.combo * 15, 230);
+                    return Math.max(360, state.baseWindow - comboPressure - Math.floor(elapsedRatio * 280));
                 }
 
                 function queuePulse(delay) {
@@ -2009,23 +2306,29 @@
                             return;
                         }
 
+                        state.pulseToken += 1;
                         placePulse();
                         state.targetLive = true;
+                        state.pulseSpawnAt = performance.now();
+                        state.pulseWindow = nextPulseWindow();
                         target.classList.add("is-live");
 
-                        if (state.missTimer) {
-                            window.clearTimeout(state.missTimer);
+                        if (state.expireTimer) {
+                            window.clearTimeout(state.expireTimer);
                         }
 
-                        state.missTimer = window.setTimeout(function () {
-                            handleMiss();
-                        }, state.hitWindow);
+                        (function (token) {
+                            state.expireTimer = window.setTimeout(function () {
+                                handleMiss(token);
+                            }, state.pulseWindow);
+                        })(state.pulseToken);
                     }, delay);
                 }
 
                 function saveBest() {
                     try {
                         window.localStorage.setItem(storageKey, String(state.best));
+                        window.localStorage.setItem(storageRankKey, state.bestRank);
                     } catch (error) {
                         // Ignore localStorage write failure and continue game flow.
                     }
@@ -2036,14 +2339,38 @@
                     clearTimers();
                     hidePulse();
                     arena.classList.remove("is-running");
+                    state.currentRank = rankFor(state.score, getAccuracy());
 
                     if (state.score > state.best) {
                         state.best = state.score;
+                        state.bestRank = state.currentRank;
                         saveBest();
                     }
 
                     updateStats();
-                    setOverlay(message);
+                    setOverlay(message + " Rank " + state.currentRank + ".");
+                }
+
+                function pointsForReaction(reactionMs) {
+                    var grade = "Good";
+                    var multiplier = 1.05;
+
+                    if (reactionMs < 250) {
+                        grade = "Perfect";
+                        multiplier = 1.55;
+                    } else if (reactionMs < 430) {
+                        grade = "Sharp";
+                        multiplier = 1.28;
+                    }
+
+                    var timeBonus = Math.floor((state.remainingMs / 1000) * 1.2);
+                    var comboBonus = Math.min(state.combo * 3, 60);
+                    var points = Math.floor((14 + timeBonus) * multiplier + comboBonus);
+
+                    return {
+                        grade: grade,
+                        points: points
+                    };
                 }
 
                 function handleHit() {
@@ -2051,55 +2378,84 @@
                         return;
                     }
 
-                    state.score += 10 + Math.floor(state.timeLeft * 1.4);
-                    state.hitWindow = Math.max(430, state.hitWindow - 24);
+                    var reaction = performance.now() - state.pulseSpawnAt;
+                    var result = pointsForReaction(reaction);
+                    state.score += result.points;
+                    state.hits += 1;
+                    state.combo += 1;
+                    state.maxCombo = Math.max(state.maxCombo, state.combo);
+                    state.currentRank = rankFor(state.score, getAccuracy());
                     hidePulse();
                     flashArena("is-hit");
+                    setFeedback(result.grade + " +" + result.points, "hit");
                     updateStats();
-                    queuePulse(180 + Math.random() * 360);
+                    queuePulse(130 + Math.random() * 280);
                 }
 
-                function handleMiss() {
-                    if (!state.running || !state.targetLive) {
+                function handleMiss(token) {
+                    if (!state.running || !state.targetLive || token !== state.pulseToken) {
                         return;
                     }
 
                     hidePulse();
+                    state.misses += 1;
+                    state.combo = 0;
                     state.integrity -= 1;
                     flashArena("is-miss");
+                    setFeedback("Miss -1 integrity", "miss");
                     updateStats();
 
                     if (state.integrity <= 0) {
-                        endGame("System overload. Hit start to run it back.");
+                        endGame("System integrity failed.");
                         return;
                     }
 
-                    queuePulse(260 + Math.random() * 420);
+                    queuePulse(220 + Math.random() * 320);
+                }
+
+                function tick(now) {
+                    if (!state.running) {
+                        return;
+                    }
+
+                    if (!state.lastTickAt) {
+                        state.lastTickAt = now;
+                    }
+
+                    var delta = now - state.lastTickAt;
+                    state.lastTickAt = now;
+                    state.remainingMs = Math.max(0, state.remainingMs - delta);
+                    updateStats();
+
+                    if (state.remainingMs <= 0) {
+                        endGame("Sprint complete.");
+                        return;
+                    }
+
+                    state.rafId = window.requestAnimationFrame(tick);
                 }
 
                 function startGame() {
                     clearTimers();
                     hidePulse();
                     state.running = true;
+                    state.remainingMs = state.durationMs;
                     state.score = 0;
-                    state.timeLeft = 20;
-                    state.integrity = 3;
-                    state.hitWindow = 1050;
+                    state.integrity = state.integrityMax;
+                    state.combo = 0;
+                    state.maxCombo = 0;
+                    state.hits = 0;
+                    state.misses = 0;
+                    state.pulseWindow = state.baseWindow;
+                    state.lastTickAt = 0;
+                    state.currentRank = "C";
                     arena.classList.remove("is-hit", "is-miss");
                     arena.classList.add("is-running");
                     startButton.textContent = "Restart Sprint";
                     setOverlay("");
                     updateStats();
                     queuePulse(520);
-
-                    state.roundTimer = window.setInterval(function () {
-                        state.timeLeft = Math.max(0, state.timeLeft - 0.1);
-                        updateStats();
-
-                        if (state.timeLeft <= 0) {
-                            endGame("Sprint complete. Can you beat your best?");
-                        }
-                    }, 100);
+                    state.rafId = window.requestAnimationFrame(tick);
                 }
 
                 startButton.addEventListener("click", function () {
@@ -2109,6 +2465,32 @@
                 target.addEventListener("click", function (event) {
                     event.preventDefault();
                     handleHit();
+                });
+
+                arena.addEventListener("click", function (event) {
+                    if (!state.running || event.target === target) {
+                        return;
+                    }
+
+                    handleMiss(state.pulseToken);
+                });
+
+                document.addEventListener("keydown", function (event) {
+                    var key = event.key;
+                    var targetTag = event.target && event.target.tagName;
+                    if (targetTag === "INPUT" || targetTag === "TEXTAREA" || targetTag === "SELECT" || targetTag === "BUTTON") {
+                        return;
+                    }
+                    if (event.repeat) {
+                        return;
+                    }
+
+                    if (key === " " || key === "Enter") {
+                        event.preventDefault();
+                        if (!state.running) {
+                            startGame();
+                        }
+                    }
                 });
 
                 updateStats();
