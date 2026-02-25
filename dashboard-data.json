@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-02-24T22:28:29.284Z",
+  "generatedAt": "2026-02-25T01:00:27.611Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 16,
     "totalContacts": 3,
     "totalActivities": 12,
     "totalSignals": 57,
-    "skillsCount": 10
+    "skillsCount": 11
   },
   "activities": [
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Follow-up email",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Technical discussion",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Technical discussion",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Project inquiry",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Follow-up email",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Business development outreach",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -101,7 +101,7 @@
   "siteOptimizer": [
     "Links: OK",
     "Content: OK",
-    "[2026-02-24T22:28:28.547Z]",
+    "[2026-02-25T01:00:27.520Z]",
     "Links: OK",
     "Content: OK"
   ],
@@ -128,6 +128,10 @@
     },
     {
       "name": "sales",
+      "description": ""
+    },
+    {
+      "name": "self-developer",
       "description": ""
     },
     {
