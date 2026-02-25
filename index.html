@@ -1930,12 +1930,35 @@
                 });
 
                 var routes = [
-                    [{ x: 420, y: 395 }, { x: 540, y: 375 }, { x: 540, y: 262 }, { x: 418, y: 254 }],
-                    [{ x: 800, y: 168 }, { x: 882, y: 164 }, { x: 948, y: 242 }, { x: 854, y: 246 }],
-                    [{ x: 980, y: 422 }, { x: 908, y: 426 }, { x: 830, y: 374 }, { x: 910, y: 352 }],
-                    [{ x: 274, y: 140 }, { x: 376, y: 136 }, { x: 456, y: 182 }, { x: 368, y: 208 }],
-                    [{ x: 618, y: 164 }, { x: 668, y: 220 }, { x: 612, y: 280 }, { x: 560, y: 214 }],
-                    [{ x: 768, y: 410 }, { x: 716, y: 372 }, { x: 666, y: 410 }, { x: 716, y: 448 }]
+                    [{ x: 420, y: 360 }, { x: 560, y: 360 }, { x: 560, y: 320 }, { x: 420, y: 320 }],
+                    [{ x: 800, y: 168 }, { x: 950, y: 168 }, { x: 950, y: 218 }, { x: 800, y: 218 }],
+                    [{ x: 980, y: 350 }, { x: 860, y: 350 }, { x: 860, y: 310 }, { x: 980, y: 310 }],
+                    [{ x: 274, y: 140 }, { x: 456, y: 140 }, { x: 456, y: 208 }, { x: 274, y: 208 }],
+                    [{ x: 612, y: 164 }, { x: 650, y: 164 }, { x: 650, y: 262 }, { x: 612, y: 262 }],
+                    [{ x: 760, y: 470 }, { x: 790, y: 470 }, { x: 790, y: 360 }, { x: 760, y: 360 }]
+                ];
+
+                var routeBounds = [
+                    { minX: 380, minY: 310, maxX: 600, maxY: 390 },
+                    { minX: 770, minY: 150, maxX: 985, maxY: 225 },
+                    { minX: 842, minY: 298, maxX: 1008, maxY: 364 },
+                    { minX: 250, minY: 126, maxX: 472, maxY: 216 },
+                    { minX: 600, minY: 150, maxX: 658, maxY: 276 },
+                    { minX: 744, minY: 350, maxX: 802, maxY: 478 }
+                ];
+
+                var collisionRects = [
+                    { x: 0, y: 0, w: 146, h: worldHeight },
+                    { x: 1110, y: 0, w: worldWidth - 1110, h: worldHeight },
+                    { x: 0, y: 0, w: worldWidth, h: 8 },
+                    { x: 0, y: worldHeight - 8, w: worldWidth, h: 8 },
+                    { x: 671, y: 0, w: 5, h: worldHeight },
+                    { x: 673, y: 238, w: 436, h: 5 },
+                    { x: 254, y: 252, w: 95, h: 58 },
+                    { x: 492, y: 252, w: 95, h: 58 },
+                    { x: 254, y: 424, w: 95, h: 58 },
+                    { x: 492, y: 424, w: 95, h: 58 },
+                    { x: 810, y: 396, w: 150, h: 80 }
                 ];
 
                 var taskMap = {
@@ -1948,12 +1971,12 @@
                 };
 
                 var agents = [
-                    { id: "router", label: "Lead Router", sprite: 2, route: 0, node: 0, x: 420, y: 395, targetX: 540, targetY: 375, speed: 96, state: "moving", stateTimer: 0, dir: "down", flip: false, task: "Routing inbound requests" },
-                    { id: "proposal", label: "Proposal", sprite: 0, route: 1, node: 0, x: 800, y: 168, targetX: 882, targetY: 164, speed: 90, state: "working", stateTimer: 1200, dir: "right", flip: false, task: "Drafting proposal packet" },
-                    { id: "qa", label: "QA", sprite: 1, route: 2, node: 0, x: 980, y: 422, targetX: 908, targetY: 426, speed: 88, state: "syncing", stateTimer: 980, dir: "left", flip: true, task: "Running quality checks" },
-                    { id: "ops", label: "Delivery Ops", sprite: 4, route: 3, node: 0, x: 274, y: 140, targetX: 376, targetY: 136, speed: 94, state: "moving", stateTimer: 0, dir: "right", flip: false, task: "Posting ops summary" },
-                    { id: "founder", label: "Founder", sprite: 3, route: 4, node: 0, x: 618, y: 164, targetX: 668, targetY: 220, speed: 92, state: "working", stateTimer: 1500, dir: "down", flip: false, task: "Approving release gate" },
-                    { id: "support", label: "Support", sprite: 5, route: 5, node: 0, x: 768, y: 410, targetX: 716, targetY: 372, speed: 86, state: "moving", stateTimer: 0, dir: "left", flip: true, task: "Resolving support loop" }
+                    { id: "router", label: "Lead Router", sprite: 2, route: 0, node: 0, x: 420, y: 360, targetX: 560, targetY: 360, speed: 92, state: "moving", stateTimer: 0, dir: "right", task: "Routing inbound requests", radius: 10, blockedMs: 0 },
+                    { id: "proposal", label: "Proposal", sprite: 0, route: 1, node: 0, x: 800, y: 168, targetX: 950, targetY: 168, speed: 86, state: "working", stateTimer: 1200, dir: "right", task: "Drafting proposal packet", radius: 10, blockedMs: 0 },
+                    { id: "qa", label: "QA", sprite: 1, route: 2, node: 0, x: 980, y: 350, targetX: 860, targetY: 350, speed: 84, state: "syncing", stateTimer: 980, dir: "left", task: "Running quality checks", radius: 10, blockedMs: 0 },
+                    { id: "ops", label: "Delivery Ops", sprite: 4, route: 3, node: 0, x: 274, y: 140, targetX: 456, targetY: 140, speed: 88, state: "moving", stateTimer: 0, dir: "right", task: "Posting ops summary", radius: 10, blockedMs: 0 },
+                    { id: "founder", label: "Founder", sprite: 3, route: 4, node: 0, x: 612, y: 164, targetX: 650, targetY: 164, speed: 86, state: "working", stateTimer: 1500, dir: "right", task: "Approving release gate", radius: 10, blockedMs: 0 },
+                    { id: "support", label: "Support", sprite: 5, route: 5, node: 0, x: 760, y: 470, targetX: 790, targetY: 470, speed: 82, state: "moving", stateTimer: 0, dir: "right", task: "Resolving support loop", radius: 10, blockedMs: 0 }
                 ];
 
                 var logRows = [];
@@ -1982,13 +2005,52 @@
                     return agent.state === "working" ? "working" : (agent.state === "syncing" ? "syncing" : "moving");
                 }
 
+                function clamp(value, min, max) {
+                    return Math.min(max, Math.max(min, value));
+                }
+
+                function circleHitsRect(x, y, radius, rect) {
+                    var nearestX = clamp(x, rect.x, rect.x + rect.w);
+                    var nearestY = clamp(y, rect.y, rect.y + rect.h);
+                    var dx = x - nearestX;
+                    var dy = y - nearestY;
+                    return (dx * dx) + (dy * dy) < radius * radius;
+                }
+
+                function isBlockedAt(x, y, radius) {
+                    for (var i = 0; i < collisionRects.length; i += 1) {
+                        if (circleHitsRect(x, y, radius, collisionRects[i])) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                function clampToRouteBounds(agent, x, y) {
+                    var bounds = routeBounds[agent.route];
+                    if (!bounds) {
+                        return { x: x, y: y };
+                    }
+                    return {
+                        x: clamp(x, bounds.minX, bounds.maxX),
+                        y: clamp(y, bounds.minY, bounds.maxY)
+                    };
+                }
+
                 function moveToNextNode(agent, silent) {
                     var path = routes[agent.route];
-                    agent.node = (agent.node + 1) % path.length;
+                    var nextNode = agent.node;
+                    var attempts = 0;
+                    do {
+                        nextNode = (nextNode + 1) % path.length;
+                        attempts += 1;
+                    } while (attempts < path.length && isBlockedAt(path[nextNode].x, path[nextNode].y, agent.radius));
+                    agent.node = nextNode;
                     agent.targetX = path[agent.node].x;
                     agent.targetY = path[agent.node].y;
                     agent.state = "moving";
                     agent.task = "Moving to lane checkpoint";
+                    agent.blockedMs = 0;
                     if (!silent) {
                         addLog(agent.label + " moved to next lane checkpoint.");
                     }
@@ -2012,11 +2074,9 @@
                 function updateDirection(agent, dx, dy) {
                     if (Math.abs(dx) > Math.abs(dy)) {
                         agent.dir = dx < 0 ? "left" : "right";
-                        agent.flip = false;
                         return;
                     }
                     agent.dir = dy < 0 ? "up" : "down";
-                    agent.flip = false;
                 }
 
                 function updateAgent(agent, dtMs) {
@@ -2029,13 +2089,46 @@
                         if (distance <= step || distance === 0) {
                             agent.x = agent.targetX;
                             agent.y = agent.targetY;
+                            agent.blockedMs = 0;
                             enterWorkState(agent);
                             return;
                         }
 
-                        updateDirection(agent, dx, dy);
-                        agent.x += (dx / distance) * step;
-                        agent.y += (dy / distance) * step;
+                        var vx = (dx / distance) * step;
+                        var vy = (dy / distance) * step;
+                        var nextX = agent.x + vx;
+                        var nextY = agent.y + vy;
+                        var resolvedX = nextX;
+                        var resolvedY = nextY;
+
+                        if (isBlockedAt(resolvedX, agent.y, agent.radius)) {
+                            resolvedX = agent.x;
+                        }
+
+                        if (isBlockedAt(resolvedX, resolvedY, agent.radius)) {
+                            if (!isBlockedAt(resolvedX, agent.y + vy, agent.radius)) {
+                                resolvedY = agent.y + vy;
+                            } else {
+                                resolvedY = agent.y;
+                            }
+                        }
+
+                        var clamped = clampToRouteBounds(agent, resolvedX, resolvedY);
+                        resolvedX = clamped.x;
+                        resolvedY = clamped.y;
+
+                        if (resolvedX === agent.x && resolvedY === agent.y) {
+                            agent.blockedMs += dtMs;
+                            if (agent.blockedMs > 480) {
+                                moveToNextNode(agent, true);
+                            }
+                            return;
+                        }
+
+                        agent.blockedMs = 0;
+                        updateDirection(agent, resolvedX - agent.x, resolvedY - agent.y);
+                        agent.x = resolvedX;
+                        agent.y = resolvedY;
                         return;
                     }
 
@@ -2056,6 +2149,7 @@
                 }
 
                 function drawBackdrop() {
+                    ctx.imageSmoothingEnabled = false;
                     if (floorImage.complete && floorImage.naturalWidth > 0) {
                         ctx.drawImage(floorImage, 0, 0, worldWidth, worldHeight);
                     } else {
@@ -2068,16 +2162,24 @@
                 }
 
                 function spriteRow(agent) {
-                    if (agent.dir === "left") {
-                        return 3;
-                    }
                     if (agent.dir === "up") {
                         return 1;
                     }
-                    if (agent.dir === "right") {
+                    if (agent.dir === "right" || agent.dir === "left") {
                         return 2;
                     }
                     return 0;
+                }
+
+                function spriteFrameIndex(agent, nowMs) {
+                    if (agent.state === "moving") {
+                        var walkCycle = [0, 1, 2, 1];
+                        return walkCycle[Math.floor(nowMs / 115) % walkCycle.length];
+                    }
+                    if (agent.state === "syncing") {
+                        return 5 + (Math.floor(nowMs / 260) % 2);
+                    }
+                    return 3 + (Math.floor(nowMs / 300) % 2);
                 }
 
                 function drawAgent(agent, nowMs) {
@@ -2087,19 +2189,26 @@
                     }
 
                     var frameWidth = 16;
-                    var frameHeight = 24;
-                    var frame = agent.state === "moving" ? ((Math.floor(nowMs / 110) % 6) + 1) : 0;
+                    var frameHeight = 32;
+                    var frame = spriteFrameIndex(agent, nowMs);
                     var sx = frame * frameWidth;
                     var sy = spriteRow(agent) * frameHeight;
-                    var dw = 34;
-                    var dh = 51;
+                    var dw = 32;
+                    var dh = 64;
                     var x = Math.round(agent.x - dw / 2);
                     var y = Math.round(agent.y - dh + 8);
 
                     ctx.fillStyle = "rgba(0, 0, 0, 0.32)";
                     ctx.fillRect(Math.round(agent.x - 9), Math.round(agent.y + 7), 18, 3);
 
-                    ctx.drawImage(img, sx, sy, frameWidth, frameHeight, x, y, dw, dh);
+                    if (agent.dir === "left") {
+                        ctx.save();
+                        ctx.scale(-1, 1);
+                        ctx.drawImage(img, sx, sy, frameWidth, frameHeight, -(x + dw), y, dw, dh);
+                        ctx.restore();
+                    } else {
+                        ctx.drawImage(img, sx, sy, frameWidth, frameHeight, x, y, dw, dh);
+                    }
 
                     if (agent.state === "syncing" && nowMs % 360 < 190) {
                         ctx.fillStyle = "rgba(145, 198, 255, 0.9)";
