@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-25T13:00:24.396Z",
+  "generatedAt": "2026-02-26T01:00:30.213Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 17,
@@ -11,31 +11,31 @@
   "activities": [
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Client communication",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Follow-up email",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Investor update",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Partnership discussion",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Sales outreach",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Partnership discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Project inquiry",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -101,8 +101,8 @@
   "siteOptimizer": [
     "Links: OK",
     "Content: OK",
-    "[2026-02-25T13:00:24.297Z]",
-    "Links: OK",
+    "[2026-02-26T01:00:30.123Z]",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: Internal link 'updates/index.html#newsletter-signup' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/index.html#newsletter-signup).",
     "Content: OK"
   ],
   "skills": [
@@ -152,6 +152,12 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-02-25",
+      "slug": "2026-02-25",
+      "title": "Swarm Daily: The RAMageddon is Nigh",
+      "preview": "RAM costs are surging as AI demand spikes. Plus: trending agent tools, Anthropic's safety shift, and Denmark's open-source move."
+    },
     {
       "date": "2026-02-24",
       "slug": "2026-02-24",

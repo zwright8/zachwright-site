@@ -39,3 +39,7 @@ Content: OK
 Links: OK
 Content: OK
 
+[2026-02-26T01:00:30.123Z]
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: Internal link 'updates/index.html#newsletter-signup' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/index.html#newsletter-signup).
+Content: OK
+
