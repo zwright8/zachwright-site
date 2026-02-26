@@ -71,7 +71,7 @@ module.exports = async function handler(req, res) {
                 const email = decryptEmail(subscriber.email_ciphertext);
                 const unsubscribeToken = buildUnsubscribeToken(subscriber.id, subscriber.email_hash);
                 const unsubscribeUrl = `${baseUrl}/api/newsletter/unsubscribe?token=${encodeURIComponent(unsubscribeToken)}`;
-                const subject = `Daily Drops: ${latestUpdate.title}`;
+                const subject = `Super Sonic Tsunami: ${latestUpdate.title}`;
 
                 if (!dryRun) {
                     await sendEmail({
@@ -80,11 +80,11 @@ module.exports = async function handler(req, res) {
                         html: `
                             <div style="font-family: Arial, sans-serif; color: #101928; line-height: 1.62;">
                                 <p style="font-size: 12px; color: #5d7189; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 10px;">
-                                    Daily Drops
+                                    Super Sonic Tsunami
                                 </p>
                                 <h2 style="margin: 0 0 12px;">${latestUpdate.title}</h2>
                                 <p style="margin: 0 0 16px;">
-                                    ${latestUpdate.preview || "Today’s update is live."}
+                                    ${latestUpdate.preview || "Your latest weekly insight is live."}
                                 </p>
                                 <p style="margin: 0 0 18px;">
                                     <a href="${updateUrl}" style="display: inline-block; background: #0f7b7d; color: #ffffff; text-decoration: none; padding: 11px 15px; border-radius: 8px; font-weight: 700;">Read Update</a>
@@ -95,10 +95,10 @@ module.exports = async function handler(req, res) {
                             </div>
                         `,
                         text: [
-                            "Daily Drops",
+                            "Super Sonic Tsunami",
                             "",
                             latestUpdate.title,
-                            latestUpdate.preview || "Today’s update is live.",
+                            latestUpdate.preview || "Your latest weekly insight is live.",
                             "",
                             `Read: ${updateUrl}`,
                             "",
@@ -134,6 +134,6 @@ module.exports = async function handler(req, res) {
         });
     } catch (error) {
         console.error("newsletter/send error", error);
-        sendJson(res, 500, { error: "Daily send failed." });
+        sendJson(res, 500, { error: "Newsletter send failed." });
     }
 };

@@ -83,7 +83,7 @@ module.exports = async function handler(req, res) {
         if (existing && existing.status === ACTIVE_STATUS) {
             sendJson(res, 200, {
                 ok: true,
-                message: "You are already subscribed to Daily Drops."
+                message: "You are already subscribed to Super Sonic Tsunami."
             });
             return;
         }
@@ -129,12 +129,12 @@ module.exports = async function handler(req, res) {
 
         await sendEmail({
             to: email,
-            subject: "Confirm your Daily Drops subscription",
+            subject: "Confirm your Super Sonic Tsunami subscription",
             html: `
                 <div style="font-family: Arial, sans-serif; color: #0f1720; line-height: 1.6;">
-                    <h2 style="margin: 0 0 12px;">Confirm your Daily Drops subscription</h2>
+                    <h2 style="margin: 0 0 12px;">Confirm your Super Sonic Tsunami subscription</h2>
                     <p style="margin: 0 0 14px;">
-                        Click the button below to confirm you want a daily newsletter from zachwright.xyz.
+                        Click the button below to confirm you want weekly AI insights from zachwright.xyz.
                     </p>
                     <p style="margin: 20px 0;">
                         <a href="${confirmLink}" style="display: inline-block; background: #0f7b7d; color: #ffffff; text-decoration: none; padding: 12px 16px; border-radius: 8px; font-weight: 700;">Confirm Subscription</a>
@@ -143,12 +143,12 @@ module.exports = async function handler(req, res) {
                         If you did not request this, you can ignore this email.
                     </p>
                     <p style="margin: 0; color: #66778e; font-size: 13px;">
-                        Daily Drops by zachwright.xyz
+                        Super Sonic Tsunami by zachwright.xyz
                     </p>
                 </div>
             `,
             text: [
-                "Confirm your Daily Drops subscription.",
+                "Confirm your Super Sonic Tsunami subscription.",
                 "",
                 `Open this link to confirm: ${confirmLink}`,
                 "",

@@ -31,7 +31,7 @@ module.exports = async function handler(req, res) {
 
     const token = getQueryToken(req);
     if (!token) {
-        redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+        redirect(res, "/?newsletter=invalid-token#signup");
         return;
     }
 
@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
         `;
 
         if (!rows[0]) {
-            redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+            redirect(res, "/?newsletter=invalid-token#signup");
             return;
         }
 
@@ -65,12 +65,12 @@ module.exports = async function handler(req, res) {
             const unsubscribeLink = `${baseUrl}/api/newsletter/unsubscribe?token=${encodeURIComponent(unsubscribeToken)}`;
             await sendEmail({
                 to: email,
-                subject: "Daily Drops subscription confirmed",
+                subject: "Super Sonic Tsunami subscription confirmed",
                 html: `
                     <div style="font-family: Arial, sans-serif; color: #0f1720; line-height: 1.6;">
                         <h2 style="margin: 0 0 12px;">You are subscribed</h2>
                         <p style="margin: 0 0 14px;">
-                            You will now receive Daily Drops at this email.
+                            You will now receive Super Sonic Tsunami at this email.
                         </p>
                         <p style="margin: 0 0 14px;">
                             Unsubscribe any time:
@@ -79,7 +79,7 @@ module.exports = async function handler(req, res) {
                     </div>
                 `,
                 text: [
-                    "Your Daily Drops subscription is now confirmed.",
+                    "Your Super Sonic Tsunami subscription is now confirmed.",
                     "",
                     `Unsubscribe any time: ${unsubscribeLink}`
                 ].join("\n")
@@ -88,9 +88,9 @@ module.exports = async function handler(req, res) {
             console.error("newsletter/confirm welcome mail error", mailError);
         }
 
-        redirect(res, "/updates/index.html?newsletter=confirmed#newsletter-signup");
+        redirect(res, "/?newsletter=confirmed#signup");
     } catch (error) {
         console.error("newsletter/confirm error", error);
-        redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+        redirect(res, "/?newsletter=invalid-token#signup");
     }
 };

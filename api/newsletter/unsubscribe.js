@@ -29,7 +29,7 @@ module.exports = async function handler(req, res) {
     const token = getQueryToken(req);
     const parsed = parseUnsubscribeToken(token);
     if (!parsed) {
-        redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+        redirect(res, "/?newsletter=invalid-token#signup");
         return;
     }
 
@@ -45,12 +45,12 @@ module.exports = async function handler(req, res) {
         `;
         const subscriber = rows[0];
         if (!subscriber) {
-            redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+            redirect(res, "/?newsletter=invalid-token#signup");
             return;
         }
 
         if (!validateUnsubscribeSignature(subscriber.id, subscriber.email_hash, parsed.signature)) {
-            redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+            redirect(res, "/?newsletter=invalid-token#signup");
             return;
         }
 
@@ -63,9 +63,9 @@ module.exports = async function handler(req, res) {
             WHERE id = ${subscriber.id};
         `;
 
-        redirect(res, "/updates/index.html?newsletter=unsubscribed#newsletter-signup");
+        redirect(res, "/?newsletter=unsubscribed#signup");
     } catch (error) {
         console.error("newsletter/unsubscribe error", error);
-        redirect(res, "/updates/index.html?newsletter=invalid-token#newsletter-signup");
+        redirect(res, "/?newsletter=invalid-token#signup");
     }
 };
