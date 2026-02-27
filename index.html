@@ -87,6 +87,31 @@
             text-decoration: none;
         }
 
+        :focus-visible {
+            outline: 2px solid rgba(78, 102, 214, 0.62);
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -48px;
+            z-index: 40;
+            background: #ffffff;
+            border: 1px solid var(--line-strong);
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            transition: top 180ms ease;
+        }
+
+        .skip-link:focus-visible {
+            top: 12px;
+        }
+
         .page {
             position: relative;
             z-index: 1;
@@ -140,6 +165,21 @@
 
         .topnav-links a:hover {
             color: var(--midnight-900);
+        }
+
+        .topbar-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            border: 1px solid rgba(27, 38, 89, 0.52);
+            background: rgba(20, 27, 69, 0.92);
+            color: #f7f9ff;
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 9px 12px;
         }
 
         .section {
@@ -476,6 +516,16 @@
             color: rgba(24, 32, 76, 0.72);
         }
 
+        .trust-strip {
+            margin-top: 16px;
+            border: 1px solid rgba(36, 50, 113, 0.22);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 12px;
+            font-size: 0.8rem;
+            color: rgba(23, 33, 84, 0.86);
+        }
+
         .hero-panel {
             padding: 24px;
             display: grid;
@@ -727,6 +777,31 @@
             padding-bottom: 2px;
         }
 
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .pattern-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.82);
+            padding: 18px;
+        }
+
+        .pattern-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.22rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 7px;
+        }
+
+        .pattern-card p {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
         .testimonial-wrap {
             border-radius: var(--radius-xl);
             padding: 20px;
@@ -972,7 +1047,8 @@
 
             .features-grid,
             .preview-grid,
-            .proof-grid {
+            .proof-grid,
+            .patterns-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
@@ -1015,6 +1091,10 @@
                 gap: 12px;
             }
 
+            .topbar-cta {
+                width: 100%;
+            }
+
             .hero-copy {
                 padding: 24px;
             }
@@ -1037,7 +1117,8 @@
 
             .features-grid,
             .preview-grid,
-            .proof-grid {
+            .proof-grid,
+            .patterns-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1061,25 +1142,27 @@
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <span class="ambient-orb orb-a" data-parallax="0.09" aria-hidden="true"></span>
     <span class="ambient-orb orb-b" data-parallax="-0.07" aria-hidden="true"></span>
 
-    <main class="page">
+    <main class="page" id="main-content">
         <header class="topbar" data-reveal>
             <a class="brand" href="/">Zach <span>Wright</span></a>
             <nav class="topnav-links" aria-label="Primary">
                 <a href="#proof">Proof</a>
                 <a href="#ventures">Ventures</a>
-                <a href="#cases">Case Studies</a>
+                <a href="#cases">Engagement</a>
                 <a href="#contact">Work With Zach</a>
             </nav>
+            <a class="topbar-cta" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book 30m Call</a>
         </header>
 
         <section class="hero section" id="signup">
             <article class="hero-copy" data-reveal>
                 <p class="eyebrow">Zach Wright • Operator + Venture Builder</p>
                 <h1>Build AI companies with signal, speed, and execution discipline.</h1>
-                <p class="lead">I help teams turn AI noise into strategic advantage. This site is both my personal operating system and the launchpad for current and future AI ventures, including the Super Sonic Tsunami intelligence brief.</p>
+                <p class="lead">I help leadership teams translate AI volatility into concrete priorities, operating decisions, and build plans. This site is my public operating surface: advisory work, venture experiments, and the Super Sonic Tsunami intelligence brief.</p>
                 <div class="cta-stack" aria-label="Primary conversion actions">
                     <a class="cta-btn primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Call</a>
                     <a class="cta-btn secondary" href="#contact">Contact Zach</a>
@@ -1092,13 +1175,14 @@
                     <label for="newsletter-website" class="honeypot" aria-hidden="true">Website</label>
                     <input class="honeypot" tabindex="-1" autocomplete="off" id="newsletter-website" name="website" type="text">
                 </form>
-                <p class="signup-note">Get the weekly brief trusted by founders and operators. Free, concise, and built for decision-making.</p>
+                <p class="signup-note">Free weekly memo for operators who need signal, not hot takes.</p>
                 <div class="newsletter-message" id="newsletter-message" role="status" aria-live="polite"></div>
                 <ul class="hero-stats" aria-label="Zach Wright platform highlights">
-                    <li><strong>2 tracks</strong><span>Brand + Venture Studio</span></li>
-                    <li><strong>1x/week</strong><span>Operator Intelligence Brief</span></li>
-                    <li><strong>Execution-first</strong><span>No Hype, Clear Moves</span></li>
+                    <li><strong>2 lanes</strong><span>Advisory + Venture Build</span></li>
+                    <li><strong>1 brief / week</strong><span>Super Sonic Tsunami</span></li>
+                    <li><strong>Production-minded</strong><span>Real constraints, real sequencing</span></li>
                 </ul>
+                <p class="trust-strip">No inflated metrics. No manufactured client logos. Messaging here reflects real scope and current work in progress.</p>
             </article>
             <aside class="hero-panel" data-reveal>
                 <p class="panel-label">Operating Model</p>
@@ -1142,6 +1226,30 @@
             </div>
         </section>
 
+        <section class="section" id="approach" data-reveal>
+            <div class="section-head">
+                <h2>How I Work</h2>
+                <p>A pragmatic workflow designed to reduce AI uncertainty while increasing shipping velocity.</p>
+            </div>
+            <div class="proof-grid">
+                <article class="proof-card" data-reveal>
+                    <ul class="proof-list">
+                        <li><strong>01 · Diagnostic</strong>Current operating model, constraints, and highest-value decisions.</li>
+                        <li><strong>02 · Prioritization</strong>What to sequence now, what to defer, and what to stop.</li>
+                        <li><strong>03 · Execution design</strong>Tooling, roles, review cadence, and deployment guardrails.</li>
+                    </ul>
+                </article>
+                <article class="journey-card" data-reveal>
+                    <h3>Delivery rhythm</h3>
+                    <ol class="journey-steps">
+                        <li>Week 1: alignment and decision architecture</li>
+                        <li>Week 2+: execution support, measurement, and iteration loops</li>
+                        <li>Ongoing: strategic updates through Super Sonic Tsunami</li>
+                    </ol>
+                </article>
+            </div>
+        </section>
+
         <section class="section section-accent" id="ventures" data-reveal>
             <div class="section-head">
                 <h2>Services + Venture Tracks</h2>
@@ -1174,33 +1282,22 @@
 
         <section class="section" id="cases" data-reveal>
             <div class="section-head">
-                <h2>Case Study Snapshots</h2>
-                <p>Representative outcomes from real operator contexts: strategy, execution, and narrative clarity.</p>
+                <h2>Engagement Patterns</h2>
+                <p>Typical situations where teams bring me in, and the concrete outputs they expect.</p>
             </div>
-            <div class="testimonial-wrap" data-carousel>
-                <div class="carousel">
-                    <button type="button" class="carousel-btn" data-prev aria-label="Previous testimonial">&#8249;</button>
-                    <div class="slides">
-                        <figure class="testimonial-slide is-active" data-slide aria-hidden="false">
-                            <blockquote>"We entered with scattered AI pilots. Zach gave us a clear operating thesis, a practical execution map, and confidence in what to stop doing."</blockquote>
-                            <figcaption>VP Operations · B2B SaaS</figcaption>
-                        </figure>
-                        <figure class="testimonial-slide" data-slide aria-hidden="true">
-                            <blockquote>"Our board narrative went from reactive to precise. The strategic framing made fundraising conversations materially stronger."</blockquote>
-                            <figcaption>Founder · Series A AI Startup</figcaption>
-                        </figure>
-                        <figure class="testimonial-slide" data-slide aria-hidden="true">
-                            <blockquote>"Super Sonic Tsunami has become our weekly calibration loop. It helps us prioritize the moves that matter and ignore the rest."</blockquote>
-                            <figcaption>Product Lead · Enterprise Platform Team</figcaption>
-                        </figure>
-                    </div>
-                    <button type="button" class="carousel-btn" data-next aria-label="Next testimonial">&#8250;</button>
-                </div>
-                <div class="carousel-dots" role="tablist" aria-label="Testimonial navigation">
-                    <button type="button" class="is-active" data-dot="0" aria-label="Show testimonial 1" aria-current="true"></button>
-                    <button type="button" data-dot="1" aria-label="Show testimonial 2" aria-current="false"></button>
-                    <button type="button" data-dot="2" aria-label="Show testimonial 3" aria-current="false"></button>
-                </div>
+            <div class="patterns-grid">
+                <article class="pattern-card" data-reveal>
+                    <h3>Executive Alignment</h3>
+                    <p>Clarify what AI should and should not do for the business this quarter, then map ownership, pacing, and decision checkpoints.</p>
+                </article>
+                <article class="pattern-card" data-reveal>
+                    <h3>Pilot-to-Production</h3>
+                    <p>Turn scattered experiments into one operating system: tooling choices, team rituals, quality bars, and rollout sequence.</p>
+                </article>
+                <article class="pattern-card" data-reveal>
+                    <h3>Narrative + GTM Coherence</h3>
+                    <p>Align product narrative, category framing, and operator reality so internal teams and external stakeholders hear one clear story.</p>
+                </article>
             </div>
         </section>
 
@@ -1247,14 +1344,7 @@
             var honeypot = document.getElementById("newsletter-website");
             var submitBtn = document.getElementById("newsletter-submit");
             var message = document.getElementById("newsletter-message");
-            var slides = Array.prototype.slice.call(document.querySelectorAll("[data-slide]"));
-            var dots = Array.prototype.slice.call(document.querySelectorAll("[data-dot]"));
-            var prevBtn = document.querySelector("[data-prev]");
-            var nextBtn = document.querySelector("[data-next]");
-            var carouselRoot = document.querySelector("[data-carousel]");
             var yearEl = document.getElementById("year");
-            var activeSlide = 0;
-            var autoRotate = null;
 
             if (yearEl) {
                 yearEl.textContent = String(new Date().getFullYear());
@@ -1388,78 +1478,6 @@
                 });
             }
 
-            function renderSlide(index) {
-                if (!slides.length) {
-                    return;
-                }
-                activeSlide = (index + slides.length) % slides.length;
-
-                slides.forEach(function (slide, idx) {
-                    var isActive = idx === activeSlide;
-                    slide.classList.toggle("is-active", isActive);
-                    slide.setAttribute("aria-hidden", isActive ? "false" : "true");
-                });
-
-                dots.forEach(function (dot, idx) {
-                    var isActive = idx === activeSlide;
-                    dot.classList.toggle("is-active", isActive);
-                    dot.setAttribute("aria-current", isActive ? "true" : "false");
-                });
-            }
-
-            function stopAutoRotate() {
-                if (autoRotate) {
-                    window.clearInterval(autoRotate);
-                    autoRotate = null;
-                }
-            }
-
-            function startAutoRotate() {
-                if (reduceMotion || slides.length < 2) {
-                    return;
-                }
-                stopAutoRotate();
-                autoRotate = window.setInterval(function () {
-                    renderSlide(activeSlide + 1);
-                }, 6500);
-            }
-
-            if (slides.length) {
-                if (prevBtn) {
-                    prevBtn.addEventListener("click", function () {
-                        renderSlide(activeSlide - 1);
-                        startAutoRotate();
-                    });
-                }
-
-                if (nextBtn) {
-                    nextBtn.addEventListener("click", function () {
-                        renderSlide(activeSlide + 1);
-                        startAutoRotate();
-                    });
-                }
-
-                dots.forEach(function (dot) {
-                    dot.addEventListener("click", function () {
-                        var index = Number(dot.getAttribute("data-dot"));
-                        if (Number.isNaN(index)) {
-                            return;
-                        }
-                        renderSlide(index);
-                        startAutoRotate();
-                    });
-                });
-
-                if (carouselRoot) {
-                    carouselRoot.addEventListener("mouseenter", stopAutoRotate);
-                    carouselRoot.addEventListener("mouseleave", startAutoRotate);
-                    carouselRoot.addEventListener("focusin", stopAutoRotate);
-                    carouselRoot.addEventListener("focusout", startAutoRotate);
-                }
-
-                renderSlide(0);
-                startAutoRotate();
-            }
         })();
     </script>
 </body>
