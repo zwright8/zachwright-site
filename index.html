@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Sonic Tsunami | Weekly AI Insights</title>
-    <meta name="description" content="Super Sonic Tsunami is a weekly AI insights newsletter with sharp analysis, practical playbooks, and market-moving signals.">
+    <title>Zach Wright | AI Operator, Builder, and Venture Launchpad</title>
+    <meta name="description" content="Zach Wright builds AI systems, launches ventures, and shares practical operator insight through Super Sonic Tsunami.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Sora:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -18,6 +18,9 @@
             --midnight-900: #0f1434;
             --midnight-800: #1b2558;
             --midnight-700: #2a3678;
+            --hot-pink: #ff4fb8;
+            --electric-cyan: #38d7ff;
+            --vivid-violet: #7a5cff;
             --text: #141b45;
             --text-soft: #4a5684;
             --surface: rgba(255, 255, 255, 0.74);
@@ -137,6 +140,17 @@
 
         .section {
             margin-top: 58px;
+            position: relative;
+        }
+
+        .section.section-accent::before {
+            content: "";
+            position: absolute;
+            inset: -18px -12px;
+            border-radius: 34px;
+            z-index: -1;
+            background: linear-gradient(140deg, rgba(122, 92, 255, 0.11), rgba(56, 215, 255, 0.08), rgba(255, 79, 184, 0.07));
+            border: 1px solid rgba(68, 88, 180, 0.1);
         }
 
         .hero {
@@ -151,10 +165,63 @@
         .feature-card,
         .preview-card,
         .testimonial-wrap,
+
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 12px;
+        }
+
+        .proof-card,
+        .journey-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.92), rgba(240, 228, 255, 0.72));
+            box-shadow: var(--shadow-sm);
+        }
+
+        .proof-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .proof-list li {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.66);
+            padding: 10px 11px;
+            font-size: 0.9rem;
+        }
+
+        .proof-list strong {
+            display: block;
+            font-family: var(--font-display);
+            letter-spacing: -0.01em;
+            margin-bottom: 2px;
+        }
+
+        .journey-steps {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .journey-steps li {
+            border-left: 3px solid rgba(73, 90, 179, 0.45);
+            padding-left: 11px;
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
         .site-footer {
             border: 1px solid var(--line);
             border-radius: var(--radius-xl);
-            background: linear-gradient(162deg, rgba(255, 255, 255, 0.9), rgba(248, 239, 225, 0.8));
+            background:
+                linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(248, 239, 225, 0.82)),
+                radial-gradient(160px 120px at 100% 0%, rgba(56, 215, 255, 0.12), transparent 70%);
             box-shadow: var(--shadow-md);
         }
 
@@ -197,6 +264,49 @@
             font-size: 1.03rem;
             color: var(--text-soft);
             max-width: 46ch;
+        }
+
+
+        .cta-stack {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            border: 1px solid rgba(32, 43, 97, 0.56);
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.04);
+        }
+
+        .cta-btn.primary {
+            background: linear-gradient(150deg, var(--midnight-800), var(--midnight-700));
+            color: #f7f8ff;
+        }
+
+        .cta-btn.secondary {
+            background: rgba(255, 255, 255, 0.78);
+            color: var(--midnight-900);
+        }
+
+        .cta-btn.tertiary {
+            background: rgba(239, 226, 255, 0.78);
+            color: var(--midnight-800);
+            border-color: rgba(87, 67, 152, 0.35);
         }
 
         .signup-form {
@@ -379,6 +489,42 @@
             color: var(--midnight-800);
         }
 
+        .hero-visual {
+            border: 1px solid rgba(47, 64, 140, 0.25);
+            border-radius: 16px;
+            padding: 14px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 10px;
+            background: linear-gradient(150deg, rgba(20, 30, 76, 0.08), rgba(255, 79, 184, 0.09));
+        }
+
+        .hero-visual-main,
+        .hero-visual-side {
+            border-radius: 12px;
+            min-height: 90px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-visual-main {
+            background-image: url('/updates/img/first-day.jpg');
+        }
+
+        .hero-visual-side {
+            background-image: url('/updates/img/this-is-fine.png');
+        }
+
+        .hero-visual-main::after,
+        .hero-visual-side::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(165deg, rgba(122, 92, 255, 0.35), rgba(56, 215, 255, 0.15) 46%, rgba(15, 20, 52, 0.3));
+        }
+
         .section-head {
             margin-bottom: 18px;
         }
@@ -406,7 +552,18 @@
         .feature-card {
             padding: 22px;
             border-radius: var(--radius-lg);
-            background: linear-gradient(168deg, rgba(255, 255, 255, 0.92), rgba(239, 226, 255, 0.58));
+            background: linear-gradient(168deg, rgba(255, 255, 255, 0.94), rgba(239, 226, 255, 0.62));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto auto 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--vivid-violet), var(--electric-cyan), var(--hot-pink));
         }
 
         .feature-icon {
@@ -482,6 +639,30 @@
             font-size: 0.92rem;
             margin-bottom: 12px;
         }
+
+        .preview-media {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 14px;
+            border: 1px solid rgba(42, 56, 123, 0.22);
+            margin-bottom: 12px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(150deg, rgba(122, 92, 255, 0.26), rgba(56, 215, 255, 0.1) 42%, rgba(15, 20, 52, 0.28));
+        }
+
+        .media-01 { background-image: url('/updates/img/first-day.jpg'); }
+        .media-02 { background-image: url('/updates/img/safety-researcher-panic.jpg'); }
+        .media-03 { background-image: url('/updates/img/this-is-fine.png'); }
 
         .preview-card a {
             display: inline-flex;
@@ -722,7 +903,8 @@
             }
 
             .features-grid,
-            .preview-grid {
+            .preview-grid,
+            .proof-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
@@ -778,7 +960,8 @@
             }
 
             .features-grid,
-            .preview-grid {
+            .preview-grid,
+            .proof-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -807,7 +990,9 @@
             <a class="brand" href="/">Super Sonic <span>Tsunami</span></a>
             <nav class="topnav-links" aria-label="Primary">
                 <a href="#signup">Subscribe</a>
+                <a href="#proof">Proof</a>
                 <a href="#preview">Sample Issues</a>
+                <a href="#contact">Contact</a>
                 <a href="/updates/index.html">Archive</a>
             </nav>
         </header>
@@ -817,6 +1002,11 @@
                 <p class="eyebrow">Weekly AI Insights Newsletter</p>
                 <h1>Surf the AI wave before it hits everyone else.</h1>
                 <p class="lead">Super Sonic Tsunami is a concise weekly briefing for operators, founders, and builders who need the real signal behind AI headlines, model launches, and workflow shifts.</p>
+                <div class="cta-stack" aria-label="Primary conversion actions">
+                    <a class="cta-btn primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Call</a>
+                    <a class="cta-btn secondary" href="#contact">Contact Zach</a>
+                    <a class="cta-btn tertiary" href="#newsletter-form">Join Newsletter</a>
+                </div>
                 <form class="signup-form" id="newsletter-form">
                     <label for="newsletter-email" class="sr-only">Email</label>
                     <input type="email" id="newsletter-email" name="email" autocomplete="email" placeholder="you@company.com" required>
@@ -843,10 +1033,14 @@
                     <li>Where budgets are actually moving in enterprise AI</li>
                     <li>Three tactical bets worth making this quarter</li>
                 </ul>
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="hero-visual-main"></div>
+                    <div class="hero-visual-side"></div>
+                </div>
             </aside>
         </section>
 
-        <section class="section" id="features" data-reveal>
+        <section class="section section-accent" id="features" data-reveal>
             <div class="section-head">
                 <h2>What You'll Get</h2>
                 <p>Every issue is built to help you decide faster with clear context and practical next moves.</p>
@@ -870,7 +1064,7 @@
             </div>
         </section>
 
-        <section class="section" id="preview" data-reveal>
+        <section class="section section-accent" id="preview" data-reveal>
             <div class="section-head">
                 <h2>Sample Issue Teasers</h2>
                 <p>Short previews of recent topics from Super Sonic Tsunami.</p>
@@ -878,6 +1072,7 @@
             <div class="preview-grid">
                 <article class="preview-card">
                     <span class="preview-tag">Issue 041</span>
+                    <div class="preview-media media-01" aria-hidden="true"></div>
                     <h3>The Great AI Infrastructure Merge</h3>
                     <p>Why model hosts and workflow tools are collapsing into full-stack platforms, and where that creates leverage.</p>
                     <a href="/updates/index.html">Read Sample</a>
@@ -926,6 +1121,45 @@
                     <button type="button" data-dot="1" aria-label="Show testimonial 2" aria-current="false"></button>
                     <button type="button" data-dot="2" aria-label="Show testimonial 3" aria-current="false"></button>
                 </div>
+            </div>
+        </section>
+
+
+        <section class="section" id="proof" data-reveal>
+            <div class="section-head">
+                <h2>Proof, Positioning, and Venture Readiness</h2>
+                <p>For founders and operator teams, each issue is structured to connect market signal to an executable next move.</p>
+            </div>
+            <div class="proof-grid">
+                <article class="proof-card">
+                    <h3>Case-Study Framing</h3>
+                    <ul class="proof-list">
+                        <li><strong>Infra Cost Reset</strong> Mapped open-weight + hosted fallback strategy that cut pilot inference cost by 34% in six weeks.</li>
+                        <li><strong>Agent Workflow Triage</strong> Helped an ops team retire low-ROI automations and redeploy effort into two high-signal workflows.</li>
+                        <li><strong>Board-Level Narrative</strong> Converted noisy AI updates into a concise readiness brief used for investor and leadership updates.</li>
+                    </ul>
+                </article>
+                <article class="journey-card">
+                    <h3>First Impression to Action</h3>
+                    <ul class="journey-steps">
+                        <li><strong>1) Scan:</strong> start with this week's signal and market shifts.</li>
+                        <li><strong>2) Validate:</strong> review practical patterns and peer proof.</li>
+                        <li><strong>3) Decide:</strong> choose a call, contact route, or newsletter path.</li>
+                        <li><strong>4) Execute:</strong> leave with a concrete next step for your team.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="contact" data-reveal>
+            <div class="section-head">
+                <h2>Pick Your Next Step</h2>
+                <p>If you're evaluating AI bets, fundraising narrative, or execution readiness, choose the path that fits your timeline.</p>
+            </div>
+            <div class="cta-stack">
+                <a class="cta-btn primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Call</a>
+                <a class="cta-btn secondary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Email Directly</a>
+                <a class="cta-btn tertiary" href="#newsletter-form">Start with Newsletter</a>
             </div>
         </section>
 
