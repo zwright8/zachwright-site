@@ -7,201 +7,328 @@
   <meta name="description" content="Zach Wright builds AI systems, launches ventures, and shares practical operator insight through Super Sonic Tsunami." />
   <style>
     :root {
-      --bg: #06080d;
-      --bg-soft: #0c1119;
-      --surface: #101722;
-      --surface-2: #0b121c;
-      --line: #1d2735;
-      --text: #f5f7fb;
-      --text-soft: #a8b3c4;
-      --accent: #7cb7ff;
-      --accent-2: #b9d8ff;
-      --max: 1120px;
-      --radius: 18px;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-      --dur: 380ms;
+      --bg: #05070b;
+      --bg-2: #0a0e14;
+      --panel: #0f141c;
+      --panel-2: #121925;
+      --line: #273243;
+      --line-strong: #3a475b;
+      --text: #f2f5fa;
+      --text-soft: #a4afc0;
+      --silver: #c7d0de;
+      --steel: #8d99ac;
+      --steel-deep: #607086;
+      --cta: #e2e8f2;
+      --cta-text: #0b1019;
+      --good: #9ee4ba;
+      --bad: #ffb8c1;
+      --max: 1180px;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
+      --dur: 280ms;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background:
-        radial-gradient(72vw 48vw at 100% -8%, rgba(124, 183, 255, 0.16), transparent 65%),
-        radial-gradient(48vw 30vw at -10% 16%, rgba(124, 183, 255, 0.1), transparent 68%),
-        linear-gradient(180deg, var(--bg) 0%, #04060a 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
-      line-height: 1.6;
+      background:
+        radial-gradient(70vw 42vw at 94% -8%, rgba(199, 208, 222, 0.12), transparent 72%),
+        radial-gradient(42vw 30vw at -12% 10%, rgba(141, 153, 172, 0.1), transparent 70%),
+        linear-gradient(180deg, #04060a 0%, #05070b 48%, #070a10 100%);
       min-height: 100vh;
+      line-height: 1.6;
     }
 
     a { color: inherit; text-decoration: none; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--silver); outline-offset: 2px; }
 
     .skip-link {
       position: absolute;
-      top: -60px;
-      left: 16px;
+      top: -56px;
+      left: 14px;
+      z-index: 120;
       background: #fff;
-      color: #0a0e14;
+      color: #0a0f17;
       border-radius: 8px;
       padding: 8px 10px;
-      z-index: 100;
     }
     .skip-link:focus-visible { top: 12px; }
 
-    .wrap { width: min(var(--max), calc(100% - 2.2rem)); margin: 0 auto; }
+    .wrap { width: min(var(--max), calc(100% - 2rem)); margin: 0 auto; }
 
-    .topbar {
+    .site-top {
       position: sticky;
-      top: 12px;
-      z-index: 50;
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.8rem 1rem;
+      top: 10px;
+      z-index: 40;
+      margin-top: 12px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: rgba(8, 12, 18, 0.78);
+      background: rgba(8, 12, 18, 0.84);
       backdrop-filter: blur(10px);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.7rem 0.9rem;
     }
 
-    .brand { font-weight: 700; letter-spacing: 0.01em; }
-    .nav { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .nav a { color: var(--text-soft); font-size: 0.92rem; }
+    .brand {
+      font-size: 0.96rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav {
+      justify-self: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .nav a {
+      color: var(--text-soft);
+      font-size: 0.88rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color var(--dur) ease;
+    }
     .nav a:hover { color: var(--text); }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      min-height: 44px;
       border-radius: 999px;
-      border: 1px solid var(--line);
-      padding: 0.7rem 1.1rem;
-      font-weight: 600;
-      transition: transform 220ms ease, background-color 220ms ease, border-color 220ms ease;
+      border: 1px solid var(--line-strong);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 0 1.05rem;
+      transition: transform var(--dur) ease, border-color var(--dur) ease, background-color var(--dur) ease, color var(--dur) ease;
+      will-change: transform;
     }
     .btn:hover { transform: translateY(-1px); }
+
     .btn-primary {
-      border-color: #3e6da7;
-      background: linear-gradient(180deg, #7cb7ff, #5e99e1);
-      color: #04101e;
+      background: linear-gradient(180deg, #f0f4fb, #cfd8e8);
+      border-color: #d5dfef;
+      color: var(--cta-text);
+      box-shadow: 0 10px 30px rgba(171, 184, 204, 0.24);
     }
-    .btn-ghost { color: var(--text); background: rgba(16, 23, 34, 0.55); }
+
+    .btn-ghost {
+      background: rgba(16, 22, 32, 0.78);
+      color: var(--silver);
+      border-color: #3d495d;
+    }
 
     main { padding-bottom: 5rem; }
-    section { padding-top: clamp(3.2rem, 8vw, 6rem); scroll-margin-top: 6rem; }
+    section { padding-top: clamp(2.8rem, 7vw, 5.5rem); scroll-margin-top: 5.5rem; }
 
     .hero {
-      min-height: min(84vh, 760px);
+      min-height: min(86vh, 780px);
       display: grid;
-      align-content: center;
-      gap: 1.3rem;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 1.1rem;
+      align-items: end;
     }
-    .eyebrow {
+
+    .frame {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16, 22, 32, 0.92), rgba(12, 17, 25, 0.96));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border: 1px solid rgba(199, 208, 222, 0.12);
+      border-radius: inherit;
+      mask: linear-gradient(to bottom, black, transparent 42%);
+    }
+
+    .hero-main { padding: clamp(1.2rem, 3.4vw, 2.1rem); }
+    .hero-side { padding: clamp(1rem, 2.8vw, 1.4rem); align-self: stretch; }
+
+    .kicker {
       color: var(--text-soft);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 0.76rem;
+      letter-spacing: 0.11em;
+      font-size: 0.75rem;
+      margin-bottom: 0.85rem;
+      font-weight: 650;
     }
+
     h1 {
-      font-size: clamp(2rem, 6vw, 4.4rem);
-      letter-spacing: -0.02em;
-      line-height: 1.04;
-      max-width: 18ch;
+      font-size: clamp(2.1rem, 6vw, 4.7rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 13ch;
+      font-weight: 850;
+      margin-bottom: 1rem;
     }
-    .hero p {
+
+    .hero-copy {
       color: var(--text-soft);
-      max-width: 66ch;
-      font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+      max-width: 58ch;
+      font-size: clamp(1.02rem, 1.7vw, 1.14rem);
     }
-    .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .signal-list { list-style: none; display: grid; gap: 0.62rem; }
+    .signal-list li {
+      border: 1px solid #354257;
+      border-radius: var(--radius-sm);
+      background: rgba(13, 18, 27, 0.76);
+      padding: 0.7rem 0.78rem;
+      color: var(--text-soft);
+      font-size: 0.94rem;
+      transition: border-color var(--dur) ease, transform var(--dur) ease;
+    }
+    .signal-list li:hover { border-color: #5c6d86; transform: translateY(-1px); }
+    .signal-list strong {
+      color: var(--silver);
+      display: block;
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.18rem;
+    }
+
+    .section-head {
+      display: grid;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: clamp(1.45rem, 3.1vw, 2.45rem);
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      font-weight: 820;
+    }
+
+    .section-intro { color: var(--text-soft); max-width: 78ch; }
 
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
+      gap: 0.9rem;
     }
 
     .card {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(16, 23, 34, 0.86), rgba(11, 18, 28, 0.92));
-      padding: 1.2rem;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(16, 22, 32, 0.94), rgba(11, 16, 24, 0.98));
       box-shadow: var(--shadow);
+      transition: transform var(--dur) ease, border-color var(--dur) ease;
     }
+    .card:hover { transform: translateY(-2px); border-color: #4b596f; }
 
-    h2 {
-      font-size: clamp(1.5rem, 3.6vw, 2.5rem);
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.8rem;
+    .card h3 {
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
     }
-
-    .section-intro { color: var(--text-soft); max-width: 68ch; margin-bottom: 1.2rem; }
-    .card h3 { font-size: 1.12rem; margin-bottom: 0.5rem; }
     .card p, .card li { color: var(--text-soft); }
 
-    .process {
+    .process-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1rem;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0.9rem;
     }
 
-    .steps { list-style: none; display: grid; gap: 0.9rem; }
+    .steps { list-style: none; display: grid; gap: 0.72rem; }
     .steps li {
-      border-left: 2px solid #345173;
-      padding-left: 0.9rem;
+      border-left: 2px solid var(--steel-deep);
+      padding-left: 0.72rem;
       color: var(--text-soft);
+      font-size: 0.95rem;
     }
-    .steps strong { color: var(--text); display: block; }
+    .steps strong {
+      display: block;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: 0.82rem;
+      margin-bottom: 0.18rem;
+    }
 
-    .cta-block {
+    .cta {
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(18, 26, 38, 0.97), rgba(10, 15, 22, 0.98));
+      box-shadow: var(--shadow);
+      padding: clamp(1.1rem, 2.8vw, 2rem);
       text-align: center;
-      padding: clamp(1.4rem, 4vw, 2.2rem);
-      background: linear-gradient(180deg, rgba(20, 30, 45, 0.92), rgba(9, 14, 22, 0.96));
     }
+
+    .cta h2 { max-width: 24ch; margin: 0 auto 0.7rem; }
+    .cta p { color: var(--text-soft); max-width: 64ch; margin: 0 auto; }
 
     .signup-form {
       margin: 1rem auto 0;
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      justify-content: center;
       max-width: 620px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.58rem;
+      justify-content: center;
     }
 
     .signup-form input[type="email"] {
       flex: 1 1 260px;
-      min-height: 46px;
+      min-height: 47px;
       border-radius: 999px;
-      border: 1px solid #31425a;
-      background: #0a121c;
+      border: 1px solid #3d4a5f;
+      background: #0b111a;
       color: var(--text);
-      padding: 0 1rem;
+      padding: 0 0.9rem;
     }
 
     .signup-form button {
-      min-height: 46px;
+      min-height: 47px;
       border-radius: 999px;
-      border: 1px solid #3e6da7;
-      background: linear-gradient(180deg, #7cb7ff, #5e99e1);
-      color: #07101e;
+      border: 1px solid #d6deec;
+      background: linear-gradient(180deg, #eef3fb, #cad4e4);
+      color: #0b1118;
+      font-weight: 780;
       padding: 0 1rem;
-      font-weight: 700;
       cursor: pointer;
+      transition: transform var(--dur) ease, filter var(--dur) ease;
     }
+    .signup-form button:hover { transform: translateY(-1px); filter: brightness(1.04); }
 
     .newsletter-message {
-      min-height: 1.35rem;
-      margin-top: 0.7rem;
+      min-height: 1.3rem;
+      margin-top: 0.68rem;
       color: var(--text-soft);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
     }
-    .newsletter-message.success { color: #96f0bf; }
-    .newsletter-message.error { color: #ffb0be; }
+    .newsletter-message.success { color: var(--good); }
+    .newsletter-message.error { color: var(--bad); }
 
     .honeypot {
       position: absolute !important;
@@ -212,29 +339,41 @@
     }
 
     footer {
+      margin-top: 3.8rem;
       border-top: 1px solid var(--line);
       color: var(--text-soft);
-      margin-top: 4rem;
-      padding: 1.6rem 0 2.2rem;
-      font-size: 0.92rem;
+      padding: 1.4rem 0 2.1rem;
+      font-size: 0.9rem;
     }
 
     [data-reveal] {
       opacity: 0;
-      transform: translateY(16px);
+      transform: translateY(14px);
       transition: opacity var(--dur) ease, transform var(--dur) ease;
     }
     [data-reveal].in { opacity: 1; transform: translateY(0); }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1000px) {
+      .hero,
+      .process-grid,
       .grid-3 { grid-template-columns: 1fr; }
-      .process { grid-template-columns: 1fr; }
-      .topbar { border-radius: 16px; }
+
+      .site-top {
+        border-radius: 14px;
+        grid-template-columns: 1fr;
+        justify-items: start;
+        gap: 0.65rem;
+      }
+
+      .nav { justify-self: start; gap: 0.75rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+      *, *::before, *::after {
+        animation-duration: 0ms !important;
+        transition-duration: 0ms !important;
+      }
       [data-reveal] { opacity: 1; transform: none; }
     }
   </style>
@@ -243,7 +382,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
 
   <div class="wrap">
-    <header class="topbar" aria-label="Primary">
+    <header class="site-top" aria-label="Primary">
       <a href="/" class="brand">Zach Wright</a>
       <nav class="nav" aria-label="Sections">
         <a href="#capabilities">Capabilities</a>
@@ -255,22 +394,35 @@
 
     <main id="main">
       <section class="hero" data-reveal>
-        <p class="eyebrow">AI Operator • Venture Builder</p>
-        <h1>Build AI initiatives with clearer decisions and faster execution.</h1>
-        <p>
-          I help teams turn AI volatility into practical priorities, operating plans, and build momentum.
-          This site is my public operating surface for advisory work, venture tracks, and the
-          <a href="/updates/index.html">Super Sonic Tsunami</a> weekly brief.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Start a conversation</a>
-          <a class="btn btn-ghost" href="#proof">See how I work</a>
-        </div>
+        <article class="frame hero-main">
+          <p class="kicker">AI Operator · Venture Builder</p>
+          <h1>Operational Clarity for AI-Heavy Decisions</h1>
+          <p class="hero-copy">
+            I help teams turn AI volatility into practical priorities, operating plans, and build momentum.
+            This is my public operating surface for advisory work, venture tracks, and the
+            <a href="/updates/index.html">Super Sonic Tsunami</a> weekly brief.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Start a conversation</a>
+            <a class="btn btn-ghost" href="#proof">See process</a>
+          </div>
+        </article>
+
+        <aside class="frame hero-side" aria-label="Operating signal">
+          <p class="kicker">Operating Focus</p>
+          <ul class="signal-list">
+            <li><strong>Decision Velocity</strong>Move from vague AI intent to concrete initiatives and owners.</li>
+            <li><strong>Execution Discipline</strong>Frame tradeoffs early so teams can ship with fewer rework loops.</li>
+            <li><strong>Signal Integrity</strong>Use real market and tooling updates to recalibrate strategy weekly.</li>
+          </ul>
+        </aside>
       </section>
 
       <section id="capabilities" data-reveal>
-        <h2>Capability Pillars</h2>
-        <p class="section-intro">Focused support for leaders and teams navigating AI strategy, execution, and commercialization.</p>
+        <div class="section-head">
+          <h2>Capability Pillars</h2>
+          <p class="section-intro">Focused support for leaders and teams navigating AI strategy, execution, and commercialization.</p>
+        </div>
         <div class="grid-3">
           <article class="card">
             <h3>Strategy to Execution</h3>
@@ -288,34 +440,36 @@
       </section>
 
       <section id="proof" data-reveal>
-        <h2>Proof and Process</h2>
-        <p class="section-intro">A practical operating model designed to reduce uncertainty and keep teams shipping.</p>
-        <div class="process">
+        <div class="section-head">
+          <h2>Proof and Process</h2>
+          <p class="section-intro">A practical operating model designed to reduce uncertainty while keeping teams shipping with confidence.</p>
+        </div>
+        <div class="process-grid">
           <article class="card">
-            <h3>Working sequence</h3>
+            <h3>Working Sequence</h3>
             <ol class="steps">
-              <li><strong>1) Frame</strong>Define the most important AI decisions and constraints for this cycle.</li>
-              <li><strong>2) Prioritize</strong>Map initiatives by impact, effort, and execution risk.</li>
-              <li><strong>3) Build</strong>Convert plans into implementation tracks and decision checkpoints.</li>
-              <li><strong>4) Iterate</strong>Use live signal and weekly intelligence to adjust with discipline.</li>
+              <li><strong>1 · Frame</strong>Define the highest-stakes AI decisions and constraints for the current cycle.</li>
+              <li><strong>2 · Prioritize</strong>Map initiatives by impact, effort, and execution risk across teams.</li>
+              <li><strong>3 · Build</strong>Convert priorities into implementation tracks and explicit checkpoints.</li>
+              <li><strong>4 · Iterate</strong>Use live signal and weekly intelligence to adjust with discipline.</li>
             </ol>
           </article>
           <aside class="card">
-            <h3>What stays true</h3>
+            <h3>Operating Standards</h3>
             <ul class="steps">
-              <li>No inflated claims or vanity metrics.</li>
-              <li>Operating clarity over trend-chasing.</li>
-              <li>Execution detail paired with leadership context.</li>
+              <li><strong>Truthful Signals</strong>No inflated claims, vanity metrics, or fabricated proof.</li>
+              <li><strong>Clarity over Noise</strong>Execution detail paired with leadership context.</li>
+              <li><strong>Consistent Cadence</strong>Deliberate updates instead of reactionary pivots.</li>
             </ul>
           </aside>
         </div>
       </section>
 
       <section id="contact" data-reveal>
-        <article class="card cta-block">
-          <h2>Ready to move faster?</h2>
-          <p class="section-intro" style="margin:0 auto;">Choose your entry point: direct advisory, venture collaboration, or the weekly intelligence brief.</p>
-          <div class="hero-actions" style="justify-content:center; margin-top: .5rem;">
+        <article class="cta">
+          <h2>If execution speed matters, start now.</h2>
+          <p>Choose your entry point: direct advisory, venture collaboration, or the weekly intelligence brief.</p>
+          <div class="hero-actions" style="justify-content:center; margin-top:0.8rem;">
             <a class="btn btn-primary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Email Zach</a>
             <a class="btn btn-ghost" href="/updates/index.html">Read Updates</a>
           </div>
