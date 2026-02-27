@@ -59,3 +59,8 @@ Content: OK
 Links: OK
 Content: OK
 
+[2026-02-27T14:02:24.213Z]
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://fortune.com/2026/02/26/ai-startup-callosum-funding-nvidia-data-center-workloads/' failed (Request failed with status code 404).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://www.theregister.com/2026/02/25/ai_chip_startups_funding/' failed (Request failed with status code 404).
+Content: OK
+

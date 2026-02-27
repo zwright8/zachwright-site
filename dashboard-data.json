@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-27T13:00:23.902Z",
+  "generatedAt": "2026-02-27T14:02:24.318Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 19,
@@ -17,25 +17,25 @@
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Sales outreach",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Project inquiry",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Investor update",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Business development outreach",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Project inquiry",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Sales outreach",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -99,10 +99,10 @@
     "conversionRate": 11
   },
   "siteOptimizer": [
-    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/index.html: Internal link 'updates/index.html#newsletter-signup' not found (tried /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/index.html#newsletter-signup).",
     "Content: OK",
-    "[2026-02-27T13:00:23.811Z]",
-    "Links: OK",
+    "[2026-02-27T14:02:24.213Z]",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://fortune.com/2026/02/26/ai-startup-callosum-funding-nvidia-data-center-workloads/' failed (Request failed with status code 404).",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://www.theregister.com/2026/02/25/ai_chip_startups_funding/' failed (Request failed with status code 404).",
     "Content: OK"
   ],
   "skills": [
@@ -152,6 +152,12 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-02-27",
+      "slug": "2026-02-27",
+      "title": "Swarm Daily: Capital Is Flooding the AI Chip Stack",
+      "preview": ""
+    },
     {
       "date": "2026-02-25",
       "slug": "2026-02-25",
