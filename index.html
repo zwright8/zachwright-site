@@ -1088,7 +1088,7 @@
                 <form class="signup-form" id="newsletter-form">
                     <label for="newsletter-email" class="sr-only">Email</label>
                     <input type="email" id="newsletter-email" name="email" autocomplete="email" placeholder="you@company.com" required>
-                    <button type="submit" id="newsletter-submit">Get Weekly Issue</button>
+                    <button type="submit" id="newsletter-submit">Join Weekly Brief</button>
                     <label for="newsletter-website" class="honeypot" aria-hidden="true">Website</label>
                     <input class="honeypot" tabindex="-1" autocomplete="off" id="newsletter-website" name="website" type="text">
                 </form>
@@ -1219,21 +1219,21 @@
 
         <footer class="site-footer" data-reveal>
             <div class="footer-brand">
-                <h3>Super Sonic Tsunami</h3>
-                <p>Weekly AI insights for teams that need clarity, not content overload.</p>
-                <p class="copyright">Copyright <span id="year"></span> Super Sonic Tsunami</p>
+                <h3>Zach Wright</h3>
+                <p>AI operator, builder, and founder. Personal brand at the front, venture launchpad in motion behind it.</p>
+                <p class="copyright">Copyright <span id="year"></span> Zach Wright</p>
             </div>
             <div class="footer-col">
-                <h4>Archive</h4>
-                <a href="/updates/index.html">Browse Full Archive</a>
-                <a href="/updates/2026-02-25.html">Read Latest Issue</a>
-                <a href="/updates/index.html#newsletter-signup">Get Daily Drops by Email</a>
+                <h4>Venture + Insights</h4>
+                <a href="/updates/index.html">Super Sonic Tsunami Archive</a>
+                <a href="/updates/2026-02-25.html">Latest Brief</a>
+                <a href="#newsletter-form">Join Weekly Brief</a>
             </div>
             <div class="footer-col">
-                <h4>Socials</h4>
+                <h4>Connect</h4>
                 <a href="https://github.com/zwright8" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <a href="https://github.com/zwright8/OpenClaw-Code" target="_blank" rel="noopener noreferrer">OpenClaw-Code</a>
                 <a href="mailto:zach@zachwright.xyz">Email</a>
+                <a href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book a Call</a>
             </div>
         </footer>
     </main>
@@ -1320,7 +1320,7 @@
                     return;
                 }
                 submitBtn.disabled = isSubmitting;
-                submitBtn.textContent = isSubmitting ? "Submitting..." : "Get Weekly Issue";
+                submitBtn.textContent = isSubmitting ? "Submitting..." : "Join Weekly Brief";
             }
 
             function queryStatusBanner() {
