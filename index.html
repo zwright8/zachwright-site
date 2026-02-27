@@ -40,6 +40,10 @@
             --font-display: "Fraunces", serif;
             --font-body: "Sora", sans-serif;
             --font-mono: "IBM Plex Mono", monospace;
+            --space-section: clamp(3.2rem, 7vw, 5.6rem);
+            --space-card: clamp(1.05rem, 2vw, 1.4rem);
+            --dur-fast: 220ms;
+            --dur-mid: 420ms;
         }
 
         * {
@@ -60,7 +64,7 @@
                 radial-gradient(62vw 50vw at -8% -14%, rgba(200, 173, 255, 0.45), transparent 66%),
                 radial-gradient(58vw 46vw at 106% -10%, rgba(188, 209, 255, 0.34), transparent 68%),
                 linear-gradient(172deg, var(--cream-100) 0%, #fcf2e4 52%, #f6ecff 100%);
-            line-height: 1.62;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
@@ -88,7 +92,7 @@
             z-index: 1;
             width: min(1120px, calc(100% - 40px));
             margin: 0 auto;
-            padding: 20px 0 64px;
+            padding: 20px 0 clamp(3rem, 7vw, 5rem);
         }
 
         .topbar {
@@ -139,8 +143,9 @@
         }
 
         .section {
-            margin-top: 58px;
+            margin-top: var(--space-section);
             position: relative;
+            scroll-margin-top: 96px;
         }
 
         .section.section-accent::before {
@@ -151,6 +156,32 @@
             z-index: -1;
             background: linear-gradient(140deg, rgba(122, 92, 255, 0.11), rgba(56, 215, 255, 0.08), rgba(255, 79, 184, 0.07));
             border: 1px solid rgba(68, 88, 180, 0.1);
+        }
+
+
+        .ambient-orb {
+            position: fixed;
+            width: clamp(170px, 24vw, 360px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(2px);
+            opacity: 0.55;
+            transform: translate3d(0,0,0);
+            will-change: transform;
+        }
+
+        .orb-a {
+            top: 14vh;
+            right: -9vw;
+            background: radial-gradient(circle at 30% 30%, rgba(173, 198, 255, 0.6), rgba(173, 198, 255, 0.06) 68%);
+        }
+
+        .orb-b {
+            top: 56vh;
+            left: -10vw;
+            background: radial-gradient(circle at 58% 50%, rgba(200, 173, 255, 0.56), rgba(200, 173, 255, 0.08) 70%);
         }
 
         .hero {
@@ -254,14 +285,14 @@
         h1 {
             font-family: var(--font-display);
             font-size: clamp(2.35rem, 5.4vw, 4.7rem);
-            line-height: 0.95;
+            line-height: 0.92;
             letter-spacing: -0.04em;
             text-wrap: balance;
         }
 
         .hero-copy p.lead {
-            margin-top: 16px;
-            font-size: 1.03rem;
+            margin-top: 18px;
+            font-size: clamp(1rem, 1.3vw, 1.1rem);
             color: var(--text-soft);
             max-width: 46ch;
         }
@@ -285,7 +316,7 @@
             letter-spacing: 0.09em;
             text-transform: uppercase;
             border: 1px solid rgba(32, 43, 97, 0.56);
-            transition: transform 0.2s ease, filter 0.2s ease;
+            transition: transform var(--dur-fast) ease, filter var(--dur-fast) ease;
         }
 
         .cta-btn:hover {
@@ -335,6 +366,9 @@
         }
 
         .signup-form button {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
             border: 1px solid rgba(32, 43, 97, 0.56);
             border-radius: 12px;
             background: linear-gradient(150deg, var(--midnight-800), var(--midnight-700));
@@ -346,12 +380,27 @@
             letter-spacing: 0.09em;
             padding: 13px 16px;
             cursor: pointer;
-            transition: transform 0.2s ease, filter 0.2s ease;
+            transition: transform var(--dur-fast) ease, filter var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+        }
+
+        .signup-form button::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(120deg, transparent 10%, rgba(255,255,255,0.24) 50%, transparent 90%);
+            transform: translateX(-140%);
+            transition: transform 580ms ease;
         }
 
         .signup-form button:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.05);
+            transform: translateY(-2px);
+            filter: brightness(1.06);
+            box-shadow: 0 10px 22px rgba(20, 28, 66, 0.28);
+        }
+
+        .signup-form button:hover::after {
+            transform: translateX(140%);
         }
 
         .signup-form button:disabled {
@@ -604,12 +653,13 @@
             border-radius: var(--radius-lg);
             padding: 20px;
             background: linear-gradient(155deg, rgba(255, 255, 255, 0.96), rgba(248, 239, 225, 0.76));
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease, border-color var(--dur-fast) ease;
         }
 
         .preview-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
+            border-color: rgba(50, 68, 146, 0.3);
         }
 
         .preview-tag {
@@ -897,6 +947,24 @@
             }
         }
 
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .ambient-orb {
+                display: none;
+            }
+        }
+
         @media (max-width: 980px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -919,12 +987,20 @@
             .hero-panel {
                 animation: none;
             }
+
+            .hero-visual {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 720px) {
             .page {
                 width: min(1120px, calc(100% - 28px));
                 padding-top: 14px;
+            }
+
+            .section::before {
+                width: 82px;
             }
 
             .topbar {
@@ -985,23 +1061,25 @@
     </style>
 </head>
 <body>
+    <span class="ambient-orb orb-a" data-parallax="0.09" aria-hidden="true"></span>
+    <span class="ambient-orb orb-b" data-parallax="-0.07" aria-hidden="true"></span>
+
     <main class="page">
         <header class="topbar" data-reveal>
-            <a class="brand" href="/">Super Sonic <span>Tsunami</span></a>
+            <a class="brand" href="/">Zach <span>Wright</span></a>
             <nav class="topnav-links" aria-label="Primary">
-                <a href="#signup">Subscribe</a>
                 <a href="#proof">Proof</a>
-                <a href="#preview">Sample Issues</a>
-                <a href="#contact">Contact</a>
-                <a href="/updates/index.html">Archive</a>
+                <a href="#ventures">Ventures</a>
+                <a href="#cases">Case Studies</a>
+                <a href="#contact">Work With Zach</a>
             </nav>
         </header>
 
         <section class="hero section" id="signup">
             <article class="hero-copy" data-reveal>
-                <p class="eyebrow">Weekly AI Insights Newsletter</p>
-                <h1>Surf the AI wave before it hits everyone else.</h1>
-                <p class="lead">Super Sonic Tsunami is a concise weekly briefing for operators, founders, and builders who need the real signal behind AI headlines, model launches, and workflow shifts.</p>
+                <p class="eyebrow">Zach Wright • Operator + Venture Builder</p>
+                <h1>Build AI companies with signal, speed, and execution discipline.</h1>
+                <p class="lead">I help teams turn AI noise into strategic advantage. This site is both my personal operating system and the launchpad for current and future AI ventures, including the Super Sonic Tsunami intelligence brief.</p>
                 <div class="cta-stack" aria-label="Primary conversion actions">
                     <a class="cta-btn primary" href="https://cal.com/zachary-wright-l9sdgm/30min" target="_blank" rel="noopener noreferrer">Book Strategy Call</a>
                     <a class="cta-btn secondary" href="#contact">Contact Zach</a>
@@ -1014,24 +1092,24 @@
                     <label for="newsletter-website" class="honeypot" aria-hidden="true">Website</label>
                     <input class="honeypot" tabindex="-1" autocomplete="off" id="newsletter-website" name="website" type="text">
                 </form>
-                <p class="signup-note">Free weekly issue. No spam. Double opt-in is enabled, and unsubscribe takes one click.</p>
+                <p class="signup-note">Get the weekly brief trusted by founders and operators. Free, concise, and built for decision-making.</p>
                 <div class="newsletter-message" id="newsletter-message" role="status" aria-live="polite"></div>
-                <ul class="hero-stats" aria-label="Newsletter highlights">
-                    <li><strong>5 min</strong><span>Average Read</span></li>
-                    <li><strong>1x</strong><span>Issue Per Week</span></li>
-                    <li><strong>0 fluff</strong><span>Only Actionable</span></li>
+                <ul class="hero-stats" aria-label="Zach Wright platform highlights">
+                    <li><strong>2 tracks</strong><span>Brand + Venture Studio</span></li>
+                    <li><strong>1x/week</strong><span>Operator Intelligence Brief</span></li>
+                    <li><strong>Execution-first</strong><span>No Hype, Clear Moves</span></li>
                 </ul>
             </article>
             <aside class="hero-panel" data-reveal>
-                <p class="panel-label">This Week's Wave</p>
+                <p class="panel-label">Operating Model</p>
                 <div class="issue-glance">
-                    <h2>Agent Memory Wars</h2>
-                    <p>Who controls persistent context in 2026, and which stack decisions can lock your team in for years.</p>
+                    <h2>Personal Brand + Venture Launchpad</h2>
+                    <p>One public front door: strategic perspective from Zach Wright and a clear pathway into products, advisory, and venture partnerships.</p>
                 </div>
                 <ul class="issue-list">
-                    <li>What changed this week across top model providers</li>
-                    <li>Where budgets are actually moving in enterprise AI</li>
-                    <li>Three tactical bets worth making this quarter</li>
+                    <li>AI strategy and execution guidance for founders and operator teams</li>
+                    <li>Live venture slate: products, experiments, and commercialization tracks</li>
+                    <li>Weekly intelligence layer via Super Sonic Tsunami</li>
                 </ul>
                 <div class="hero-visual" aria-hidden="true">
                     <div class="hero-visual-main"></div>
@@ -1040,26 +1118,26 @@
             </aside>
         </section>
 
-        <section class="section section-accent" id="features" data-reveal>
+        <section class="section section-accent" id="proof" data-reveal>
             <div class="section-head">
-                <h2>What You'll Get</h2>
-                <p>Every issue is built to help you decide faster with clear context and practical next moves.</p>
+                <h2>Proof of Work</h2>
+                <p>From boardroom narrative to implementation detail, this is how I create leverage across AI initiatives.</p>
             </div>
             <div class="features-grid">
-                <article class="feature-card">
+                <article class="feature-card" data-reveal>
                     <span class="feature-icon">01</span>
-                    <h3>Signal Over Noise</h3>
-                    <p>Fast breakdowns of the AI shifts that matter, filtered from the daily flood of hype and recycled takes.</p>
+                    <h3>Strategic Clarity</h3>
+                    <p>I translate model and market shifts into decisions leadership teams can act on in days, not quarters.</p>
                 </article>
-                <article class="feature-card">
+                <article class="feature-card" data-reveal>
                     <span class="feature-icon">02</span>
-                    <h3>Practical Playbooks</h3>
-                    <p>Applied examples, deployment patterns, and lightweight frameworks you can use in your team this week.</p>
+                    <h3>Execution Systems</h3>
+                    <p>I design practical workflows, toolchains, and team operating rhythms that turn pilots into repeatable outcomes.</p>
                 </article>
-                <article class="feature-card">
+                <article class="feature-card" data-reveal>
                     <span class="feature-icon">03</span>
-                    <h3>Forward Watchlist</h3>
-                    <p>Early signals on tools, labs, and ecosystem moves that could change your roadmap before competitors react.</p>
+                    <h3>Venture Momentum</h3>
+                    <p>I package insight into ventures and products with clear ICPs, positioning, and go-to-market narrative.</p>
                 </article>
             </div>
         </section>
@@ -1070,21 +1148,23 @@
                 <p>Short previews of recent topics from Super Sonic Tsunami.</p>
             </div>
             <div class="preview-grid">
-                <article class="preview-card">
+                <article class="preview-card" data-reveal>
                     <span class="preview-tag">Issue 041</span>
                     <div class="preview-media media-01" aria-hidden="true"></div>
                     <h3>The Great AI Infrastructure Merge</h3>
                     <p>Why model hosts and workflow tools are collapsing into full-stack platforms, and where that creates leverage.</p>
                     <a href="/updates/index.html">Read Sample</a>
                 </article>
-                <article class="preview-card">
+                <article class="preview-card" data-reveal>
                     <span class="preview-tag">Issue 040</span>
+                    <div class="preview-media media-02" aria-hidden="true"></div>
                     <h3>Open Weights Catch Up</h3>
                     <p>Open ecosystems closed key performance gaps this month. We mapped what this changes for cost and control.</p>
                     <a href="/updates/index.html">Read Sample</a>
                 </article>
-                <article class="preview-card">
+                <article class="preview-card" data-reveal>
                     <span class="preview-tag">Issue 039</span>
+                    <div class="preview-media media-03" aria-hidden="true"></div>
                     <h3>Automation ROI Under Pressure</h3>
                     <p>Teams are cutting experiments and doubling down on measurable flows. Here is the playbook we are seeing win.</p>
                     <a href="/updates/index.html">Read Sample</a>
@@ -1225,9 +1305,32 @@
                 });
 
                 revealItems.forEach(function (item, index) {
-                    item.style.setProperty("--delay", String(Math.min(index * 80, 420)) + "ms");
+                    item.style.setProperty("--delay", String(Math.min(index * 70, 440)) + "ms");
                     observer.observe(item);
                 });
+            }
+
+            var parallaxEls = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
+            if (!reduceMotion && parallaxEls.length) {
+                var ticking = false;
+
+                function updateParallax() {
+                    var y = window.scrollY || window.pageYOffset || 0;
+                    parallaxEls.forEach(function (el) {
+                        var factor = Number(el.getAttribute("data-parallax")) || 0;
+                        el.style.transform = "translate3d(0," + (y * factor).toFixed(2) + "px,0)";
+                    });
+                    ticking = false;
+                }
+
+                window.addEventListener("scroll", function () {
+                    if (ticking) {
+                        return;
+                    }
+                    ticking = true;
+                    window.requestAnimationFrame(updateParallax);
+                }, { passive: true });
+                updateParallax();
             }
 
             function showMessage(kind, text) {
