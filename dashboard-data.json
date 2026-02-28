@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-02-28T01:00:41.922Z",
+  "generatedAt": "2026-02-28T13:00:58.490Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
-    "daysAlive": 19,
+    "daysAlive": 20,
     "totalContacts": 3,
     "totalActivities": 12,
     "totalSignals": 57,
-    "skillsCount": 11
+    "skillsCount": 25
   },
   "activities": [
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Project inquiry",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Business development outreach",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Sales outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Investor update",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Project inquiry",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Follow-up email",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Follow-up email",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -99,13 +99,17 @@
     "conversionRate": 11
   },
   "siteOptimizer": [
-    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://www.theregister.com/2026/02/25/ai_chip_startups_funding/' failed (Request failed with status code 404).",
+    "Links: OK",
     "Content: OK",
-    "[2026-02-28T01:00:41.837Z]",
+    "[2026-02-28T13:00:58.417Z]",
     "Links: OK",
     "Content: OK"
   ],
   "skills": [
+    {
+      "name": "afrexai-sre-platform",
+      "description": ""
+    },
     {
       "name": "agent-builder",
       "description": "Build fully-equipped OpenClaw AI agents from job descriptions. Use when Zach provides a job title, role description, or list of responsibilities and wants a deployable agent created. Handles the full pipeline: role analysis, identity design, personality crafting, skill identification, skill creation, and workspace assembly. Each output agent includes IDENTITY.md, SOUL.md, AGENTS.md, USER.md, TOOLS.md, HEARTBEAT.md, and all skills needed to perform the role. Trigger on: \"create an agent for...\", \"I need a [role]\", \"build me a [job title] agent\", \"hire a [role]\", or any request to staff a position with an AI agent."
@@ -115,20 +119,56 @@
       "description": "Monitor Cal.com bookings and send real-time alerts via email and WhatsApp when new meetings are scheduled. Use when you need automated notifications for Cal.com booking activity, want to be alerted immediately when someone books a meeting, or need to integrate booking notifications into your workflow automation."
     },
     {
+      "name": "clean-code",
+      "description": ""
+    },
+    {
+      "name": "code-review",
+      "description": "Systematic code review patterns covering security, performance, maintainability, correctness, and testing — with severity levels, structured feedback guidance, review process, and anti-patterns to avoid. Use when reviewing PRs, establishing review standards, or improving review quality."
+    },
+    {
       "name": "crm",
       "description": "Contact management, deal pipeline tracking, activity logging, and weekly digest for sales workflows"
+    },
+    {
+      "name": "database-migrations",
+      "description": "Safe, zero-downtime database migration strategies — schema evolution, rollback planning, data migration, tooling, and anti-pattern avoidance for production systems. Use when planning schema changes, writing migrations, or reviewing migration safety."
+    },
+    {
+      "name": "Design System",
+      "description": "Build design systems with tokens, components, and documentation that scale across teams and products."
+    },
+    {
+      "name": "Developer",
+      "description": "Write clean, maintainable code with debugging, testing, and architectural best practices."
+    },
+    {
+      "name": "github-actions-troubleshooting",
+      "description": "\"Troubleshoot GitHub Actions workflows, particularly for Go projects. Diagnose failing workflows, distinguish between code and environment issues, interpret logs, and apply fixes for common CI/CD problems.\""
     },
     {
       "name": "newsletter-curator",
       "description": ""
     },
     {
+      "name": "openrouter-transcribe",
+      "description": "Transcribe audio files via OpenRouter using audio-capable models (Gemini, GPT-4o-audio, etc)."
+    },
+    {
       "name": "outbound-sales",
+      "description": ""
+    },
+    {
+      "name": "performance-profiler",
       "description": ""
     },
     {
       "name": "sales",
       "description": ""
+    },
+    {
+      "name": "security-auditor",
+      "description": "Use when reviewing code for security vulnerabilities, implementing authentication flows, auditing OWASP Top 10, configuring CORS/CSP headers, handling secrets, input validation, SQL injection prevention, XSS protection, or any security-related code review."
     },
     {
       "name": "self-developer",
@@ -141,6 +181,22 @@
     {
       "name": "site-optimizer",
       "description": ""
+    },
+    {
+      "name": "sovereign-accessibility-auditor",
+      "description": ""
+    },
+    {
+      "name": "sovereign-api-docs-generator",
+      "description": ""
+    },
+    {
+      "name": "sovereign-changelog-maker",
+      "description": ""
+    },
+    {
+      "name": "test-specialist",
+      "description": "This skill should be used when writing test cases, fixing bugs, analyzing code for potential issues, or improving test coverage for JavaScript/TypeScript applications. Use this for unit tests, integration tests, end-to-end tests, debugging runtime errors, logic bugs, performance issues, security vulnerabilities, and systematic code analysis."
     },
     {
       "name": "voice-call-agent",
