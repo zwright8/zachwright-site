@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Operator Kit — Zach Wright</title>
+  <meta name="description" content="AI Operator Kit: prompts, SOPs, dashboard, and automation checklists to run your business with AI." />
+  <style>
+    :root {
+      --bg: #070a0d;
+      --panel: #0d1318;
+      --line: #24313c;
+      --text: #e9eef5;
+      --muted: #9fb0c4;
+      --green: #4fbf5f;
+      --green-deep: #2f8f45;
+      --max: 1040px;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(1200px 500px at 20% -10%, #15202b 0%, transparent 50%), var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 1.2rem 1rem 3rem; }
+    .top {
+      display: flex; justify-content: space-between; align-items: center;
+      border: 1px solid var(--line); background: rgba(13,19,24,.8);
+      padding: .75rem .95rem; border-radius: var(--radius);
+      position: sticky; top: 10px; backdrop-filter: blur(8px);
+    }
+    .brand { font-weight: 700; text-decoration: none; letter-spacing: .03em; }
+    .nav { display: flex; gap: .8rem; flex-wrap: wrap; }
+    .nav a { text-decoration: none; color: var(--muted); font-size: .92rem; }
+    .btn { display: inline-block; border: 1px solid var(--line); padding: .7rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 700; }
+    .btn-primary { background: linear-gradient(180deg, #63d576, var(--green)); color: #041108; border-color: #66d47a; }
+    .btn-ghost { color: var(--text); background: rgba(255,255,255,.02); }
+
+    .hero { margin-top: 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); }
+    .kicker { font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 .4rem; }
+    h1 { margin: 0 0 .7rem; font-size: clamp(1.9rem, 4.7vw, 3.1rem); line-height: 1.05; }
+    .lead { margin: 0; color: var(--muted); max-width: 70ch; }
+    .actions { margin-top: 1rem; display: flex; gap: .7rem; flex-wrap: wrap; }
+
+    .grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .9rem; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 1rem; }
+    .card h3 { margin: 0 0 .45rem; font-size: 1.02rem; }
+    .card p { margin: 0; color: var(--muted); }
+
+    .pricing { margin-top: 1rem; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .9rem; }
+    .tier { border: 1px solid var(--line); border-radius: var(--radius); background: #0b1115; padding: 1rem; }
+    .tier h4 { margin: 0 0 .2rem; }
+    .price { font-size: 1.8rem; margin: .25rem 0 .7rem; font-weight: 800; }
+    .tier ul { margin: 0 0 .9rem; padding-left: 1.05rem; color: var(--muted); }
+
+    .proof { margin-top: 1rem; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; color: var(--muted); }
+    .foot { margin-top: 1.2rem; color: #8ea1b5; font-size: .9rem; text-align: center; }
+
+    .pay-state { margin-top: .5rem; font-size: .85rem; color: #bcd2c2; }
+
+    @media (max-width: 900px) {
+      .pricing { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .top { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="/">Zach Wright</a>
+      <nav class="nav">
+        <a href="#contents">Contents</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#buy">Buy</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20question">Questions</a>
+    </header>
+
+    <section class="hero" id="buy">
+      <p class="kicker">Digital Product</p>
+      <h1>AI Operator Kit</h1>
+      <p class="lead">A practical execution system for founders: 50 prompts, SOP templates, weekly dashboard, and automation checklists. Designed for fast implementation and first revenue.</p>
+      <div class="actions">
+        <a id="buy-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Get the Kit — $29</a>
+        <a class="btn btn-ghost" href="#pricing">View pricing</a>
+      </div>
+      <div id="pay-state" class="pay-state">Loading checkout…</div>
+    </section>
+
+    <section id="contents" class="grid">
+      <article class="card">
+        <h3>50 Operator Prompts</h3>
+        <p>Sales, content, operations, finance, and decision-making prompts to execute faster with less chaos.</p>
+      </article>
+      <article class="card">
+        <h3>5 SOP Templates</h3>
+        <p>Lead intake, proposals, onboarding handoff, weekly review, and content-to-lead workflow.</p>
+      </article>
+      <article class="card">
+        <h3>Weekly Dashboard</h3>
+        <p>A compact KPI + priorities template to run execution cadence every week.</p>
+      </article>
+      <article class="card">
+        <h3>Automation Checklist</h3>
+        <p>Stepwise automation roadmap with guardrails for safe scaling.</p>
+      </article>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <article class="tier">
+        <h4>Lite</h4>
+        <div class="price">$29</div>
+        <ul><li>Prompt pack</li><li>SOP templates</li><li>Dashboard</li></ul>
+        <a class="btn btn-primary" id="buy-lite" href="#" target="_blank" rel="noopener">Buy Lite</a>
+      </article>
+      <article class="tier">
+        <h4>Pro</h4>
+        <div class="price">$79</div>
+        <ul><li>Lite + bonus workflows</li><li>Priority update pack</li></ul>
+        <a class="btn btn-primary" id="buy-pro" href="#" target="_blank" rel="noopener">Buy Pro</a>
+      </article>
+      <article class="tier">
+        <h4>Agency</h4>
+        <div class="price">$149</div>
+        <ul><li>Pro + team-ready package</li><li>License for internal team use</li></ul>
+        <a class="btn btn-primary" id="buy-agency" href="#" target="_blank" rel="noopener">Buy Agency</a>
+      </article>
+    </section>
+
+    <section class="proof">
+      <strong>Delivery:</strong> instant digital download after payment. <strong>Refund policy:</strong> 7-day no-hassle refund.
+    </section>
+
+    <p class="foot">© <span id="year"></span> Zach Wright · AI Operator Kit</p>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const state = document.getElementById('pay-state');
+
+    async function initCheckout() {
+      try {
+        const res = await fetch('/api/payments/config');
+        if (!res.ok) throw new Error('Payment config unavailable');
+        const cfg = await res.json();
+
+        const links = cfg && cfg.links ? cfg.links : {};
+        const lite = links.lite || '';
+        const pro = links.pro || '';
+        const agency = links.agency || '';
+
+        const btnMain = document.getElementById('buy-btn');
+        const btnLite = document.getElementById('buy-lite');
+        const btnPro = document.getElementById('buy-pro');
+        const btnAgency = document.getElementById('buy-agency');
+
+        if (lite) {
+          btnMain.href = lite;
+          btnLite.href = lite;
+          state.textContent = 'Checkout active.';
+        } else {
+          btnMain.href = 'mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20Purchase';
+          btnLite.href = btnMain.href;
+          state.textContent = 'Checkout link not configured yet. Contact Zach to purchase.';
+        }
+
+        btnPro.href = pro || btnMain.href;
+        btnAgency.href = agency || btnMain.href;
+      } catch (err) {
+        state.textContent = 'Checkout is being configured. Email Zach to purchase now.';
+      }
+    }
+
+    initCheckout();
+  </script>
+</body>
+</html>
