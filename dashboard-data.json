@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-27T14:02:24.318Z",
+  "generatedAt": "2026-02-28T01:00:41.922Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 19,
@@ -17,25 +17,25 @@
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Client communication",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Investor update",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Follow-up email",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Sales outreach",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Investor update",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Investor update",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Client communication",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Partnership discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -99,10 +99,10 @@
     "conversionRate": 11
   },
   "siteOptimizer": [
-    "Content: OK",
-    "[2026-02-27T14:02:24.213Z]",
-    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://fortune.com/2026/02/26/ai-startup-callosum-funding-nvidia-data-center-workloads/' failed (Request failed with status code 404).",
     "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-27.html: External link 'https://www.theregister.com/2026/02/25/ai_chip_startups_funding/' failed (Request failed with status code 404).",
+    "Content: OK",
+    "[2026-02-28T01:00:41.837Z]",
+    "Links: OK",
     "Content: OK"
   ],
   "skills": [
