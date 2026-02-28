@@ -72,3 +72,9 @@ Content: OK
 Links: OK
 Content: OK
 
+[2026-02-28T14:04:01.737Z]
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-24.html: External link 'https://github.com/obra/superpowers' failed (timeout of 5000ms exceeded).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-24.html: External link 'https://github.com/generalaction/emdash' failed (timeout of 5000ms exceeded).
+[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-24.html: External link 'https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools' failed (timeout of 5000ms exceeded).
+Content: OK
+

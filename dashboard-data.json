@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-28T13:00:58.490Z",
+  "generatedAt": "2026-02-28T14:04:01.811Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 20,
@@ -11,31 +11,31 @@
   "activities": [
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Partnership discussion",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Partnership discussion",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Client communication",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Technical discussion",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Business development outreach",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Investor update",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Investor update",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Technical discussion",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -99,10 +99,10 @@
     "conversionRate": 11
   },
   "siteOptimizer": [
-    "Links: OK",
-    "Content: OK",
-    "[2026-02-28T13:00:58.417Z]",
-    "Links: OK",
+    "[2026-02-28T14:04:01.737Z]",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-24.html: External link 'https://github.com/obra/superpowers' failed (timeout of 5000ms exceeded).",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-24.html: External link 'https://github.com/generalaction/emdash' failed (timeout of 5000ms exceeded).",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-02-24.html: External link 'https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools' failed (timeout of 5000ms exceeded).",
     "Content: OK"
   ],
   "skills": [
@@ -208,6 +208,12 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-02-28",
+      "slug": "2026-02-28",
+      "title": "Swarm Daily: OpenAI’s $110B Round Starts the Infrastructure Endgame",
+      "preview": "Mega-funding, defense AI pressure, and the hottest repos from the last 24 hours."
+    },
     {
       "date": "2026-02-27",
       "slug": "2026-02-27",
