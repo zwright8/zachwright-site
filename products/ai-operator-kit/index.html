@@ -7,140 +7,691 @@
   <meta name="description" content="AI Operator Kit: prompts, SOPs, dashboard, and automation checklists to run your business with AI." />
   <style>
     :root {
-      --bg: #070a0d;
-      --panel: #0d1318;
-      --line: #24313c;
-      --text: #e9eef5;
-      --muted: #9fb0c4;
-      --green: #4fbf5f;
-      --green-deep: #2f8f45;
-      --max: 1040px;
-      --radius: 8px;
+      --bg: #04060a;
+      --panel: #0b1119;
+      --panel-2: #0f1723;
+      --line: #2c3748;
+      --line-strong: #49556a;
+      --text: #f2f5fa;
+      --muted: #9ca8bc;
+      --accent: #d6dde8;
+      --accent-soft: #b8c3d6;
+      --good: #9ee4ba;
+      --max: 1080px;
+      --radius: 2px;
     }
+
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(1200px 500px at 20% -10%, #15202b 0%, transparent 50%), var(--bg);
+      font-family: "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(90vw 55vw at 88% -8%, rgba(223, 230, 242, 0.08), transparent 70%),
+        linear-gradient(180deg, #020305 0%, #04060a 52%, #070b12 100%);
       color: var(--text);
       line-height: 1.55;
+      letter-spacing: 0.002em;
     }
+
     a { color: inherit; }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 1.2rem 1rem 3rem; }
-    .top {
-      display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid var(--line); background: rgba(13,19,24,.8);
-      padding: .75rem .95rem; border-radius: var(--radius);
-      position: sticky; top: 10px; backdrop-filter: blur(8px);
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
-    .brand { font-weight: 700; text-decoration: none; letter-spacing: .03em; }
-    .nav { display: flex; gap: .8rem; flex-wrap: wrap; }
-    .nav a { text-decoration: none; color: var(--muted); font-size: .92rem; }
-    .btn { display: inline-block; border: 1px solid var(--line); padding: .7rem 1rem; border-radius: 6px; text-decoration: none; font-weight: 700; }
-    .btn-primary { background: linear-gradient(180deg, #63d576, var(--green)); color: #041108; border-color: #66d47a; }
-    .btn-ghost { color: var(--text); background: rgba(255,255,255,.02); }
 
-    .hero { margin-top: 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); }
-    .kicker { font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 .4rem; }
-    h1 { margin: 0 0 .7rem; font-size: clamp(1.9rem, 4.7vw, 3.1rem); line-height: 1.05; }
-    .lead { margin: 0; color: var(--muted); max-width: 70ch; }
-    .actions { margin-top: 1rem; display: flex; gap: .7rem; flex-wrap: wrap; }
+    .skip-link {
+      position: absolute;
+      top: -56px;
+      left: 14px;
+      z-index: 120;
+      background: #fff;
+      color: #0a0f17;
+      padding: 8px 10px;
+      text-decoration: none;
+    }
+    .skip-link:focus-visible { top: 12px; }
 
-    .grid { margin-top: 1rem; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .9rem; }
-    .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 1rem; }
-    .card h3 { margin: 0 0 .45rem; font-size: 1.02rem; }
-    .card p { margin: 0; color: var(--muted); }
+    .wrap {
+      width: min(var(--max), calc(100% - 1.6rem));
+      margin: 0 auto;
+      padding-bottom: 3.5rem;
+    }
 
-    .pricing { margin-top: 1rem; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .9rem; }
-    .tier { border: 1px solid var(--line); border-radius: var(--radius); background: #0b1115; padding: 1rem; }
-    .tier h4 { margin: 0 0 .2rem; }
-    .price { font-size: 1.8rem; margin: .25rem 0 .7rem; font-weight: 800; }
-    .tier ul { margin: 0 0 .9rem; padding-left: 1.05rem; color: var(--muted); }
+    .top {
+      position: sticky;
+      top: 10px;
+      z-index: 40;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      background: rgba(6, 9, 14, 0.92);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.72rem 0.85rem;
+    }
 
-    .proof { margin-top: 1rem; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; color: var(--muted); }
-    .foot { margin-top: 1.2rem; color: #8ea1b5; font-size: .9rem; text-align: center; }
+    .brand {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-decoration: none;
+    }
 
-    .pay-state { margin-top: .5rem; font-size: .85rem; color: #bcd2c2; }
+    .nav {
+      justify-self: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      justify-content: center;
+    }
 
-    @media (max-width: 900px) {
-      .pricing { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
-      .top { position: static; }
+    .nav a {
+      color: var(--muted);
+      font-size: 0.74rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      padding: 0 0.95rem;
+      text-decoration: none;
+      transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease, color 220ms ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #060b12;
+    }
+
+    .btn-ghost {
+      background: rgba(13, 18, 27, 0.82);
+      color: var(--text);
+      border-color: var(--line-strong);
+    }
+
+    main {
+      padding-top: 1.2rem;
+      display: grid;
+      gap: 0.95rem;
+    }
+
+    .frame {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #090f18 0%, #0c1320 100%);
+      padding: clamp(0.95rem, 2.5vw, 1.4rem);
+    }
+
+    .kicker {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 0.69rem;
+      margin: 0 0 0.55rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 0.8rem;
+      font-size: clamp(2rem, 5.4vw, 4rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 13ch;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.6vw, 2rem);
+      line-height: 1.06;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    p { margin: 0; }
+
+    .lead {
+      color: var(--muted);
+      max-width: 67ch;
+      font-size: clamp(0.95rem, 1.35vw, 1.06rem);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0.82rem;
+      margin-top: 1rem;
+    }
+
+    .signal-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .signal-list li {
+      border: 1px solid #364256;
+      background: rgba(10, 15, 24, 0.88);
+      padding: 0.58rem 0.68rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .signal-list strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.16rem;
+    }
+
+    .actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pay-state {
+      margin-top: 0.58rem;
+      font-size: 0.83rem;
+      color: var(--accent-soft);
+      min-height: 1.2rem;
+    }
+
+    .section-head {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 72ch;
+      font-size: 0.93rem;
+    }
+
+    .problem-grid,
+    .deliverable-grid,
+    .fit-grid,
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.66rem;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 0.75rem;
+      display: grid;
+      gap: 0.44rem;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .deliverable-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.05rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      background: #090e16;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+    }
+
+    caption {
+      text-align: left;
+      padding: 0.8rem 0.85rem 0.55rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      caption-side: top;
+    }
+
+    th,
+    td {
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      text-align: left;
+      padding: 0.6rem 0.7rem;
+      font-size: 0.87rem;
+      vertical-align: top;
+    }
+
+    tr > *:last-child { border-right: none; }
+
+    th {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.68rem;
+      color: var(--text);
+      background: #101825;
+    }
+
+    td { color: var(--muted); }
+
+    td strong {
+      color: var(--text);
+      display: block;
+      font-size: 0.77rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.18rem;
+    }
+
+    .matrix-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.56rem;
+      margin-top: 0.74rem;
+    }
+
+    .tier-cta {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 0.65rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .tier-cta p {
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+    .timeline {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .timeline li {
+      border-left: 2px solid #58657c;
+      padding-left: 0.62rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .timeline strong {
+      display: block;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.69rem;
+      margin-bottom: 0.12rem;
+    }
+
+    .cta {
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, #0d141f 0%, #0a1018 100%);
+      padding: clamp(0.95rem, 2.1vw, 1.35rem);
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .cta p {
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: 0.93rem;
+    }
+
+    .foot {
+      margin-top: 1.35rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--line);
+      color: #8ea1b5;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1000px) {
+      .top {
+        grid-template-columns: 1fr;
+        justify-items: start;
+        gap: 0.56rem;
+      }
+      .nav { justify-self: start; }
+      .hero-grid,
+      .problem-grid,
+      .deliverable-grid,
+      .fit-grid,
+      .trust-grid,
+      .matrix-actions { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: calc(100% - 1rem); }
+      .btn { width: 100%; }
+      .actions .btn { width: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0ms !important;
+        transition-duration: 0ms !important;
+      }
     }
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <div class="wrap">
-    <header class="top">
+    <header class="top" aria-label="Primary">
       <a class="brand" href="/">Zach Wright</a>
-      <nav class="nav">
-        <a href="#contents">Contents</a>
-        <a href="#pricing">Pricing</a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#problem">Problem</a>
+        <a href="#deliverables">Deliverables</a>
+        <a href="#comparison">Compare</a>
+        <a href="#timeline">Timeline</a>
         <a href="#buy">Buy</a>
       </nav>
       <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20question">Questions</a>
     </header>
 
-    <section class="hero" id="buy">
-      <p class="kicker">Digital Product</p>
-      <h1>AI Operator Kit</h1>
-      <p class="lead">A practical execution system for founders: 50 prompts, SOP templates, weekly dashboard, and automation checklists. Designed for fast implementation and first revenue.</p>
-      <div class="actions">
-        <a id="buy-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Get the Kit — $29</a>
-        <a class="btn btn-ghost" href="#pricing">View pricing</a>
-      </div>
-      <div id="pay-state" class="pay-state">Loading checkout…</div>
-    </section>
+    <main id="main">
+      <section class="frame" id="buy" aria-labelledby="hero-title">
+        <p class="kicker">Digital Product · Operator System</p>
+        <h1 id="hero-title">AI Operator Kit</h1>
+        <p class="lead">For founders and small teams who need clearer execution: this kit gives you a practical operating structure for prompts, SOPs, weekly review, and safe automation rollout.</p>
 
-    <section id="contents" class="grid">
-      <article class="card">
-        <h3>50 Operator Prompts</h3>
-        <p>Sales, content, operations, finance, and decision-making prompts to execute faster with less chaos.</p>
-      </article>
-      <article class="card">
-        <h3>5 SOP Templates</h3>
-        <p>Lead intake, proposals, onboarding handoff, weekly review, and content-to-lead workflow.</p>
-      </article>
-      <article class="card">
-        <h3>Weekly Dashboard</h3>
-        <p>A compact KPI + priorities template to run execution cadence every week.</p>
-      </article>
-      <article class="card">
-        <h3>Automation Checklist</h3>
-        <p>Stepwise automation roadmap with guardrails for safe scaling.</p>
-      </article>
-    </section>
+        <div class="actions">
+          <a id="buy-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Get Lite — $29</a>
+          <a class="btn btn-ghost" href="#comparison">Compare plans</a>
+        </div>
+        <div id="pay-state" class="pay-state" role="status" aria-live="polite">Loading checkout…</div>
 
-    <section id="pricing" class="pricing">
-      <article class="tier">
-        <h4>Lite</h4>
-        <div class="price">$29</div>
-        <ul><li>Prompt pack</li><li>SOP templates</li><li>Dashboard</li></ul>
-        <a class="btn btn-primary" id="buy-lite" href="#" target="_blank" rel="noopener">Buy Lite</a>
-      </article>
-      <article class="tier">
-        <h4>Pro</h4>
-        <div class="price">$79</div>
-        <ul><li>Lite + bonus workflows</li><li>Priority update pack</li></ul>
-        <a class="btn btn-primary" id="buy-pro" href="#" target="_blank" rel="noopener">Buy Pro</a>
-      </article>
-      <article class="tier">
-        <h4>Agency</h4>
-        <div class="price">$149</div>
-        <ul><li>Pro + team-ready package</li><li>License for internal team use</li></ul>
-        <a class="btn btn-primary" id="buy-agency" href="#" target="_blank" rel="noopener">Buy Agency</a>
-      </article>
-    </section>
+        <div class="hero-grid" aria-label="Operator outcomes">
+          <article class="card">
+            <h3>Problem This Solves</h3>
+            <ul>
+              <li>You have AI tools but no repeatable execution system.</li>
+              <li>Your weekly priorities drift without one operating dashboard.</li>
+              <li>Automation ideas exist, but rollout order and guardrails are unclear.</li>
+            </ul>
+          </article>
+          <aside class="card" aria-label="What changes">
+            <h3>What Changes</h3>
+            <ul class="signal-list">
+              <li><strong>Clear Playbook</strong>Turn ad hoc AI usage into a stable weekly operating cadence.</li>
+              <li><strong>Faster Decisions</strong>Use templates and prompts instead of starting from blank docs.</li>
+              <li><strong>Safer Scaling</strong>Implement automation in defined stages with checks.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
 
-    <section class="proof">
-      <strong>Delivery:</strong> instant digital download after payment. <strong>Refund policy:</strong> 7-day no-hassle refund.
-    </section>
+      <section id="problem" class="frame" aria-labelledby="problem-title">
+        <div class="section-head">
+          <h2 id="problem-title">From Chaos to Operating Rhythm</h2>
+          <p class="section-intro">Most AI execution problems are workflow problems, not model problems. The kit is structured to move from scattered effort into one practical execution loop.</p>
+        </div>
+        <div class="problem-grid">
+          <article class="card">
+            <h3>Before</h3>
+            <p>Random prompts, inconsistent handoffs, and no shared decision cadence.</p>
+          </article>
+          <article class="card">
+            <h3>After</h3>
+            <p>Prompt libraries mapped to business functions plus SOPs your team can actually run.</p>
+          </article>
+          <article class="card">
+            <h3>Outcome</h3>
+            <p>Clearer weekly priorities, faster execution starts, and fewer avoidable process bottlenecks.</p>
+          </article>
+        </div>
+      </section>
 
-    <p class="foot">© <span id="year"></span> Zach Wright · AI Operator Kit</p>
+      <section id="deliverables" class="frame" aria-labelledby="deliverables-title">
+        <div class="section-head">
+          <h2 id="deliverables-title">What You Get</h2>
+          <p class="section-intro">Everything is built as implementation-ready assets so you can apply it immediately.</p>
+        </div>
+        <div class="deliverable-grid">
+          <article class="card">
+            <h3>50 Operator Prompts</h3>
+            <p>Coverage across sales, content, operations, finance, and decision support.</p>
+          </article>
+          <article class="card">
+            <h3>5 SOP Templates</h3>
+            <p>Lead intake, proposals, onboarding handoff, weekly review, and content-to-lead workflow.</p>
+          </article>
+          <article class="card">
+            <h3>Weekly Dashboard</h3>
+            <p>A compact KPI + priorities format for one weekly operating checkpoint.</p>
+          </article>
+          <article class="card">
+            <h3>Automation Checklist</h3>
+            <p>Step-by-step rollout sequence with practical guardrails before scaling changes.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="comparison" class="frame" aria-labelledby="comparison-title">
+        <div class="section-head">
+          <h2 id="comparison-title">Choose Your Implementation Depth</h2>
+          <p class="section-intro">All tiers are digital downloads. Pick the package that matches your scope and team context.</p>
+        </div>
+
+        <div class="table-wrap" role="region" aria-label="Plan comparison table" tabindex="0">
+          <table>
+            <caption>AI Operator Kit plans</caption>
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Lite · $29</th>
+                <th scope="col">Pro · $79</th>
+                <th scope="col">Agency · $149</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Core prompt pack</th>
+                <td>50 prompts</td>
+                <td>50 prompts</td>
+                <td>50 prompts</td>
+              </tr>
+              <tr>
+                <th scope="row">SOP templates</th>
+                <td>5 templates</td>
+                <td>5 templates</td>
+                <td>5 templates</td>
+              </tr>
+              <tr>
+                <th scope="row">Weekly dashboard</th>
+                <td>Included</td>
+                <td>Included</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <th scope="row">Automation checklist</th>
+                <td>Included</td>
+                <td>Included</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <th scope="row">Bonus workflows</th>
+                <td>—</td>
+                <td>Included</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <th scope="row">Priority update pack</th>
+                <td>—</td>
+                <td>Included</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <th scope="row">Team-ready package</th>
+                <td>—</td>
+                <td>—</td>
+                <td>Included</td>
+              </tr>
+              <tr>
+                <th scope="row">Internal team-use license</th>
+                <td>—</td>
+                <td>—</td>
+                <td>Included</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="matrix-actions" aria-label="Purchase options">
+          <article class="tier-cta">
+            <h3>Lite</h3>
+            <p>Best for solo founders getting their first structured AI operating system in place.</p>
+            <a class="btn btn-primary" id="buy-lite" href="#" target="_blank" rel="noopener">Buy Lite</a>
+          </article>
+          <article class="tier-cta">
+            <h3>Pro</h3>
+            <p>Best for operators who want deeper workflow coverage and update assets.</p>
+            <a class="btn btn-primary" id="buy-pro" href="#" target="_blank" rel="noopener">Buy Pro</a>
+          </article>
+          <article class="tier-cta">
+            <h3>Agency</h3>
+            <p>Best for teams that need a broader package and internal team-use rights.</p>
+            <a class="btn btn-primary" id="buy-agency" href="#" target="_blank" rel="noopener">Buy Agency</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="timeline" class="frame" aria-labelledby="timeline-title">
+        <div class="section-head">
+          <h2 id="timeline-title">Implementation Timeline</h2>
+          <p class="section-intro">A practical rollout sequence you can execute without rebuilding your entire stack.</p>
+        </div>
+        <ol class="timeline">
+          <li><strong>Day 0</strong>Download the kit and select one core workflow to implement first.</li>
+          <li><strong>Days 1–2</strong>Adapt the SOP templates to your current operating process and owners.</li>
+          <li><strong>Days 3–7</strong>Run your first weekly dashboard cycle with defined priorities and checkpoints.</li>
+          <li><strong>Week 2+</strong>Roll out automation items in sequence using the checklist guardrails.</li>
+        </ol>
+      </section>
+
+      <section id="fit" class="frame" aria-labelledby="fit-title">
+        <div class="section-head">
+          <h2 id="fit-title">Who This Is For (and Not For)</h2>
+          <p class="section-intro">This product is intentionally practical. It fits operators who want to execute, not collect theory.</p>
+        </div>
+        <div class="fit-grid">
+          <article class="card">
+            <h3>Good Fit</h3>
+            <ul>
+              <li>Founder-led teams building execution cadence around AI.</li>
+              <li>Solo operators who want reusable workflows and templates.</li>
+              <li>Small agencies standardizing internal operations.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Not a Fit</h3>
+            <ul>
+              <li>Teams looking for done-for-you implementation services.</li>
+              <li>Buyers expecting guaranteed revenue outcomes from a template product.</li>
+              <li>Operators unwilling to run weekly execution review discipline.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>What to Expect</h3>
+            <ul>
+              <li>Clear assets you can adapt quickly.</li>
+              <li>No hype claims, no inflated guarantees.</li>
+              <li>A practical system that improves with consistent use.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="trust" class="frame" aria-labelledby="trust-title">
+        <div class="section-head">
+          <h2 id="trust-title">Delivery, Trust, and Support</h2>
+          <p class="section-intro">Straight terms. Clear delivery. Direct operator contact.</p>
+        </div>
+        <div class="trust-grid">
+          <article class="card">
+            <h3>Instant Delivery</h3>
+            <p>Digital download is delivered immediately after successful payment.</p>
+          </article>
+          <article class="card">
+            <h3>Refund Policy</h3>
+            <p>7-day no-hassle refund window.</p>
+          </article>
+          <article class="card">
+            <h3>Questions</h3>
+            <p>Email <a href="mailto:zach@zachwright.xyz">zach@zachwright.xyz</a> for pre-purchase or product questions.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta" aria-labelledby="cta-title">
+        <h2 id="cta-title">Pick your tier and implement this week.</h2>
+        <p>Start with Lite for immediate execution structure, upgrade to Pro for deeper workflows, or choose Agency for team-ready internal rollout.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#comparison">View plans</a>
+          <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20question">Talk to Zach</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span><strong>AI Operator Kit</strong> — practical operating assets for AI execution.</span>
+      <span>© <span id="year"></span> Zach Wright</span>
+    </footer>
   </div>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('year').textContent = String(new Date().getFullYear());
     const state = document.getElementById('pay-state');
 
     async function initCheckout() {
