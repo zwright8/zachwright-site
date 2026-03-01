@@ -447,7 +447,7 @@
         <p class="lead">For founders and small teams who need clearer execution: this kit gives you a practical operating structure for prompts, SOPs, weekly review, and safe automation rollout.</p>
 
         <div class="actions">
-          <a id="buy-btn" class="btn btn-primary" href="#" target="_blank" rel="noopener">Get Lite — $29</a>
+          <a id="buy-btn" class="btn btn-primary" href="https://buy.stripe.com/aFaeV54ZK9LP4og5Sd6Zy02" target="_blank" rel="noopener">Get Lite — $29</a>
           <a class="btn btn-ghost" href="#comparison">Compare plans</a>
         </div>
         <div id="pay-state" class="pay-state" role="status" aria-live="polite">Loading checkout…</div>
@@ -592,17 +592,17 @@
           <article class="tier-cta">
             <h3>Lite</h3>
             <p>Best for solo founders getting their first structured AI operating system in place.</p>
-            <a class="btn btn-primary" id="buy-lite" href="#" target="_blank" rel="noopener">Buy Lite</a>
+            <a class="btn btn-primary" id="buy-lite" href="https://buy.stripe.com/aFaeV54ZK9LP4og5Sd6Zy02" target="_blank" rel="noopener">Buy Lite</a>
           </article>
           <article class="tier-cta">
             <h3>Pro</h3>
             <p>Best for operators who want deeper workflow coverage and update assets.</p>
-            <a class="btn btn-primary" id="buy-pro" href="#" target="_blank" rel="noopener">Buy Pro</a>
+            <a class="btn btn-primary" id="buy-pro" href="https://buy.stripe.com/bJe9AL3VG0bfaME80l6Zy01" target="_blank" rel="noopener">Buy Pro</a>
           </article>
           <article class="tier-cta">
             <h3>Agency</h3>
             <p>Best for teams that need a broader package and internal team-use rights.</p>
-            <a class="btn btn-primary" id="buy-agency" href="#" target="_blank" rel="noopener">Buy Agency</a>
+            <a class="btn btn-primary" id="buy-agency" href="https://buy.stripe.com/6oU5kv8bWf69bQI2G16Zy00" target="_blank" rel="noopener">Buy Agency</a>
           </article>
         </div>
       </section>
@@ -694,36 +694,41 @@
     document.getElementById('year').textContent = String(new Date().getFullYear());
     const state = document.getElementById('pay-state');
 
+    const defaultLinks = {
+      lite: 'https://buy.stripe.com/aFaeV54ZK9LP4og5Sd6Zy02',
+      pro: 'https://buy.stripe.com/bJe9AL3VG0bfaME80l6Zy01',
+      agency: 'https://buy.stripe.com/6oU5kv8bWf69bQI2G16Zy00'
+    };
+
     async function initCheckout() {
+      const btnMain = document.getElementById('buy-btn');
+      const btnLite = document.getElementById('buy-lite');
+      const btnPro = document.getElementById('buy-pro');
+      const btnAgency = document.getElementById('buy-agency');
+
+      btnMain.href = defaultLinks.lite;
+      btnLite.href = defaultLinks.lite;
+      btnPro.href = defaultLinks.pro;
+      btnAgency.href = defaultLinks.agency;
+      state.textContent = 'Checkout active.';
+
       try {
         const res = await fetch('/api/payments/config');
         if (!res.ok) throw new Error('Payment config unavailable');
         const cfg = await res.json();
 
         const links = cfg && cfg.links ? cfg.links : {};
-        const lite = links.lite || '';
-        const pro = links.pro || '';
-        const agency = links.agency || '';
+        const lite = links.lite || defaultLinks.lite;
+        const pro = links.pro || defaultLinks.pro;
+        const agency = links.agency || defaultLinks.agency;
 
-        const btnMain = document.getElementById('buy-btn');
-        const btnLite = document.getElementById('buy-lite');
-        const btnPro = document.getElementById('buy-pro');
-        const btnAgency = document.getElementById('buy-agency');
-
-        if (lite) {
-          btnMain.href = lite;
-          btnLite.href = lite;
-          state.textContent = 'Checkout active.';
-        } else {
-          btnMain.href = 'mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20Purchase';
-          btnLite.href = btnMain.href;
-          state.textContent = 'Checkout link not configured yet. Contact Zach to purchase.';
-        }
-
-        btnPro.href = pro || btnMain.href;
-        btnAgency.href = agency || btnMain.href;
+        btnMain.href = lite;
+        btnLite.href = lite;
+        btnPro.href = pro;
+        btnAgency.href = agency;
+        state.textContent = 'Checkout active.';
       } catch (err) {
-        state.textContent = 'Checkout is being configured. Email Zach to purchase now.';
+        state.textContent = 'Checkout active.';
       }
     }
 

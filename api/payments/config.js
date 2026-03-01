@@ -7,9 +7,9 @@ module.exports = async function handler(req, res) {
     }
 
     const links = {
-        lite: process.env.STRIPE_PAYMENT_LINK_AI_OPERATOR_KIT_LITE || "",
-        pro: process.env.STRIPE_PAYMENT_LINK_AI_OPERATOR_KIT_PRO || "",
-        agency: process.env.STRIPE_PAYMENT_LINK_AI_OPERATOR_KIT_AGENCY || ""
+        lite: process.env.STRIPE_PAYMENT_LINK_AI_OPERATOR_KIT_LITE || "https://buy.stripe.com/aFaeV54ZK9LP4og5Sd6Zy02",
+        pro: process.env.STRIPE_PAYMENT_LINK_AI_OPERATOR_KIT_PRO || "https://buy.stripe.com/bJe9AL3VG0bfaME80l6Zy01",
+        agency: process.env.STRIPE_PAYMENT_LINK_AI_OPERATOR_KIT_AGENCY || "https://buy.stripe.com/6oU5kv8bWf69bQI2G16Zy00"
     };
 
     res.statusCode = 200;
