@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-03-01T23:03:38.171Z",
+  "generatedAt": "2026-03-02T01:00:47.786Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 21,
     "totalContacts": 3,
     "totalActivities": 12,
     "totalSignals": 57,
-    "skillsCount": 25
+    "skillsCount": 30
   },
   "activities": [
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Project inquiry",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Investor update",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Partnership discussion",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Business development outreach",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -53,7 +53,7 @@
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Sales outreach",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Technical discussion",
+      "note": "Investor update",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -115,6 +115,10 @@
       "description": "Build fully-equipped OpenClaw AI agents from job descriptions. Use when Zach provides a job title, role description, or list of responsibilities and wants a deployable agent created. Handles the full pipeline: role analysis, identity design, personality crafting, skill identification, skill creation, and workspace assembly. Each output agent includes IDENTITY.md, SOUL.md, AGENTS.md, USER.md, TOOLS.md, HEARTBEAT.md, and all skills needed to perform the role. Trigger on: \"create an agent for...\", \"I need a [role]\", \"build me a [job title] agent\", \"hire a [role]\", or any request to staff a position with an AI agent."
     },
     {
+      "name": "automation-workflows",
+      "description": "Design and implement automation workflows to save time and scale operations as a solopreneur. Use when identifying repetitive tasks to automate, building workflows across tools, setting up triggers and actions, or optimizing existing automations. Covers automation opportunity identification, workflow design, tool selection (Zapier, Make, n8n), testing, and maintenance. Trigger on \"automate\", \"automation\", \"workflow automation\", \"save time\", \"reduce manual work\", \"automate my business\", \"no-code automation\"."
+    },
+    {
       "name": "cal-booking-alerts",
       "description": "Monitor Cal.com bookings and send real-time alerts via email and WhatsApp when new meetings are scheduled. Use when you need automated notifications for Cal.com booking activity, want to be alerted immediately when someone books a meeting, or need to integrate booking notifications into your workflow automation."
     },
@@ -143,8 +147,20 @@
       "description": "Write clean, maintainable code with debugging, testing, and architectural best practices."
     },
     {
+      "name": "DevOps",
+      "description": "Automate deployments, manage infrastructure, and build reliable CI/CD pipelines."
+    },
+    {
+      "name": "docs-cog",
+      "description": "\"Deep reasoning. Accurate data. Beautiful design. The three things every great document needs — and most AI gets wrong. #1 on DeepResearch Bench (Feb 2026), powered by SOTA search models, and state-of-the-art PDF generation. Create resumes, contracts, reports, proposals, invoices, certificates, and any professional document.\""
+    },
+    {
       "name": "github-actions-troubleshooting",
       "description": "\"Troubleshoot GitHub Actions workflows, particularly for Go projects. Diagnose failing workflows, distinguish between code and environment issues, interpret logs, and apply fixes for common CI/CD problems.\""
+    },
+    {
+      "name": "Monitoring",
+      "description": "\"Set up observability for applications and infrastructure with metrics, logs, traces, and alerts.\""
     },
     {
       "name": "newsletter-curator",
@@ -161,6 +177,10 @@
     {
       "name": "performance-profiler",
       "description": ""
+    },
+    {
+      "name": "project-management",
+      "description": "Manage projects, tasks, and priorities effectively as a solopreneur. Use when organizing work, tracking progress, managing deadlines, coordinating with contractors or clients, or building project management systems. Covers task management methods, prioritization frameworks, project planning templates, tool selection, and personal productivity workflows. Trigger on \"project management\", \"manage my work\", \"organize tasks\", \"project planning\", \"task management\", \"prioritization\", \"stay organized\"."
     },
     {
       "name": "sales",
