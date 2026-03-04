@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-03T13:00:48.100Z",
+  "generatedAt": "2026-03-04T01:01:41.328Z",
   "uptime": {
     "bornAt": "2026-02-08T05:00:00.000Z",
     "daysAlive": 23,
@@ -11,31 +11,31 @@
   "activities": [
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Business development outreach",
       "contact": "Potential Client",
       "date": "2026-02-18T21:01:56.000Z"
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Business development outreach",
       "contact": "Investor Contact",
       "date": "2026-02-17T17:40:21.656Z"
     },
     {
       "type": "email",
-      "note": "Investor update",
+      "note": "Project inquiry",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:33:23.430Z"
     },
     {
       "type": "email",
-      "note": "Sales outreach",
+      "note": "Business development outreach",
       "contact": "Strategic Partner",
       "date": "2026-02-17T17:25:41.000Z"
     },
     {
       "type": "email",
-      "note": "Client communication",
+      "note": "Investor update",
       "contact": "Potential Client",
       "date": "2026-02-17T13:22:36.000Z"
     },
@@ -47,19 +47,19 @@
     },
     {
       "type": "email",
-      "note": "Business development outreach",
+      "note": "Sales outreach",
       "contact": "Warm Lead",
       "date": "2026-02-14T04:44:41.000Z"
     },
     {
       "type": "email",
-      "note": "Partnership discussion",
+      "note": "Client communication",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:08:10.000Z"
     },
     {
       "type": "email",
-      "note": "Follow-up email",
+      "note": "Sales outreach",
       "contact": "Warm Lead",
       "date": "2026-02-13T15:05:56.000Z"
     },
@@ -71,7 +71,7 @@
     },
     {
       "type": "email",
-      "note": "Project inquiry",
+      "note": "Follow-up email",
       "contact": "Warm Lead",
       "date": "2026-02-13T08:09:46.000Z"
     },
@@ -99,10 +99,10 @@
     "conversionRate": 11
   },
   "siteOptimizer": [
-    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-03-01.html: External link 'https://www.reuters.com/business/energy/oil-jumps-10-iran-conflict-could-spike-100-barrel-analysts-say-2026-03-01/' failed (Request failed with status code 401).",
-    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-03-01.html: External link 'https://www.reuters.com/business/energy/hundreds-ships-drop-anchor-middle-east-gulf-us-war-iran-escalates-data-shows-2026-03-01/' failed (Request failed with status code 401).",
     "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-03-01.html: External link 'https://www.reuters.com/business/energy/opec-debates-oil-output-boost-us-war-iran-disrupts-shipments-2026-03-01/' failed (Request failed with status code 401).",
     "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-03-02.html: External link 'https://www.science.org/content/article/nist-moves-restrict-foreign-scientists-its-labs' failed (Request failed with status code 403).",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-03-03.html: External link 'https://x.com/sama/status/2028640354912923739?s=20' failed (Request failed with status code 403).",
+    "[BROKEN] /Users/zacharywright/.openclaw/workspace/zachwright-site/updates/2026-03-03.html: External link 'https://www.bloomberg.com/news/articles/2026-03-03/meta-tests-ai-shopping-research-tool-to-rival-chatgpt-gemini' failed (Request failed with status code 403).",
     "Content: OK"
   ],
   "skills": [
@@ -232,6 +232,12 @@
     }
   ],
   "updates": [
+    {
+      "date": "2026-03-03",
+      "slug": "2026-03-03",
+      "title": "Swarm Daily: The Pentagon Just Became an AI Product Manager",
+      "preview": "Defense procurement is now directly shaping AI model behavior, while open-source agent tooling keeps accelerating."
+    },
     {
       "date": "2026-03-02",
       "slug": "2026-03-02",
