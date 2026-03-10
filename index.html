@@ -235,6 +235,18 @@
       font-size: 0.92rem;
     }
 
+    .editorial-block a {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: #617088;
+      text-underline-offset: 2px;
+    }
+
+    .editorial-block a:hover {
+      color: #ffffff;
+      text-decoration-color: var(--accent);
+    }
+
     .steps { list-style: none; display: grid; gap: 0.56rem; }
     .steps li {
       border-left: 2px solid #58657c;
@@ -435,10 +447,11 @@
       <nav class="nav" aria-label="Sections">
         <a href="#capabilities">Capabilities</a>
         <a href="#proof">Proof & Process</a>
+        <a href="#weekly-reviews">Weekly Reviews</a>
+        <a href="/updates/index.html">Updates</a>
         <a href="#contact">Contact</a>
-        <a href="/products/ai-operator-kit/">AI Operator Kit</a>
       </nav>
-      <a class="btn btn-primary" href="/products/ai-operator-kit/">Get Kit</a>
+      <a class="btn btn-primary" href="#weekly-reviews">Read Weekly Reviews</a>
     </header>
 
     <main id="main" class="narrow">
@@ -449,7 +462,7 @@
           <p class="hero-copy">
             I help teams turn AI volatility into practical priorities, operating plans, and build momentum.
             This is my public operating surface for advisory work, venture tracks, and the
-            <a href="/updates/index.html">Super Sonic Tsunami</a> weekly brief.
+            <a href="/updates/index.html">Super Sonic Tsunami</a> weekly OpenClaw design reviews.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Start a conversation</a>
@@ -511,6 +524,28 @@
         </article>
       </section>
 
+      <section id="weekly-reviews" data-reveal>
+        <div class="section-head">
+          <h2>Weekly OpenClaw Design Reviews</h2>
+          <p class="section-intro">A weekly review of what OpenClaw has been designing, shipping, and refining.</p>
+        </div>
+        <article class="editorial-block">
+          <h3>Latest Review · February 17-23</h3>
+          <p>The latest weekly review covers new skills, tooling improvements, and the next build priorities.</p>
+          <p><a href="/updates/2026-02-22.html">Read the February 17-23 review</a></p>
+        </article>
+        <article class="editorial-block">
+          <h3>Launch Week Review</h3>
+          <p>The first review captures early design decisions, shipped systems, and operating model setup.</p>
+          <p><a href="/updates/2026-02-17.html">Read the launch-week review</a></p>
+        </article>
+        <article class="editorial-block">
+          <h3>Full Archive</h3>
+          <p>Browse daily drops and weekly reviews in one stream.</p>
+          <p><a href="/updates/index.html">Open the updates archive</a></p>
+        </article>
+      </section>
+
       <section id="contact" data-reveal>
         <article class="cta">
           <h2>If execution speed matters, start now.</h2>
@@ -528,7 +563,7 @@
             <div class="control-actions">
               <a class="control-btn" href="mailto:zach@zachwright.xyz?subject=Advisory%20intro">Contact</a>
               <a class="control-btn" href="/updates/index.html">Read Brief</a>
-              <a class="control-btn" href="/products/ai-operator-kit/">Buy AI Operator Kit</a>
+              <a class="control-btn" href="#weekly-reviews">Weekly Reviews</a>
             </div>
           </div>
 
@@ -559,8 +594,8 @@
           <ul>
             <li><a href="#capabilities">Capabilities</a></li>
             <li><a href="#proof">Proof & Process</a></li>
+            <li><a href="#weekly-reviews">Weekly Reviews</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="/products/ai-operator-kit/">AI Operator Kit</a></li>
           </ul>
         </section>
         <section>

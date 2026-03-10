@@ -1,0 +1,80 @@
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - banner [ref=e6]:
+      - heading "Eryn Lasgalen LLC" [level=1] [ref=e10]
+    - generic [ref=e13]:
+      - heading "Pay Eryn Lasgalen LLC" [level=2] [ref=e14]
+      - generic [ref=e19]: $149.00
+  - generic [ref=e20]:
+    - main [ref=e21]:
+      - generic [ref=e24]:
+        - generic:
+          - iframe [ref=e30]:
+            
+          - generic [ref=e31]:
+            - separator [ref=e32]
+            - paragraph [ref=e33]: Or
+        - heading "Contact information" [level=2] [ref=e34]
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e41]:
+            - generic [ref=e43]: Email
+            - textbox "Email" [ref=e50]:
+              - /placeholder: email@example.com
+          - heading "Payment method" [level=2] [ref=e52]
+        - list [ref=e54]:
+          - listitem [ref=e59]:
+            - generic [ref=e68]:
+              - generic [ref=e72]:
+                - radio "Card" [ref=e73]
+                - generic [ref=e75]: Card
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Visa"
+                  - generic:
+                    - generic:
+                      - img "MasterCard"
+                  - generic:
+                    - generic:
+                      - img "American Express"
+                  - generic:
+                    - img "Discover"
+                    - img "JCB"
+                    - img "Diners Club"
+                    - img "UnionPay"
+              - generic:
+                - button "Pay with card"
+          - listitem [ref=e80]:
+            - generic [ref=e89]:
+              - generic [ref=e93]:
+                - radio "Affirm" [ref=e94]
+                - generic [ref=e96]: Affirm
+              - generic:
+                - button "Pay with Affirm"
+          - listitem [ref=e101]:
+            - generic [ref=e110]:
+              - generic [ref=e114]:
+                - radio "Cash App Pay" [ref=e115]
+                - generic [ref=e117]: Cash App Pay
+              - generic:
+                - button "Pay with Cash App"
+          - listitem [ref=e122]:
+            - generic [ref=e131]:
+              - generic [ref=e135]:
+                - radio "Klarna" [ref=e136]
+                - generic [ref=e138]: Klarna
+              - generic:
+                - button "Pay with Klarna"
+        - button "Pay" [ref=e143] [cursor=pointer]:
+          - generic:
+            - generic [ref=e145]: Pay
+            - generic [ref=e146]: Processing
+    - contentinfo [ref=e149]:
+      - link "Powered by" [ref=e151] [cursor=pointer]:
+        - /url: https://stripe.com
+        - generic [ref=e152]: Powered by
+      - link "Terms" [ref=e153] [cursor=pointer]:
+        - /url: https://stripe.com/legal/end-users
+      - link "Privacy" [ref=e154] [cursor=pointer]:
+        - /url: https://stripe.com/privacy

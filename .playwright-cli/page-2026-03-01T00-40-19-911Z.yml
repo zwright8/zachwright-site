@@ -1,0 +1,222 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e3]:
+    - banner "Primary" [ref=e4]:
+      - link "Zach Wright" [ref=e5] [cursor=pointer]:
+        - /url: /
+      - navigation "Sections" [ref=e6]:
+        - link "Problem" [ref=e7] [cursor=pointer]:
+          - /url: "#problem"
+        - link "Deliverables" [ref=e8] [cursor=pointer]:
+          - /url: "#deliverables"
+        - link "Compare" [ref=e9] [cursor=pointer]:
+          - /url: "#comparison"
+        - link "Timeline" [ref=e10] [cursor=pointer]:
+          - /url: "#timeline"
+        - link "Buy" [ref=e11] [cursor=pointer]:
+          - /url: "#buy"
+      - link "Questions" [ref=e12] [cursor=pointer]:
+        - /url: mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20question
+    - main [ref=e13]:
+      - region "AI Operator Kit" [ref=e14]:
+        - paragraph [ref=e15]: Digital Product · Operator System
+        - heading "AI Operator Kit" [level=1] [ref=e16]
+        - paragraph [ref=e17]: "For founders and small teams who need clearer execution: this kit gives you a practical operating structure for prompts, SOPs, weekly review, and safe automation rollout."
+        - generic [ref=e18]:
+          - link "Get Lite — $29" [ref=e19] [cursor=pointer]:
+            - /url: https://buy.stripe.com/aFaeV54ZK9LP4og5Sd6Zy02
+          - link "Compare plans" [ref=e20] [cursor=pointer]:
+            - /url: "#comparison"
+        - status [ref=e21]: Checkout active.
+        - generic "Operator outcomes" [ref=e22]:
+          - article [ref=e23]:
+            - heading "Problem This Solves" [level=3] [ref=e24]
+            - list [ref=e25]:
+              - listitem [ref=e26]: You have AI tools but no repeatable execution system.
+              - listitem [ref=e27]: Your weekly priorities drift without one operating dashboard.
+              - listitem [ref=e28]: Automation ideas exist, but rollout order and guardrails are unclear.
+          - complementary "What changes" [ref=e29]:
+            - heading "What Changes" [level=3] [ref=e30]
+            - list [ref=e31]:
+              - listitem [ref=e32]:
+                - strong [ref=e33]: Clear Playbook
+                - text: Turn ad hoc AI usage into a stable weekly operating cadence.
+              - listitem [ref=e34]:
+                - strong [ref=e35]: Faster Decisions
+                - text: Use templates and prompts instead of starting from blank docs.
+              - listitem [ref=e36]:
+                - strong [ref=e37]: Safer Scaling
+                - text: Implement automation in defined stages with checks.
+      - region "From Chaos to Operating Rhythm" [ref=e38]:
+        - generic [ref=e39]:
+          - heading "From Chaos to Operating Rhythm" [level=2] [ref=e40]
+          - paragraph [ref=e41]: Most AI execution problems are workflow problems, not model problems. The kit is structured to move from scattered effort into one practical execution loop.
+        - generic [ref=e42]:
+          - article [ref=e43]:
+            - heading "Before" [level=3] [ref=e44]
+            - paragraph [ref=e45]: Random prompts, inconsistent handoffs, and no shared decision cadence.
+          - article [ref=e46]:
+            - heading "After" [level=3] [ref=e47]
+            - paragraph [ref=e48]: Prompt libraries mapped to business functions plus SOPs your team can actually run.
+          - article [ref=e49]:
+            - heading "Outcome" [level=3] [ref=e50]
+            - paragraph [ref=e51]: Clearer weekly priorities, faster execution starts, and fewer avoidable process bottlenecks.
+      - region "What You Get" [ref=e52]:
+        - generic [ref=e53]:
+          - heading "What You Get" [level=2] [ref=e54]
+          - paragraph [ref=e55]: Everything is built as implementation-ready assets so you can apply it immediately.
+        - generic [ref=e56]:
+          - article [ref=e57]:
+            - heading "50 Operator Prompts" [level=3] [ref=e58]
+            - paragraph [ref=e59]: Coverage across sales, content, operations, finance, and decision support.
+          - article [ref=e60]:
+            - heading "5 SOP Templates" [level=3] [ref=e61]
+            - paragraph [ref=e62]: Lead intake, proposals, onboarding handoff, weekly review, and content-to-lead workflow.
+          - article [ref=e63]:
+            - heading "Weekly Dashboard" [level=3] [ref=e64]
+            - paragraph [ref=e65]: A compact KPI + priorities format for one weekly operating checkpoint.
+          - article [ref=e66]:
+            - heading "Automation Checklist" [level=3] [ref=e67]
+            - paragraph [ref=e68]: Step-by-step rollout sequence with practical guardrails before scaling changes.
+      - region "Choose Your Implementation Depth" [ref=e69]:
+        - generic [ref=e70]:
+          - heading "Choose Your Implementation Depth" [level=2] [ref=e71]
+          - paragraph [ref=e72]: All tiers are digital downloads. Pick the package that matches your scope and team context.
+        - region "Plan comparison table" [ref=e73]:
+          - table "AI Operator Kit plans" [ref=e74]:
+            - caption [ref=e75]: AI Operator Kit plans
+            - rowgroup [ref=e76]:
+              - row "Feature Lite · $29 Pro · $79 Agency · $149" [ref=e77]:
+                - columnheader "Feature" [ref=e78]
+                - columnheader "Lite · $29" [ref=e79]
+                - columnheader "Pro · $79" [ref=e80]
+                - columnheader "Agency · $149" [ref=e81]
+            - rowgroup [ref=e82]:
+              - row "Core prompt pack 50 prompts 50 prompts 50 prompts" [ref=e83]:
+                - rowheader "Core prompt pack" [ref=e84]
+                - cell "50 prompts" [ref=e85]
+                - cell "50 prompts" [ref=e86]
+                - cell "50 prompts" [ref=e87]
+              - row "SOP templates 5 templates 5 templates 5 templates" [ref=e88]:
+                - rowheader "SOP templates" [ref=e89]
+                - cell "5 templates" [ref=e90]
+                - cell "5 templates" [ref=e91]
+                - cell "5 templates" [ref=e92]
+              - row "Weekly dashboard Included Included Included" [ref=e93]:
+                - rowheader "Weekly dashboard" [ref=e94]
+                - cell "Included" [ref=e95]
+                - cell "Included" [ref=e96]
+                - cell "Included" [ref=e97]
+              - row "Automation checklist Included Included Included" [ref=e98]:
+                - rowheader "Automation checklist" [ref=e99]
+                - cell "Included" [ref=e100]
+                - cell "Included" [ref=e101]
+                - cell "Included" [ref=e102]
+              - row "Bonus workflows — Included Included" [ref=e103]:
+                - rowheader "Bonus workflows" [ref=e104]
+                - cell "—" [ref=e105]
+                - cell "Included" [ref=e106]
+                - cell "Included" [ref=e107]
+              - row "Priority update pack — Included Included" [ref=e108]:
+                - rowheader "Priority update pack" [ref=e109]
+                - cell "—" [ref=e110]
+                - cell "Included" [ref=e111]
+                - cell "Included" [ref=e112]
+              - row "Team-ready package — — Included" [ref=e113]:
+                - rowheader "Team-ready package" [ref=e114]
+                - cell "—" [ref=e115]
+                - cell "—" [ref=e116]
+                - cell "Included" [ref=e117]
+              - row "Internal team-use license — — Included" [ref=e118]:
+                - rowheader "Internal team-use license" [ref=e119]
+                - cell "—" [ref=e120]
+                - cell "—" [ref=e121]
+                - cell "Included" [ref=e122]
+        - generic "Purchase options" [ref=e123]:
+          - article [ref=e124]:
+            - heading "Lite" [level=3] [ref=e125]
+            - paragraph [ref=e126]: Best for solo founders getting their first structured AI operating system in place.
+            - link "Buy Lite" [ref=e127] [cursor=pointer]:
+              - /url: https://buy.stripe.com/aFaeV54ZK9LP4og5Sd6Zy02
+          - article [ref=e128]:
+            - heading "Pro" [level=3] [ref=e129]
+            - paragraph [ref=e130]: Best for operators who want deeper workflow coverage and update assets.
+            - link "Buy Pro" [ref=e131] [cursor=pointer]:
+              - /url: https://buy.stripe.com/bJe9AL3VG0bfaME80l6Zy01
+          - article [ref=e132]:
+            - heading "Agency" [level=3] [ref=e133]
+            - paragraph [ref=e134]: Best for teams that need a broader package and internal team-use rights.
+            - link "Buy Agency" [ref=e135] [cursor=pointer]:
+              - /url: https://buy.stripe.com/6oU5kv8bWf69bQI2G16Zy00
+      - region "Implementation Timeline" [ref=e136]:
+        - generic [ref=e137]:
+          - heading "Implementation Timeline" [level=2] [ref=e138]
+          - paragraph [ref=e139]: A practical rollout sequence you can execute without rebuilding your entire stack.
+        - list [ref=e140]:
+          - listitem [ref=e141]:
+            - strong [ref=e142]: Day 0
+            - text: Download the kit and select one core workflow to implement first.
+          - listitem [ref=e143]:
+            - strong [ref=e144]: Days 1–2
+            - text: Adapt the SOP templates to your current operating process and owners.
+          - listitem [ref=e145]:
+            - strong [ref=e146]: Days 3–7
+            - text: Run your first weekly dashboard cycle with defined priorities and checkpoints.
+          - listitem [ref=e147]:
+            - strong [ref=e148]: Week 2+
+            - text: Roll out automation items in sequence using the checklist guardrails.
+      - region "Who This Is For (and Not For)" [ref=e149]:
+        - generic [ref=e150]:
+          - heading "Who This Is For (and Not For)" [level=2] [ref=e151]
+          - paragraph [ref=e152]: This product is intentionally practical. It fits operators who want to execute, not collect theory.
+        - generic [ref=e153]:
+          - article [ref=e154]:
+            - heading "Good Fit" [level=3] [ref=e155]
+            - list [ref=e156]:
+              - listitem [ref=e157]: Founder-led teams building execution cadence around AI.
+              - listitem [ref=e158]: Solo operators who want reusable workflows and templates.
+              - listitem [ref=e159]: Small agencies standardizing internal operations.
+          - article [ref=e160]:
+            - heading "Not a Fit" [level=3] [ref=e161]
+            - list [ref=e162]:
+              - listitem [ref=e163]: Teams looking for done-for-you implementation services.
+              - listitem [ref=e164]: Buyers expecting guaranteed revenue outcomes from a template product.
+              - listitem [ref=e165]: Operators unwilling to run weekly execution review discipline.
+          - article [ref=e166]:
+            - heading "What to Expect" [level=3] [ref=e167]
+            - list [ref=e168]:
+              - listitem [ref=e169]: Clear assets you can adapt quickly.
+              - listitem [ref=e170]: No hype claims, no inflated guarantees.
+              - listitem [ref=e171]: A practical system that improves with consistent use.
+      - region "Delivery, Trust, and Support" [ref=e172]:
+        - generic [ref=e173]:
+          - heading "Delivery, Trust, and Support" [level=2] [ref=e174]
+          - paragraph [ref=e175]: Straight terms. Clear delivery. Direct operator contact.
+        - generic [ref=e176]:
+          - article [ref=e177]:
+            - heading "Instant Delivery" [level=3] [ref=e178]
+            - paragraph [ref=e179]: Digital download is delivered immediately after successful payment.
+          - article [ref=e180]:
+            - heading "Refund Policy" [level=3] [ref=e181]
+            - paragraph [ref=e182]: 7-day no-hassle refund window.
+          - article [ref=e183]:
+            - heading "Questions" [level=3] [ref=e184]
+            - paragraph [ref=e185]:
+              - text: Email
+              - link "zach@zachwright.xyz" [ref=e186] [cursor=pointer]:
+                - /url: mailto:zach@zachwright.xyz
+              - text: for pre-purchase or product questions.
+      - region "Pick your tier and implement this week." [ref=e187]:
+        - heading "Pick your tier and implement this week." [level=2] [ref=e188]
+        - paragraph [ref=e189]: Start with Lite for immediate execution structure, upgrade to Pro for deeper workflows, or choose Agency for team-ready internal rollout.
+        - generic [ref=e190]:
+          - link "View plans" [ref=e191] [cursor=pointer]:
+            - /url: "#comparison"
+          - link "Talk to Zach" [ref=e192] [cursor=pointer]:
+            - /url: mailto:zach@zachwright.xyz?subject=AI%20Operator%20Kit%20question
+    - contentinfo [ref=e193]:
+      - generic [ref=e194]:
+        - strong [ref=e195]: AI Operator Kit
+        - text: — practical operating assets for AI execution.
+      - generic [ref=e196]: © 2026 Zach Wright
