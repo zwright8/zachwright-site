@@ -7,6 +7,9 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PENDING_STATUS = "pending";
 const ACTIVE_STATUS = "active";
 const UNSUBSCRIBED_STATUS = "unsubscribed";
+const CADENCE_DAILY = "daily";
+const CADENCE_WEEKLY = "weekly";
+const SUPPORTED_CADENCES = new Set([CADENCE_DAILY, CADENCE_WEEKLY]);
 
 let sqlClient = null;
 let schemaReadyPromise = null;
@@ -42,6 +45,7 @@ async function ensureSchema() {
                 email_hash CHAR(64) NOT NULL UNIQUE,
                 email_ciphertext TEXT NOT NULL,
                 status TEXT NOT NULL CHECK (status IN ('pending', 'active', 'unsubscribed')),
+                cadence TEXT NOT NULL DEFAULT 'weekly',
                 verify_token_hash CHAR(64),
                 source TEXT,
                 consent_ip_hash CHAR(64),
@@ -58,6 +62,48 @@ async function ensureSchema() {
             CREATE UNIQUE INDEX IF NOT EXISTS newsletter_verify_token_idx
             ON newsletter_subscribers (verify_token_hash)
             WHERE verify_token_hash IS NOT NULL;
+        `;
+
+        await sql`
+            ALTER TABLE newsletter_subscribers
+            ADD COLUMN IF NOT EXISTS cadence TEXT;
+        `;
+
+        await sql`
+            UPDATE newsletter_subscribers
+            SET cadence = ${CADENCE_WEEKLY}
+            WHERE cadence IS NULL;
+        `;
+
+        await sql`
+            ALTER TABLE newsletter_subscribers
+            ALTER COLUMN cadence SET DEFAULT ${CADENCE_WEEKLY};
+        `;
+
+        await sql`
+            ALTER TABLE newsletter_subscribers
+            ALTER COLUMN cadence SET NOT NULL;
+        `;
+
+        await sql`
+            DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM pg_constraint
+                    WHERE conname = 'newsletter_subscribers_cadence_check'
+                ) THEN
+                    ALTER TABLE newsletter_subscribers
+                    ADD CONSTRAINT newsletter_subscribers_cadence_check
+                    CHECK (cadence IN ('daily', 'weekly'));
+                END IF;
+            END
+            $$;
+        `;
+
+        await sql`
+            CREATE INDEX IF NOT EXISTS newsletter_subscribers_status_cadence_idx
+            ON newsletter_subscribers (status, cadence, last_sent_slug);
         `;
 
         await sql`
@@ -139,6 +185,22 @@ function isValidEmail(email) {
         return false;
     }
     return EMAIL_REGEX.test(email);
+}
+
+function normalizeCadence(value, fallbackCadence) {
+    const fallback = SUPPORTED_CADENCES.has(fallbackCadence) ? fallbackCadence : CADENCE_WEEKLY;
+    const normalized = String(value || "").trim().toLowerCase();
+    if (!normalized) {
+        return fallback;
+    }
+    if (!SUPPORTED_CADENCES.has(normalized)) {
+        return fallback;
+    }
+    return normalized;
+}
+
+function isSupportedCadence(value) {
+    return SUPPORTED_CADENCES.has(String(value || "").trim().toLowerCase());
 }
 
 function getEncryptionKey() {
@@ -406,8 +468,35 @@ async function readLatestUpdate() {
     };
 }
 
+async function readUpdateBySlug(slug) {
+    const normalizedSlug = String(slug || "").trim();
+    if (!normalizedSlug) {
+        return null;
+    }
+    const updatesPath = path.join(process.cwd(), "updates", "index.json");
+    const file = await fs.readFile(updatesPath, "utf8");
+    const parsed = JSON.parse(file);
+    if (!Array.isArray(parsed)) {
+        return null;
+    }
+    const matching = parsed.find(function (entry) {
+        return String(entry && entry.slug ? entry.slug : "") === normalizedSlug;
+    });
+    if (!matching || !matching.title) {
+        return null;
+    }
+    return {
+        slug: normalizedSlug,
+        title: String(matching.title),
+        preview: String(matching.preview || ""),
+        date: String(matching.date || "")
+    };
+}
+
 module.exports = {
     ACTIVE_STATUS,
+    CADENCE_DAILY,
+    CADENCE_WEEKLY,
     PENDING_STATUS,
     UNSUBSCRIBED_STATUS,
     buildUnsubscribeToken,
@@ -423,10 +512,13 @@ module.exports = {
     hashUserAgent,
     isAllowedOrigin,
     isAuthorizedCron,
+    isSupportedCadence,
     isValidEmail,
+    normalizeCadence,
     normalizeEmail,
     parseBody,
     parseUnsubscribeToken,
+    readUpdateBySlug,
     readLatestUpdate,
     recordAttemptAndCheckRateLimit,
     redirect,

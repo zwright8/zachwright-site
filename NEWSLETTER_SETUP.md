@@ -1,11 +1,13 @@
 # Newsletter Setup
 
-This site now includes a secure daily newsletter flow:
+This site now includes secure daily + weekly newsletter automation:
 
-- `POST /api/newsletter/signup` (double opt-in signup)
+- `POST /api/newsletter/signup` (double opt-in signup, supports `cadence`)
 - `GET /api/newsletter/confirm?token=...` (email confirmation)
 - `GET /api/newsletter/unsubscribe?token=...` (one-click unsubscribe)
-- `GET|POST /api/newsletter/send` (daily sender, cron protected)
+- `GET|POST /api/newsletter/send-daily` (cron sender for daily subscribers)
+- `GET|POST /api/newsletter/send-weekly` (cron sender for weekly subscribers)
+- `GET|POST /api/newsletter/send` (manual sender; supports `cadence=daily|weekly`)
 
 ## Guardrails Included
 
@@ -16,6 +18,7 @@ This site now includes a secure daily newsletter flow:
 - Signup endpoint has honeypot + per-IP rate limiting windows.
 - Unsubscribe token uses HMAC signature validation.
 - Cron sender requires bearer token auth (`CRON_SECRET`).
+- Subscriber cadence is stored (`daily` or `weekly`) and filtered at send time.
 
 ## Environment Variables
 
@@ -41,20 +44,37 @@ Set these in Vercel Project Settings:
   Comma-separated allowed browser origins for signup POST.
 - `NEWSLETTER_BATCH_SIZE` (optional):
   Max recipients per cron run; default `120`.
+- `NEWSLETTER_DEFAULT_SEND_CADENCE` (optional):
+  Default cadence used by `/api/newsletter/send` when no cadence is provided (`daily` by default).
 
 ## Cron Schedule
 
 Defined in [vercel.json](/Users/zacharywright/Documents/GitHub/zachwright-site/vercel.json):
 
-- `0 14 * * *` (14:00 UTC daily)
+- `0 14 * * *` (daily send, 14:00 UTC)
+- `0 15 * * 1` (weekly send, Mondays at 15:00 UTC)
 
 Adjust as needed.
 
 ## Manual Dry Run
 
-You can test the sender without updating `last_sent_slug` by adding `dryRun=1`:
+You can test either sender without updating `last_sent_slug` by adding `dryRun=1`:
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  "https://zachwright.xyz/api/newsletter/send?dryRun=1"
+  "https://zachwright.xyz/api/newsletter/send-daily?dryRun=1"
+```
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" \
+  "https://zachwright.xyz/api/newsletter/send-weekly?dryRun=1"
+```
+
+To manually send a specific slug for a specific cadence:
+
+```bash
+curl -X POST -H "Authorization: Bearer $CRON_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"cadence":"weekly","slug":"2026-03-11","dryRun":true}' \
+  "https://zachwright.xyz/api/newsletter/send"
 ```

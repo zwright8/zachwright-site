@@ -1,11 +1,13 @@
 const {
     ACTIVE_STATUS,
+    CADENCE_WEEKLY,
     PENDING_STATUS,
     UNSUBSCRIBED_STATUS,
     encryptEmail,
     ensureSchema,
     generateToken,
     getBaseUrl,
+    normalizeCadence,
     getSql,
     hashEmail,
     hashIp,
@@ -51,6 +53,7 @@ module.exports = async function handler(req, res) {
         sendJson(res, 400, { error: "Enter a valid email address." });
         return;
     }
+    const cadence = normalizeCadence(body.cadence, CADENCE_WEEKLY);
 
     const source = String(body.source || "site").trim().slice(0, 120);
     const ipHash = hashIp(req);
@@ -73,7 +76,7 @@ module.exports = async function handler(req, res) {
         const tokenHash = hashToken(token);
 
         const existingRows = await sql`
-            SELECT id, status
+            SELECT id, status, cadence
             FROM newsletter_subscribers
             WHERE email_hash = ${emailHash}
             LIMIT 1;
@@ -81,6 +84,18 @@ module.exports = async function handler(req, res) {
         const existing = existingRows[0];
 
         if (existing && existing.status === ACTIVE_STATUS) {
+            if (existing.cadence !== cadence) {
+                await sql`
+                    UPDATE newsletter_subscribers
+                    SET cadence = ${cadence}
+                    WHERE id = ${existing.id};
+                `;
+                sendJson(res, 200, {
+                    ok: true,
+                    message: `Subscription preference updated to ${cadence}.`
+                });
+                return;
+            }
             sendJson(res, 200, {
                 ok: true,
                 message: "You are already subscribed to Super Sonic Tsunami."
@@ -96,6 +111,7 @@ module.exports = async function handler(req, res) {
                     status = ${PENDING_STATUS},
                     verify_token_hash = ${tokenHash},
                     source = ${source},
+                    cadence = ${cadence},
                     consent_ip_hash = ${ipHash},
                     user_agent_hash = ${userAgentHash},
                     unsubscribed_at = NULL
@@ -109,6 +125,7 @@ module.exports = async function handler(req, res) {
                     status,
                     verify_token_hash,
                     source,
+                    cadence,
                     consent_ip_hash,
                     user_agent_hash
                 )
@@ -118,6 +135,7 @@ module.exports = async function handler(req, res) {
                     ${PENDING_STATUS},
                     ${tokenHash},
                     ${source},
+                    ${cadence},
                     ${ipHash},
                     ${userAgentHash}
                 );

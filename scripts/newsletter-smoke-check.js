@@ -7,7 +7,9 @@ const apiFiles = [
     "api/newsletter/signup.js",
     "api/newsletter/confirm.js",
     "api/newsletter/unsubscribe.js",
-    "api/newsletter/send.js"
+    "api/newsletter/send.js",
+    "api/newsletter/send-daily.js",
+    "api/newsletter/send-weekly.js"
 ];
 
 for (const relativePath of apiFiles) {
@@ -21,9 +23,9 @@ for (const relativePath of apiFiles) {
     }
 }
 
-const updatesIndex = fs.readFileSync(path.join(root, "updates", "index.html"), "utf8");
-if (!updatesIndex.includes("id=\"newsletter-form\"")) {
-    throw new Error("updates/index.html does not contain newsletter form.");
+const homepage = fs.readFileSync(path.join(root, "index.html"), "utf8");
+if (!homepage.includes("id=\"newsletter-form\"")) {
+    throw new Error("index.html does not contain newsletter form.");
 }
 
 console.log("newsletter smoke check passed");

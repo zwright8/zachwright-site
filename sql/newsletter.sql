@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     email_hash CHAR(64) NOT NULL UNIQUE,
     email_ciphertext TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('pending', 'active', 'unsubscribed')),
+    cadence TEXT NOT NULL DEFAULT 'weekly',
     verify_token_hash CHAR(64),
     source TEXT,
     consent_ip_hash CHAR(64),
@@ -14,9 +15,39 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     last_sent_at TIMESTAMPTZ
 );
 
+ALTER TABLE newsletter_subscribers
+ADD COLUMN IF NOT EXISTS cadence TEXT;
+
+UPDATE newsletter_subscribers
+SET cadence = 'weekly'
+WHERE cadence IS NULL;
+
+ALTER TABLE newsletter_subscribers
+ALTER COLUMN cadence SET DEFAULT 'weekly';
+
+ALTER TABLE newsletter_subscribers
+ALTER COLUMN cadence SET NOT NULL;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM pg_constraint
+        WHERE conname = 'newsletter_subscribers_cadence_check'
+    ) THEN
+        ALTER TABLE newsletter_subscribers
+        ADD CONSTRAINT newsletter_subscribers_cadence_check
+        CHECK (cadence IN ('daily', 'weekly'));
+    END IF;
+END
+$$;
+
 CREATE UNIQUE INDEX IF NOT EXISTS newsletter_verify_token_idx
 ON newsletter_subscribers (verify_token_hash)
 WHERE verify_token_hash IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS newsletter_subscribers_status_cadence_idx
+ON newsletter_subscribers (status, cadence, last_sent_slug);
 
 CREATE TABLE IF NOT EXISTS newsletter_signup_attempts (
     id BIGSERIAL PRIMARY KEY,
