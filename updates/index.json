@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-12",
+    "slug": "2026-03-12",
+    "title": "Swarm Daily: Retrieval Quality Is the New Uptime",
+    "url": "/updates/2026-03-12.html",
+    "preview": "Teams are discovering that context quality, not model size, now determines production reliability."
+  },
+  {
     "date": "2026-03-11",
     "slug": "2026-03-11",
     "title": "Swarm Daily: Ops Discipline Beats Prompt Magic",
