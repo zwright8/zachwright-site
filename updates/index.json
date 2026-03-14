@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-14",
+    "slug": "2026-03-14",
+    "title": "Swarm Daily: The Agent Control Plane Is the Product",
+    "url": "/updates/2026-03-14.html",
+    "preview": "Multi-agent command centers, security validation, and open protocols are becoming the layer that decides whether agents actually ship."
+  },
+  {
     "date": "2026-03-13",
     "slug": "2026-03-13",
     "title": "Swarm Daily: Shipping Memory, Not Just Models",
