@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-16",
+    "slug": "2026-03-16",
+    "title": "Swarm Daily: Context Is Becoming Infrastructure",
+    "url": "/updates/2026-03-16.html",
+    "preview": "Repo context, session controls, and agent packaging standards are turning context into infrastructure."
+  },
+  {
     "date": "2026-03-15",
     "slug": "2026-03-15",
     "title": "Swarm Daily: Guardrails Are Moving Into the Runtime",
