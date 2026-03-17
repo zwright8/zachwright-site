@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-17",
+    "slug": "2026-03-17",
+    "title": "Swarm Daily: Traceability Is Becoming the Trust Layer",
+    "url": "/updates/2026-03-17.html",
+    "preview": "Debug snapshots, session logs, and verification harnesses are making autonomous software auditable before humans sign off."
+  },
+  {
     "date": "2026-03-16",
     "slug": "2026-03-16",
     "title": "Swarm Daily: Context Is Becoming Infrastructure",
