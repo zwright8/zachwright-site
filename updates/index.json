@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-18",
+    "slug": "2026-03-18",
+    "title": "Swarm Daily: Live Steering Is Replacing One-Shot Prompting",
+    "url": "/updates/2026-03-18.html",
+    "preview": "Operators now expect to interrupt, redirect, and inspect agents mid-flight instead of waiting on a black-box final answer."
+  },
+  {
     "date": "2026-03-17",
     "slug": "2026-03-17",
     "title": "Swarm Daily: Traceability Is Becoming the Trust Layer",
