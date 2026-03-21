@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-21",
+    "slug": "2026-03-21",
+    "title": "Swarm Daily: The Web Is Growing a Read API for Agents",
+    "url": "/updates/2026-03-21.html",
+    "preview": "Markdown negotiation, fetch APIs, and browser sandboxes are forcing operators to route agent web work by cost and intent."
+  },
+  {
     "date": "2026-03-20",
     "slug": "2026-03-20",
     "title": "Swarm Daily: The Queue Is Becoming the Workspace",
