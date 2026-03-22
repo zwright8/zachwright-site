@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-22",
+    "slug": "2026-03-22",
+    "title": "Swarm Daily: Release Controls Are Becoming Agent-Operable",
+    "url": "/updates/2026-03-22.html",
+    "preview": "Flags, rollout webhooks, and live evaluation hooks are turning release control into a machine-operable surface for AI teams."
+  },
+  {
     "date": "2026-03-21",
     "slug": "2026-03-21",
     "title": "Swarm Daily: The Web Is Growing a Read API for Agents",
