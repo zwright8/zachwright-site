@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-23",
+    "slug": "2026-03-23",
+    "title": "Swarm Daily: The Patch Is No Longer Enough",
+    "url": "/updates/2026-03-23.html",
+    "preview": "Tests, code review, secret scans, and validated security findings are turning proof into the real handoff artifact for autonomous coding."
+  },
+  {
     "date": "2026-03-22",
     "slug": "2026-03-22",
     "title": "Swarm Daily: Release Controls Are Becoming Agent-Operable",
