@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-24",
+    "slug": "2026-03-24",
+    "title": "Swarm Daily: The Agent Bottleneck Is Identity",
+    "url": "/updates/2026-03-24.html",
+    "preview": "OAuth scopes, connector policies, and delegated MCP auth are turning identity plumbing into the gating layer for useful AI automation."
+  },
+  {
     "date": "2026-03-23",
     "slug": "2026-03-23",
     "title": "Swarm Daily: The Patch Is No Longer Enough",
