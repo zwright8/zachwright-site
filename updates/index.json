@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-25",
+    "slug": "2026-03-25",
+    "title": "Swarm Daily: Durability Is the New Agent Primitive",
+    "url": "/updates/2026-03-25.html",
+    "preview": "Background responses, resumable workflows, and pause-for-approval runtimes are turning agent reliability into a state and recovery problem."
+  },
+  {
     "date": "2026-03-24",
     "slug": "2026-03-24",
     "title": "Swarm Daily: The Agent Bottleneck Is Identity",
