@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-29",
+    "slug": "2026-03-29",
+    "title": "Swarm Daily: The Event Log Is No Longer Debug Exhaust",
+    "url": "/updates/2026-03-29.html",
+    "preview": "Encrypted workflow state, append-only compliance feeds, and queryable traces are turning agent telemetry into something operators have to secure, retain, and route."
+  },
+  {
     "date": "2026-03-28",
     "slug": "2026-03-28",
     "title": "Swarm Daily: The Runtime Is Becoming the Safety System",

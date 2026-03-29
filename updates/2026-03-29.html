@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: The Event Log Is No Longer Debug Exhaust | zachwright.xyz</title>
+  <meta name="description" content="Encrypted workflow state, append-only compliance feeds, and queryable traces are turning agent telemetry into something operators have to secure, retain, and route." />
+  <style>
+    :root {
+      --bg: #020305;
+      --bg-2: #06090f;
+      --panel: #0b1018;
+      --panel-2: #121a26;
+      --surface: #0f1724;
+      --border: #2c3647;
+      --white: #f2f5fa;
+      --line: #2c3647;
+      --line-strong: #49556a;
+      --text: #f2f5fa;
+      --text-soft: #9ca8bc;
+      --accent: #d6dde8;
+      --max: 1120px;
+      --dur: 220ms;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(90vw 58vw at 88% -8%, rgba(223, 230, 242, 0.08), transparent 70%),
+        linear-gradient(180deg, #020305 0%, #04060a 52%, #070b12 100%);
+      min-height: 100vh;
+      line-height: 1.5;
+      letter-spacing: 0.002em;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .skip-link {
+      position: absolute;
+      top: -56px;
+      left: 14px;
+      z-index: 120;
+      background: #fff;
+      color: #0a0f17;
+      padding: 8px 10px;
+    }
+
+    .skip-link:focus-visible { top: 12px; }
+
+    .wrap { width: min(var(--max), calc(100% - 1.6rem)); margin: 0 auto; }
+    .narrow { width: min(780px, 100%); }
+
+    .site-top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      background: rgba(6, 9, 14, 0.92);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.72rem 0.85rem;
+    }
+
+    .brand {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav {
+      justify-self: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .nav a {
+      color: var(--text-soft);
+      font-size: 0.76rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 650;
+      transition: color var(--dur) ease;
+    }
+
+    .nav a:hover,
+    .nav a[aria-current="page"] { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      padding: 0 0.95rem;
+      transition: transform var(--dur) ease, border-color var(--dur) ease, background-color var(--dur) ease, color var(--dur) ease;
+      will-change: transform;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #060b12;
+    }
+
+    main { padding-bottom: 4.4rem; }
+
+    .post-shell { padding-top: clamp(2.2rem, 4.4vw, 3.9rem); scroll-margin-top: 5.3rem; }
+
+    .post-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #090f18 0%, #0c1320 100%);
+      padding: clamp(1rem, 2.2vw, 1.45rem);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 0.72rem;
+      border: 1px solid #55647c;
+      background: #0f1724;
+      color: var(--text);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.95rem;
+    }
+
+    .post-card > p:first-of-type {
+      color: var(--text-soft);
+      margin-bottom: 0.95rem;
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 22ch;
+      font-weight: 840;
+      margin-bottom: 0.86rem;
+      color: var(--text);
+    }
+
+    h2 {
+      font-size: clamp(1.22rem, 2.5vw, 1.78rem);
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      font-weight: 810;
+      margin: 1.35rem 0 0.56rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 1.05rem 0 0.42rem;
+    }
+
+    p,
+    li {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-bottom: 0.74rem;
+    }
+
+    strong { color: var(--text); }
+    em { color: #b6c0d1; }
+
+    ul,
+    ol {
+      margin: 0.2rem 0 0.94rem 1.1rem;
+      padding: 0;
+    }
+
+    li { padding-left: 0.18rem; }
+
+    a[href] {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: #617088;
+      text-underline-offset: 2px;
+    }
+
+    a[href]:hover {
+      color: #ffffff;
+      text-decoration-color: var(--accent);
+    }
+
+    code {
+      background: rgba(12, 20, 30, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 2px 6px;
+      color: #d8e2f2;
+      font-size: 0.85em;
+    }
+
+    pre {
+      background: rgba(12, 20, 30, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 14px;
+      overflow-x: auto;
+      margin: 0.7rem 0 0.95rem;
+    }
+
+    pre code {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--text);
+    }
+
+    blockquote {
+      border-left: 2px solid #58657c;
+      padding-left: 0.72rem;
+      margin: 0.84rem 0;
+      color: #b5c2d6;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 1.05rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.82rem 0 1rem;
+      border: 1px solid var(--line);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+    }
+
+    th {
+      color: var(--text);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    img {
+      max-width: 100%;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+    }
+
+    .footer-grid {
+      margin-top: 2.8rem;
+      border-top: 1px solid var(--line);
+      padding: 1.1rem 0 1.8rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      color: var(--text-soft);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .footer-grid h4 {
+      font-size: 0.68rem;
+      color: var(--text);
+      letter-spacing: 0.14em;
+      margin-bottom: 0.35rem;
+    }
+
+    .footer-grid ul { list-style: none; display: grid; gap: 0.28rem; margin: 0; }
+    .footer-grid li { margin: 0; }
+    .footer-grid li a:hover { color: var(--text); }
+
+    .copyright {
+      border-top: 1px solid var(--line);
+      padding: 0.7rem 0 1.8rem;
+      color: var(--text-soft);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity var(--dur) ease, transform var(--dur) ease;
+    }
+
+    [data-reveal].in { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1000px) {
+      .site-top {
+        grid-template-columns: 1fr;
+        justify-items: start;
+        gap: 0.56rem;
+      }
+
+      .nav { justify-self: start; gap: 0.64rem; }
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: calc(100% - 1rem); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand">Zach Wright</a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/#capabilities">Capabilities</a>
+        <a href="/#proof">Proof &amp; Process</a>
+        <a href="/#weekly-reviews">Weekly Reviews</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a class="btn btn-primary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Email Zach</a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: The Event Log Is No Longer Debug Exhaust</h1>
+          <p>Encrypted workflow state, append-only compliance feeds, and queryable traces are turning agent telemetry into something operators have to secure, retain, and route.</p>
+          <h2>The Big Thing</h2>
+          <p><strong>The interesting shift is not that agent platforms emit more logs. It is that they are starting to treat workflow traces and audit trails like protected runtime data.</strong></p>
+          <p>Why it matters: once agents can touch CI, tickets, flags, repos, and enterprise data, their "logs" stop being disposable debug text. They become the replayable record of what ran, what data crossed boundaries, who decrypted what, and which actions were approved. The vendors shipping serious operator surfaces right now are adding encryption, append-only export, structured query, and longer retention, which is a strong tell that the event trail is turning into infrastructure teams need to govern on purpose.</p>
+          <ul>
+            <li>Vercel Workflow now encrypts workflow inputs, step arguments, return values, hook payloads, and stream data before writing them to the event log. Pair that with Workflow DevKit's event-sourcing model and the message is obvious: the log is the durable state layer, not just a UI convenience.
+            <a href="https://vercel.com/changelog">https://vercel.com/changelog</a>
+            <a href="https://useworkflow.dev/docs/how-it-works/event-sourcing">https://useworkflow.dev/docs/how-it-works/event-sourcing</a></li>
+            <li>OpenAI is building the same direction for enterprise chat and Codex operations. The Compliance Logs Platform exports immutable, time-windowed JSONL logs for SIEM, DLP, and eDiscovery workflows, and the latest update added Admin Audit, User Authentication, and Codex Usage streams.
+            <a href="https://openai.com/index/new-tools-for-chatgpt-enterprise/">https://openai.com/index/new-tools-for-chatgpt-enterprise/</a>
+            <a href="https://help.openai.com/en/articles/9261474-compliance-apis-for-enterprise-customers">https://help.openai.com/en/articles/9261474-compliance-apis-for-enterprise-customers</a></li>
+            <li>Cloudflare is standardizing both the cold trail and the hot path. Audit Logs v2 brings actor and resource history with 18-month retention, while Workers and Agents surfaces now make traces queryable and structured enough to route into real pipelines.
+            <a href="https://developers.cloudflare.com/fundamentals/account/account-security/audit-logs/">https://developers.cloudflare.com/fundamentals/account/account-security/audit-logs/</a>
+            <a href="https://developers.cloudflare.com/changelog/post/2026-02-24-observability-query-language/">https://developers.cloudflare.com/changelog/post/2026-02-24-observability-query-language/</a>
+            <a href="https://developers.cloudflare.com/changelog/post/2026-03-02-agents-sdk-v070/">https://developers.cloudflare.com/changelog/post/2026-03-02-agents-sdk-v070/</a></li>
+          </ul>
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel Workflow end-to-end encryption</strong> - workflow payloads land in ciphertext by default, while operators still get controlled dashboard and CLI decryption when they actually need to inspect the run.
+            <a href="https://vercel.com/changelog">https://vercel.com/changelog</a>
+            <a href="https://useworkflow.dev/docs/observability">https://useworkflow.dev/docs/observability</a></li>
+            <li><strong>OpenAI Compliance Logs Platform</strong> - immutable log export plus Admin Audit, User Authentication, and Codex Usage streams make it easier to feed workspace activity into SIEM, DLP, and legal-hold systems without custom scraping.
+            <a href="https://openai.com/index/new-tools-for-chatgpt-enterprise/">https://openai.com/index/new-tools-for-chatgpt-enterprise/</a>
+            <a href="https://help.openai.com/en/articles/9261474-compliance-apis-for-enterprise-customers">https://help.openai.com/en/articles/9261474-compliance-apis-for-enterprise-customers</a></li>
+            <li><strong>Cloudflare Audit Logs v2</strong> - cross-product audit history with actor, method, auth, and resource context plus long retention gives operators an evidence trail that is actually usable after the incident fades.
+            <a href="https://developers.cloudflare.com/fundamentals/account/account-security/audit-logs/">https://developers.cloudflare.com/fundamentals/account/account-security/audit-logs/</a></li>
+            <li><strong>Cloudflare Workers query language</strong> - field-aware search across logs and traces turns observability into a real investigation surface instead of a stack of disconnected filters.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-02-24-observability-query-language/">https://developers.cloudflare.com/changelog/post/2026-02-24-observability-query-language/</a></li>
+            <li><strong>Cloudflare Agents SDK v0.7 observability rewrite</strong> - structured <code>diagnostics_channel</code> events for RPC, workflow, schedule, and MCP activity make agent traces easier to forward, retain, and correlate with the rest of the stack.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-03-02-agents-sdk-v070/">https://developers.cloudflare.com/changelog/post/2026-03-02-agents-sdk-v070/</a></li>
+          </ol>
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Secure storage becomes part of the agent runtime contract.</strong> If event logs hold tool inputs, step outputs, and approval history, teams will expect encryption and explicit decryption paths the same way they expect secret stores and database controls.
+            <a href="https://vercel.com/changelog">https://vercel.com/changelog</a>
+            <a href="https://openai.com/index/new-tools-for-chatgpt-enterprise/">https://openai.com/index/new-tools-for-chatgpt-enterprise/</a></li>
+            <li><strong>Telemetry splits into hot traces and cold evidence.</strong> Operators will keep short-latency query surfaces for live debugging, but they will also export immutable log streams for SIEM, legal hold, and policy review.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-02-24-observability-query-language/">https://developers.cloudflare.com/changelog/post/2026-02-24-observability-query-language/</a>
+            <a href="https://help.openai.com/en/articles/9261474-compliance-apis-for-enterprise-customers">https://help.openai.com/en/articles/9261474-compliance-apis-for-enterprise-customers</a></li>
+            <li><strong>Vendor selection shifts toward evidence ergonomics.</strong> Retention windows, export formats, auditability of access, and how easily traces correlate to real workflow state will increasingly decide which platforms clear enterprise deployment review.
+            <a href="https://developers.cloudflare.com/fundamentals/account/account-security/audit-logs/">https://developers.cloudflare.com/fundamentals/account/account-security/audit-logs/</a>
+            <a href="https://useworkflow.dev/docs/how-it-works/event-sourcing">https://useworkflow.dev/docs/how-it-works/event-sourcing</a></li>
+          </ul>
+          <h2>Meme of the Day</h2>
+          <p><strong>"Incident Report"</strong> (xkcd) - because once the log becomes the product surface, every extra timestamp starts sounding like the Jaws theme.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/incident_report.png">https://imgs.xkcd.com/comics/incident_report.png</a><br>Post: <a href="https://xkcd.com/2553/">https://xkcd.com/2553/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+            <li><a href="/#weekly-reviews">Weekly Reviews</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Intelligence</li>
+            <li>Weekly Reviews</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+
+</body>
+</html>
