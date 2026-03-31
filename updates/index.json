@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-03-31",
+    "slug": "2026-03-31",
+    "title": "Swarm Daily: The Tool Catalog Is Becoming a Liability",
+    "url": "/updates/2026-03-31.html",
+    "preview": "Typed SDKs, CLI-backed skills, and prefilled issue handoffs are replacing giant tool menus with smaller surfaces agents can compose, audit, and run cheaper."
+  },
+  {
     "date": "2026-03-30",
     "slug": "2026-03-30",
     "title": "Swarm Daily: The Diff Is Becoming the Command Surface",
