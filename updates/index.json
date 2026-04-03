@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-03",
+    "slug": "2026-04-03",
+    "title": "Swarm Daily: The Build Box Is Now a Tier-0 Asset",
+    "url": "/updates/2026-04-03.html",
+    "preview": "GitHub's supply-chain warning, Vercel's axios response, and tighter framework/runtime fixes show build environments now need the same containment, provenance, and patch cadence as production."
+  },
+  {
     "date": "2026-04-01",
     "slug": "2026-04-01",
     "title": "Swarm Daily: Build Rights Are Splitting From Ship Rights",
