@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-04",
+    "slug": "2026-04-04",
+    "title": "Swarm Daily: The Agent Loop Is Hitting the Guardrail",
+    "url": "/updates/2026-04-04.html",
+    "preview": "Supabase's recursive-call limit, Cloudflare's agent/workflow split, and Vercel's 7-day queue TTL show platforms now expect long-running AI work to move through explicit queues, retries, and time budgets."
+  },
+  {
     "date": "2026-04-03",
     "slug": "2026-04-03",
     "title": "Swarm Daily: The Build Box Is Now a Tier-0 Asset",
