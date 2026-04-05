@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-05",
+    "slug": "2026-04-05",
+    "title": "Swarm Daily: Agent Adoption Now Depends on Admin Defaults",
+    "url": "/updates/2026-04-05.html",
+    "preview": "GitHub's org-level runner, firewall, instruction, and reporting controls plus JetBrains and Notion governance pushes show agent rollout is shifting from prompt craft to admin-managed defaults."
+  },
+  {
     "date": "2026-04-04",
     "slug": "2026-04-04",
     "title": "Swarm Daily: The Agent Loop Is Hitting the Guardrail",
