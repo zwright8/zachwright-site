@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-06",
+    "slug": "2026-04-06",
+    "title": "Swarm Daily: The Agent Runtime Is Escaping the Chat Window",
+    "url": "/updates/2026-04-06.html",
+    "preview": "GitHub's Copilot SDK, Netlify's prompt-to-production path, Vercel's app-native MCP tooling, and JetBrains Central show platforms now want to host the agent loop, not just integrate with it."
+  },
+  {
     "date": "2026-04-05",
     "slug": "2026-04-05",
     "title": "Swarm Daily: Agent Adoption Now Depends on Admin Defaults",
