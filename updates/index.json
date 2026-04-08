@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-08",
+    "slug": "2026-04-08",
+    "title": "Swarm Daily: The Agent Loop Has To Fit Inside the Trust Boundary",
+    "url": "/updates/2026-04-08.html",
+    "preview": "GitHub's local and in-region Copilot surfaces, Vercel's team-wide ZDR controls, and Supabase's private-link and default-off API moves show AI workflows now have to fit inside approved networks, regions, and data policies."
+  },
+  {
     "date": "2026-04-07",
     "slug": "2026-04-07",
     "title": "Swarm Daily: The Write Path Is Getting Productized",
