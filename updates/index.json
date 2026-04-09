@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-09",
+    "slug": "2026-04-09",
+    "title": "Swarm Daily: The Agent UI Is Becoming the Ops Layer",
+    "url": "/updates/2026-04-09.html",
+    "preview": "GitHub's cloud agent controls, mobile session logs, Copilot SDK, and Cloudflare's signed bot work show agent systems shifting into managed operator surfaces."
+  },
+  {
     "date": "2026-04-08",
     "slug": "2026-04-08",
     "title": "Swarm Daily: The Agent Loop Has To Fit Inside the Trust Boundary",
