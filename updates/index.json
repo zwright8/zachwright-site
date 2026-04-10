@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-10",
+    "slug": "2026-04-10",
+    "title": "Swarm Daily: The Setup Tax Is Getting Built In",
+    "url": "/updates/2026-04-10.html",
+    "preview": "Netlify's Firecracker rebuild, Vercel's zero-config Django and Go support, and Cloudflare's org layer show the platform absorbing setup tax and build glue."
+  },
+  {
     "date": "2026-04-09",
     "slug": "2026-04-09",
     "title": "Swarm Daily: The Agent UI Is Becoming the Ops Layer",
