@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-11",
+    "slug": "2026-04-11",
+    "title": "Swarm Daily: The Signal Plane Is Getting Programmable",
+    "url": "/updates/2026-04-11.html",
+    "preview": "Vercel's workflow metrics, GitHub Actions' trust claims, and Cloudflare's transport fields show operational signal moving into product surfaces instead of separate glue."
+  },
+  {
     "date": "2026-04-10",
     "slug": "2026-04-10",
     "title": "Swarm Daily: The Setup Tax Is Getting Built In",
