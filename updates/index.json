@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-12",
+    "slug": "2026-04-12",
+    "title": "Swarm Daily: The Web Stack Is Getting Opinionated About Speed and Custody",
+    "url": "/updates/2026-04-12.html",
+    "preview": "Netlify's faster builds and ownership stance, Cloudflare's capacity and PQ roadmap, and Vercel's alert controls show platforms competing on speed, custody, and defaults."
+  },
+  {
     "date": "2026-04-11",
     "slug": "2026-04-11",
     "title": "Swarm Daily: The Signal Plane Is Getting Programmable",
