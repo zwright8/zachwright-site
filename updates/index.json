@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-13",
+    "slug": "2026-04-13",
+    "title": "Swarm Daily: The Browser Is Becoming a Programmable Endpoint",
+    "url": "/updates/2026-04-13.html",
+    "preview": "GitHub Copilot, VS Code, and Cloudflare Browser Rendering show browser debugging, crawling, and MCP access collapsing into one managed runtime."
+  },
+  {
     "date": "2026-04-12",
     "slug": "2026-04-12",
     "title": "Swarm Daily: The Web Stack Is Getting Opinionated About Speed and Custody",
