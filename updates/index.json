@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-14",
+    "slug": "2026-04-14",
+    "title": "Swarm Daily: Security Review Is Becoming One Control Surface",
+    "url": "/updates/2026-04-14.html",
+    "preview": "GitHub's Security & quality surface, risk assessments, secret scanning, and Copilot metrics collapse security triage into one workflow while Cloudflare hardens the edge."
+  },
+  {
     "date": "2026-04-13",
     "slug": "2026-04-13",
     "title": "Swarm Daily: The Browser Is Becoming a Programmable Endpoint",
