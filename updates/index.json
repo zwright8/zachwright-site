@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-15",
+    "slug": "2026-04-15",
+    "title": "Swarm Daily: Repo Metadata Is Becoming the Control Plane",
+    "url": "/updates/2026-04-15.html",
+    "preview": "GitHub is pushing release state, contributor context, issue search, and alert tracking into the list and sidebar surfaces maintainers already use."
+  },
+  {
     "date": "2026-04-14",
     "slug": "2026-04-14",
     "title": "Swarm Daily: Security Review Is Becoming One Control Surface",
