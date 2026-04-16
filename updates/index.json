@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-16",
+    "slug": "2026-04-16",
+    "title": "Swarm Daily: Agent Infrastructure Is Getting a Real Stack",
+    "url": "/updates/2026-04-16.html",
+    "preview": "Cloudflare's Sandboxes, Mesh, Browser Run, and Netlify's prompt-to-deploy tooling show agents moving onto persistent runtime, auth, networking, and deploy plumbing."
+  },
+  {
     "date": "2026-04-15",
     "slug": "2026-04-15",
     "title": "Swarm Daily: Repo Metadata Is Becoming the Control Plane",
