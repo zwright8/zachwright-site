@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-20",
+    "slug": "2026-04-20",
+    "title": "Swarm Daily: The Seat Model Is Breaking Apart",
+    "url": "/updates/2026-04-20.html",
+    "preview": "Netlify dropped seat pricing, Vercel cut build costs, and both platforms are exposing flags, logs, and alerts as native control surfaces."
+  },
+  {
     "date": "2026-04-16",
     "slug": "2026-04-16",
     "title": "Swarm Daily: Agent Infrastructure Is Getting a Real Stack",
