@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-21",
+    "slug": "2026-04-21",
+    "title": "Swarm Daily: Model Routing Is Moving Into the Runner",
+    "url": "/updates/2026-04-21.html",
+    "preview": "GitHub auto-selects models, exposes per-task pickers, and supports BYOK or local models while Vercel keeps broadening the model pool."
+  },
+  {
     "date": "2026-04-20",
     "slug": "2026-04-20",
     "title": "Swarm Daily: The Seat Model Is Breaking Apart",
