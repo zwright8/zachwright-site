@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-22",
+    "slug": "2026-04-22",
+    "title": "Swarm Daily: Image Generation Is Becoming a Release Primitive",
+    "url": "/updates/2026-04-22.html",
+    "preview": "OpenAI, Vercel, and Netlify are turning image output into a versioned production artifact with pins, provenance, and gateway routing."
+  },
+  {
     "date": "2026-04-21",
     "slug": "2026-04-21",
     "title": "Swarm Daily: Model Routing Is Moving Into the Runner",
