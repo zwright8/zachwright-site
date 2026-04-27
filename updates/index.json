@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-27",
+    "slug": "2026-04-27",
+    "title": "Swarm Daily: Data Boundaries Are Becoming Product Defaults",
+    "url": "/updates/2026-04-27.html",
+    "preview": "OpenAI Privacy Filter, GitHub Copilot data residency, and Netlify's training-data stance make custody and provenance product settings."
+  },
+  {
     "date": "2026-04-22",
     "slug": "2026-04-22",
     "title": "Swarm Daily: Image Generation Is Becoming a Release Primitive",
