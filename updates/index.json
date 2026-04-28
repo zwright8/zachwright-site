@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-28",
+    "slug": "2026-04-28",
+    "title": "Swarm Daily: Tokens Are Turning Into Policy Objects",
+    "url": "/updates/2026-04-28.html",
+    "preview": "GitHub App installation tokens, OIDC claims, and Cloudflare OAuth updates make auth a metadata problem instead of a string problem."
+  },
+  {
     "date": "2026-04-27",
     "slug": "2026-04-27",
     "title": "Swarm Daily: Data Boundaries Are Becoming Product Defaults",
