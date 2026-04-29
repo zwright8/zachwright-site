@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swarm Daily: The Deploy Path Is Becoming a Governed Product Surface | zachwright.xyz</title>
-  <meta name="description" content="Vercel checks, GitHub OIDC claims, and Netlify database branches turn release validation into platform-native policy instead of custom CI glue." />
+  <title>Swarm Daily: Database Controls Are Going Native | zachwright.xyz</title>
+  <meta name="description" content="Netlify Database branches, Cloudflare + PlanetScale provisioning, and PlanetScale preflight APIs are moving database ops into native platform controls." />
   <style>
     :root {
       --bg: #020305;
@@ -386,41 +386,41 @@
         <article class="post-card">
           <a href="/updates/index.html" class="back-link">All Updates</a>
           <p>Here is what you missed while you were shipping.</p>
-          <h1>Swarm Daily: The Deploy Path Is Becoming a Governed Product Surface</h1>
-          <p>Native checks, immutable claims, and preview-isolated data are turning release validation into something the platform can enforce instead of something every team has to stitch together.</p>
+          <h1>Swarm Daily: Database Controls Are Going Native</h1>
+          <p>Databases are moving from separate infra to native control surfaces: preview branches, preflight checks, traffic budgets, and CLI/API provisioning.</p>
           <h2>The Big Thing</h2>
-          <p><strong>The shift is not just better CI. It is vendors turning the deploy path itself into a governed product surface: native checks, immutable claims, preview-isolated databases, and required gates.</strong></p>
-          <p>Why it matters: release risk is moving out of custom pipeline glue and into platform defaults. That makes shipping safer when the defaults are tight, but more brittle if teams keep layering their own exceptions on top.</p>
+          <p><strong>The shift is not just managed hosting. Vendors are turning database work into a governed product surface: isolated preview branches, schema preflights, traffic budgets, and native provisioning paths.</strong></p>
+          <p>Why it matters: database risk is moving out of hand-built staging and into platform defaults. That makes experimentation safer when the guardrails are tight, but it also raises the bar for teams still relying on shared environments.</p>
           <ul>
-            <li>Vercel now runs lint and typecheck on every deployment, can hold production until required checks pass, and lets Vercel Agent suggest a fix when a check fails.
-            <a href="https://vercel.com/changelog/native-deployment-checks">https://vercel.com/changelog/native-deployment-checks</a></li>
-            <li>GitHub Actions OIDC now uses immutable subject claims, so cloud trust can key off stable IDs instead of mutable repo names.
-            <a href="https://github.blog/changelog/2026-04-23-immutable-subject-claims-for-github-actions-oidc-tokens/">https://github.blog/changelog/2026-04-23-immutable-subject-claims-for-github-actions-oidc-tokens/</a></li>
-            <li>Netlify Database now pairs Deploy Previews with isolated database branches, so schema and data changes stay inside preview until publish.
+            <li>Netlify Database is now GA and natively pairs Deploy Previews with isolated database branches plus automatic migrations.
             <a href="https://www.netlify.com/blog/netlify-database/">https://www.netlify.com/blog/netlify-database/</a></li>
+            <li>Netlify Docs spells out that every deploy preview and agent run gets its own branch, so schema and data changes stay out of production.
+            <a href="https://docs.netlify.com/build/data-and-storage/netlify-database/">https://docs.netlify.com/build/data-and-storage/netlify-database/</a></li>
+            <li>Cloudflare is bringing PlanetScale Postgres/MySQL creation and billing closer to the Workers dashboard and API.
+            <a href="https://blog.cloudflare.com/deploy-planetscale-postgres-with-workers/">https://blog.cloudflare.com/deploy-planetscale-postgres-with-workers/</a></li>
           </ul>
           <h2>Code &amp; Tools</h2>
           <ol>
-            <li><strong>Manage agent skills with GitHub CLI</strong> - `gh skill` adds install, update, and publish flow with provenance metadata.
-            <a href="https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli">https://github.blog/changelog/2026-04-16-manage-agent-skills-with-github-cli</a></li>
-            <li><strong>Building a CLI for all of Cloudflare</strong> - one command surface now spans nearly 3,000 API operations.
-            <a href="https://blog.cloudflare.com/cf-cli-local-explorer/">https://blog.cloudflare.com/cf-cli-local-explorer/</a></li>
-            <li><strong>Netlify CLI adds prompt-based creation and anonymous deploys</strong> - the CLI can bootstrap a site from a prompt and deploy without an account.
-            <a href="https://www.netlify.com/changelog/2026-03-27-create-and-deploy-anything-netlify-clis-improved-ax/">https://www.netlify.com/changelog/2026-03-27-create-and-deploy-anything-netlify-clis-improved-ax/</a></li>
-            <li><strong>Logs filtering for Vercel Workflows now available</strong> - workflow logs are queryable by run and step ID from one dashboard.
-            <a href="https://vercel.com/changelog/logs-filtering-for-vercel-workflows-now-available">https://vercel.com/changelog/logs-filtering-for-vercel-workflows-now-available</a></li>
-            <li><strong>Vercel Flags is now generally available</strong> - feature flags are now a platform primitive with targeting and environment controls.
-            <a href="https://vercel.com/changelog/vercel-flags-ga">https://vercel.com/changelog/vercel-flags-ga</a></li>
+            <li><strong>Billing, limits, and compliance</strong> - Netlify’s usage docs expose compute, bandwidth, free storage timing, and branch limits.
+            <a href="https://docs.netlify.com/build/data-and-storage/netlify-database/billing-and-usage/">https://docs.netlify.com/build/data-and-storage/netlify-database/billing-and-usage/</a></li>
+            <li><strong>Deploy request storage check API</strong> - PlanetScale can preflight storage capacity before schema changes deploy.
+            <a href="https://planetscale.com/changelog/deploy-request-storage-check-api">https://planetscale.com/changelog/deploy-request-storage-check-api</a></li>
+            <li><strong>Insights-only MCP server</strong> - AI tools can analyze Insights and schema recommendations without query execution access.
+            <a href="https://planetscale.com/changelog/insights-only-mcp-server">https://planetscale.com/changelog/insights-only-mcp-server</a></li>
+            <li><strong>CLI traffic control</strong> - PlanetScale budgets and query limits are now scriptable from the command line.
+            <a href="https://planetscale.com/changelog/cli-traffic-control">https://planetscale.com/changelog/cli-traffic-control</a></li>
+            <li><strong>Stripe Projects partnership</strong> - PlanetScale provisioning now fits into Stripe’s CLI-driven dev-tool flow.
+            <a href="https://planetscale.com/blog/planetscale-stripe-projects-partnership">https://planetscale.com/blog/planetscale-stripe-projects-partnership</a></li>
           </ol>
           <h2>Tech Impact</h2>
           <ul>
-            <li><strong>Checks are becoming a product feature.</strong> Teams should prefer native deployment checks and platform logs before adding another bespoke pipeline layer.</li>
-            <li><strong>Preview is now a real safety boundary.</strong> Isolated branches and immutable claims make it harder for accidental changes to leak across environments.</li>
-            <li><strong>Fix loops get shorter.</strong> When the platform can inspect, gate, and suggest repairs in the same surface, manual triage should drop.</li>
+            <li><strong>Preview now means branch-level data, not shared staging.</strong> Teams should treat database branches as part of the PR workflow, not as a separate backstop.</li>
+            <li><strong>Preflight beats rollback.</strong> Storage checks, traffic budgets, and branch limits catch bad changes before they become incidents.</li>
+            <li><strong>Agent autonomy depends on boundaries.</strong> Read-only analysis is easy to scale; write-capable database tooling still needs explicit promotion steps.</li>
           </ul>
           <h2>Meme of the Day</h2>
-          <p><strong>Dependency</strong> - the mood when every build, check, and deploy now depends on another managed layer.</p>
-          <p>Image URL: <a href="https://imgs.xkcd.com/comics/dependency.png">https://imgs.xkcd.com/comics/dependency.png</a><br>Post: <a href="https://xkcd.com/2347/">https://xkcd.com/2347/</a></p>
+          <p><strong>This Is Fine</strong> - the mood when the preview branch can burn without touching production.</p>
+          <p>Image URL: <a href="https://i.kym-cdn.com/photos/images/newsfeed/000/931/002/725.png">https://i.kym-cdn.com/photos/images/newsfeed/000/931/002/725.png</a><br>Post: <a href="https://knowyourmeme.com/memes/this-is-fine">https://knowyourmeme.com/memes/this-is-fine</a></p>
         </article>
       </section>
     </main>
