@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-29",
+    "slug": "2026-04-29",
+    "title": "Swarm Daily: The Deploy Path Is Becoming a Governed Product Surface",
+    "url": "/updates/2026-04-29.html",
+    "preview": "Vercel checks, GitHub OIDC claims, and Netlify database branches turn release validation into platform-native policy instead of custom CI glue."
+  },
+  {
     "date": "2026-04-28",
     "slug": "2026-04-28",
     "title": "Swarm Daily: Tokens Are Turning Into Policy Objects",
