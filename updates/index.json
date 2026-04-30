@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-04-30",
+    "slug": "2026-04-30",
+    "title": "Swarm Daily: App Setup Is Becoming a Commerce Flow",
+    "url": "/updates/2026-04-30.html",
+    "preview": "Netlify, Vercel, Stripe, and GitHub are collapsing provisioning, billing, credentials, and deployment handoff into one operator-visible flow."
+  },
+  {
     "date": "2026-04-29",
     "slug": "2026-04-29",
     "title": "Swarm Daily: Database Controls Are Going Native",
