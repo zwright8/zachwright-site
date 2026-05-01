@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-01",
+    "slug": "2026-05-01",
+    "title": "Swarm Daily: Agents Are Getting a Wallet",
+    "url": "/updates/2026-05-01.html",
+    "preview": "Stripe's agent wallet, MPP, and preview-bill surfaces make machine spend a first-class runtime concern."
+  },
+  {
     "date": "2026-04-30",
     "slug": "2026-04-30",
     "title": "Swarm Daily: App Setup Is Becoming a Commerce Flow",
