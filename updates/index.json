@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-02",
+    "slug": "2026-05-02",
+    "title": "Swarm Daily: Workflows Are Following the Tenant",
+    "url": "/updates/2026-05-02.html",
+    "preview": "Cloudflare Dynamic Workflows, GitHub Agentic Workflows, and Actions failover turn durable execution into a tenant-scoped control problem."
+  },
+  {
     "date": "2026-05-01",
     "slug": "2026-05-01",
     "title": "Swarm Daily: Agents Are Getting a Wallet",
