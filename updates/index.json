@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-03",
+    "slug": "2026-05-03",
+    "title": "Swarm Daily: The Terminal Is Splitting Into Modes",
+    "url": "/updates/2026-05-03.html",
+    "preview": "GitHub Copilot CLI, AWS AgentCore, and OpenAI's agent stack turn interactive, remote, local, and managed sessions into separate operator lanes."
+  },
+  {
     "date": "2026-05-02",
     "slug": "2026-05-02",
     "title": "Swarm Daily: Workflows Are Following the Tenant",
