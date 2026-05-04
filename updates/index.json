@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-04",
+    "slug": "2026-05-04",
+    "title": "Swarm Daily: The Platform Is Turning Deployment Behavior Into Policy",
+    "url": "/updates/2026-05-04.html",
+    "preview": "Vercel and Cloudflare are turning checks, cache rules, build sizing, and retention into native deployment controls."
+  },
+  {
     "date": "2026-05-03",
     "slug": "2026-05-03",
     "title": "Swarm Daily: The Terminal Is Splitting Into Modes",
