@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-05",
+    "slug": "2026-05-05",
+    "title": "Swarm Daily: Docs Are Becoming the Agent Interface",
+    "url": "/updates/2026-05-05.html",
+    "preview": "GitBook and Vercel are turning docs into machine-readable inputs, assistant tools, and crawler-facing surfaces that agents now consume directly."
+  },
+  {
     "date": "2026-05-04",
     "slug": "2026-05-04",
     "title": "Swarm Daily: The Platform Is Turning Deployment Behavior Into Policy",
