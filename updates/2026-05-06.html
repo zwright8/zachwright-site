@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Security Is Moving Into the Write Loop | zachwright.xyz</title>
+  <meta name="description" content="GitHub, Vercel, Cloudflare, and OpenAI are pushing secret scanning, code risk visibility, and account hardening into the preflight loop." />
+  <style>
+    :root {
+      --bg: #020305;
+      --bg-2: #06090f;
+      --panel: #0b1018;
+      --panel-2: #121a26;
+      --surface: #0f1724;
+      --border: #2c3647;
+      --white: #f2f5fa;
+      --line: #2c3647;
+      --line-strong: #49556a;
+      --text: #f2f5fa;
+      --text-soft: #9ca8bc;
+      --accent: #d6dde8;
+      --max: 1120px;
+      --dur: 220ms;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(90vw 58vw at 88% -8%, rgba(223, 230, 242, 0.08), transparent 70%),
+        linear-gradient(180deg, #020305 0%, #04060a 52%, #070b12 100%);
+      min-height: 100vh;
+      line-height: 1.5;
+      letter-spacing: 0.002em;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .skip-link {
+      position: absolute;
+      top: -56px;
+      left: 14px;
+      z-index: 120;
+      background: #fff;
+      color: #0a0f17;
+      padding: 8px 10px;
+    }
+
+    .skip-link:focus-visible { top: 12px; }
+
+    .wrap { width: min(var(--max), calc(100% - 1.6rem)); margin: 0 auto; }
+    .narrow { width: min(780px, 100%); }
+
+    .site-top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      background: rgba(6, 9, 14, 0.92);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.72rem 0.85rem;
+    }
+
+    .brand {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav {
+      justify-self: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .nav a {
+      color: var(--text-soft);
+      font-size: 0.76rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 650;
+      transition: color var(--dur) ease;
+    }
+
+    .nav a:hover,
+    .nav a[aria-current="page"] { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      padding: 0 0.95rem;
+      transition: transform var(--dur) ease, border-color var(--dur) ease, background-color var(--dur) ease, color var(--dur) ease;
+      will-change: transform;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #060b12;
+    }
+
+    main { padding-bottom: 4.4rem; }
+
+    .post-shell { padding-top: clamp(2.2rem, 4.4vw, 3.9rem); scroll-margin-top: 5.3rem; }
+
+    .post-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #090f18 0%, #0c1320 100%);
+      padding: clamp(1rem, 2.2vw, 1.45rem);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 0.72rem;
+      border: 1px solid #55647c;
+      background: #0f1724;
+      color: var(--text);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.95rem;
+    }
+
+    .post-card > p:first-of-type {
+      color: var(--text-soft);
+      margin-bottom: 0.95rem;
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 22ch;
+      font-weight: 840;
+      margin-bottom: 0.86rem;
+      color: var(--text);
+    }
+
+    h2 {
+      font-size: clamp(1.22rem, 2.5vw, 1.78rem);
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      font-weight: 810;
+      margin: 1.35rem 0 0.56rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 1.05rem 0 0.42rem;
+    }
+
+    p,
+    li {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-bottom: 0.74rem;
+    }
+
+    strong { color: var(--text); }
+    em { color: #b6c0d1; }
+
+    ul,
+    ol {
+      margin: 0.2rem 0 0.94rem 1.1rem;
+      padding: 0;
+    }
+
+    li { padding-left: 0.18rem; }
+
+    a[href] {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: #617088;
+      text-underline-offset: 2px;
+    }
+
+    a[href]:hover {
+      color: #ffffff;
+      text-decoration-color: var(--accent);
+    }
+
+    code {
+      background: rgba(12, 20, 30, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 2px 6px;
+      color: #d8e2f2;
+      font-size: 0.85em;
+    }
+
+    pre {
+      background: rgba(12, 20, 30, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 14px;
+      overflow-x: auto;
+      margin: 0.7rem 0 0.95rem;
+    }
+
+    pre code {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--text);
+    }
+
+    blockquote {
+      border-left: 2px solid #58657c;
+      padding-left: 0.72rem;
+      margin: 0.84rem 0;
+      color: #b5c2d6;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 1.05rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.82rem 0 1rem;
+      border: 1px solid var(--line);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+    }
+
+    td { color: var(--text-soft); font-size: 0.9rem; }
+
+    .footnote {
+      color: #9ca8bc;
+      font-size: 0.84rem;
+      margin-top: 1rem;
+    }
+
+    .footnote a { color: inherit; }
+
+    .footer-grid {
+      margin-top: 2.8rem;
+      border-top: 1px solid var(--line);
+      padding: 1.1rem 0 1.8rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .footer-grid h4 {
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.42rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-grid li {
+      margin: 0.22rem 0;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+    }
+
+    .footer-grid a {
+      color: var(--text-soft);
+      text-decoration: underline;
+      text-decoration-color: #617088;
+      text-underline-offset: 2px;
+    }
+
+    .footer-grid a:hover { color: var(--text); }
+
+    .copyright {
+      border-top: 1px solid var(--line);
+      padding: 0.85rem 0 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      color: var(--text-soft);
+      font-size: 0.78rem;
+    }
+
+    .copyright strong { color: var(--text); }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    [data-reveal].in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 820px) {
+      .site-top {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .nav { justify-self: start; justify-content: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { width: min(var(--max), calc(100% - 1rem)); }
+      .site-top { padding: 0.7rem 0.75rem; }
+      .nav { gap: 0.72rem; }
+      .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand">Zach Wright</a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/#capabilities">Capabilities</a>
+        <a href="/#proof">Proof &amp; Process</a>
+        <a href="/#weekly-reviews">Weekly Reviews</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a class="btn btn-primary" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">Email Zach</a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Security Is Moving Into the Write Loop</h1>
+          <p>Security is moving upstream. The control surface is no longer just the security tab or the after-the-fact review queue. It is now the MCP prompt, the IDE, the auth screen, and the account settings page.</p>
+          <h2>The Big Thing</h2>
+          <p><strong>The shift is from manual post-merge review to automatic preflight. Secret scanners, code-risk views, and account-hardening flows are moving security checks into the same loop where code is written and tools are granted access.</strong></p>
+          <p>Why it matters: the best security posture is now the one that blocks bad defaults before they become artifacts, sessions, or leaked credentials.</p>
+          <ul>
+            <li>GitHub's MCP secret scanning now checks current changes before commit or PR, which pushes leak detection into the write path.
+            <a href="https://github.blog/changelog/2026-05-05-secret-scanning-with-github-mcp-server-is-now-generally-available/">https://github.blog/changelog/2026-05-05-secret-scanning-with-github-mcp-server-is-now-generally-available/</a></li>
+            <li>OpenAI's Advanced Account Security makes passkeys, shorter sessions, and stricter recovery the default for high-risk accounts.
+            <a href="https://openai.com/index/advanced-account-security/">https://openai.com/index/advanced-account-security/</a></li>
+            <li>Cloudflare's non-human identity work ties revocation, OAuth visibility, and scoped permissions to the lifecycle of agent tokens.
+            <a href="https://blog.cloudflare.com/improved-developer-security/">https://blog.cloudflare.com/improved-developer-security/</a></li>
+          </ul>
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub MCP secret scanning</strong> - scans current changes in Copilot CLI or VS Code before commit or PR.
+            <a href="https://github.blog/changelog/2026-05-05-secret-scanning-with-github-mcp-server-is-now-generally-available/">https://github.blog/changelog/2026-05-05-secret-scanning-with-github-mcp-server-is-now-generally-available/</a></li>
+            <li><strong>Vercel deepsec</strong> - an agent-powered security harness that runs on your own infrastructure.
+            <a href="https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base">https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base</a></li>
+            <li><strong>OpenAI Advanced Account Security</strong> - passkeys, recovery keys, shorter sessions, and login alerts for sensitive accounts.
+            <a href="https://openai.com/index/advanced-account-security/">https://openai.com/index/advanced-account-security/</a></li>
+            <li><strong>Cloudflare non-human identity controls</strong> - automated revocation, OAuth visibility, and scoped permissions for agent tokens.
+            <a href="https://blog.cloudflare.com/improved-developer-security/">https://blog.cloudflare.com/improved-developer-security/</a></li>
+            <li><strong>Cloudflare Client-Side Security</strong> - browser-side detections and code-change monitoring for script injection risk.
+            <a href="https://blog.cloudflare.com/client-side-security-open-to-everyone/">https://blog.cloudflare.com/client-side-security-open-to-everyone/</a></li>
+          </ol>
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Security moves before the artifact exists.</strong> If the agent, IDE, or account screen can catch it first, the ticket queue gets smaller and the blast radius shrinks.</li>
+            <li><strong>Identity is now operational state.</strong> Token revocation, session lifetime, and approval scope are runtime controls, not policy footnotes.</li>
+            <li><strong>Platform defaults matter more than team discipline.</strong> The tools that win will make secure paths faster than insecure ones without adding a manual review tax.</li>
+          </ul>
+          <h2>Meme of the Day</h2>
+          <p><strong>This Is Fine</strong> - the mood when the scan passes but the blast radius still feels one typo away.</p>
+          <p>Image URL: <a href="https://commons.wikimedia.org/wiki/Special:Redirect/file/This_Is_Fine_(meme).png">https://commons.wikimedia.org/wiki/Special:Redirect/file/This_Is_Fine_(meme).png</a><br>Post: <a href="https://commons.wikimedia.org/wiki/File:This_Is_Fine_(meme).png">https://commons.wikimedia.org/wiki/File:This_Is_Fine_(meme).png</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+            <li><a href="/#weekly-reviews">Weekly Reviews</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Intelligence</li>
+            <li>Weekly Reviews</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

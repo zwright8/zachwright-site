@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-06",
+    "slug": "2026-05-06",
+    "title": "Swarm Daily: Security Is Moving Into the Write Loop",
+    "url": "/updates/2026-05-06.html",
+    "preview": "GitHub, Vercel, Cloudflare, and OpenAI are pushing secret scanning, code risk visibility, and account hardening into the preflight loop."
+  },
+  {
     "date": "2026-05-05",
     "slug": "2026-05-05",
     "title": "Swarm Daily: Docs Are Becoming the Agent Interface",
