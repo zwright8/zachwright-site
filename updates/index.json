@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-07",
+    "slug": "2026-05-07",
+    "title": "Swarm Daily: The Stack Is Turning Into an Evidence Plane",
+    "url": "/updates/2026-05-07.html",
+    "preview": "GitHub Copilot session logs, OpenAI trace grading, Vercel tracing, and Cloudflare observability are turning replayable evidence into the default control surface."
+  },
+  {
     "date": "2026-05-06",
     "slug": "2026-05-06",
     "title": "Swarm Daily: Security Is Moving Into the Write Loop",
