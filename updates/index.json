@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-11",
+    "slug": "2026-05-11",
+    "title": "Swarm Daily: The Browser Is Becoming the Agent Runtime",
+    "url": "/updates/2026-05-11.html",
+    "preview": "WebMCP, CDP, live replay, and human handoff are turning browser automation into a managed runtime instead of a brittle click loop."
+  },
+  {
     "date": "2026-05-07",
     "slug": "2026-05-07",
     "title": "Swarm Daily: The Stack Is Turning Into an Evidence Plane",
