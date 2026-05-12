@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-12",
+    "slug": "2026-05-12",
+    "title": "Swarm Daily: The Agent Runtime Is Becoming a Control Plane",
+    "url": "/updates/2026-05-12.html",
+    "preview": "Sandbox rules, private networking, admin-managed tools, typed flags, and usage-based billing are turning agent behavior into explicit config."
+  },
+  {
     "date": "2026-05-11",
     "slug": "2026-05-11",
     "title": "Swarm Daily: The Browser Is Becoming the Agent Runtime",
