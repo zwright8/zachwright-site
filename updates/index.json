@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-13",
+    "slug": "2026-05-13",
+    "title": "Swarm Daily: The Glue Layer Is Becoming the Product",
+    "url": "/updates/2026-05-13.html",
+    "preview": "Voice models, web adapters, transcripts, and managed toolkits are turning transport and execution glue into the thing you ship."
+  },
+  {
     "date": "2026-05-12",
     "slug": "2026-05-12",
     "title": "Swarm Daily: The Agent Runtime Is Becoming a Control Plane",
