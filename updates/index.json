@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-14",
+    "slug": "2026-05-14",
+    "title": "Swarm Daily: The Release Perimeter Is Getting Typed",
+    "url": "/updates/2026-05-14.html",
+    "preview": "Short-lived trust, generated firewall rules, staged rollouts, and severity-scored review are turning release safety into structured config."
+  },
+  {
     "date": "2026-05-13",
     "slug": "2026-05-13",
     "title": "Swarm Daily: The Glue Layer Is Becoming the Product",
