@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-16",
+    "slug": "2026-05-16",
+    "title": "Swarm Daily: Agent Work Is Becoming a Session Ledger",
+    "url": "/updates/2026-05-16.html",
+    "preview": "GitHub sessions, Cloudflare recovery, Netlify PR links, and AWS Transform state are turning agent work into resumable records."
+  },
+  {
     "date": "2026-05-14",
     "slug": "2026-05-14",
     "title": "Swarm Daily: The Release Perimeter Is Getting Typed",
