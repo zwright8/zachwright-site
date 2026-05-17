@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-17",
+    "slug": "2026-05-17",
+    "title": "Swarm Daily: The Back Office Is Becoming Agent-Callable",
+    "url": "/updates/2026-05-17.html",
+    "preview": "ServiceNow Action Fabric, SAP Joule Work, AWS Partner Central, and WorkSpaces are turning business workflows into governed agent actions."
+  },
+  {
     "date": "2026-05-16",
     "slug": "2026-05-16",
     "title": "Swarm Daily: Agent Work Is Becoming a Session Ledger",
