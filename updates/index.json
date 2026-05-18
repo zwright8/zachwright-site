@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-18",
+    "slug": "2026-05-18",
+    "title": "Swarm Daily: Model Spend Is Moving Into the Request Path",
+    "url": "/updates/2026-05-18.html",
+    "preview": "Vercel AI Gateway, GitHub Copilot routing, LTS base models, and team metrics are turning AI spend into request-path policy."
+  },
+  {
     "date": "2026-05-17",
     "slug": "2026-05-17",
     "title": "Swarm Daily: The Back Office Is Becoming Agent-Callable",
