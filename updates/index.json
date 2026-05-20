@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-20",
+    "slug": "2026-05-20",
+    "title": "Swarm Daily: The Debug Loop Is Becoming Agent-Readable",
+    "url": "/updates/2026-05-20.html",
+    "preview": "Netlify logs, Vercel curl, Cloudflare dev tunnels, and workflow run IDs are turning runtime debugging into agent-readable evidence."
+  },
+  {
     "date": "2026-05-18",
     "slug": "2026-05-18",
     "title": "Swarm Daily: Model Spend Is Moving Into the Request Path",
