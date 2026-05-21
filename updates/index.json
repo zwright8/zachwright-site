@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-21",
+    "slug": "2026-05-21",
+    "title": "Swarm Daily: The Chat Thread Is Becoming the App Runtime",
+    "url": "/updates/2026-05-21.html",
+    "preview": "Chat SDK tools, MCP apps, callback URLs, and on-device MCP sessions are turning conversations into typed execution surfaces."
+  },
+  {
     "date": "2026-05-20",
     "slug": "2026-05-20",
     "title": "Swarm Daily: The Debug Loop Is Becoming Agent-Readable",
