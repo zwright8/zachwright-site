@@ -14,6 +14,13 @@
     "preview": "Netlify logs, Vercel curl, Cloudflare dev tunnels, and workflow run IDs are turning runtime debugging into agent-readable evidence."
   },
   {
+    "date": "2026-05-19",
+    "slug": "2026-05-19",
+    "title": "Swarm Daily: Model Spend Is Moving Into the Request Path",
+    "url": "/updates/2026-05-19.html",
+    "preview": "Vercel AI Gateway, GitHub Copilot model routing, LTS base models, and team-level metrics are turning AI spend into request-path policy."
+  },
+  {
     "date": "2026-05-18",
     "slug": "2026-05-18",
     "title": "Swarm Daily: Model Spend Is Moving Into the Request Path",
