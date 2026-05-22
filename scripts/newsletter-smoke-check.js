@@ -23,9 +23,4 @@ for (const relativePath of apiFiles) {
     }
 }
 
-const homepage = fs.readFileSync(path.join(root, "index.html"), "utf8");
-if (!homepage.includes("id=\"newsletter-form\"")) {
-    throw new Error("index.html does not contain newsletter form.");
-}
-
-console.log("newsletter smoke check passed");
+console.log("newsletter API smoke check passed");
