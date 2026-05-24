@@ -307,7 +307,9 @@ function scrollToSection(event: MouseEvent<HTMLAnchorElement>, id: string) {
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("home");
+  const lastScrollY = useRef(0);
   const links = [
     ["Home", "home"],
     ["Capabilities", "work"],
@@ -315,8 +317,20 @@ function Navbar() {
   ];
 
   useEffect(() => {
+    lastScrollY.current = Math.max(window.scrollY, 0);
+
     const update = () => {
-      setScrolled(window.scrollY > 100);
+      const currentY = Math.max(window.scrollY, 0);
+      const delta = currentY - lastScrollY.current;
+      setScrolled(currentY > 100);
+
+      if (currentY <= 80 || delta < -8) {
+        setHidden(false);
+      } else if (delta > 8 && currentY > 80) {
+        setHidden(true);
+      }
+
+      lastScrollY.current = currentY;
 
       let current = "home";
       for (const id of ["home", "work", "journal"]) {
@@ -334,7 +348,12 @@ function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-6">
+    <nav
+      className={`fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 transition-[opacity,transform] duration-300 ease-out md:pt-6 ${
+        hidden ? "pointer-events-none -translate-y-[calc(100%+2rem)] opacity-0" : "translate-y-0 opacity-100"
+      }`}
+      onFocus={() => setHidden(false)}
+    >
       <div
         className={`inline-flex items-center rounded-full border border-white/10 bg-surface px-2 py-2 backdrop-blur-md transition-shadow duration-300 ${
           scrolled ? "shadow-md shadow-black/10" : ""

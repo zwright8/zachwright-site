@@ -107,6 +107,13 @@
       padding: 8px;
       box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
       backdrop-filter: blur(18px);
+      transition: opacity var(--dur) ease, transform var(--dur) ease;
+    }
+
+    .site-top.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 32px));
     }
 
     .brand {
@@ -1226,6 +1233,7 @@
     </footer>
   </div>
 
+  <script src="/assets/hide-nav-on-scroll.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.16/dist/hls.min.js"></script>
   <script>
     (function () {

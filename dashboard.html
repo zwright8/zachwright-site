@@ -92,6 +92,13 @@
             align-items: center;
             gap: 16px;
             padding: 10px 14px 10px 18px;
+            transition: opacity 0.24s ease, transform 0.24s ease;
+        }
+
+        .nav.is-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(calc(-100% - 28px));
         }
 
         .brand {
@@ -632,6 +639,7 @@
         </footer>
     </div>
 
+    <script src="/assets/hide-nav-on-scroll.js"></script>
     <script>
     const TYPE_LABELS = { email: "Email", call: "Call", meeting: "Meeting", note: "Note" };
     const STAGE_LABELS = {
