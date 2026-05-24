@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-24",
+    "slug": "2026-05-24",
+    "title": "Swarm Daily: AI Plumbing Is Moving Into the Work Surface",
+    "url": "/updates/2026-05-24.html",
+    "preview": "Open Copilot internals, WordPress gateway connectors, Cloudflare AI REST endpoints, and Netlify no-key model access are moving AI plumbing into existing operator surfaces."
+  },
+  {
     "date": "2026-05-23",
     "slug": "2026-05-23",
     "title": "Swarm Daily: Package Trust Is Moving Into the Release Gate",
