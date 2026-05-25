@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-25",
+    "slug": "2026-05-25",
+    "title": "Swarm Daily: Work Queues Are Getting a Schema",
+    "url": "/updates/2026-05-25.html",
+    "preview": "GitHub issue fields, semantic search, Vercel flag splits, and typed bot subjects are turning work queues into structured automation inputs."
+  },
+  {
     "date": "2026-05-24",
     "slug": "2026-05-24",
     "title": "Swarm Daily: AI Plumbing Is Moving Into the Work Surface",
