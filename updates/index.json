@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-26",
+    "slug": "2026-05-26",
+    "title": "Swarm Daily: Traffic Policy Is Becoming the Bill",
+    "url": "/updates/2026-05-26.html",
+    "preview": "Vercel microfrontend routing, Cloudflare Dynamic Workers pricing, WAF waivers, and flat CDN pricing are turning traffic policy into cost control."
+  },
+  {
     "date": "2026-05-25",
     "slug": "2026-05-25",
     "title": "Swarm Daily: Work Queues Are Getting a Schema",
