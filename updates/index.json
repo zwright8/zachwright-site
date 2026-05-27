@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-27",
+    "slug": "2026-05-27",
+    "title": "Swarm Daily: Review Gates Are Becoming Control Planes",
+    "url": "/updates/2026-05-27.html",
+    "preview": "GitHub Code Quality APIs, PR coverage, secret bypass filters, and Copilot model rules are turning review gates into programmable repo controls."
+  },
+  {
     "date": "2026-05-26",
     "slug": "2026-05-26",
     "title": "Swarm Daily: Traffic Policy Is Becoming the Bill",
