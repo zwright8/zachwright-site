@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-28",
+    "slug": "2026-05-28",
+    "title": "Swarm Daily: Web Research Is Becoming a Managed Input",
+    "url": "/updates/2026-05-28.html",
+    "preview": "Firecrawl on Vercel, Cloudflare crawl controls, Codex browser extraction, and async research APIs are turning web collection into managed agent input."
+  },
+  {
     "date": "2026-05-27",
     "slug": "2026-05-27",
     "title": "Swarm Daily: Review Gates Are Becoming Control Planes",
