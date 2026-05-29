@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-29",
+    "slug": "2026-05-29",
+    "title": "Swarm Daily: Agent Context Is Getting Admin Handles",
+    "url": "/updates/2026-05-29.html",
+    "preview": "Copilot Memory controls, Spaces APIs, ChatGPT app templates, Codex tokens, and remote CLI sessions are turning agent context into governed state."
+  },
+  {
     "date": "2026-05-28",
     "slug": "2026-05-28",
     "title": "Swarm Daily: Web Research Is Becoming a Managed Input",
