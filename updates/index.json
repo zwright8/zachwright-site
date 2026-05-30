@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-30",
+    "slug": "2026-05-30",
+    "title": "Swarm Daily: Local Dev Is Becoming the Agent Test Rig",
+    "url": "/updates/2026-05-30.html",
+    "preview": "Vercel Sandbox Docker, port 8080 ingress, Cloudflare tunnels, Local Explorer, and native CLIs are turning local loops into reproducible agent test rigs."
+  },
+  {
     "date": "2026-05-29",
     "slug": "2026-05-29",
     "title": "Swarm Daily: Agent Context Is Getting Admin Handles",
