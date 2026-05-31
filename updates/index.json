@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-05-31",
+    "slug": "2026-05-31",
+    "title": "Swarm Daily: The Fix Button Is Becoming the Handoff",
+    "url": "/updates/2026-05-31.html",
+    "preview": "GitHub Actions fixes, Copilot review batches, VS Code session controls, Codex mobile, and Browser Run bindings are turning failures into scoped agent handoffs."
+  },
+  {
     "date": "2026-05-30",
     "slug": "2026-05-30",
     "title": "Swarm Daily: Local Dev Is Becoming the Agent Test Rig",
