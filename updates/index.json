@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-02",
+    "slug": "2026-06-02",
+    "title": "Swarm Daily: Long-Lived Secrets Are Leaving the Loop",
+    "url": "/updates/2026-06-02.html",
+    "preview": "Vercel Blob OIDC, Dependabot registry federation, stateless app tokens, npm staged publishing, and secret bypass filters are pushing credentials into scoped workload identity."
+  },
+  {
     "date": "2026-06-01",
     "slug": "2026-06-01",
     "title": "Swarm Daily: Realtime AI Needs Stream Contracts",
