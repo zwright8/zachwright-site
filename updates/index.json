@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-03",
+    "slug": "2026-06-03",
+    "title": "Swarm Daily: Fleet Defaults Are Replacing Project Chores",
+    "url": "/updates/2026-06-03.html",
+    "preview": "Vercel repo-level Git settings, elastic build memory, Copilot budgets, GHAS hard caps, and Cloudflare usage alerts are turning per-project toggles into fleet controls."
+  },
+  {
     "date": "2026-06-02",
     "slug": "2026-06-02",
     "title": "Swarm Daily: Long-Lived Secrets Are Leaving the Loop",
