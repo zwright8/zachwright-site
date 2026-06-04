@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-04",
+    "slug": "2026-06-04",
+    "title": "Swarm Daily: Model Choice Needs a Runbook",
+    "url": "/updates/2026-06-04.html",
+    "preview": "Copilot context and reasoning knobs, GPT-4.1 retirement, Gemini model policies, Vercel AI Gateway, Bedrock, and Workers AI deprecations make model choice an operating contract."
+  },
+  {
     "date": "2026-06-03",
     "slug": "2026-06-03",
     "title": "Swarm Daily: Fleet Defaults Are Replacing Project Chores",
