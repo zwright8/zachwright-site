@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-05",
+    "slug": "2026-06-05",
+    "title": "Swarm Daily: Agent Actions Need an Owner",
+    "url": "/updates/2026-06-05.html",
+    "preview": "Vercel AI accountability terms, GitHub agent task APIs, CI repair handoffs, enterprise teams, Netlify Agent Runner ownership, and Copilot budgets make agent work an account-control problem."
+  },
+  {
     "date": "2026-06-04",
     "slug": "2026-06-04",
     "title": "Swarm Daily: Model Choice Needs a Runbook",
