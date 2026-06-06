@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-06",
+    "slug": "2026-06-06",
+    "title": "Swarm Daily: Security Signals Need the Scaffold",
+    "url": "/updates/2026-06-06.html",
+    "preview": "Anthropic's MITRE mapping, Cloudflare log fields, Turnstile events, CodeQL coverage, managed plugins, sandbox drives, and session traces make AI security a scaffold-telemetry problem."
+  },
+  {
     "date": "2026-06-05",
     "slug": "2026-06-05",
     "title": "Swarm Daily: Agent Actions Need an Owner",
