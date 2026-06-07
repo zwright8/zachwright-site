@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-07",
+    "slug": "2026-06-07",
+    "title": "Swarm Daily: Scheduled Agents Need a Control Loop",
+    "url": "/updates/2026-06-07.html",
+    "preview": "Cloudflare scheduled tasks, Copilot CLI timers, Copilot app canvases, VS Code session sync, Agent Skills, and skills.sh make recurring agent work a control-loop problem."
+  },
+  {
     "date": "2026-06-06",
     "slug": "2026-06-06",
     "title": "Swarm Daily: Security Signals Need the Scaffold",
