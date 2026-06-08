@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-08",
+    "slug": "2026-06-08",
+    "title": "Swarm Daily: Side Effects Need a Rewind Button",
+    "url": "/updates/2026-06-08.html",
+    "preview": "Cloudflare Workflows rollbacks, Worker Gateway egress, Vercel Sandbox Drives, CLI traces, skills.sh, and checkpoint research make agent side effects a recovery-design problem."
+  },
+  {
     "date": "2026-06-07",
     "slug": "2026-06-07",
     "title": "Swarm Daily: Scheduled Agents Need a Control Loop",
