@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-09",
+    "slug": "2026-06-09",
+    "title": "Swarm Daily: Dormant Systems Need a Pulse",
+    "url": "/updates/2026-06-09.html",
+    "preview": "GitHub inactive-repo scans, EMU IP allow lists, Docker pinned extension manifests, Cloudflare posture scans, bulk secrets, and billing APIs turn stale inventory into active controls."
+  },
+  {
     "date": "2026-06-08",
     "slug": "2026-06-08",
     "title": "Swarm Daily: Side Effects Need a Rewind Button",
