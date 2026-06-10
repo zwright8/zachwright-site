@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-10",
+    "slug": "2026-06-10",
+    "title": "Swarm Daily: Preflight Is Moving Into the CLI",
+    "url": "/updates/2026-06-10.html",
+    "preview": "Copilot CLI security reviews, AI Gateway key budgets, Vercel domain search, request traces, agent validation, and Fable 5 policies turn preflight into terminal automation."
+  },
+  {
     "date": "2026-06-09",
     "slug": "2026-06-09",
     "title": "Swarm Daily: Dormant Systems Need a Pulse",
