@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-11",
+    "slug": "2026-06-11",
+    "title": "Swarm Daily: Internal Systems Are Becoming Agent-Addressable",
+    "url": "/updates/2026-06-11.html",
+    "preview": "Cloudflare private-origin routing, GitHub CLI work graphs and discussions, Copilot session search, Sentry agent endpoints, and npm trusted publishers make internal operations scriptable."
+  },
+  {
     "date": "2026-06-10",
     "slug": "2026-06-10",
     "title": "Swarm Daily: Preflight Is Moving Into the CLI",
