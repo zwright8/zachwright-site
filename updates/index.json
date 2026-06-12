@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-12",
+    "slug": "2026-06-12",
+    "title": "Swarm Daily: CI Is Becoming the Agent Runtime",
+    "url": "/updates/2026-06-12.html",
+    "preview": "GitHub Agentic Workflows, built-in Actions tokens, approval-gated bot PRs, runner previews, AI usage reports, and Browser Run snapshots move agent work into CI policy."
+  },
+  {
     "date": "2026-06-11",
     "slug": "2026-06-11",
     "title": "Swarm Daily: Internal Systems Are Becoming Agent-Addressable",
