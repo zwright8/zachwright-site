@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hls from "hls.js";
 import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import updatesIndex from "../updates/index.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,23 @@ const GITHUB_URL = "https://github.com/zwright8";
 const UPDATES_URL = "/updates/index.html";
 
 const roles = ["AI Operator", "Venture Builder", "Builder", "Founder"];
+
+type UpdateEntry = {
+  date: string;
+  slug: string;
+  title: string;
+  url: string;
+  preview: string;
+};
+
+const latestJournalEntries = (updatesIndex as UpdateEntry[]).slice(0, 4);
+
+const updateDateFormatter = new Intl.DateTimeFormat("en-US", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+  year: "numeric",
+});
 
 const projects = [
   {
@@ -45,37 +63,6 @@ const projects = [
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
     span: "md:col-span-7",
     ratio: "aspect-[1.18/1]",
-  },
-];
-
-const journalEntries = [
-  {
-    title: "Chat SDK subjects, stream resume, and adapter SDKs make context portable",
-    image:
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=420&q=80",
-    date: "May 21, 2026",
-    readTime: "4 min read",
-  },
-  {
-    title: "AI spend is becoming request-path policy",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=420&q=80",
-    date: "May 19, 2026",
-    readTime: "6 min read",
-  },
-  {
-    title: "Replayable evidence is becoming the default control surface",
-    image:
-      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=420&q=80",
-    date: "May 7, 2026",
-    readTime: "5 min read",
-  },
-  {
-    title: "Custody and provenance are becoming product settings",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=420&q=80",
-    date: "Apr 27, 2026",
-    readTime: "7 min read",
   },
 ];
 
@@ -303,6 +290,16 @@ function scrollToSection(event: MouseEvent<HTMLAnchorElement>, id: string) {
   event.preventDefault();
   target.scrollIntoView({ behavior: "smooth", block: "start" });
   window.history.replaceState(null, "", `#${id}`);
+}
+
+function formatUpdateDate(date: string) {
+  const parsed = new Date(`${date}T00:00:00Z`);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return date;
+  }
+
+  return updateDateFormatter.format(parsed);
 }
 
 function Navbar() {
@@ -550,7 +547,7 @@ function SectionHeader({
 function GradientAction({ children, href }: { children: ReactNode; href: string }) {
   return (
     <a className="gradient-ring group hidden rounded-full md:inline-flex" href={href}>
-      <span className="relative inline-flex items-center gap-2 rounded-full border border-stroke bg-bg px-5 py-3 text-sm text-text-primary transition-colors group-hover:border-transparent">
+      <span className="relative inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-stroke bg-bg px-5 py-3 text-sm text-text-primary transition-colors group-hover:border-transparent">
         {children}
         <ArrowIcon className="h-4 w-4" />
       </span>
@@ -621,40 +618,40 @@ function SelectedWorks() {
 
 function Journal() {
   return (
-    <section className="bg-bg py-16 md:py-24">
+    <section id="journal" className="scroll-mt-24 bg-bg py-16 md:scroll-mt-28 md:py-24">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         <SectionHeader
           action={<GradientAction href={UPDATES_URL}>View archive</GradientAction>}
           eyebrow="Super Sonic Tsunami"
           italic="signal"
-          text="Recent daily drops and weekly intelligence for teams making AI-heavy decisions."
-          title="Weekly"
+          text="Latest daily drops and weekly intelligence for teams making AI-heavy decisions."
+          title="Latest"
         />
 
-        <div id="journal" className="grid gap-4">
-          {journalEntries.map((entry, index) => (
-            <motion.article
+        <div className="grid gap-4 md:grid-cols-2">
+          {latestJournalEntries.map((entry, index) => (
+            <motion.a
               key={entry.title}
-              className="group flex flex-col gap-5 rounded-[40px] border border-stroke bg-surface/30 p-4 transition-colors duration-300 hover:bg-surface sm:flex-row sm:items-center sm:rounded-full sm:gap-6"
+              aria-label={`Read ${entry.title}`}
+              className="group flex h-full flex-col justify-between rounded-2xl border border-stroke bg-surface/30 p-5 text-left transition-colors duration-300 hover:border-text-primary/30 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg md:p-6"
+              href={entry.url}
               initial={{ opacity: 0, y: 24 }}
               transition={{ duration: 0.7, delay: index * 0.06, ease: [0.25, 0.1, 0.25, 1] }}
               viewport={{ once: true, margin: "-80px" }}
               whileInView={{ opacity: 1, y: 0 }}
             >
-              <img
-                alt=""
-                className="h-24 w-full rounded-[28px] object-cover sm:h-20 sm:w-28 sm:rounded-full"
-                loading="lazy"
-                src={entry.image}
-              />
-              <div className="min-w-0 flex-1">
-                <h3 className="text-lg leading-snug text-text-primary md:text-xl">{entry.title}</h3>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-muted">
-                  {entry.date} / {entry.readTime}
+              <div>
+                <p className="mb-4 text-xs uppercase tracking-[0.22em] text-muted">
+                  {formatUpdateDate(entry.date)} / Daily Drop
                 </p>
+                <h3 className="text-xl leading-snug text-text-primary md:text-2xl">{entry.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-muted">{entry.preview}</p>
               </div>
-              <ArrowIcon className="hidden h-5 w-5 shrink-0 text-muted transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-text-primary sm:block" />
-            </motion.article>
+              <span className="mt-6 inline-flex min-h-8 items-center gap-2 text-sm font-medium text-text-primary">
+                Read drop
+                <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+              </span>
+            </motion.a>
           ))}
         </div>
       </div>
