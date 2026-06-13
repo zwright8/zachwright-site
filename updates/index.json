@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-13",
+    "slug": "2026-06-13",
+    "title": "Swarm Daily: Installs Are Becoming Approval Gates",
+    "url": "/updates/2026-06-13.html",
+    "preview": "npm v12, Bundler cooldowns, pnpm staged-publish trust, Socket Firewall, and Docker Hardened Images move package installs from automatic execution to explicit policy."
+  },
+  {
     "date": "2026-06-12",
     "slug": "2026-06-12",
     "title": "Swarm Daily: CI Is Becoming the Agent Runtime",
