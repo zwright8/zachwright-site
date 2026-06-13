@@ -1,15 +1,19 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Hls from "hls.js";
+import {
+  AnimatePresence,
+  LazyMotion,
+  MotionConfig,
+  domAnimation,
+  m,
+  useReducedMotion,
+} from "framer-motion";
 import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import updatesIndex from "../updates/index.json";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const HLS_SOURCE =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
+const HERO_FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=72";
 
 const CONTACT_EMAIL = "zach@zachwright.xyz";
 const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
@@ -71,43 +75,31 @@ const explorations = [
     title: "Frame",
     image:
       "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80",
-    rotate: "-rotate-3",
-    drift: -160,
   },
   {
     title: "Prioritize",
     image:
       "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
-    rotate: "rotate-2",
-    drift: 140,
   },
   {
     title: "Build",
     image:
       "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80",
-    rotate: "rotate-6",
-    drift: -110,
   },
   {
     title: "Iterate",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-    rotate: "-rotate-2",
-    drift: 170,
   },
   {
     title: "Truthful Signals",
     image:
       "https://images.unsplash.com/photo-1523726491678-bf852e717f6a?auto=format&fit=crop&w=900&q=80",
-    rotate: "rotate-3",
-    drift: -140,
   },
   {
     title: "Clarity over Noise",
     image:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
-    rotate: "-rotate-6",
-    drift: 120,
   },
 ];
 
@@ -144,129 +136,85 @@ function ArrowIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  const [count, setCount] = useState(0);
-  const [wordIndex, setWordIndex] = useState(0);
-  const words = ["Frame", "Build", "Iterate"];
-
-  useEffect(() => {
-    const duration = 2700;
-    let frame = 0;
-    let startedAt = 0;
-    let done = false;
-    let completeTimer = 0;
-
-    const tick = (time: number) => {
-      if (!startedAt) {
-        startedAt = time;
-      }
-
-      const progress = Math.min((time - startedAt) / duration, 1);
-      setCount(Math.floor(progress * 100));
-
-      if (progress < 1) {
-        frame = requestAnimationFrame(tick);
-        return;
-      }
-
-      if (!done) {
-        done = true;
-        setCount(100);
-        completeTimer = window.setTimeout(onComplete, 400);
-      }
-    };
-
-    frame = requestAnimationFrame(tick);
-    const wordTimer = window.setInterval(() => {
-      setWordIndex((current) => (current + 1) % words.length);
-    }, 900);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(completeTimer);
-      window.clearInterval(wordTimer);
-    };
-  }, [onComplete, words.length]);
-
-  return (
-    <motion.div
-      animate={{ opacity: 1 }}
-      className="fixed inset-0 z-[9999] bg-bg"
-      exit={{ opacity: 0, transition: { duration: 0.65, ease: [0.25, 0.1, 0.25, 1] } }}
-      initial={{ opacity: 1 }}
-    >
-      <motion.div
-        animate={{ opacity: 1, y: 0 }}
-        className="absolute left-6 top-6 text-xs uppercase tracking-[0.3em] text-muted md:left-10 md:top-10"
-        initial={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.75, ease: "easeOut" }}
-      >
-        zachwright.xyz
-      </motion.div>
-
-      <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={words[wordIndex]}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-display text-4xl italic text-text-primary/80 md:text-6xl lg:text-7xl"
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.28 } }}
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.42, ease: "easeOut" }}
-          >
-            {words[wordIndex]}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <div className="absolute bottom-8 right-6 font-display text-6xl tabular-nums text-text-primary md:bottom-10 md:right-10 md:text-8xl lg:text-9xl">
-        {String(count).padStart(3, "0")}
-      </div>
-
-      <div className="absolute bottom-0 left-0 h-[3px] w-full bg-stroke/50">
-        <div
-          className="accent-gradient h-full origin-left"
-          style={{
-            boxShadow: "0 0 8px rgba(137, 170, 204, 0.35)",
-            transform: `scaleX(${count / 100})`,
-          }}
-        />
-      </div>
-    </motion.div>
-  );
-}
-
-function HlsVideo({ className = "", flipY = false }: { className?: string; flipY?: boolean }) {
+function HlsVideo({
+  className = "",
+  eager = false,
+  flipY = false,
+}: {
+  className?: string;
+  eager?: boolean;
+  flipY?: boolean;
+}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const [shouldLoad, setShouldLoad] = useState(eager);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) {
+    if (!video || eager || prefersReducedMotion) {
       return undefined;
     }
 
-    let hls: Hls | null = null;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "360px" },
+    );
 
-    if (Hls.isSupported()) {
-      hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-      hls.loadSource(HLS_SOURCE);
-      hls.attachMedia(video);
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = HLS_SOURCE;
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [eager, prefersReducedMotion]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !shouldLoad || prefersReducedMotion) {
+      return undefined;
     }
+
+    let disposed = false;
+    let hls: {
+      attachMedia: (media: HTMLMediaElement) => void;
+      destroy: () => void;
+      loadSource: (source: string) => void;
+    } | null = null;
 
     const play = () => {
       void video.play().catch(() => undefined);
     };
 
-    video.addEventListener("loadedmetadata", play);
-    play();
+    const loadVideo = async () => {
+      video.addEventListener("loadedmetadata", play);
+
+      if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = HLS_SOURCE;
+        play();
+        return;
+      }
+
+      const { default: Hls } = await import("hls.js/light");
+      if (disposed || !Hls.isSupported()) {
+        return;
+      }
+
+      const instance = new Hls({ enableWorker: true, lowLatencyMode: true });
+      instance.loadSource(HLS_SOURCE);
+      instance.attachMedia(video);
+      hls = instance;
+      play();
+    };
+
+    void loadVideo();
 
     return () => {
+      disposed = true;
       video.removeEventListener("loadedmetadata", play);
       hls?.destroy();
     };
-  }, []);
+  }, [prefersReducedMotion, shouldLoad]);
 
   return (
     <video
@@ -277,6 +225,7 @@ function HlsVideo({ className = "", flipY = false }: { className?: string; flipY
       loop
       muted
       playsInline
+      preload={eager ? "metadata" : "none"}
     />
   );
 }
@@ -406,9 +355,8 @@ function Navbar() {
   );
 }
 
-function Hero({ isReady }: { isReady: boolean }) {
+function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -418,52 +366,46 @@ function Hero({ isReady }: { isReady: boolean }) {
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (!isReady || prefersReducedMotion) {
-      return undefined;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.set(".name-reveal", { opacity: 0, y: 50 });
-      gsap.set(".blur-in", { opacity: 0, filter: "blur(10px)", y: 20 });
-
-      const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-      timeline
-        .to(".name-reveal", { opacity: 1, y: 0, duration: 1.2, delay: 0.1 })
-        .to(
-          ".blur-in",
-          {
-            opacity: 1,
-            filter: "blur(0px)",
-            y: 0,
-            duration: 1,
-            stagger: 0.1,
-            delay: 0.3,
-          },
-          0,
-        );
-    });
-
-    return () => ctx.revert();
-  }, [isReady, prefersReducedMotion]);
+  const heroTransition = { duration: 0.82, ease: [0.22, 1, 0.36, 1] } as const;
 
   return (
-    <section
+    <m.section
       id="home"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24 text-center"
+      initial="hidden"
+      animate="visible"
     >
-      <HlsVideo />
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-[linear-gradient(145deg,#070707_0%,#11151b_42%,#050505_100%)]" />
+      <img
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover opacity-55"
+        fetchPriority="high"
+        src={HERO_FALLBACK_IMAGE}
+      />
+      <HlsVideo className="opacity-80" eager />
+      <div className="absolute inset-0 bg-black/45" />
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg to-transparent" />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
-        <p className="blur-in mb-8 text-xs uppercase tracking-[0.3em] text-muted">
+        <m.p
+          className="mb-8 text-xs uppercase tracking-[0.3em] text-muted"
+          variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ ...heroTransition, delay: 0.04 }}
+        >
           AI OPERATING SURFACE
-        </p>
-        <h1 className="name-reveal mb-6 font-display text-6xl italic leading-[0.9] tracking-tight text-text-primary md:text-8xl lg:text-9xl">
+        </m.p>
+        <m.h1
+          className="mb-6 font-display text-6xl italic leading-[0.9] tracking-tight text-text-primary md:text-8xl lg:text-9xl"
+          variants={{ hidden: { opacity: 0, y: 26 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ ...heroTransition, delay: 0.12 }}
+        >
           Zach Wright
-        </h1>
-        <p className="blur-in mb-5 text-base text-text-primary/90 md:text-lg">
+        </m.h1>
+        <m.p
+          className="mb-5 text-base text-text-primary/90 md:text-lg"
+          variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ ...heroTransition, delay: 0.22 }}
+        >
           <span
             key={roleIndex}
             className="inline-block animate-role-fade-in font-display italic text-text-primary"
@@ -471,14 +413,22 @@ function Hero({ isReady }: { isReady: boolean }) {
             {roles[roleIndex]}
           </span>{" "}
           for AI-heavy decisions.
-        </p>
-        <p className="blur-in mb-12 max-w-md text-sm leading-7 text-muted md:text-base">
+        </m.p>
+        <m.p
+          className="mb-12 max-w-md text-sm leading-7 text-muted md:text-base"
+          variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ ...heroTransition, delay: 0.3 }}
+        >
           Building AI systems, venture tracks, and weekly operating intelligence with
           practical priorities, clear ownership, and truthful signal.
-        </p>
-        <div className="blur-in inline-flex flex-wrap items-center justify-center gap-4">
+        </m.p>
+        <m.div
+          className="inline-flex flex-wrap items-center justify-center gap-4"
+          variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
+          transition={{ ...heroTransition, delay: 0.38 }}
+        >
           <a
-            className="gradient-ring group rounded-full transition-transform duration-300 hover:scale-105"
+            className="gradient-ring group rounded-full transition-transform duration-300 hover:-translate-y-0.5"
             href="#work"
             onClick={(event) => scrollToSection(event, "work")}
           >
@@ -487,7 +437,7 @@ function Hero({ isReady }: { isReady: boolean }) {
             </span>
           </a>
           <a
-            className="gradient-ring group rounded-full transition-transform duration-300 hover:scale-105"
+            className="gradient-ring group rounded-full transition-transform duration-300 hover:-translate-y-0.5"
             href="#contact"
             onClick={(event) => scrollToSection(event, "contact")}
           >
@@ -495,7 +445,7 @@ function Hero({ isReady }: { isReady: boolean }) {
               Start a conversation
             </span>
           </a>
-        </div>
+        </m.div>
       </div>
 
       <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3">
@@ -504,7 +454,7 @@ function Hero({ isReady }: { isReady: boolean }) {
           <span className="animate-scroll-down accent-gradient absolute left-0 top-0 h-1/2 w-px" />
         </span>
       </div>
-    </section>
+    </m.section>
   );
 }
 
@@ -522,10 +472,10 @@ function SectionHeader({
   action?: ReactNode;
 }) {
   return (
-    <motion.div
+    <m.div
       className="mb-10 flex flex-col gap-6 md:mb-12 md:flex-row md:items-end md:justify-between"
       initial={{ opacity: 0, y: 30 }}
-      transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-100px" }}
       whileInView={{ opacity: 1, y: 0 }}
     >
@@ -540,7 +490,7 @@ function SectionHeader({
         <p className="max-w-xl text-sm leading-7 text-muted md:text-base">{text}</p>
       </div>
       {action}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -563,10 +513,10 @@ function ProjectCard({
   index: number;
 }) {
   return (
-    <motion.article
+    <m.article
       className={`group relative overflow-hidden rounded-3xl border border-stroke bg-surface ${project.ratio} ${project.span}`}
       initial={{ opacity: 0, y: 36 }}
-      transition={{ duration: 0.8, delay: index * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration: 0.72, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-80px" }}
       whileInView={{ opacity: 1, y: 0 }}
     >
@@ -590,7 +540,7 @@ function ProjectCard({
           </span>
         </span>
       </div>
-    </motion.article>
+    </m.article>
   );
 }
 
@@ -630,13 +580,13 @@ function Journal() {
 
         <div className="grid gap-4 md:grid-cols-2">
           {latestJournalEntries.map((entry, index) => (
-            <motion.a
+            <m.a
               key={entry.title}
               aria-label={`Read ${entry.title}`}
               className="group flex h-full flex-col justify-between rounded-2xl border border-stroke bg-surface/30 p-5 text-left transition-colors duration-300 hover:border-text-primary/30 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg md:p-6"
               href={entry.url}
               initial={{ opacity: 0, y: 24 }}
-              transition={{ duration: 0.7, delay: index * 0.06, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ duration: 0.6, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true, margin: "-80px" }}
               whileInView={{ opacity: 1, y: 0 }}
             >
@@ -651,7 +601,7 @@ function Journal() {
                 Read drop
                 <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
               </span>
-            </motion.a>
+            </m.a>
           ))}
         </div>
       </div>
@@ -660,87 +610,24 @@ function Journal() {
 }
 
 function Explorations() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [activeImage, setActiveImage] = useState<(typeof explorations)[number] | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (prefersReducedMotion || !sectionRef.current || !contentRef.current) {
-      return undefined;
-    }
-
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        pin: contentRef.current,
-        pinSpacing: false,
-      });
-
-      cardRefs.current.forEach((card, index) => {
-        if (!card) {
-          return;
-        }
-
-        gsap.to(card, {
-          y: explorations[index].drift,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [prefersReducedMotion]);
-
-  const leftColumn = explorations.filter((_, index) => index % 2 === 0);
-  const rightColumn = explorations.filter((_, index) => index % 2 === 1);
-
-  const renderCard = (item: (typeof explorations)[number], columnIndex: number) => {
-    const index = explorations.findIndex((exploration) => exploration.title === item.title);
-
-    return (
-      <button
-        key={item.title}
-        ref={(node) => {
-          cardRefs.current[index] = node;
-        }}
-        className={`group pointer-events-auto relative aspect-square w-full max-w-[320px] overflow-hidden rounded-3xl border border-white/10 bg-surface text-left shadow-2xl shadow-black/20 outline-none transition-transform duration-300 hover:scale-[1.03] focus-visible:ring-2 focus-visible:ring-text-primary ${item.rotate} ${
-          columnIndex === 1 ? "self-end" : "self-start"
-        }`}
-        onClick={() => setActiveImage(item)}
-        type="button"
-      >
-        <img
-          alt=""
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-          src={item.image}
-        />
-        <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5 text-sm text-text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          {item.title}
-        </span>
-      </button>
-    );
-  };
-
   return (
-    <section ref={sectionRef} className="relative min-h-[300vh] overflow-hidden bg-bg">
-      <div ref={contentRef} className="relative z-10 flex h-screen items-center justify-center px-6">
-        <div className="mx-auto max-w-3xl text-center">
+    <section className="relative overflow-hidden bg-bg py-20 md:py-28">
+      <div className="mx-auto grid max-w-[1200px] gap-12 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:px-16">
+        <m.div
+          className="lg:sticky lg:top-28 lg:self-start"
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: "-80px" }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
           <p className="mb-5 text-xs uppercase tracking-[0.3em] text-muted">Proof and Process</p>
           <h2 className="mb-6 text-5xl leading-none tracking-tight text-text-primary md:text-7xl">
             Operating <span className="font-display italic">model</span>
           </h2>
-          <p className="mx-auto mb-8 max-w-lg text-sm leading-7 text-muted md:text-base">
+          <p className="mb-8 max-w-lg text-sm leading-7 text-muted md:text-base">
             Frame the highest-stakes decisions, prioritize by risk and impact, build with
             checkpoints, then recalibrate through live market signal.
           </p>
@@ -750,29 +637,48 @@ function Explorations() {
               <ArrowIcon className="h-4 w-4" />
             </span>
           </a>
-        </div>
-      </div>
+        </m.div>
 
-      <div className="pointer-events-none absolute inset-0 z-20 mx-auto grid max-w-[1400px] grid-cols-2 gap-12 px-6 pt-[32vh] md:gap-40 md:px-12">
-        <div className="flex flex-col gap-[42vh]">
-          {leftColumn.map((item) => renderCard(item, 0))}
-        </div>
-        <div className="mt-[28vh] flex flex-col gap-[42vh]">
-          {rightColumn.map((item) => renderCard(item, 1))}
+        <div className="grid gap-4 sm:grid-cols-2">
+          {explorations.map((item, index) => (
+            <m.button
+              key={item.title}
+              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-surface text-left outline-none transition-colors duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-text-primary"
+              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
+              onClick={() => setActiveImage(item)}
+              transition={{ duration: 0.58, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
+              type="button"
+              viewport={{ once: true, margin: "-80px" }}
+              whileHover={prefersReducedMotion ? undefined : { y: -4 }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <img
+                alt=""
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                loading="lazy"
+                src={item.image}
+              />
+              <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+              <span className="absolute inset-x-0 bottom-0 p-5 text-sm text-text-primary">
+                {item.title}
+              </span>
+            </m.button>
+          ))}
         </div>
       </div>
 
       <AnimatePresence>
         {activeImage ? (
-          <motion.div
+          <m.div
             className="fixed inset-0 z-[100] grid place-items-center bg-black/80 p-5 backdrop-blur-md"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             onClick={() => setActiveImage(null)}
             role="dialog"
             animate={{ opacity: 1 }}
+            aria-modal="true"
           >
-            <motion.figure
+            <m.figure
               className="w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-surface"
               exit={{ opacity: 0, scale: 0.96 }}
               initial={{ opacity: 0, scale: 0.96 }}
@@ -790,8 +696,8 @@ function Explorations() {
                   Close
                 </button>
               </figcaption>
-            </motion.figure>
-          </motion.div>
+            </m.figure>
+          </m.div>
         ) : null}
       </AnimatePresence>
     </section>
@@ -816,26 +722,6 @@ function Stats() {
 }
 
 function Footer() {
-  const marqueeRef = useRef<HTMLDivElement | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion || !marqueeRef.current) {
-      return undefined;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.to(marqueeRef.current, {
-        xPercent: -50,
-        duration: 40,
-        ease: "none",
-        repeat: -1,
-      });
-    });
-
-    return () => ctx.revert();
-  }, [prefersReducedMotion]);
-
   return (
     <footer id="contact" className="relative overflow-hidden bg-bg pt-16 md:pt-20">
       <div className="absolute inset-0">
@@ -847,8 +733,7 @@ function Footer() {
       <div className="relative z-10">
         <div className="overflow-hidden py-8">
           <div
-            ref={marqueeRef}
-            className="flex w-max whitespace-nowrap font-display text-6xl italic leading-none text-text-primary/10 md:text-8xl lg:text-9xl"
+            className="marquee-track flex w-max whitespace-nowrap font-display text-6xl italic leading-none text-text-primary/10 md:text-8xl lg:text-9xl"
           >
             {Array.from({ length: 2 }).map((_, groupIndex) => (
               <span key={groupIndex}>
@@ -897,11 +782,11 @@ function Footer() {
   );
 }
 
-function PortfolioPage({ isLoading }: { isLoading: boolean }) {
+function PortfolioPage() {
   return (
     <>
       <Navbar />
-      <Hero isReady={!isLoading} />
+      <Hero />
       <SelectedWorks />
       <Journal />
       <Explorations />
@@ -912,26 +797,23 @@ function PortfolioPage({ isLoading }: { isLoading: boolean }) {
 }
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
   return (
-    <>
-      <AnimatePresence>
-        {isLoading ? <LoadingScreen onComplete={() => setIsLoading(false)} /> : null}
-      </AnimatePresence>
-
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={location.pathname}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          initial={{ opacity: 0 }}
-          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <PortfolioPage isLoading={isLoading} />
-        </motion.main>
-      </AnimatePresence>
-    </>
+    <MotionConfig reducedMotion="user">
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence mode="wait">
+          <m.main
+            key={location.pathname}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <PortfolioPage />
+          </m.main>
+        </AnimatePresence>
+      </LazyMotion>
+    </MotionConfig>
   );
 }
