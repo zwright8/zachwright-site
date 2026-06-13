@@ -1,0 +1,29 @@
+name: Preview smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: Vercel preview URL to verify
+        required: true
+        type: string
+
+jobs:
+  smoke:
+    name: Verify protected Vercel preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check preview access and app shell
+        run: npm run check:preview -- "${{ inputs.preview_url }}"
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
