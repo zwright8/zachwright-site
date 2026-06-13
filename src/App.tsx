@@ -13,7 +13,7 @@ import updatesIndex from "../updates/index.json";
 const HLS_SOURCE =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
 const HERO_FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=72";
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=68";
 
 const CONTACT_EMAIL = "zach@zachwright.xyz";
 const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
@@ -366,46 +366,32 @@ function Hero() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const heroTransition = { duration: 0.82, ease: [0.22, 1, 0.36, 1] } as const;
-
   return (
-    <m.section
+    <section
       id="home"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-24 text-center"
-      initial="hidden"
-      animate="visible"
     >
       <div className="absolute inset-0 bg-[linear-gradient(145deg,#070707_0%,#11151b_42%,#050505_100%)]" />
       <img
         alt=""
         className="absolute inset-0 h-full w-full object-cover opacity-55"
         fetchPriority="high"
+        sizes="100vw"
         src={HERO_FALLBACK_IMAGE}
+        srcSet="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=720&q=66 720w, https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=68 1200w, https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=70 1800w"
       />
       <HlsVideo className="opacity-80" eager />
       <div className="absolute inset-0 bg-black/45" />
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg to-transparent" />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
-        <m.p
-          className="mb-8 text-xs uppercase tracking-[0.3em] text-muted"
-          variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ ...heroTransition, delay: 0.04 }}
-        >
+        <p className="mb-8 text-xs uppercase tracking-[0.3em] text-muted">
           AI OPERATING SURFACE
-        </m.p>
-        <m.h1
-          className="mb-6 font-display text-6xl italic leading-[0.9] tracking-tight text-text-primary md:text-8xl lg:text-9xl"
-          variants={{ hidden: { opacity: 0, y: 26 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ ...heroTransition, delay: 0.12 }}
-        >
+        </p>
+        <h1 className="mb-6 font-display text-6xl italic leading-[0.9] tracking-tight text-text-primary md:text-8xl lg:text-9xl">
           Zach Wright
-        </m.h1>
-        <m.p
-          className="mb-5 text-base text-text-primary/90 md:text-lg"
-          variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ ...heroTransition, delay: 0.22 }}
-        >
+        </h1>
+        <p className="mb-5 text-base text-text-primary/90 md:text-lg">
           <span
             key={roleIndex}
             className="inline-block animate-role-fade-in font-display italic text-text-primary"
@@ -413,20 +399,12 @@ function Hero() {
             {roles[roleIndex]}
           </span>{" "}
           for AI-heavy decisions.
-        </m.p>
-        <m.p
-          className="mb-12 max-w-md text-sm leading-7 text-muted md:text-base"
-          variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ ...heroTransition, delay: 0.3 }}
-        >
+        </p>
+        <p className="mb-12 max-w-md text-sm leading-7 text-muted md:text-base">
           Building AI systems, venture tracks, and weekly operating intelligence with
           practical priorities, clear ownership, and truthful signal.
-        </m.p>
-        <m.div
-          className="inline-flex flex-wrap items-center justify-center gap-4"
-          variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
-          transition={{ ...heroTransition, delay: 0.38 }}
-        >
+        </p>
+        <div className="inline-flex flex-wrap items-center justify-center gap-4">
           <a
             className="gradient-ring group rounded-full transition-transform duration-300 hover:-translate-y-0.5"
             href="#work"
@@ -445,7 +423,7 @@ function Hero() {
               Start a conversation
             </span>
           </a>
-        </m.div>
+        </div>
       </div>
 
       <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3">
@@ -454,7 +432,7 @@ function Hero() {
           <span className="animate-scroll-down accent-gradient absolute left-0 top-0 h-1/2 w-px" />
         </span>
       </div>
-    </m.section>
+    </section>
   );
 }
 
