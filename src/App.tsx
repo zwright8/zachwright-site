@@ -18,9 +18,11 @@ const HERO_FALLBACK_IMAGE =
 const CONTACT_EMAIL = "zach@zachwright.xyz";
 const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
 const GITHUB_URL = "https://github.com/zwright8";
+const PRODUCT_URL = "/products/ai-operator-kit/";
+const DASHBOARD_URL = "/dashboard.html";
 const UPDATES_URL = "/updates/index.html";
 
-const roles = ["AI Operator", "Venture Builder", "Builder", "Founder"];
+const roles = ["AI Systems Engineer", "Product Engineer", "Frontend Builder", "Automation Operator"];
 
 type UpdateEntry = {
   date: string;
@@ -39,30 +41,46 @@ const updateDateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
-const projects = [
+const proofSurfaces = [
   {
-    title: "Strategy to Execution",
+    title: "AI Operator Kit",
+    cta: "Open product surface",
+    href: PRODUCT_URL,
+    kind: "Product",
+    summary: "A real product page with package tiers, fulfillment files, policy docs, and checkout wiring.",
     image:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
     span: "md:col-span-7",
     ratio: "aspect-[1.18/1]",
   },
   {
-    title: "Venture Formation",
+    title: "Daily Drop Archive",
+    cta: "Read dated technical notes",
+    href: UPDATES_URL,
+    kind: "Archive",
+    summary: "A dated archive of AI-era engineering notes with source links and concrete operating takeaways.",
     image:
       "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1100&q=80",
     span: "md:col-span-5",
     ratio: "aspect-[0.86/1]",
   },
   {
-    title: "Continuous Intelligence",
+    title: "Operations Dashboard",
+    cta: "Open dashboard",
+    href: DASHBOARD_URL,
+    kind: "Dashboard",
+    summary: "A site-owned dashboard surface for checking the portfolio's data presentation and supporting assets.",
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1100&q=80",
     span: "md:col-span-5",
     ratio: "aspect-[0.86/1]",
   },
   {
-    title: "Operating Standards",
+    title: "GitHub Implementation Trail",
+    cta: "View repository work",
+    href: GITHUB_URL,
+    kind: "Code record",
+    summary: "Public code history for inspecting how the site and related software work are actually built.",
     image:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
     span: "md:col-span-7",
@@ -70,50 +88,12 @@ const projects = [
   },
 ];
 
-const explorations = [
-  {
-    title: "Frame",
-    image:
-      "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    title: "Prioritize",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    title: "Build",
-    image:
-      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    title: "Iterate",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    title: "Truthful Signals",
-    image:
-      "https://images.unsplash.com/photo-1523726491678-bf852e717f6a?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    title: "Clarity over Noise",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80",
-  },
-];
-
-const stats = [
-  ["3", "Profile Lanes"],
-  ["4", "Working Steps"],
-  ["Weekly", "Intelligence Cadence"],
-];
-
 const socialLinks = [
-  ["Email", `mailto:${CONTACT_EMAIL}?subject=AI%20strategy%20inquiry`],
-  ["Super Sonic Tsunami", UPDATES_URL],
-  ["GitHub", GITHUB_URL],
-  ["Book Call", CAL_URL],
+  ["Email Zach", `mailto:${CONTACT_EMAIL}?subject=AI%20strategy%20inquiry`],
+  ["Read Daily Drop archive", UPDATES_URL],
+  ["Open AI Operator Kit", PRODUCT_URL],
+  ["View GitHub work", GITHUB_URL],
+  ["Book 30-min call", CAL_URL],
 ];
 
 function ArrowIcon({ className = "" }: { className?: string }) {
@@ -258,7 +238,7 @@ function Navbar() {
   const lastScrollY = useRef(0);
   const links = [
     ["Home", "home"],
-    ["Capabilities", "work"],
+    ["Proof", "work"],
     ["Updates", "journal"],
   ];
 
@@ -398,11 +378,11 @@ function Hero() {
           >
             {roles[roleIndex]}
           </span>{" "}
-          for AI-heavy decisions.
+          shipping AI-era systems.
         </p>
         <p className="mb-12 max-w-md text-sm leading-7 text-muted md:text-base">
-          Building AI systems, venture tracks, and weekly operating intelligence with
-          practical priorities, clear ownership, and truthful signal.
+          Inspect the active product, technical notes, dashboard, and code trail before
+          starting a conversation.
         </p>
         <div className="inline-flex flex-wrap items-center justify-center gap-4">
           <a
@@ -411,7 +391,7 @@ function Hero() {
             onClick={(event) => scrollToSection(event, "work")}
           >
             <span className="relative inline-flex rounded-full bg-text-primary px-7 py-3.5 text-sm font-medium text-bg transition-colors group-hover:bg-bg group-hover:text-text-primary">
-              See Capabilities
+              Inspect proof
             </span>
           </a>
           <a
@@ -420,7 +400,7 @@ function Hero() {
             onClick={(event) => scrollToSection(event, "contact")}
           >
             <span className="relative inline-flex rounded-full border-2 border-stroke bg-bg px-7 py-3.5 text-sm font-medium text-text-primary transition-colors group-hover:border-transparent">
-              Start a conversation
+              Email Zach
             </span>
           </a>
         </div>
@@ -483,16 +463,18 @@ function GradientAction({ children, href }: { children: ReactNode; href: string 
   );
 }
 
-function ProjectCard({
-  project,
+function ProofSurfaceCard({
+  surface,
   index,
 }: {
-  project: (typeof projects)[number];
+  surface: (typeof proofSurfaces)[number];
   index: number;
 }) {
   return (
-    <m.article
-      className={`group relative overflow-hidden rounded-3xl border border-stroke bg-surface ${project.ratio} ${project.span}`}
+    <m.a
+      aria-label={`${surface.cta}: ${surface.title}`}
+      className={`group relative flex overflow-hidden rounded-3xl border border-stroke bg-surface text-left outline-none transition-colors duration-300 hover:border-text-primary/30 focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg ${surface.ratio} ${surface.span}`}
+      href={surface.href}
       initial={{ opacity: 0, y: 36 }}
       transition={{ duration: 0.72, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: "-80px" }}
@@ -502,7 +484,7 @@ function ProjectCard({
         alt=""
         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         loading="lazy"
-        src={project.image}
+        src={surface.image}
       />
       <div
         className="absolute inset-0 opacity-20 mix-blend-multiply"
@@ -511,14 +493,20 @@ function ProjectCard({
           backgroundSize: "4px 4px",
         }}
       />
-      <div className="absolute inset-0 grid place-items-center bg-bg/70 opacity-0 backdrop-blur-lg transition-opacity duration-300 group-hover:opacity-100">
-        <span className="animated-gradient-border rounded-full p-[2px]">
-          <span className="inline-flex rounded-full bg-white px-5 py-2 text-sm text-bg">
-            View {"\u2014"} <span className="ml-1 font-display italic">{project.title}</span>
-          </span>
+      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-bg via-bg/50 to-transparent p-5 md:p-7">
+        <p className="mb-3 text-xs uppercase tracking-[0.22em] text-text-primary/70">
+          {surface.kind}
+        </p>
+        <h3 className="text-2xl leading-tight text-text-primary md:text-3xl">
+          {surface.title}
+        </h3>
+        <p className="mt-3 max-w-md text-sm leading-6 text-muted">{surface.summary}</p>
+        <span className="mt-5 inline-flex min-h-8 items-center gap-2 text-sm font-medium text-text-primary">
+          {surface.cta}
+          <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
         </span>
       </div>
-    </m.article>
+    </m.a>
   );
 }
 
@@ -527,16 +515,16 @@ function SelectedWorks() {
     <section id="work" className="bg-bg py-12 md:py-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         <SectionHeader
-          action={<GradientAction href={UPDATES_URL}>Read operating signal</GradientAction>}
-          eyebrow="Capabilities"
-          italic="pillars"
-          text="Focused support for leaders and teams navigating AI strategy, execution, and commercialization."
-          title="Capability"
+          action={<GradientAction href={PRODUCT_URL}>Open product surface</GradientAction>}
+          eyebrow="Proof surfaces"
+          italic="work"
+          text="Each item below is a live surface or external record that can be opened, inspected, and used."
+          title="Active"
         />
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} index={index} project={project} />
+          {proofSurfaces.map((surface, index) => (
+            <ProofSurfaceCard key={surface.title} index={index} surface={surface} />
           ))}
         </div>
       </div>
@@ -550,10 +538,10 @@ function Journal() {
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         <SectionHeader
           action={<GradientAction href={UPDATES_URL}>View archive</GradientAction>}
-          eyebrow="Super Sonic Tsunami"
-          italic="signal"
-          text="Latest daily drops and weekly intelligence for teams making AI-heavy decisions."
-          title="Latest"
+          eyebrow="Technical notes"
+          italic="drops"
+          text="The latest published notes are linked directly from the archive rather than described with placeholder claims."
+          title="Recent"
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -587,118 +575,6 @@ function Journal() {
   );
 }
 
-function Explorations() {
-  const [activeImage, setActiveImage] = useState<(typeof explorations)[number] | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  return (
-    <section className="relative overflow-hidden bg-bg py-20 md:py-28">
-      <div className="mx-auto grid max-w-[1200px] gap-12 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:px-16">
-        <m.div
-          className="lg:sticky lg:top-28 lg:self-start"
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          viewport={{ once: true, margin: "-80px" }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
-          <p className="mb-5 text-xs uppercase tracking-[0.3em] text-muted">Proof and Process</p>
-          <h2 className="mb-6 text-5xl leading-none tracking-tight text-text-primary md:text-7xl">
-            Operating <span className="font-display italic">model</span>
-          </h2>
-          <p className="mb-8 max-w-lg text-sm leading-7 text-muted md:text-base">
-            Frame the highest-stakes decisions, prioritize by risk and impact, build with
-            checkpoints, then recalibrate through live market signal.
-          </p>
-          <a className="gradient-ring group inline-flex rounded-full" href={UPDATES_URL}>
-            <span className="relative inline-flex items-center gap-2 rounded-full border border-stroke bg-bg px-5 py-3 text-sm text-text-primary transition-colors group-hover:border-transparent">
-              Super Sonic Tsunami
-              <ArrowIcon className="h-4 w-4" />
-            </span>
-          </a>
-        </m.div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {explorations.map((item, index) => (
-            <m.button
-              key={item.title}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-surface text-left outline-none transition-colors duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-text-primary"
-              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
-              onClick={() => setActiveImage(item)}
-              transition={{ duration: 0.58, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
-              type="button"
-              viewport={{ once: true, margin: "-80px" }}
-              whileHover={prefersReducedMotion ? undefined : { y: -4 }}
-              whileInView={{ opacity: 1, y: 0 }}
-            >
-              <img
-                alt=""
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                loading="lazy"
-                src={item.image}
-              />
-              <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-              <span className="absolute inset-x-0 bottom-0 p-5 text-sm text-text-primary">
-                {item.title}
-              </span>
-            </m.button>
-          ))}
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {activeImage ? (
-          <m.div
-            className="fixed inset-0 z-[100] grid place-items-center bg-black/80 p-5 backdrop-blur-md"
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            onClick={() => setActiveImage(null)}
-            role="dialog"
-            animate={{ opacity: 1 }}
-            aria-modal="true"
-          >
-            <m.figure
-              className="w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-surface"
-              exit={{ opacity: 0, scale: 0.96 }}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <img alt="" className="max-h-[78vh] w-full object-cover" src={activeImage.image} />
-              <figcaption className="flex items-center justify-between p-5 text-sm text-text-primary">
-                <span className="font-display text-2xl italic">{activeImage.title}</span>
-                <button
-                  className="rounded-full border border-stroke px-4 py-2 text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-text-primary"
-                  onClick={() => setActiveImage(null)}
-                  type="button"
-                >
-                  Close
-                </button>
-              </figcaption>
-            </m.figure>
-          </m.div>
-        ) : null}
-      </AnimatePresence>
-    </section>
-  );
-}
-
-function Stats() {
-  return (
-    <section id="proof" className="bg-bg py-16 md:py-24">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-px overflow-hidden border border-stroke bg-stroke px-0 md:grid-cols-3">
-        {stats.map(([value, label]) => (
-          <div key={label} className="bg-bg p-8 text-center md:p-12">
-            <div className="mb-3 font-display text-6xl italic leading-none text-text-primary md:text-7xl">
-              {value}
-            </div>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted">{label}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden bg-bg pt-16 md:pt-20">
@@ -726,8 +602,12 @@ function Footer() {
         <div className="mx-auto flex max-w-[1200px] flex-col items-center px-6 py-16 text-center md:px-10 lg:px-16">
           <p className="mb-5 text-xs uppercase tracking-[0.3em] text-muted">Contact</p>
           <h2 className="mb-8 max-w-3xl text-5xl leading-none tracking-tight text-text-primary md:text-7xl">
-            If execution speed matters, <span className="font-display italic">start now</span>.
+            Start with the artifact. <span className="font-display italic">Then bring context</span>.
           </h2>
+          <p className="mb-8 max-w-xl text-sm leading-7 text-muted md:text-base">
+            Use the product, archive, dashboard, and code links above to inspect fit. Email when
+            there is a real system, product, or technical decision to work through.
+          </p>
           <a
             className="gradient-ring group rounded-full"
             href={`mailto:${CONTACT_EMAIL}?subject=AI%20strategy%20inquiry`}
@@ -767,8 +647,6 @@ function PortfolioPage() {
       <Hero />
       <SelectedWorks />
       <Journal />
-      <Explorations />
-      <Stats />
       <Footer />
     </>
   );
