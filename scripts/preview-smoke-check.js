@@ -1,6 +1,6 @@
 const expectedMarkers = [
     "Zach Wright",
-    "AI Operator",
+    "Software Engineering Portfolio",
     "id=\"root\""
 ];
 
