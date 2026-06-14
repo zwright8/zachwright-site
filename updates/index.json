@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-14",
+    "slug": "2026-06-14",
+    "title": "Swarm Daily: Agent Harnesses Are Becoming APIs",
+    "url": "/updates/2026-06-14.html",
+    "preview": "AI SDK HarnessAgent, Claude Agent SDK, Copilot SDK, Codex docs, Docker MCP Gateway, and IDE plugins turn agent harnesses into programmable surfaces."
+  },
+  {
     "date": "2026-06-13",
     "slug": "2026-06-13",
     "title": "Swarm Daily: Installs Are Becoming Approval Gates",

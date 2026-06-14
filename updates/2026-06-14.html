@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Harnesses Are Becoming APIs | zachwright.xyz</title>
+  <meta name="description" content="AI SDK HarnessAgent, Claude Agent SDK, Copilot SDK, Codex docs, Docker MCP Gateway, and IDE plugins turn agent harnesses into programmable surfaces." />
+  <style>
+    :root {
+      --bg: #020305;
+      --bg-2: #06090f;
+      --panel: #0b1018;
+      --panel-2: #121a26;
+      --surface: #0f1724;
+      --border: #2c3647;
+      --white: #f2f5fa;
+      --line: #2c3647;
+      --line-strong: #49556a;
+      --text: #f2f5fa;
+      --text-soft: #9ca8bc;
+      --accent: #d6dde8;
+      --max: 1120px;
+      --dur: 220ms;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(90vw 58vw at 88% -8%, rgba(223, 230, 242, 0.08), transparent 70%),
+        linear-gradient(180deg, #020305 0%, #04060a 52%, #070b12 100%);
+      min-height: 100vh;
+      line-height: 1.5;
+      letter-spacing: 0.002em;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .skip-link {
+      position: absolute;
+      top: -56px;
+      left: 14px;
+      z-index: 120;
+      background: #fff;
+      color: #0a0f17;
+      padding: 8px 10px;
+    }
+
+    .skip-link:focus-visible { top: 12px; }
+
+    .wrap { width: min(var(--max), calc(100% - 1.6rem)); margin: 0 auto; }
+    .narrow { width: min(780px, 100%); }
+
+    .site-top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      background: rgba(6, 9, 14, 0.92);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.72rem 0.85rem;
+    }
+
+    .brand {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav {
+      justify-self: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .nav a {
+      color: var(--text-soft);
+      font-size: 0.76rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 650;
+      transition: color var(--dur) ease;
+    }
+
+    .nav a:hover,
+    .nav a[aria-current="page"] { color: var(--text); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      padding: 0 0.95rem;
+      transition: transform var(--dur) ease, border-color var(--dur) ease, background-color var(--dur) ease, color var(--dur) ease;
+      will-change: transform;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #060b12;
+    }
+
+    main { padding-bottom: 4.4rem; }
+
+    .post-shell { padding-top: clamp(2.2rem, 4.4vw, 3.9rem); scroll-margin-top: 5.3rem; }
+
+    .post-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #090f18 0%, #0c1320 100%);
+      padding: clamp(1rem, 2.2vw, 1.45rem);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 0.72rem;
+      border: 1px solid #55647c;
+      background: #0f1724;
+      color: var(--text);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.95rem;
+    }
+
+    .post-card > p:first-of-type {
+      color: var(--text-soft);
+      margin-bottom: 0.95rem;
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      max-width: 22ch;
+      font-weight: 840;
+      margin-bottom: 0.86rem;
+      color: var(--text);
+    }
+
+    h2 {
+      font-size: clamp(1.22rem, 2.5vw, 1.78rem);
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      font-weight: 810;
+      margin: 1.35rem 0 0.56rem;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 1.05rem 0 0.42rem;
+    }
+
+    p,
+    li {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-bottom: 0.74rem;
+    }
+
+    strong { color: var(--text); }
+    em { color: #b6c0d1; }
+
+    ul,
+    ol {
+      margin: 0.2rem 0 0.94rem 1.1rem;
+      padding: 0;
+    }
+
+    li { padding-left: 0.18rem; }
+
+    a[href] {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: #617088;
+      text-underline-offset: 2px;
+    }
+
+    a[href]:hover {
+      color: #ffffff;
+      text-decoration-color: var(--accent);
+    }
+
+    code {
+      background: rgba(12, 20, 30, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 2px 6px;
+      color: #d8e2f2;
+      font-size: 0.85em;
+    }
+
+    pre {
+      background: rgba(12, 20, 30, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      padding: 14px;
+      overflow-x: auto;
+      margin: 0.7rem 0 0.95rem;
+    }
+
+    pre code {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--text);
+    }
+
+    blockquote {
+      border-left: 2px solid #58657c;
+      padding-left: 0.72rem;
+      margin: 0.84rem 0;
+      color: #b5c2d6;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 1.05rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.82rem 0 1rem;
+      border: 1px solid var(--line);
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+    }
+
+    td { color: var(--text-soft); font-size: 0.9rem; }
+
+    .footnote {
+      color: #9ca8bc;
+      font-size: 0.84rem;
+      margin-top: 1rem;
+    }
+
+    .footnote a { color: inherit; }
+
+    .footer-grid {
+      margin-top: 2.8rem;
+      border-top: 1px solid var(--line);
+      padding: 1.1rem 0 1.8rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .footer-grid h4 {
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.42rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-grid li {
+      margin: 0.22rem 0;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+    }
+
+    .footer-grid a {
+      color: var(--text-soft);
+      text-decoration: underline;
+      text-decoration-color: #617088;
+      text-underline-offset: 2px;
+    }
+
+    .footer-grid a:hover { color: var(--text); }
+
+    .copyright {
+      border-top: 1px solid var(--line);
+      padding: 0.85rem 0 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      color: var(--text-soft);
+      font-size: 0.78rem;
+    }
+
+    .copyright strong { color: var(--text); }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    [data-reveal].in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 820px) {
+      .site-top {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .nav { justify-self: start; justify-content: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { width: min(var(--max), calc(100% - 1rem)); }
+      .site-top { padding: 0.7rem 0.75rem; }
+      .nav { gap: 0.72rem; }
+      .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .btn { transition: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Harnesses Are Becoming APIs</h1>
+          <p>AI SDK HarnessAgent, Claude Agent SDK, Copilot SDK, Codex docs, Docker MCP Gateway, and IDE plugins turn agent harnesses into programmable surfaces.</p>
+          <h2>The Big Thing</h2>
+          <p><strong>The agent harness is becoming the API: sessions, sandboxes, tools, permissions, skills, memory, context injection, and tracing are moving above the model call into programmable contracts.</strong></p>
+          <p>Why it matters: model switching is now the easy part. The harder operating question is which harness owns the workspace, permission flow, tool registry, audit trail, and recovery path when an agent touches real code.</p>
+          <ul>
+            <li>Vercel's AI SDK 7 introduces <code>HarnessAgent</code>, a unified flow for established agent harnesses including Claude Code, Codex, and Pi; the abstraction normalizes skills, sandboxes, sessions, permission flows, compaction, runtime config, and subagents.
+            <a href="https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk">https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk</a></li>
+            <li>Claude Agent SDK exposes the Claude Code loop as Python and TypeScript libraries, with built-in file, shell, edit, hooks, MCP, permissions, sessions, and subagent capabilities.
+            <a href="https://code.claude.com/docs/en/agent-sdk/overview">https://code.claude.com/docs/en/agent-sdk/overview</a></li>
+            <li>GitHub Copilot SDK is generally available as a stable API for the Copilot agent runtime, including planning, tool invocation, file edits, streaming, multi-turn sessions, custom tools, MCP, prompt section edits, and OpenTelemetry tracing.
+            <a href="https://github.blog/changelog/2026-06-02-copilot-sdk-is-now-generally-available/">https://github.blog/changelog/2026-06-02-copilot-sdk-is-now-generally-available/</a></li>
+            <li>OpenAI is deprecating Agent Builder and pointing users toward Agents SDK or ChatGPT Workspace Agents, a clean signal that production agents are moving out of dashboard-only assembly and into owned code surfaces.
+            <a href="https://developers.openai.com/api/docs/deprecations">https://developers.openai.com/api/docs/deprecations</a></li>
+          </ul>
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>AI SDK 7 HarnessAgent</strong> - write one TypeScript agent flow, then swap <code>claudeCode</code>, <code>codex</code>, or <code>pi</code> while keeping the same session, sandbox, tools, skills, generate, and stream shape.
+            <a href="https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk">https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk</a></li>
+            <li><strong>Claude Agent SDK</strong> - build against Claude Code as a library instead of rebuilding the file/edit/shell/tool loop yourself; note the separate Agent SDK credit model that starts June 15, 2026.
+            <a href="https://code.claude.com/docs/en/agent-sdk/overview">https://code.claude.com/docs/en/agent-sdk/overview</a></li>
+            <li><strong>Copilot SDK GA</strong> - available across TypeScript, Python, Go, .NET, Rust, and Java, with MCP tools, system-prompt section customization, and W3C trace context propagation.
+            <a href="https://github.blog/changelog/2026-06-02-copilot-sdk-is-now-generally-available/">https://github.blog/changelog/2026-06-02-copilot-sdk-is-now-generally-available/</a></li>
+            <li><strong>Codex automation surface</strong> - the Codex docs now put SDK, App Server, MCP Server, GitHub Action, plugins, skills, subagents, and managed configuration in the same operating map.
+            <a href="https://developers.openai.com/codex/changelog">https://developers.openai.com/codex/changelog</a></li>
+            <li><strong>Docker Desktop 4.77.0</strong> - Docker MCP Gateway v0.42.2 and Gordon MCP OAuth controls push local container workflows further into agent-facing protocol space.
+            <a href="https://docs.docker.com/desktop/release-notes/">https://docs.docker.com/desktop/release-notes/</a></li>
+          </ol>
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Harness choice becomes architecture.</strong> The reusable unit is no longer "which model answers this prompt"; it is which runtime owns sessions, tools, filesystem rights, approvals, memory, and rollback.</li>
+            <li><strong>Observability has to follow the loop.</strong> If planning, tool calls, shell work, edits, and subagents live inside the harness, traces and logs need to cross those boundaries too.</li>
+            <li><strong>Plugins become context distribution.</strong> Vercel in Grok Build and Netlify in Cursor show platform knowledge being installed into the work surface, not pasted into chat.
+            <a href="https://vercel.com/changelog/vercel-plugin-is-now-available-in-grok-build">https://vercel.com/changelog/vercel-plugin-is-now-available-in-grok-build</a>
+            <a href="https://www.netlify.com/changelog/2026-06-09-netlify-cursor-marketplace/">https://www.netlify.com/changelog/2026-06-09-netlify-cursor-marketplace/</a></li>
+            <li><strong>Web state is becoming agent-readable input.</strong> Cloudflare Browser Run can now return screenshot, Markdown, and accessibility tree from one snapshot call, reducing the glue code between browsing and reasoning.
+            <a href="https://developers.cloudflare.com/changelog/">https://developers.cloudflare.com/changelog/</a></li>
+          </ul>
+          <h2>Meme of the Day</h2>
+          <p><strong>API.</strong> - because the agent harness is the latest thing that used to be a product and is now an interface.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/api.png">https://imgs.xkcd.com/comics/api.png</a><br>Post: <a href="https://xkcd.com/1481/">https://xkcd.com/1481/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
