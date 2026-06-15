@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-15",
+    "slug": "2026-06-15",
+    "title": "Swarm Daily: App Services Are Becoming Project Attachments",
+    "url": "/updates/2026-06-15.html",
+    "preview": "Auth0 on Vercel, Nitro-native Workflow SDK, expanded Blob stores, GitHub runner migrations, Docker Gordon streams, and Cloudflare WAF windows turn app services into deploy-time attachments."
+  },
+  {
     "date": "2026-06-14",
     "slug": "2026-06-14",
     "title": "Swarm Daily: Agent Harnesses Are Becoming APIs",
