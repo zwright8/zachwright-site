@@ -18,6 +18,7 @@ const HERO_FALLBACK_IMAGE =
 const CONTACT_EMAIL = "zach@zachwright.xyz";
 const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
 const GITHUB_URL = "https://github.com/zwright8";
+const SITE_REPO_URL = "https://github.com/zwright8/zachwright-site";
 const PRODUCT_URL = "/products/ai-operator-kit/";
 const DASHBOARD_URL = "/dashboard.html";
 const UPDATES_URL = "/updates/index.html";
@@ -85,6 +86,33 @@ const proofSurfaces = [
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
     span: "md:col-span-7",
     ratio: "aspect-[1.18/1]",
+  },
+];
+
+const engineeringSignals = [
+  {
+    kind: "Deploy confidence",
+    title: "Protected previews fail loudly",
+    summary:
+      "The preview smoke check detects Vercel protection states and returns a specific bypass-secret diagnostic instead of a false-green deploy check.",
+    cta: "Inspect preview smoke",
+    href: `${SITE_REPO_URL}/blob/main/scripts/preview-smoke-check.js`,
+  },
+  {
+    kind: "Build architecture",
+    title: "Static proof surfaces ship with the React app",
+    summary:
+      "The Vite build copies product, update, research, asset, and dashboard surfaces into the production artifact so the portfolio remains inspectable after deploy.",
+    cta: "Inspect build hook",
+    href: `${SITE_REPO_URL}/blob/main/vite.config.ts`,
+  },
+  {
+    kind: "Content pipeline",
+    title: "Newsletter routes stay smoke-tested",
+    summary:
+      "The newsletter check loads every route module and validates callable handler exports before update or Daily Drop work is treated as safe.",
+    cta: "Inspect newsletter check",
+    href: `${SITE_REPO_URL}/blob/main/scripts/newsletter-smoke-check.js`,
   },
 ];
 
@@ -532,6 +560,72 @@ function SelectedWorks() {
   );
 }
 
+function EngineeringLedger() {
+  return (
+    <section id="judgment" className="bg-bg py-12 md:py-20">
+      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 md:px-10 lg:grid-cols-[0.82fr_1.18fr] lg:px-16">
+        <m.div
+          className="lg:sticky lg:top-28"
+          initial={{ opacity: 0, y: 30 }}
+          transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: "-100px" }}
+          whileInView={{ opacity: 1, y: 0 }}
+        >
+          <div className="mb-5 flex items-center gap-4">
+            <span className="h-px w-8 bg-stroke" />
+            <span className="text-xs uppercase tracking-[0.3em] text-muted">
+              Engineering judgment
+            </span>
+          </div>
+          <h2 className="mb-5 text-4xl leading-tight tracking-tight text-text-primary md:text-6xl">
+            Decisions with <span className="font-display italic">evidence</span>
+          </h2>
+          <p className="max-w-md text-sm leading-7 text-muted md:text-base">
+            A stronger portfolio shows how the system is kept honest: clear checks,
+            boring build paths, and inspectable operating surfaces.
+          </p>
+          <a
+            className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full border border-stroke px-5 py-3 text-sm text-text-primary transition-colors hover:border-text-primary/40 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+            href={SITE_REPO_URL}
+          >
+            Open site repository
+            <ArrowIcon className="h-4 w-4" />
+          </a>
+        </m.div>
+
+        <div className="divide-y divide-stroke border-y border-stroke">
+          {engineeringSignals.map((signal, index) => (
+            <m.a
+              key={signal.title}
+              aria-label={`${signal.cta}: ${signal.title}`}
+              className="group grid gap-4 px-0 py-6 text-left outline-none transition-colors duration-300 hover:bg-surface/35 focus-visible:bg-surface/35 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-text-primary md:grid-cols-[10rem_1fr] md:gap-x-6 md:px-5 lg:grid-cols-[11rem_1fr]"
+              href={signal.href}
+              initial={{ opacity: 0, y: 24 }}
+              transition={{ duration: 0.62, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true, margin: "-80px" }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <p className="text-xs uppercase tracking-[0.22em] text-muted">{signal.kind}</p>
+              <div>
+                <h3 className="text-2xl leading-tight text-text-primary md:text-3xl">
+                  {signal.title}
+                </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-muted">
+                  {signal.summary}
+                </p>
+              </div>
+              <span className="inline-flex min-h-8 items-center gap-2 text-sm font-medium text-text-primary md:col-start-2">
+                {signal.cta}
+                <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+              </span>
+            </m.a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Journal() {
   return (
     <section id="journal" className="scroll-mt-24 bg-bg py-16 md:scroll-mt-28 md:py-24">
@@ -646,6 +740,7 @@ function PortfolioPage() {
       <Navbar />
       <Hero />
       <SelectedWorks />
+      <EngineeringLedger />
       <Journal />
       <Footer />
     </>
