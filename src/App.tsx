@@ -12,8 +12,9 @@ import updatesIndex from "../updates/index.json";
 
 const HLS_SOURCE =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
-const HERO_FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=68";
+const HERO_IMAGE = "/assets/hero-material-1200.webp";
+const HERO_IMAGE_SRCSET =
+  "/assets/hero-material-720.webp 720w, /assets/hero-material-1200.webp 1200w, /assets/hero-material-1800.webp 1800w";
 
 const CONTACT_EMAIL = "zach@zachwright.xyz";
 const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
@@ -354,14 +355,14 @@ function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(145deg,#070707_0%,#11151b_42%,#050505_100%)]" />
       <img
         alt=""
-        className="absolute inset-0 h-full w-full object-cover opacity-55"
+        className="absolute inset-0 h-full w-full object-cover object-center opacity-95"
         fetchPriority="high"
         sizes="100vw"
-        src={HERO_FALLBACK_IMAGE}
-        srcSet="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=720&q=66 720w, https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=68 1200w, https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=70 1800w"
+        src={HERO_IMAGE}
+        srcSet={HERO_IMAGE_SRCSET}
       />
-      <HlsVideo className="opacity-80" eager />
-      <div className="absolute inset-0 bg-black/45" />
+      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,transparent_0%,rgba(0,0,0,0.24)_42%,rgba(0,0,0,0.78)_100%)]" />
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-bg to-transparent" />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center">
