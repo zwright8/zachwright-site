@@ -21,18 +21,50 @@
 
 html {
   scroll-behavior: smooth;
-  background: hsl(var(--bg));
+  background: #050505;
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: hsl(var(--bg));
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.42) 0%, hsl(var(--bg)) 84%),
+    hsl(var(--bg));
   color: hsl(var(--text));
   font-family: var(--font-body, "Inter", sans-serif);
   text-rendering: geometricPrecision;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+}
+
+body::before {
+  background-image: url("/assets/hero-material-1800.webp");
+  background-position: center top;
+  background-size: cover;
+  filter: saturate(0.96) contrast(1.03);
+  opacity: 0.54;
+}
+
+body::after {
+  background:
+    radial-gradient(circle at 52% 18%, rgba(78, 133, 191, 0.18), transparent 32%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.42) 0%, rgba(5, 5, 5, 0.82) 58%, #050505 100%);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 button,

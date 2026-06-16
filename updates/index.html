@@ -30,18 +30,46 @@
 
     html {
       scroll-behavior: smooth;
-      background: hsl(var(--bg));
+      background: #050505;
     }
 
     body {
+      position: relative;
+      isolation: isolate;
       min-width: 320px;
       min-height: 100vh;
       overflow-x: hidden;
-      background: hsl(var(--bg));
+      background:
+        linear-gradient(180deg, rgba(5, 5, 5, 0.38) 0%, hsl(var(--bg)) 84%),
+        hsl(var(--bg));
       color: hsl(var(--text));
       font-family: var(--font-body);
       line-height: 1.5;
       text-rendering: geometricPrecision;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      pointer-events: none;
+      content: "";
+    }
+
+    body::before {
+      background-image: url("/assets/hero-material-1800.webp");
+      background-position: center top;
+      background-size: cover;
+      filter: saturate(0.96) contrast(1.03);
+      opacity: 0.54;
+    }
+
+    body::after {
+      z-index: -3;
+      background:
+        radial-gradient(circle at 52% 18%, rgba(78, 133, 191, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(5, 5, 5, 0.38) 0%, rgba(5, 5, 5, 0.78) 54%, hsl(var(--bg)) 100%);
     }
 
     a {
@@ -287,10 +315,10 @@
       content: "";
       inset: 0;
       z-index: -3;
-      background-image: url("https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1800&q=80");
-      background-position: center;
+      background-image: url("/assets/hero-material-1800.webp");
+      background-position: center top;
       background-size: cover;
-      filter: saturate(0.8) contrast(1.04);
+      filter: saturate(0.96) contrast(1.03);
       transform: scale(1.02);
     }
 
@@ -349,10 +377,12 @@
     }
 
     .hero-copy {
+      width: min(510px, calc(100vw - 48px));
       max-width: 510px;
       color: hsl(var(--muted));
       font-size: clamp(0.94rem, 1.5vw, 1.06rem);
       margin-inline: auto;
+      overflow-wrap: break-word;
     }
 
     .hero-actions {
@@ -674,6 +704,10 @@
 
       .hero-main {
         padding-inline: 18px;
+      }
+
+      .hero-copy {
+        width: min(284px, calc(100vw - 72px));
       }
 
       .hero-actions {
