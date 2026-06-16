@@ -23,6 +23,7 @@ const SITE_REPO_URL = "https://github.com/zwright8/zachwright-site";
 const PRODUCT_URL = "/products/ai-operator-kit/";
 const DASHBOARD_URL = "/dashboard.html";
 const UPDATES_URL = "/updates/index.html";
+const PLAYGROUND_URL = "/agent-playground";
 
 const roles = ["AI Systems Engineer", "Product Engineer", "Frontend Builder", "Automation Operator"];
 
@@ -44,6 +45,17 @@ const updateDateFormatter = new Intl.DateTimeFormat("en-US", {
 });
 
 const proofSurfaces = [
+  {
+    title: "Agentic Playground",
+    cta: "Run agent scenarios",
+    href: PLAYGROUND_URL,
+    kind: "Interactive demo",
+    summary:
+      "A local control-room surface for inspecting agent routing, tool calls, memory, verification gates, and handoffs.",
+    image: "/assets/hero-material-1200.webp",
+    span: "md:col-span-12",
+    ratio: "aspect-[2.15/1]",
+  },
   {
     title: "AI Operator Kit",
     cta: "Open product surface",
@@ -119,11 +131,220 @@ const engineeringSignals = [
 
 const socialLinks = [
   ["Email Zach", `mailto:${CONTACT_EMAIL}?subject=AI%20strategy%20inquiry`],
+  ["Run Agentic Playground", PLAYGROUND_URL],
   ["Read Daily Drop archive", UPDATES_URL],
   ["Open AI Operator Kit", PRODUCT_URL],
   ["View GitHub work", GITHUB_URL],
   ["Book 30-min call", CAL_URL],
 ];
+
+type PlaygroundTraceStep = {
+  agent: string;
+  detail: string;
+  evidence: string;
+  kind: string;
+  title: string;
+};
+
+type PlaygroundScenario = {
+  artifacts: Array<{ href: string; label: string; metric: string }>;
+  capabilities: string[];
+  evals: Array<{ label: string; result: string; tone: "pass" | "watch" }>;
+  id: string;
+  intent: string;
+  memory: string[];
+  outcome: string;
+  title: string;
+  tools: Array<{ label: string; status: string }>;
+  trace: PlaygroundTraceStep[];
+};
+
+const playgroundScenarios: PlaygroundScenario[] = [
+  {
+    id: "release",
+    title: "Guarded release agent",
+    intent: "Ship a portfolio change only after build, preview, visual, and accessibility evidence agree.",
+    outcome: "Ready for merge after verifier gates pass",
+    capabilities: ["Planner", "Browser tool", "GitHub handoff", "Verifier"],
+    tools: [
+      { label: "repo.read", status: "Scoped to changed files" },
+      { label: "browser.inspect", status: "Desktop and mobile viewports" },
+      { label: "npm.build", status: "TypeScript plus Vite" },
+      { label: "github.pr", status: "Reviewable branch only" },
+    ],
+    memory: [
+      "Do not push design changes directly to main.",
+      "Keep hero assets local and small.",
+      "Report unverified preview-protection states explicitly.",
+    ],
+    trace: [
+      {
+        agent: "Planner",
+        detail: "Narrows the request to one reversible production slice and defines visual, accessibility, and deploy gates.",
+        evidence: "Goal, acceptance criteria, and rollback boundary",
+        kind: "plan",
+        title: "Scope the release",
+      },
+      {
+        agent: "Builder",
+        detail: "Changes only the hero asset system and removes eager background video from the first viewport.",
+        evidence: "Small diff, no dependency change",
+        kind: "edit",
+        title: "Apply constrained diff",
+      },
+      {
+        agent: "Browser",
+        detail: "Loads the built preview, checks responsive source selection, and confirms console silence.",
+        evidence: "390x844 and 1280x900 checks",
+        kind: "tool",
+        title: "Inspect rendered site",
+      },
+      {
+        agent: "Verifier",
+        detail: "Blocks completion unless build, smoke, motion, and production checks all match the claim.",
+        evidence: "Green checks before handoff",
+        kind: "gate",
+        title: "Approve or stop",
+      },
+    ],
+    evals: [
+      { label: "Build reproducible", result: "pass", tone: "pass" },
+      { label: "Console warnings", result: "0", tone: "pass" },
+      { label: "Preview bypass", result: "not configured", tone: "watch" },
+    ],
+    artifacts: [
+      { href: "/assets/hero-material-1200.webp", label: "Hero asset", metric: "5.7 KB" },
+      {
+        href: `${SITE_REPO_URL}/blob/main/scripts/preview-smoke-check.js`,
+        label: "Preview smoke",
+        metric: "deploy gate",
+      },
+    ],
+  },
+  {
+    id: "incident",
+    title: "Incident triage swarm",
+    intent: "Turn ambiguous production symptoms into a ranked diagnosis, owner handoff, and rollback-safe fix plan.",
+    outcome: "Root-cause shortlist with evidence-backed next action",
+    capabilities: ["Triage", "Log search", "Risk ranking", "Rollback"],
+    tools: [
+      { label: "logs.query", status: "Time-boxed window" },
+      { label: "deploy.diff", status: "Last known good compare" },
+      { label: "asset.probe", status: "Broken resource scan" },
+      { label: "status.write", status: "Human-readable update" },
+    ],
+    memory: [
+      "Prefer rollback over speculative patching when user impact is active.",
+      "Separate correlation from causation in the incident note.",
+      "Capture exact failing URL and status code.",
+    ],
+    trace: [
+      {
+        agent: "Triage",
+        detail: "Classifies the symptom, blast radius, and first recovery lever before deeper analysis.",
+        evidence: "Severity and customer-impact notes",
+        kind: "plan",
+        title: "Frame the incident",
+      },
+      {
+        agent: "Searcher",
+        detail: "Queries logs, failed resources, and recent deploy changes with a tight time window.",
+        evidence: "Failed asset and deploy correlation",
+        kind: "tool",
+        title: "Collect signals",
+      },
+      {
+        agent: "Debugger",
+        detail: "Ranks explanations by reversibility and evidence strength, then chooses the smallest recovery action.",
+        evidence: "Hypothesis table",
+        kind: "reason",
+        title: "Rank causes",
+      },
+      {
+        agent: "Comms",
+        detail: "Produces a status update with impact, current action, and next checkpoint.",
+        evidence: "Stakeholder handoff note",
+        kind: "handoff",
+        title: "Write the update",
+      },
+    ],
+    evals: [
+      { label: "Rollback path", result: "known", tone: "pass" },
+      { label: "Hypothesis count", result: "3", tone: "watch" },
+      { label: "Owner handoff", result: "ready", tone: "pass" },
+    ],
+    artifacts: [
+      { href: "/dashboard.html", label: "Ops dashboard", metric: "surface" },
+      { href: "/updates/index.html", label: "Public updates", metric: "archive" },
+    ],
+  },
+  {
+    id: "research",
+    title: "Research-to-build agent",
+    intent: "Convert fast-moving AI platform changes into a decision memo, build plan, and verification checklist.",
+    outcome: "Decision-ready implementation packet",
+    capabilities: ["Research", "Synthesis", "Architecture", "Test design"],
+    tools: [
+      { label: "source.fetch", status: "Primary docs only" },
+      { label: "claim.map", status: "Evidence linked" },
+      { label: "risk.review", status: "Alternatives rejected" },
+      { label: "plan.emit", status: "Shippable slice" },
+    ],
+    memory: [
+      "Primary sources outrank trend posts.",
+      "Record rejected options so they are not re-litigated.",
+      "Every recommendation needs a verification command.",
+    ],
+    trace: [
+      {
+        agent: "Researcher",
+        detail: "Collects official docs and extracts only implementation-relevant changes.",
+        evidence: "Source list and stability notes",
+        kind: "tool",
+        title: "Read the sources",
+      },
+      {
+        agent: "Architect",
+        detail: "Maps platform changes to local constraints, ownership boundaries, and migration risk.",
+        evidence: "Decision matrix",
+        kind: "reason",
+        title: "Choose the slice",
+      },
+      {
+        agent: "Builder",
+        detail: "Turns the selected slice into a small implementation plan with tests and rollback criteria.",
+        evidence: "Patch plan plus test spec",
+        kind: "plan",
+        title: "Prepare build packet",
+      },
+      {
+        agent: "Critic",
+        detail: "Challenges unsupported claims and forces unclear risk into explicit follow-up.",
+        evidence: "Open questions and rejected paths",
+        kind: "gate",
+        title: "Scrub weak claims",
+      },
+    ],
+    evals: [
+      { label: "Primary-source coverage", result: "high", tone: "pass" },
+      { label: "Unknowns", result: "2", tone: "watch" },
+      { label: "Patch size", result: "narrow", tone: "pass" },
+    ],
+    artifacts: [
+      { href: "/updates/index.html", label: "Daily Drop archive", metric: "research trail" },
+      { href: "/research/daily-drop/program.md", label: "Program notes", metric: "source ops" },
+    ],
+  },
+];
+
+const kindStyles: Record<string, string> = {
+  edit: "border-sky-300/30 bg-sky-300/10 text-sky-100",
+  gate: "border-emerald-300/30 bg-emerald-300/10 text-emerald-100",
+  handoff: "border-violet-300/30 bg-violet-300/10 text-violet-100",
+  plan: "border-white/15 bg-white/10 text-text-primary",
+  reason: "border-amber-200/30 bg-amber-200/10 text-amber-100",
+  tool: "border-blue-300/30 bg-blue-300/10 text-blue-100",
+};
 
 function ArrowIcon({ className = "" }: { className?: string }) {
   return (
@@ -670,6 +891,269 @@ function Journal() {
   );
 }
 
+function AgentPlaygroundPage() {
+  const prefersReducedMotion = useReducedMotion();
+  const [selectedId, setSelectedId] = useState(playgroundScenarios[0].id);
+  const [isRunning, setIsRunning] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const selectedScenario =
+    playgroundScenarios.find((scenario) => scenario.id === selectedId) ?? playgroundScenarios[0];
+  const visibleSteps = isRunning
+    ? selectedScenario.trace.slice(0, activeStep + 1)
+    : selectedScenario.trace;
+  const activeTrace = selectedScenario.trace[activeStep] ?? selectedScenario.trace[0];
+
+  useEffect(() => {
+    if (!isRunning) {
+      return undefined;
+    }
+
+    if (prefersReducedMotion) {
+      setActiveStep(selectedScenario.trace.length - 1);
+      setIsRunning(false);
+      return undefined;
+    }
+
+    if (activeStep >= selectedScenario.trace.length - 1) {
+      const timer = window.setTimeout(() => setIsRunning(false), 520);
+      return () => window.clearTimeout(timer);
+    }
+
+    const timer = window.setTimeout(() => {
+      setActiveStep((step) => Math.min(step + 1, selectedScenario.trace.length - 1));
+    }, 760);
+
+    return () => window.clearTimeout(timer);
+  }, [activeStep, isRunning, prefersReducedMotion, selectedScenario.trace.length]);
+
+  const selectScenario = (scenarioId: string) => {
+    setSelectedId(scenarioId);
+    setIsRunning(false);
+    setActiveStep(0);
+  };
+
+  const runScenario = () => {
+    setActiveStep(0);
+    setIsRunning(true);
+  };
+
+  return (
+    <div className="min-h-screen overflow-hidden bg-bg text-text-primary">
+      <div className="fixed inset-0 -z-10">
+        <img
+          alt=""
+          className="h-full w-full object-cover opacity-55"
+          src={HERO_IMAGE}
+          srcSet={HERO_IMAGE_SRCSET}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_18%,rgba(78,133,191,0.22),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.68),#050505_72%)]" />
+      </div>
+
+      <header className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-5 md:px-8">
+        <a
+          aria-label="Back to Zach Wright portfolio"
+          className="inline-flex min-h-11 items-center gap-3 rounded-full border border-white/10 bg-bg/80 px-3 py-2 text-sm text-text-primary backdrop-blur-md transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+          href="/"
+        >
+          <span className="accent-gradient grid h-7 w-7 place-items-center rounded-full p-[1px]">
+            <span className="grid h-full w-full place-items-center rounded-full bg-bg font-display text-[11px] italic leading-none">
+              ZW
+            </span>
+          </span>
+          <span>Agentic Playground</span>
+        </a>
+        <a
+          className="hidden min-h-11 items-center gap-2 rounded-full border border-white/10 bg-bg/70 px-4 py-2 text-sm text-muted backdrop-blur-md transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary sm:inline-flex"
+          href={GITHUB_URL}
+        >
+          Code record
+          <ArrowIcon className="h-4 w-4" />
+        </a>
+      </header>
+
+      <main className="mx-auto grid max-w-[1440px] gap-5 px-5 pb-10 md:px-8 lg:grid-cols-[19rem_1fr_21rem]">
+        <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-xs uppercase tracking-[0.24em] text-muted">Scenario queue</p>
+              <h1 className="mt-2 text-2xl leading-tight tracking-tight md:text-3xl">
+                Agent control room
+              </h1>
+            </div>
+            <span className="rounded-full border border-emerald-300/25 bg-emerald-300/10 px-2.5 py-1 text-xs text-emerald-100">
+              Local
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            {playgroundScenarios.map((scenario) => {
+              const selected = scenario.id === selectedScenario.id;
+              return (
+                <button
+                  key={scenario.id}
+                  className={`w-full rounded-lg border p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary ${
+                    selected
+                      ? "border-text-primary/35 bg-white/10 text-text-primary"
+                      : "border-white/10 bg-white/[0.03] text-muted hover:border-white/20 hover:text-text-primary"
+                  }`}
+                  onClick={() => selectScenario(scenario.id)}
+                  type="button"
+                >
+                  <span className="block text-sm font-medium">{scenario.title}</span>
+                  <span className="mt-2 block text-xs leading-5 text-muted">{scenario.outcome}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-5 border-t border-white/10 pt-5">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted">Intent</p>
+            <p className="mt-3 text-sm leading-6 text-text-primary/85">{selectedScenario.intent}</p>
+            <button
+              className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-text-primary px-5 py-3 text-sm font-medium text-bg transition-colors hover:bg-bg hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+              onClick={runScenario}
+              type="button"
+            >
+              {isRunning ? "Running trace" : "Run scenario"}
+              <ArrowIcon className="h-4 w-4" />
+            </button>
+          </div>
+        </section>
+
+        <section className="min-h-[620px] rounded-lg border border-white/10 bg-bg/82 p-4 backdrop-blur-xl md:p-5">
+          <div className="mb-5 flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-start md:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.24em] text-muted">Live trace</p>
+              <h2 className="mt-2 text-3xl leading-tight tracking-tight md:text-5xl">
+                {activeTrace.title}
+              </h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {selectedScenario.capabilities.map((capability) => (
+                <span
+                  key={capability}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-muted"
+                >
+                  {capability}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-3">
+            {visibleSteps.map((step, index) => {
+              const current = index === activeStep;
+              return (
+                <m.article
+                  key={`${selectedScenario.id}-${step.title}`}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`grid gap-4 rounded-lg border p-4 transition-colors md:grid-cols-[9rem_1fr] ${
+                    current
+                      ? "border-text-primary/30 bg-white/[0.07]"
+                      : "border-white/10 bg-white/[0.025]"
+                  }`}
+                  initial={{ opacity: 0, y: 16 }}
+                  transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <div>
+                    <span
+                      className={`inline-flex rounded-full border px-2.5 py-1 text-xs ${
+                        kindStyles[step.kind] ?? kindStyles.plan
+                      }`}
+                    >
+                      {step.kind}
+                    </span>
+                    <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted">
+                      {step.agent}
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl leading-tight text-text-primary">{step.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-muted">{step.detail}</p>
+                    <p className="mt-4 border-l border-white/15 pl-3 text-sm text-text-primary/85">
+                      {step.evidence}
+                    </p>
+                  </div>
+                </m.article>
+              );
+            })}
+          </div>
+        </section>
+
+        <aside className="grid gap-5">
+          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted">Tool stack</p>
+            <div className="mt-4 space-y-3">
+              {selectedScenario.tools.map((tool) => (
+                <div key={tool.label} className="flex items-start justify-between gap-4 border-b border-white/10 pb-3 last:border-b-0 last:pb-0">
+                  <div>
+                    <p className="font-mono text-sm text-text-primary">{tool.label}</p>
+                    <p className="mt-1 text-xs leading-5 text-muted">{tool.status}</p>
+                  </div>
+                  <span className="mt-1 h-2 w-2 rounded-full bg-emerald-300" />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted">Scoped memory</p>
+            <ul className="mt-4 space-y-3">
+              {selectedScenario.memory.map((memory) => (
+                <li key={memory} className="text-sm leading-6 text-text-primary/85">
+                  {memory}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted">Eval gates</p>
+            <div className="mt-4 grid gap-2">
+              {selectedScenario.evals.map((evaluation) => (
+                <div
+                  key={evaluation.label}
+                  className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2"
+                >
+                  <span className="text-sm text-muted">{evaluation.label}</span>
+                  <span
+                    className={`rounded-full px-2.5 py-1 text-xs ${
+                      evaluation.tone === "pass"
+                        ? "bg-emerald-300/10 text-emerald-100"
+                        : "bg-amber-200/10 text-amber-100"
+                    }`}
+                  >
+                    {evaluation.result}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted">Artifacts</p>
+            <div className="mt-4 grid gap-2">
+              {selectedScenario.artifacts.map((artifact) => (
+                <a
+                  key={artifact.href}
+                  className="group flex min-h-11 items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm transition-colors hover:border-text-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+                  href={artifact.href}
+                >
+                  <span>{artifact.label}</span>
+                  <span className="inline-flex items-center gap-2 text-xs text-muted">
+                    {artifact.metric}
+                    <ArrowIcon className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+  );
+}
+
 function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden bg-bg pt-16 md:pt-20">
@@ -750,6 +1234,13 @@ function PortfolioPage() {
 
 export default function App() {
   const location = useLocation();
+  const isPlayground = location.pathname.startsWith(PLAYGROUND_URL);
+
+  useEffect(() => {
+    document.title = isPlayground
+      ? "Agentic Playground | Zach Wright"
+      : "Zach Wright | Software Engineering Portfolio";
+  }, [isPlayground]);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -762,7 +1253,7 @@ export default function App() {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
           >
-            <PortfolioPage />
+            {isPlayground ? <AgentPlaygroundPage /> : <PortfolioPage />}
           </m.main>
         </AnimatePresence>
       </LazyMotion>
