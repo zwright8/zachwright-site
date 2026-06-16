@@ -1,4 +1,14 @@
 {
+  "rewrites": [
+    {
+      "source": "/agent-playground",
+      "destination": "/"
+    },
+    {
+      "source": "/agent-playground/:path*",
+      "destination": "/"
+    }
+  ],
   "crons": [
     {
       "path": "/api/newsletter/send-daily",
