@@ -306,42 +306,22 @@
       min-height: 100vh;
       overflow: hidden;
       border-radius: 0;
-      background: hsl(var(--surface));
+      background:
+        radial-gradient(circle at 52% 22%, rgba(78, 133, 191, 0.42), transparent 36%),
+        linear-gradient(180deg, rgba(5, 5, 5, 0.04) 0%, rgba(5, 5, 5, 0.38) 48%, hsl(var(--bg)) 100%),
+        url("/assets/hero-material-1800.webp") center top / cover no-repeat,
+        hsl(var(--surface));
       isolation: isolate;
-    }
-
-    .frame::before {
-      position: absolute;
-      content: "";
-      inset: 0;
-      z-index: -3;
-      background-image: url("/assets/hero-material-1800.webp");
-      background-position: center top;
-      background-size: cover;
-      filter: saturate(0.96) contrast(1.03);
-      transform: scale(1.02);
-    }
-
-    .hero-video {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: -3;
-      min-width: 100%;
-      min-height: 100%;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      opacity: 0.95;
     }
 
     .frame::after {
       position: absolute;
       content: "";
       inset: 0;
-      z-index: -2;
+      z-index: -1;
       background:
-        linear-gradient(180deg, rgba(10, 10, 10, 0.48) 0%, rgba(10, 10, 10, 0.36) 42%, hsl(var(--bg)) 100%),
-        rgba(0, 0, 0, 0.18);
+        radial-gradient(circle at 50% 44%, transparent 0%, rgba(0, 0, 0, 0.12) 46%, rgba(0, 0, 0, 0.56) 100%),
+        linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.28) 62%, hsl(var(--bg)) 100%);
     }
 
     .hero-main {
@@ -769,7 +749,6 @@
     <main id="main" class="narrow">
       <section class="hero" data-reveal>
         <article class="frame hero-main">
-          <video class="hero-video" autoplay muted loop playsinline aria-hidden="true"></video>
           <p class="kicker">Super Sonic Tsunami</p>
           <h1>Daily Drops</h1>
           <p class="hero-copy">
@@ -1412,20 +1391,9 @@
   </div>
 
   <script src="/assets/hide-nav-on-scroll.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.16/dist/hls.min.js"></script>
   <script>
     (function () {
       document.getElementById('year').textContent = String(new Date().getFullYear());
-
-      var video = document.querySelector('.hero-video');
-      var hlsSource = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
-      if (video && window.Hls && window.Hls.isSupported()) {
-        var hls = new window.Hls({ enableWorker: true, lowLatencyMode: true });
-        hls.loadSource(hlsSource);
-        hls.attachMedia(video);
-      } else if (video && video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = hlsSource;
-      }
 
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var nodes = document.querySelectorAll('[data-reveal]');

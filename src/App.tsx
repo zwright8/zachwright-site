@@ -10,8 +10,6 @@ import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from "re
 import { useLocation } from "react-router-dom";
 import updatesIndex from "../updates/index.json";
 
-const HLS_SOURCE =
-  "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
 const HERO_IMAGE = "/assets/hero-material-1200.webp";
 const HERO_IMAGE_SRCSET =
   "/assets/hero-material-720.webp 720w, /assets/hero-material-1200.webp 1200w, /assets/hero-material-1800.webp 1800w";
@@ -363,100 +361,6 @@ function ArrowIcon({ className = "" }: { className?: string }) {
         strokeWidth="1.5"
       />
     </svg>
-  );
-}
-
-function HlsVideo({
-  className = "",
-  eager = false,
-  flipY = false,
-}: {
-  className?: string;
-  eager?: boolean;
-  flipY?: boolean;
-}) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const prefersReducedMotion = useReducedMotion();
-  const [shouldLoad, setShouldLoad] = useState(eager);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || eager || prefersReducedMotion) {
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setShouldLoad(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "360px" },
-    );
-
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, [eager, prefersReducedMotion]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !shouldLoad || prefersReducedMotion) {
-      return undefined;
-    }
-
-    let disposed = false;
-    let hls: {
-      attachMedia: (media: HTMLMediaElement) => void;
-      destroy: () => void;
-      loadSource: (source: string) => void;
-    } | null = null;
-
-    const play = () => {
-      void video.play().catch(() => undefined);
-    };
-
-    const loadVideo = async () => {
-      video.addEventListener("loadedmetadata", play);
-
-      if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = HLS_SOURCE;
-        play();
-        return;
-      }
-
-      const { default: Hls } = await import("hls.js/light");
-      if (disposed || !Hls.isSupported()) {
-        return;
-      }
-
-      const instance = new Hls({ enableWorker: true, lowLatencyMode: true });
-      instance.loadSource(HLS_SOURCE);
-      instance.attachMedia(video);
-      hls = instance;
-      play();
-    };
-
-    void loadVideo();
-
-    return () => {
-      disposed = true;
-      video.removeEventListener("loadedmetadata", play);
-      hls?.destroy();
-    };
-  }, [prefersReducedMotion, shouldLoad]);
-
-  return (
-    <video
-      ref={videoRef}
-      aria-hidden="true"
-      autoPlay
-      className={`absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 object-cover ${flipY ? "scale-y-[-1]" : ""} ${className}`}
-      loop
-      muted
-      playsInline
-      preload={eager ? "metadata" : "none"}
-    />
   );
 }
 
@@ -1158,8 +1062,16 @@ function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden bg-bg pt-16 md:pt-20">
       <div className="absolute inset-0">
-        <HlsVideo flipY />
-        <div className="absolute inset-0 bg-black/60" />
+        <img
+          alt=""
+          aria-hidden="true"
+          className="h-full w-full object-cover object-center opacity-90"
+          loading="lazy"
+          sizes="100vw"
+          src={HERO_IMAGE}
+          srcSet={HERO_IMAGE_SRCSET}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(78,133,191,0.34),transparent_36%),linear-gradient(180deg,rgba(5,5,5,0.24)_0%,rgba(5,5,5,0.58)_54%,#050505_100%)]" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-bg to-transparent" />
       </div>
 
