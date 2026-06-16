@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-16",
+    "slug": "2026-06-16",
+    "title": "Swarm Daily: Long-Running Work Needs a Stop Signal",
+    "url": "/updates/2026-06-16.html",
+    "preview": "Vercel workflow cancellation, 30-minute functions, GitHub Node 24 runner defaults, Cloudflare AI Gateway logs, and OpenAI container billing make abort paths operational infrastructure."
+  },
+  {
     "date": "2026-06-15",
     "slug": "2026-06-15",
     "title": "Swarm Daily: App Services Are Becoming Project Attachments",
