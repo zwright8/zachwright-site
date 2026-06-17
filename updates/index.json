@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-17",
+    "slug": "2026-06-17",
+    "title": "Swarm Daily: Agents Are Becoming Deployable Folders",
+    "url": "/updates/2026-06-17.html",
+    "preview": "Vercel Eve, Passport, 24-hour sandboxes, Claude Code Workflows, Docker MCP Toolkit, and Cloudflare AI prompt controls turn agents into repo-shaped deployment artifacts."
+  },
+  {
     "date": "2026-06-16",
     "slug": "2026-06-16",
     "title": "Swarm Daily: Long-Running Work Needs a Stop Signal",
