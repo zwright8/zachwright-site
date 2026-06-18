@@ -1241,6 +1241,47 @@ function scenarioPointToVector(THREE: ThreeModule, step: PlaygroundTraceStep) {
   return new THREE.Vector3((step.position.x - 50) / 7.5, 0.28, (step.position.y - 50) / 7.5);
 }
 
+function getPlaygroundScenarioById(scenarioId: string | null | undefined) {
+  return playgroundScenarios.find((scenario) => scenario.id === scenarioId) ?? playgroundScenarios[0];
+}
+
+function readInitialPlaygroundScenario() {
+  if (typeof window === "undefined") {
+    return playgroundScenarios[0];
+  }
+
+  return getPlaygroundScenarioById(new URLSearchParams(window.location.search).get("scenario"));
+}
+
+function readInitialPlaygroundStep(scenario: PlaygroundScenario) {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
+  const stepParam = new URLSearchParams(window.location.search).get("step");
+  if (stepParam === "final") {
+    return scenario.trace.length - 1;
+  }
+
+  const parsedStep = Number.parseInt(stepParam ?? "", 10);
+  if (!Number.isFinite(parsedStep)) {
+    return 0;
+  }
+
+  return Math.min(Math.max(parsedStep - 1, 0), scenario.trace.length - 1);
+}
+
+function replacePlaygroundScenarioParam(scenarioId: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set("scenario", scenarioId);
+  nextUrl.searchParams.delete("step");
+  window.history.replaceState(null, "", `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+}
+
 function materialForMode(THREE: ThreeModule, color: number, renderMode: PlaygroundRenderMode, index = 0) {
   if (renderMode === "segmentation") {
     const colors = [0x76b900, 0x22d3ee, 0xfbbf24, 0xf472b6, 0xa3e635, 0x60a5fa];
@@ -1450,6 +1491,15 @@ function ThreeSimulationViewport({
     }
 
     const route = scenario.trace.map((step) => scenarioPointToVector(THREE, step));
+    const isForkliftScenario = scenario.id === "forklift";
+    const isPickCellScenario = scenario.id === "pick";
+    const isDatasetScenario = scenario.id === "dataset";
+    const isMobileRobotScenario = isForkliftScenario || scenario.id === "route" || scenario.id === "safety";
+    const stationaryRigPosition = isPickCellScenario
+      ? new THREE.Vector3(2.8, 0, -1.4)
+      : isDatasetScenario
+        ? new THREE.Vector3(-2.8, 0, 2.6)
+        : null;
     const routeGeometry = new THREE.BufferGeometry().setFromPoints(route.map((point) => point.clone().setY(0.08)));
     const routeLine = new THREE.Line(
       routeGeometry,
@@ -1471,15 +1521,29 @@ function ThreeSimulationViewport({
     });
 
     const robotGroup = new THREE.Group();
-    const robotAssetId = scenario.id === "pick" ? "arm" : scenario.id === "forklift" ? "forklift" : "amr";
+    const robotAssetId = isPickCellScenario ? "arm" : isForkliftScenario ? "forklift" : isDatasetScenario ? "camera" : "amr";
     const robotBaseSize: [number, number, number] =
-      scenario.id === "forklift" ? [1.78, 0.38, 1.14] : [1.45, 0.34, 1.02];
+      isForkliftScenario
+        ? [1.78, 0.38, 1.14]
+        : isPickCellScenario
+          ? [0.8, 0.36, 0.8]
+          : isDatasetScenario
+            ? [0.82, 0.22, 0.72]
+            : [1.45, 0.34, 1.02];
     const robotTopSize: [number, number, number] =
-      scenario.id === "forklift" ? [0.82, 0.72, 0.74] : [1.08, 0.56, 0.76];
-    const robotTopBaseY = scenario.id === "forklift" ? 0.78 : 0.72;
+      isForkliftScenario
+        ? [0.82, 0.72, 0.74]
+        : isPickCellScenario
+          ? [0.5, 0.32, 0.5]
+          : isDatasetScenario
+            ? [0.62, 0.38, 0.46]
+            : [1.08, 0.56, 0.76];
+    const robotTopBaseY = isForkliftScenario ? 0.78 : isPickCellScenario || isDatasetScenario ? 0.52 : 0.72;
     const robotTopPosition: [number, number, number] =
-      scenario.id === "forklift" ? [-0.28, robotTopBaseY, 0.08] : [0.04, robotTopBaseY, 0];
+      isForkliftScenario ? [-0.28, robotTopBaseY, 0.08] : [0.04, robotTopBaseY, 0];
     let forkliftLiftGroup: Object3D | null = null;
+    let sensorCone: Mesh | null = null;
+    let safetyZone: Mesh | null = null;
     const robotBase = createBox(
       THREE,
       robotBaseSize,
@@ -1487,7 +1551,7 @@ function ThreeSimulationViewport({
       materialForMode(THREE, 0x162034, renderMode, 0),
       robotAssetId,
       selectable,
-      scenario.id === "forklift" ? "Forklift Chassis" : "Autonomous Robot",
+      isForkliftScenario ? "Forklift Chassis" : isPickCellScenario ? "Manipulator Pedestal" : isDatasetScenario ? "Camera Rig Base" : "Autonomous Robot",
     );
     const robotTop = createBox(
       THREE,
@@ -1496,22 +1560,24 @@ function ThreeSimulationViewport({
       materialForMode(THREE, 0x76b900, renderMode, 4),
       robotAssetId,
       selectable,
-      scenario.id === "forklift" ? "Forklift Counterweight" : "Robot Body",
+      isForkliftScenario ? "Forklift Counterweight" : isPickCellScenario ? "Arm Rotary Base" : isDatasetScenario ? "Capture Controller" : "Robot Body",
     );
     robotGroup.add(robotBase, robotTop);
 
-    const wheelMaterial = materialForMode(THREE, 0x050607, renderMode, 5);
-    for (const x of scenario.id === "forklift" ? [-0.66, 0.66] : [-0.52, 0.52]) {
-      for (const z of scenario.id === "forklift" ? [-0.46, 0.46] : [-0.42, 0.42]) {
-        const wheelRadius = scenario.id === "forklift" ? 0.22 : 0.17;
-        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(wheelRadius, wheelRadius, 0.18, 18), wheelMaterial);
-        wheel.rotation.z = Math.PI / 2;
-        wheel.position.set(x, 0.16, z);
-        robotGroup.add(wheel);
+    if (isMobileRobotScenario) {
+      const wheelMaterial = materialForMode(THREE, 0x050607, renderMode, 5);
+      for (const x of isForkliftScenario ? [-0.66, 0.66] : [-0.52, 0.52]) {
+        for (const z of isForkliftScenario ? [-0.46, 0.46] : [-0.42, 0.42]) {
+          const wheelRadius = isForkliftScenario ? 0.22 : 0.17;
+          const wheel = new THREE.Mesh(new THREE.CylinderGeometry(wheelRadius, wheelRadius, 0.18, 18), wheelMaterial);
+          wheel.rotation.z = Math.PI / 2;
+          wheel.position.set(x, 0.16, z);
+          robotGroup.add(wheel);
+        }
       }
     }
 
-    if (scenario.id === "forklift") {
+    if (isForkliftScenario) {
       const mastMaterial = materialForMode(THREE, 0x334155, renderMode, 6);
       const forkMaterial = materialForMode(THREE, 0xd8dee9, renderMode, 7);
       const scannerMaterial = materialForMode(THREE, 0x22d3ee, renderMode, 8);
@@ -1571,11 +1637,11 @@ function ThreeSimulationViewport({
       robotGroup.add(bodyCamera);
     }
 
-    robotGroup.position.copy(route[0] ?? new THREE.Vector3());
+    robotGroup.position.copy(stationaryRigPosition ?? route[0] ?? new THREE.Vector3());
     registerAsset(robotGroup, robotAssetId);
     scene.add(robotGroup);
 
-    if (scenario.id === "forklift") {
+    if (isForkliftScenario) {
       const targetMaterial = materialForMode(THREE, 0x9dff3a, renderMode, 9);
       const slotParts = [
         createBox(THREE, [1.85, 0.08, 0.12], [0.92, 1.62, 0.36], targetMaterial, "rack", selectable, "Target Slot Front Beam"),
@@ -1608,26 +1674,26 @@ function ThreeSimulationViewport({
       scene.add(targetPallet);
     }
 
-    if (scenario.id === "pick") {
+    if (isPickCellScenario) {
       const armMaterial = materialForMode(THREE, 0xcbd5e1, renderMode, 6);
       const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 0.42, 24), armMaterial);
-      shoulder.position.set(2.8, 0.45, -1.4);
+      shoulder.position.set(0, 0.45, 0);
       shoulder.castShadow = true;
       addSelectable(shoulder, "arm", selectable, "Manipulator Shoulder");
       registerAsset(shoulder, "arm");
-      scene.add(shoulder);
-      const upper = createBox(THREE, [0.26, 1.8, 0.26], [3.18, 1.32, -1.15], armMaterial, "arm", selectable, "Manipulator Link");
+      robotGroup.add(shoulder);
+      const upper = createBox(THREE, [0.26, 1.8, 0.26], [0.38, 1.32, 0.25], armMaterial, "arm", selectable, "Manipulator Link");
       upper.rotation.z = -0.44;
       registerAsset(upper, "arm");
-      scene.add(upper);
-      const forearm = createBox(THREE, [0.24, 1.46, 0.24], [3.78, 1.25, -0.1], armMaterial, "arm", selectable, "Manipulator Forearm");
+      robotGroup.add(upper);
+      const forearm = createBox(THREE, [0.24, 1.46, 0.24], [0.98, 1.25, 1.3], armMaterial, "arm", selectable, "Manipulator Forearm");
       forearm.rotation.z = 0.68;
       registerAsset(forearm, "arm");
-      scene.add(forearm);
+      robotGroup.add(forearm);
     }
 
-    if (scenario.id === "pick" || scenario.id === "dataset") {
-      const binAssetId = scenario.id === "dataset" ? "target" : "bin";
+    if (isPickCellScenario || isDatasetScenario) {
+      const binAssetId = isDatasetScenario ? "target" : "bin";
       const bin = createBox(
         THREE,
         [2.4, 0.52, 1.55],
@@ -1635,22 +1701,22 @@ function ThreeSimulationViewport({
         binMaterial,
         binAssetId,
         selectable,
-        scenario.id === "dataset" ? "Inspection Target Tray" : "Part Bin",
+        isDatasetScenario ? "Inspection Target Tray" : "Part Bin",
       );
       registerAsset(bin, binAssetId);
       scene.add(bin);
       for (let i = 0; i < 8; i += 1) {
-        const partAssetId = scenario.id === "dataset" ? "target" : i === 2 ? "target" : "bin";
+        const partAssetId = isDatasetScenario ? "target" : i === 2 ? "target" : "bin";
         const part = new THREE.Mesh(new THREE.DodecahedronGeometry(0.18 + (i % 3) * 0.04), materialForMode(THREE, 0x22d3ee, renderMode, i));
         part.position.set(2.1 + (i % 4) * 0.42, 0.76, 1.28 + Math.floor(i / 4) * 0.46);
         part.castShadow = true;
-        addSelectable(part, partAssetId, selectable, scenario.id === "dataset" ? "Defect Variant" : "Pick Part");
+        addSelectable(part, partAssetId, selectable, isDatasetScenario ? "Defect Variant" : "Pick Part");
         registerAsset(part, partAssetId);
         scene.add(part);
       }
     }
 
-    if (scenario.id === "pick" || scenario.id === "dataset" || scenario.id === "forklift") {
+    if (isPickCellScenario || isDatasetScenario) {
       const cameraMaterial = materialForMode(THREE, 0x4b5563, renderMode, 8);
       const mast = createBox(THREE, [0.12, 2.2, 0.12], [-2.8, 1.12, 2.6], cameraMaterial, "camera", selectable, "Camera Mast");
       registerAsset(mast, "camera");
@@ -1709,7 +1775,7 @@ function ThreeSimulationViewport({
       });
     }
 
-    if (scenario.id === "dataset") {
+    if (isDatasetScenario) {
       const lightRig = createBox(THREE, [0.92, 0.08, 0.54], [-3.85, 3.18, -1.35], materialForMode(THREE, 0xf8fafc, renderMode, 12), "light", selectable, "Randomized Area Light");
       lightRig.rotation.z = 0.18;
       registerAsset(lightRig, "light");
@@ -1729,35 +1795,37 @@ function ThreeSimulationViewport({
       scene.add(datasetPacket);
     }
 
-    const zoneAssetId = scenario.id === "safety" ? "zone" : scenario.id === "forklift" ? "scanner" : "human";
-    const zoneMaterial = new THREE.MeshBasicMaterial({
-      color: scenario.id === "safety" ? 0xfbbf24 : scenario.id === "forklift" ? 0x76b900 : 0x22d3ee,
-      transparent: true,
-      opacity: renderMode === "sensor" ? 0.22 : 0.13,
-      side: THREE.DoubleSide,
-    });
-    const safetyZone = new THREE.Mesh(
-      new THREE.RingGeometry(scenario.id === "forklift" ? 1.45 : 1.0, scenario.id === "forklift" ? 2.35 : 1.8, 48),
-      zoneMaterial,
-    );
-    safetyZone.rotation.x = -Math.PI / 2;
-    safetyZone.position.set(scenario.id === "forklift" ? 0 : 1.25, 0.045, scenario.id === "forklift" ? 0 : -0.5);
-    safetyZone.userData.assetId = zoneAssetId;
-    selectable.push(safetyZone);
-    registerAsset(safetyZone, zoneAssetId);
-    if (scenario.id === "forklift") {
-      robotGroup.add(safetyZone);
-    } else {
-      scene.add(safetyZone);
-    }
+    if (isMobileRobotScenario) {
+      const zoneAssetId = scenario.id === "safety" ? "zone" : isForkliftScenario ? "scanner" : "human";
+      const zoneMaterial = new THREE.MeshBasicMaterial({
+        color: scenario.id === "safety" ? 0xfbbf24 : isForkliftScenario ? 0x76b900 : 0x22d3ee,
+        transparent: true,
+        opacity: renderMode === "sensor" ? 0.22 : 0.13,
+        side: THREE.DoubleSide,
+      });
+      safetyZone = new THREE.Mesh(
+        new THREE.RingGeometry(isForkliftScenario ? 1.45 : 1.0, isForkliftScenario ? 2.35 : 1.8, 48),
+        zoneMaterial,
+      );
+      safetyZone.rotation.x = -Math.PI / 2;
+      safetyZone.position.set(isForkliftScenario ? 0 : 1.25, 0.045, isForkliftScenario ? 0 : -0.5);
+      safetyZone.userData.assetId = zoneAssetId;
+      selectable.push(safetyZone);
+      registerAsset(safetyZone, zoneAssetId);
+      if (isForkliftScenario) {
+        robotGroup.add(safetyZone);
+      } else {
+        scene.add(safetyZone);
+      }
 
-    const sensorCone = new THREE.Mesh(
-      new THREE.ConeGeometry(1.7, 3.4, 48, 1, true),
-      new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.16, wireframe: renderMode === "sensor" }),
-    );
-    sensorCone.rotation.x = Math.PI / 2;
-    sensorCone.position.set(0, 0.52, -1.72);
-    robotGroup.add(sensorCone);
+      sensorCone = new THREE.Mesh(
+        new THREE.ConeGeometry(1.7, 3.4, 48, 1, true),
+        new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.16, wireframe: renderMode === "sensor" }),
+      );
+      sensorCone.rotation.x = Math.PI / 2;
+      sensorCone.position.set(0, 0.52, -1.72);
+      robotGroup.add(sensorCone);
+    }
 
     const outlineMaterial = new THREE.LineBasicMaterial({ color: 0x9dff3a, transparent: true, opacity: 0.95 });
     const selectionOutline = new THREE.BoxHelper(robotGroup, 0x9dff3a);
@@ -1865,13 +1933,21 @@ function ThreeSimulationViewport({
       const elapsed = (window.performance.now() - startedAt) / 1000;
       const nextPoint = route[activeStepRef.current] ?? route[0] ?? new THREE.Vector3();
       targetPosition.copy(nextPoint);
-      robotGroup.position.lerp(targetPosition, prefersReducedMotion ? 1 : 0.055);
-      const lookPoint = route[Math.min(activeStepRef.current + 1, route.length - 1)] ?? nextPoint;
-      robotGroup.lookAt(lookPoint.x, robotGroup.position.y, lookPoint.z);
+      if (isMobileRobotScenario) {
+        robotGroup.position.lerp(targetPosition, prefersReducedMotion ? 1 : 0.055);
+        const lookPoint = route[Math.min(activeStepRef.current + 1, route.length - 1)] ?? nextPoint;
+        robotGroup.lookAt(lookPoint.x, robotGroup.position.y, lookPoint.z);
+      } else if (stationaryRigPosition) {
+        robotGroup.position.copy(stationaryRigPosition);
+      }
 
-      if (runningRef.current && !prefersReducedMotion) {
+      if (isMobileRobotScenario && runningRef.current && !prefersReducedMotion) {
         robotTop.position.y = robotTopBaseY + Math.sin(elapsed * 7) * 0.025;
-        sensorCone.rotation.z = Math.sin(elapsed * 2.4) * 0.24;
+        if (sensorCone) {
+          sensorCone.rotation.z = Math.sin(elapsed * 2.4) * 0.24;
+        }
+      } else {
+        robotTop.position.y = robotTopBaseY;
       }
 
       if (forkliftLiftGroup) {
@@ -1880,7 +1956,9 @@ function ThreeSimulationViewport({
         forkliftLiftGroup.rotation.x = runningRef.current && !prefersReducedMotion ? Math.sin(elapsed * 4.2) * 0.015 : 0;
       }
 
-      safetyZone.rotation.z += runningRef.current && !prefersReducedMotion ? 0.006 : 0;
+      if (safetyZone) {
+        safetyZone.rotation.z += runningRef.current && !prefersReducedMotion ? 0.006 : 0;
+      }
       cyanLight.intensity = 1.8 + Math.sin(elapsed * 1.7) * 0.4;
 
       const selectedObjects = assetObjects.get(selectedAssetRef.current) ?? [robotGroup];
@@ -1937,14 +2015,20 @@ function ThreeSimulationViewport({
 
 function AgentPlaygroundPage() {
   const prefersReducedMotion = useReducedMotion();
-  const [selectedId, setSelectedId] = useState(playgroundScenarios[0].id);
+  const initialScenarioRef = useRef<PlaygroundScenario | null>(null);
+  if (!initialScenarioRef.current) {
+    initialScenarioRef.current = readInitialPlaygroundScenario();
+  }
+
+  const initialScenario = initialScenarioRef.current;
+  const initialStep = readInitialPlaygroundStep(initialScenario);
+  const [selectedId, setSelectedId] = useState(initialScenario.id);
   const [isRunning, setIsRunning] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(initialStep);
   const [renderMode, setRenderMode] = useState<PlaygroundRenderMode>("rtx");
   const [resetSignal, setResetSignal] = useState(0);
-  const [selectedAssetId, setSelectedAssetId] = useState(playgroundScenarios[0].assets[0].id);
-  const selectedScenario =
-    playgroundScenarios.find((scenario) => scenario.id === selectedId) ?? playgroundScenarios[0];
+  const [selectedAssetId, setSelectedAssetId] = useState(initialScenario.assets[0].id);
+  const selectedScenario = getPlaygroundScenarioById(selectedId);
   const activeTrace = selectedScenario.trace[activeStep] ?? selectedScenario.trace[0];
   const selectedAsset =
     selectedScenario.assets.find((asset) => asset.id === selectedAssetId) ?? selectedScenario.assets[0];
@@ -1995,12 +2079,13 @@ function AgentPlaygroundPage() {
   }, [activeStep, isRunning, prefersReducedMotion, selectedScenario.trace.length]);
 
   const selectScenario = (scenarioId: string) => {
-    const nextScenario = playgroundScenarios.find((scenario) => scenario.id === scenarioId) ?? playgroundScenarios[0];
-    setSelectedId(scenarioId);
+    const nextScenario = getPlaygroundScenarioById(scenarioId);
+    setSelectedId(nextScenario.id);
     setIsRunning(false);
     setActiveStep(0);
     setSelectedAssetId(nextScenario.assets[0].id);
     setResetSignal((value) => value + 1);
+    replacePlaygroundScenarioParam(nextScenario.id);
   };
 
   const togglePlayback = () => {
