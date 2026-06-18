@@ -387,7 +387,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
     ],
     trainingMetrics: [
       { label: "Reward terms", value: "Pose, fork depth, clearance, load stability, time" },
-      { label: "Policy target", value: "94% current / 98% target in Isaac Lab", tone: "watch" },
+      { label: "Policy target", value: "Measure >= 98% seeded success in Isaac Lab before claiming policy performance", tone: "watch" },
       { label: "Curriculum", value: "Empty pallet -> 480 kg load -> occluded rack" },
       { label: "Randomization", value: "1,280 seeds for lights, pallet mass, friction, rack pose" },
       { label: "Artifacts", value: "USD capture, ROS bag, Replicator labels, Isaac Lab metrics" },
@@ -460,7 +460,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
         agent: "Verifier",
         detail:
           "Scores success rate, intervention count, pose error, load stability, cycle time, and the randomization seeds that should become the next training batch.",
-        evidence: "94% multi-seed success, 0 interventions, cycle 82 s, next batch expands tight-clearance racks",
+        evidence: "Browser gate score only; Isaac Lab seed table and intervention log still required before claiming policy success",
         kind: "gate",
         position: { x: 76, y: 38 },
         telemetry: [
