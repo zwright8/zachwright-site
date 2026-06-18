@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Work Is Getting a Byline | zachwright.xyz</title>
+  <meta name="description" content="GitHub release-note attribution, Copilot app worktrees, managed permission settings, scoped agent finder, CLI remote reads, and secret scanning turn agent work into auditable metadata." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Work Is Getting a Byline</h1>
+          <p>GitHub release-note attribution, Copilot app worktrees, managed permission settings, scoped agent finder, CLI remote reads, and secret scanning turn agent work into auditable metadata.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is not another agent surface. It is the attribution layer around the work: who requested it, what policy applied, which tools were discoverable, and what the release record says afterward.</strong></p>
+          <p>GitHub's generated release notes now credit the human who asked Copilot cloud agent to open a merged pull request, alongside <code>@copilot</code>. That sounds small, but it fixes a real operations gap: agent-authored work needs a visible requester, not just a bot handle.</p>
+          <ul>
+            <li>Generated release notes now show the requesting developer with <code>@copilot</code> for merged Copilot cloud agent PRs, so the release artifact carries both the automation and the accountable human.
+            <a href="https://github.blog/changelog/2026-06-18-generated-release-notes-credit-you-for-copilot-pull-requests/">https://github.blog/changelog/2026-06-18-generated-release-notes-credit-you-for-copilot-pull-requests/</a></li>
+            <li>The GitHub Copilot app is GA for macOS, Windows, and Linux, with sessions launched from issues, pull requests, or prompts, then isolated on branches and worktrees before review and PR handoff.
+            <a href="https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/">https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/</a></li>
+            <li>Enterprise-managed settings can now disable automatic permission bypass for Copilot CLI and VS Code, moving approval posture out of personal preference and into centrally distributed policy.
+            <a href="https://github.blog/changelog/2026-06-17-enterprise-managed-settings-now-support-bypass-permission-controls/">https://github.blog/changelog/2026-06-17-enterprise-managed-settings-now-support-bypass-permission-controls/</a></li>
+            <li>Agent finder scopes discovery to an approved public or private registry and does not silently install anything, which makes "what the agent could find" part of the governance surface.
+            <a href="https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/">https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Copilot PR credit in release notes</strong> - check generated releases for human-plus-agent attribution before you treat the changelog as an accountability trail.
+            <a href="https://github.blog/changelog/2026-06-18-generated-release-notes-credit-you-for-copilot-pull-requests/">https://github.blog/changelog/2026-06-18-generated-release-notes-credit-you-for-copilot-pull-requests/</a></li>
+            <li><strong>GitHub Copilot app GA</strong> - use branch/worktree isolation as the default unit for agent sessions, then let existing checks and merge requirements close the loop.
+            <a href="https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/">https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/</a></li>
+            <li><strong>Managed permission bypass control</strong> - add <code>disableBypassPermissionsMode</code> to enterprise-managed Copilot settings when auto-approve should not be a user-level decision.
+            <a href="https://github.blog/changelog/2026-06-17-enterprise-managed-settings-now-support-bypass-permission-controls/">https://github.blog/changelog/2026-06-17-enterprise-managed-settings-now-support-bypass-permission-controls/</a></li>
+            <li><strong>Agent finder</strong> - publish internal resources through a registry you control, then let discovery stay scoped instead of depending on every developer wiring the same tools manually.
+            <a href="https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/">https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/</a></li>
+            <li><strong>No-clone repo reads</strong> - <code>gh repo read-file</code> and <code>gh repo read-dir</code> make fleet config inspection cheap enough for scripts and agents to run continuously.
+            <a href="https://github.blog/changelog/2026-06-17-read-remote-repository-content-with-github-cli/">https://github.blog/changelog/2026-06-17-read-remote-repository-content-with-github-cli/</a></li>
+            <li><strong>Secret scanning June update</strong> - new detectors, expanded push-protection defaults, validity checks, and richer metadata tighten the feedback loop before leaked automation credentials land.
+            <a href="https://github.blog/changelog/2026-06-17-secret-scanning-updates-june-2026/">https://github.blog/changelog/2026-06-17-secret-scanning-updates-june-2026/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Release notes are becoming evidence.</strong> If agent-generated work ships, the changelog needs to show the requester, bot, PR, and merge path cleanly enough for incident review.</li>
+            <li><strong>Approval policy belongs at fleet level.</strong> Auto-approve, yolo mode, and permission bypass are too sensitive to hide in local editor state once agents can run write-heavy sessions.</li>
+            <li><strong>Discovery is an allowlist.</strong> Registries decide which tools and internal resources agents can find; that makes registry ownership part of platform security, not developer convenience.</li>
+            <li><strong>Config drift should get cheaper.</strong> Remote file reads let operators inspect settings across repos without clone-heavy audits, so stale agent, security, and release config has fewer excuses.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Standards.</strong> - because every agent registry starts as the one obvious place to put governance metadata, right before the second one appears.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/standards.png">https://imgs.xkcd.com/comics/standards.png</a><br>Post: <a href="https://xkcd.com/927/">https://xkcd.com/927/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
