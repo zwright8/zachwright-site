@@ -159,11 +159,19 @@ type PlaygroundTraceStep = {
   title: string;
 };
 
+type PlaygroundFact = {
+  label: string;
+  tone?: PlaygroundTone;
+  value: string;
+};
+
 type PlaygroundScenario = {
   artifacts: Array<{ href: string; label: string; metric: string }>;
   assets: PlaygroundAsset[];
   capabilities: string[];
   evals: Array<{ label: string; result: string; tone: PlaygroundTone }>;
+  failureCriteria?: PlaygroundFact[];
+  hardware?: PlaygroundFact[];
   id: string;
   intent: string;
   memory: string[];
@@ -173,13 +181,168 @@ type PlaygroundScenario = {
   primRoot: string;
   runtime: string;
   scene: string;
+  successCriteria?: PlaygroundFact[];
   tests: Array<{ label: string; status: string; tone: PlaygroundTone }>;
   title: string;
   tools: Array<{ label: string; status: string }>;
   trace: PlaygroundTraceStep[];
+  trainingMetrics?: PlaygroundFact[];
 };
 
 const playgroundScenarios: PlaygroundScenario[] = [
+  {
+    id: "forklift",
+    title: "Robotic forklift stacking trial",
+    scene: "High-bay warehouse bay B-12",
+    model: "Forklift policy + lift controller",
+    nvidiaPath: "Isaac Sim full_warehouse.usd -> rigged forklift USD -> ROS 2 sensor graph -> Isaac Lab policy eval -> Replicator SDG expansion",
+    primRoot: "/World/ForkliftWarehouse",
+    runtime: "Browser WebGL demo; production run targets Isaac Sim forklift assets and an ovrtx/ovstream viewer",
+    intent:
+      "Validate an autonomous forklift that retrieves a 480 kg pallet from inbound staging, drives a mixed warehouse aisle, stacks it into rack bay B-12 level 2, then retrieves a return pallet without rack contact, load drop, or safety-zone breach.",
+    outcome: "Pass when stacking and retrieval stay inside pose, clearance, load-stability, safety, and cycle-time gates",
+    capabilities: ["Rigged 7-DOF forklift", "Prismatic fork lift", "RTX LiDAR + RGB-D", "ROS 2 bridge", "Replicator SDG", "Isaac Lab curriculum"],
+    assets: [
+      { id: "forklift", label: "Autonomous Forklift F-12", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01", status: "policy running", type: "robot articulation" },
+      { id: "forks", label: "Fork Carriage + Tines", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01/Forks", status: "0.2-1.6 m lift", type: "actuated prismatic joint" },
+      { id: "pallet", label: "Inbound Pallet P-42", path: "/World/ForkliftWarehouse/Pallets/Inbound_Pallet_42", status: "480 kg payload", type: "dynamic rigid body" },
+      { id: "rack", label: "Rack Bay B-12 Level 2", path: "/World/ForkliftWarehouse/Racks/Bay_B12/Level_02", status: "target slot", type: "warehouse collider" },
+      { id: "scanner", label: "Safety Scanner 270", path: "/World/ForkliftWarehouse/Sensors/SafetyScanner_270", status: "zone armed", type: "safety sensor" },
+      { id: "camera", label: "RGB-D Mast Camera", path: "/World/ForkliftWarehouse/Sensors/RGBD_Mast", status: "ROS 2 topics", type: "perception sensor" },
+    ],
+    tools: [
+      { label: "full_warehouse.usd", status: "Isaac Sim warehouse with racks, obstacles, pallets, and forklifts" },
+      { label: "forklift_b_rigged_cm.usd", status: "Rigged forklift reference with seven DOF and actuated fork joint" },
+      { label: "anim_robot.yaml", status: "Forklift MoveTo, Turn, Idle, and Sequence action graph" },
+      { label: "ros2.bridge", status: "RGB, depth, camera info, TF, odometry, and command topics" },
+      { label: "replicator.writer", status: "Randomized pallet pose, rack occlusion, lights, labels, and depth" },
+      { label: "isaaclab.task", status: "RL/IL curriculum, reward terms, and multi-seed policy gates" },
+    ],
+    memory: [
+      "Treat a visually clean stack as a failure if fork depth, clearance, or load sway misses the physical gate.",
+      "Run retrieval after stacking so the policy proves it can recover from the exact rack pose it created.",
+      "Keep browser playback as the executive demo; Isaac Sim logs, USD captures, and ROS bags are the deployable evidence.",
+    ],
+    tests: [
+      { label: "Rack approach alignment", status: "pass", tone: "pass" },
+      { label: "Fork insertion clearance", status: "watch", tone: "watch" },
+      { label: "Lift and pallet stability", status: "pass", tone: "pass" },
+      { label: "Retrieval cycle", status: "pass", tone: "pass" },
+    ],
+    successCriteria: [
+      { label: "Place pose", value: "<= 5 cm XY and <= 3 deg yaw", tone: "pass" },
+      { label: "Fork depth", value: ">= 85% tine insertion before lift", tone: "pass" },
+      { label: "Load sway", value: "< 2 deg after stop and lift", tone: "pass" },
+      { label: "Contacts", value: "0 rack, fork, human, or pallet-drop contacts", tone: "pass" },
+      { label: "Cycle", value: "Stack + retrieve <= 90 s", tone: "watch" },
+    ],
+    failureCriteria: [
+      { label: "Collision", value: "Any rack/fork collision or pallet drop", tone: "watch" },
+      { label: "Mis-slot", value: "> 8 cm from rack slot center", tone: "watch" },
+      { label: "Under-insert", value: "< 75% tine depth before lift", tone: "watch" },
+      { label: "Safety", value: "Human/obstacle within 0.5 m protective field", tone: "watch" },
+      { label: "Instability", value: "> 5 deg pallet tilt or > 0.15 g slip spike", tone: "watch" },
+    ],
+    trainingMetrics: [
+      { label: "Reward terms", value: "Pose, fork depth, clearance, load stability, time" },
+      { label: "Policy success", value: "94% current / 98% target", tone: "watch" },
+      { label: "Curriculum", value: "Empty pallet -> 480 kg load -> occluded rack" },
+      { label: "Randomization", value: "1,280 seeds for lights, pallet mass, friction, rack pose" },
+      { label: "Artifacts", value: "USD capture, ROS bag, Replicator labels, Isaac Lab metrics" },
+    ],
+    hardware: [
+      { label: "Compute", value: "Jetson AGX Orin Industrial or x86 RTX workstation" },
+      { label: "Vehicle", value: "Differential-drive forklift sample with mast, carriage, and fork DOF" },
+      { label: "Sensors", value: "RTX LiDAR, RGB-D mast camera, IMU, fork-height encoder, load cell" },
+      { label: "Safety", value: "270 deg protective scanner plus supervised stop state" },
+      { label: "Actuation", value: "Traction drive, steer/drive joints, prismatic fork lift, mast tilt" },
+    ],
+    trace: [
+      {
+        agent: "Scene Builder",
+        detail:
+          "Loads the full warehouse stage, replaces the generic vehicle with the rigged forklift asset, assigns pallet mass/friction, and marks rack bay B-12 level 2 as the target slot.",
+        evidence: "full_warehouse.usd, forklift_b_rigged_cm.usd, payload P-42 mass 480 kg",
+        kind: "sim",
+        position: { x: 34, y: 62 },
+        telemetry: [
+          { label: "Sim", value: "00:00" },
+          { label: "Payload", value: "480 kg", tone: "pass" },
+          { label: "Fork", value: "0.20 m", tone: "pass" },
+        ],
+        title: "Build the forklift world",
+      },
+      {
+        agent: "Perception",
+        detail:
+          "Uses RGB-D, LiDAR, and fork-height telemetry to align the tines with the pallet pockets before the lift controller is allowed to raise.",
+        evidence: "Pallet pocket offset 1.8 cm, tine insertion 92%, camera + depth topics live",
+        kind: "sensor",
+        position: { x: 42, y: 58 },
+        telemetry: [
+          { label: "Offset", value: "1.8 cm", tone: "pass" },
+          { label: "Tine", value: "92%", tone: "pass" },
+          { label: "Slip", value: "0.04 g", tone: "pass" },
+        ],
+        title: "Acquire the pallet",
+      },
+      {
+        agent: "Lift Controller",
+        detail:
+          "Approaches the rack, raises the carriage to level 2, nudges the pallet into the target bay, and verifies clearance before backing out.",
+        evidence: "Lift 1.62 m, mast tilt 2 deg, rack side clearance 7.5 cm",
+        kind: "stack",
+        position: { x: 56, y: 52 },
+        telemetry: [
+          { label: "Lift", value: "1.62 m", tone: "pass" },
+          { label: "Clear", value: "7.5 cm", tone: "watch" },
+          { label: "Contact", value: "0", tone: "pass" },
+        ],
+        title: "Stack level B-12",
+      },
+      {
+        agent: "Recovery Policy",
+        detail:
+          "Runs the inverse maneuver against the placed pallet, proving the policy can retrieve its own stack without dragging the rack or tipping the load.",
+        evidence: "Pose error 3.2 cm, load sway 1.1 deg, no rack contact",
+        kind: "retrieve",
+        position: { x: 64, y: 47 },
+        telemetry: [
+          { label: "Error", value: "3.2 cm", tone: "pass" },
+          { label: "Sway", value: "1.1 deg", tone: "pass" },
+          { label: "Rack", value: "clear", tone: "pass" },
+        ],
+        title: "Retrieve the return pallet",
+      },
+      {
+        agent: "Verifier",
+        detail:
+          "Scores success rate, intervention count, pose error, load stability, cycle time, and the randomization seeds that should become the next training batch.",
+        evidence: "94% multi-seed success, 0 interventions, cycle 82 s, next batch expands tight-clearance racks",
+        kind: "gate",
+        position: { x: 76, y: 38 },
+        telemetry: [
+          { label: "Success", value: "94%", tone: "watch" },
+          { label: "Cycle", value: "82 s", tone: "pass" },
+          { label: "Gate", value: "train more", tone: "watch" },
+        ],
+        title: "Score the experiment",
+      },
+    ],
+    evals: [
+      { label: "Placement error", result: "3.2 cm", tone: "pass" },
+      { label: "Rack/fork contacts", result: "0", tone: "pass" },
+      { label: "Load stability", result: "1.1 deg", tone: "pass" },
+      { label: "Policy success", result: "94%", tone: "watch" },
+    ],
+    artifacts: [
+      { href: "https://docs.isaacsim.omniverse.nvidia.com/5.1.0/assets/usd_assets_environments.html", label: "Warehouse USD assets", metric: "scene" },
+      { href: "https://docs.isaacsim.omniverse.nvidia.com/5.1.0/robot_setup_tutorials/rig_mobile_robot.html", label: "Forklift rigging", metric: "robot" },
+      { href: "https://docs.isaacsim.omniverse.nvidia.com/6.0.0/action_and_event_data_generation/ext_replicator-agent/ext_isaacsim_anim_robot.html", label: "Forklift action graph", metric: "control" },
+      { href: "https://docs.isaacsim.omniverse.nvidia.com/6.0.0/replicator_tutorials/tutorial_replicator_scene_based_sdg.html", label: "Replicator SDG", metric: "dataset" },
+      { href: "https://developer.nvidia.com/isaac/lab", label: "Isaac Lab", metric: "training" },
+    ],
+  },
   {
     id: "route",
     title: "AMR route validation",
@@ -604,9 +767,11 @@ const kindStyles: Record<string, string> = {
   gate: "border-emerald-300/30 bg-emerald-300/10 text-emerald-100",
   handoff: "border-cyan-300/30 bg-cyan-300/10 text-cyan-100",
   plan: "border-white/15 bg-white/10 text-text-primary",
+  retrieve: "border-blue-300/30 bg-blue-300/10 text-blue-100",
   risk: "border-amber-200/30 bg-amber-200/10 text-amber-100",
   sensor: "border-cyan-300/30 bg-cyan-300/10 text-cyan-100",
   sim: "border-[#76B900]/35 bg-[#76B900]/10 text-[#d6ff99]",
+  stack: "border-orange-200/30 bg-orange-200/10 text-orange-100",
 };
 
 function ArrowIcon({ className = "" }: { className?: string }) {
@@ -1300,38 +1465,142 @@ function ThreeSimulationViewport({
     });
 
     const robotGroup = new THREE.Group();
+    const robotAssetId = scenario.id === "pick" ? "arm" : scenario.id === "forklift" ? "forklift" : "amr";
+    const robotBaseSize: [number, number, number] =
+      scenario.id === "forklift" ? [1.78, 0.38, 1.14] : [1.45, 0.34, 1.02];
+    const robotTopSize: [number, number, number] =
+      scenario.id === "forklift" ? [0.82, 0.72, 0.74] : [1.08, 0.56, 0.76];
+    const robotTopBaseY = scenario.id === "forklift" ? 0.78 : 0.72;
+    const robotTopPosition: [number, number, number] =
+      scenario.id === "forklift" ? [-0.28, robotTopBaseY, 0.08] : [0.04, robotTopBaseY, 0];
+    let forkliftLiftGroup: Object3D | null = null;
     const robotBase = createBox(
       THREE,
-      [1.45, 0.34, 1.02],
+      robotBaseSize,
       [0, 0.23, 0],
       materialForMode(THREE, 0x162034, renderMode, 0),
-      scenario.id === "pick" ? "arm" : "amr",
+      robotAssetId,
       selectable,
-      "Autonomous Robot",
+      scenario.id === "forklift" ? "Forklift Chassis" : "Autonomous Robot",
     );
     const robotTop = createBox(
       THREE,
-      [1.08, 0.56, 0.76],
-      [0.04, 0.72, 0],
+      robotTopSize,
+      robotTopPosition,
       materialForMode(THREE, 0x76b900, renderMode, 4),
-      scenario.id === "pick" ? "arm" : "amr",
+      robotAssetId,
       selectable,
-      "Robot Body",
+      scenario.id === "forklift" ? "Forklift Counterweight" : "Robot Body",
     );
     robotGroup.add(robotBase, robotTop);
 
     const wheelMaterial = materialForMode(THREE, 0x050607, renderMode, 5);
-    for (const x of [-0.52, 0.52]) {
-      for (const z of [-0.42, 0.42]) {
-        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.18, 18), wheelMaterial);
+    for (const x of scenario.id === "forklift" ? [-0.66, 0.66] : [-0.52, 0.52]) {
+      for (const z of scenario.id === "forklift" ? [-0.46, 0.46] : [-0.42, 0.42]) {
+        const wheelRadius = scenario.id === "forklift" ? 0.22 : 0.17;
+        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(wheelRadius, wheelRadius, 0.18, 18), wheelMaterial);
         wheel.rotation.z = Math.PI / 2;
         wheel.position.set(x, 0.16, z);
         robotGroup.add(wheel);
       }
     }
+
+    if (scenario.id === "forklift") {
+      const mastMaterial = materialForMode(THREE, 0x334155, renderMode, 6);
+      const forkMaterial = materialForMode(THREE, 0xd8dee9, renderMode, 7);
+      const scannerMaterial = materialForMode(THREE, 0x22d3ee, renderMode, 8);
+      const mastParts = [
+        createBox(THREE, [0.08, 1.85, 0.08], [-0.44, 1.04, -0.62], mastMaterial, "forks", selectable, "Left Mast Rail"),
+        createBox(THREE, [0.08, 1.85, 0.08], [0.44, 1.04, -0.62], mastMaterial, "forks", selectable, "Right Mast Rail"),
+        createBox(THREE, [0.98, 0.08, 0.08], [0, 1.84, -0.62], mastMaterial, "forks", selectable, "Mast Crossbar"),
+      ];
+      mastParts.forEach((part) => {
+        registerAsset(part, "forks");
+        robotGroup.add(part);
+      });
+
+      const liftGroup = new THREE.Group();
+      forkliftLiftGroup = liftGroup;
+      const liftParts = [
+        createBox(THREE, [0.92, 0.12, 0.1], [0, 0.38, -0.7], forkMaterial, "forks", selectable, "Fork Carriage"),
+        createBox(THREE, [0.16, 0.08, 1.25], [-0.34, 0.2, -1.22], forkMaterial, "forks", selectable, "Left Fork Tine"),
+        createBox(THREE, [0.16, 0.08, 1.25], [0.34, 0.2, -1.22], forkMaterial, "forks", selectable, "Right Fork Tine"),
+      ];
+      liftParts.forEach((part) => {
+        registerAsset(part, "forks");
+        liftGroup.add(part);
+      });
+
+      const carriedPallet = createBox(
+        THREE,
+        [1.18, 0.46, 0.92],
+        [0, 0.54, -1.52],
+        palletMaterial,
+        "pallet",
+        selectable,
+        "Carried Pallet P-42",
+      );
+      registerAsset(carriedPallet, "pallet");
+      liftGroup.add(carriedPallet);
+      robotGroup.add(liftGroup);
+
+      const scanner = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.18, 24), scannerMaterial);
+      scanner.position.set(0, 0.62, -0.72);
+      scanner.castShadow = true;
+      scanner.rotation.x = Math.PI / 2;
+      addSelectable(scanner, "scanner", selectable, "Safety Scanner");
+      registerAsset(scanner, "scanner");
+      robotGroup.add(scanner);
+
+      const bodyCamera = createBox(
+        THREE,
+        [0.22, 0.16, 0.28],
+        [0.32, 1.25, -0.58],
+        scannerMaterial,
+        "camera",
+        selectable,
+        "Mast RGB-D Camera",
+      );
+      registerAsset(bodyCamera, "camera");
+      robotGroup.add(bodyCamera);
+    }
+
     robotGroup.position.copy(route[0] ?? new THREE.Vector3());
-    registerAsset(robotGroup, scenario.id === "pick" ? "arm" : "amr");
+    registerAsset(robotGroup, robotAssetId);
     scene.add(robotGroup);
+
+    if (scenario.id === "forklift") {
+      const targetMaterial = materialForMode(THREE, 0x9dff3a, renderMode, 9);
+      const slotParts = [
+        createBox(THREE, [1.85, 0.08, 0.12], [0.92, 1.62, 0.36], targetMaterial, "rack", selectable, "Target Slot Front Beam"),
+        createBox(THREE, [1.85, 0.08, 0.12], [0.92, 1.18, 0.36], targetMaterial, "rack", selectable, "Target Slot Lower Beam"),
+        createBox(THREE, [0.1, 1.0, 0.16], [0.02, 1.4, 0.36], targetMaterial, "rack", selectable, "Target Slot Left Upright"),
+        createBox(THREE, [0.1, 1.0, 0.16], [1.82, 1.4, 0.36], targetMaterial, "rack", selectable, "Target Slot Right Upright"),
+      ];
+      slotParts.forEach((part) => {
+        registerAsset(part, "rack");
+        scene.add(part);
+      });
+
+      const targetPallet = createBox(
+        THREE,
+        [1.18, 0.38, 0.86],
+        [0.92, 1.38, 0.78],
+        new THREE.MeshStandardMaterial({
+          color: 0x76b900,
+          emissive: 0x3a5e00,
+          emissiveIntensity: renderMode === "sensor" ? 0.32 : 0.12,
+          opacity: 0.42,
+          transparent: true,
+          roughness: 0.42,
+        }),
+        "rack",
+        selectable,
+        "Target Pallet Ghost",
+      );
+      registerAsset(targetPallet, "rack");
+      scene.add(targetPallet);
+    }
 
     if (scenario.id === "pick") {
       const armMaterial = materialForMode(THREE, 0xcbd5e1, renderMode, 6);
@@ -1375,7 +1644,7 @@ function ThreeSimulationViewport({
       }
     }
 
-    if (scenario.id === "pick" || scenario.id === "dataset") {
+    if (scenario.id === "pick" || scenario.id === "dataset" || scenario.id === "forklift") {
       const cameraMaterial = materialForMode(THREE, 0x4b5563, renderMode, 8);
       const mast = createBox(THREE, [0.12, 2.2, 0.12], [-2.8, 1.12, 2.6], cameraMaterial, "camera", selectable, "Camera Mast");
       registerAsset(mast, "camera");
@@ -1454,19 +1723,27 @@ function ThreeSimulationViewport({
       scene.add(datasetPacket);
     }
 
+    const zoneAssetId = scenario.id === "safety" ? "zone" : scenario.id === "forklift" ? "scanner" : "human";
     const zoneMaterial = new THREE.MeshBasicMaterial({
-      color: scenario.id === "safety" ? 0xfbbf24 : 0x22d3ee,
+      color: scenario.id === "safety" ? 0xfbbf24 : scenario.id === "forklift" ? 0x76b900 : 0x22d3ee,
       transparent: true,
       opacity: renderMode === "sensor" ? 0.22 : 0.13,
       side: THREE.DoubleSide,
     });
-    const safetyZone = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.8, 48), zoneMaterial);
+    const safetyZone = new THREE.Mesh(
+      new THREE.RingGeometry(scenario.id === "forklift" ? 1.45 : 1.0, scenario.id === "forklift" ? 2.35 : 1.8, 48),
+      zoneMaterial,
+    );
     safetyZone.rotation.x = -Math.PI / 2;
-    safetyZone.position.set(1.25, 0.045, -0.5);
-    safetyZone.userData.assetId = scenario.id === "safety" ? "zone" : "human";
+    safetyZone.position.set(scenario.id === "forklift" ? 0 : 1.25, 0.045, scenario.id === "forklift" ? 0 : -0.5);
+    safetyZone.userData.assetId = zoneAssetId;
     selectable.push(safetyZone);
-    registerAsset(safetyZone, scenario.id === "safety" ? "zone" : "human");
-    scene.add(safetyZone);
+    registerAsset(safetyZone, zoneAssetId);
+    if (scenario.id === "forklift") {
+      robotGroup.add(safetyZone);
+    } else {
+      scene.add(safetyZone);
+    }
 
     const sensorCone = new THREE.Mesh(
       new THREE.ConeGeometry(1.7, 3.4, 48, 1, true),
@@ -1587,8 +1864,14 @@ function ThreeSimulationViewport({
       robotGroup.lookAt(lookPoint.x, robotGroup.position.y, lookPoint.z);
 
       if (runningRef.current && !prefersReducedMotion) {
-        robotTop.position.y = 0.72 + Math.sin(elapsed * 7) * 0.025;
+        robotTop.position.y = robotTopBaseY + Math.sin(elapsed * 7) * 0.025;
         sensorCone.rotation.z = Math.sin(elapsed * 2.4) * 0.24;
+      }
+
+      if (forkliftLiftGroup) {
+        const liftTarget = activeStepRef.current >= 2 ? 0.92 : activeStepRef.current >= 1 ? 0.18 : 0;
+        forkliftLiftGroup.position.y += (liftTarget - forkliftLiftGroup.position.y) * (prefersReducedMotion ? 1 : 0.08);
+        forkliftLiftGroup.rotation.x = runningRef.current && !prefersReducedMotion ? Math.sin(elapsed * 4.2) * 0.015 : 0;
       }
 
       safetyZone.rotation.z += runningRef.current && !prefersReducedMotion ? 0.006 : 0;
@@ -1665,6 +1948,19 @@ function AgentPlaygroundPage() {
     { id: "depth", label: "Depth" },
     { id: "sensor", label: "Sensors" },
   ];
+  const experimentPanels: Array<{ items: PlaygroundFact[]; title: string }> = [];
+  if (selectedScenario.hardware?.length) {
+    experimentPanels.push({ items: selectedScenario.hardware, title: "Hardware model" });
+  }
+  if (selectedScenario.successCriteria?.length) {
+    experimentPanels.push({ items: selectedScenario.successCriteria, title: "Success criteria" });
+  }
+  if (selectedScenario.failureCriteria?.length) {
+    experimentPanels.push({ items: selectedScenario.failureCriteria, title: "Failure criteria" });
+  }
+  if (selectedScenario.trainingMetrics?.length) {
+    experimentPanels.push({ items: selectedScenario.trainingMetrics, title: "Training metrics" });
+  }
 
   useEffect(() => {
     if (!isRunning) {
@@ -2011,6 +2307,27 @@ function AgentPlaygroundPage() {
               ))}
             </div>
           </section>
+
+          {experimentPanels.map((panel) => (
+            <section key={panel.title} className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+              <p className="text-xs uppercase text-muted">{panel.title}</p>
+              <div className="mt-4 grid gap-2">
+                {panel.items.map((item) => (
+                  <div key={`${panel.title}-${item.label}`} className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-sm text-text-primary/90">{item.label}</span>
+                      {item.tone ? (
+                        <span className={`rounded-full border px-2.5 py-1 text-[11px] ${toneClasses(item.tone)}`}>
+                          {item.tone === "pass" ? "target" : "watch"}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-2 text-xs leading-5 text-muted">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
 
           <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <p className="text-xs uppercase text-muted">Tool stack</p>
