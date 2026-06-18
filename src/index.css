@@ -175,69 +175,6 @@ video {
   will-change: transform;
 }
 
-.simulation-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at 70% 20%, rgba(118, 185, 0, 0.16), transparent 34%),
-    radial-gradient(circle at 20% 76%, rgba(103, 232, 249, 0.12), transparent 28%);
-  background-size:
-    28px 28px,
-    28px 28px,
-    100% 100%,
-    100% 100%;
-}
-
-.route-flow {
-  animation: route-dash 1.6s linear infinite;
-  stroke-dasharray: 6 4;
-}
-
-.sensor-ring {
-  animation: sensor-ping 1.8s ease-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.sensor-sweep {
-  animation: sensor-sweep 4s linear infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@keyframes route-dash {
-  to {
-    stroke-dashoffset: -20;
-  }
-}
-
-@keyframes sensor-ping {
-  0% {
-    opacity: 0.78;
-    transform: scale(0.72);
-  }
-
-  70% {
-    opacity: 0.18;
-    transform: scale(1.85);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(2.1);
-  }
-}
-
-@keyframes sensor-sweep {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

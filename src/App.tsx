@@ -6,7 +6,8 @@ import {
   m,
   useReducedMotion,
 } from "framer-motion";
-import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import type { Material, Mesh, Object3D } from "three";
+import { type MouseEvent, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import updatesIndex from "../updates/index.json";
 
@@ -137,6 +138,16 @@ const socialLinks = [
 ];
 
 type PlaygroundTone = "pass" | "watch";
+type PlaygroundRenderMode = "rtx" | "segmentation" | "depth" | "sensor";
+type ThreeModule = typeof import("three");
+
+type PlaygroundAsset = {
+  id: string;
+  label: string;
+  path: string;
+  status: string;
+  type: string;
+};
 
 type PlaygroundTraceStep = {
   agent: string;
@@ -150,6 +161,7 @@ type PlaygroundTraceStep = {
 
 type PlaygroundScenario = {
   artifacts: Array<{ href: string; label: string; metric: string }>;
+  assets: PlaygroundAsset[];
   capabilities: string[];
   evals: Array<{ label: string; result: string; tone: PlaygroundTone }>;
   id: string;
@@ -158,6 +170,8 @@ type PlaygroundScenario = {
   model: string;
   nvidiaPath: string;
   outcome: string;
+  primRoot: string;
+  runtime: string;
   scene: string;
   tests: Array<{ label: string; status: string; tone: PlaygroundTone }>;
   title: string;
@@ -172,10 +186,18 @@ const playgroundScenarios: PlaygroundScenario[] = [
     scene: "Warehouse aisle digital twin",
     model: "Nav policy + occupancy planner",
     nvidiaPath: "Omniverse libraries -> Isaac Sim -> Isaac Lab policy eval",
+    primRoot: "/World/Warehouse_A",
+    runtime: "Browser WebGL demo; ovrtx/ovstream runtime not connected",
     intent:
       "Stress-test an autonomous mobile robot through a warehouse route with blocked aisles, pallet shadows, and a human crossing zone.",
     outcome: "Pass when the robot reroutes without entering the safety envelope",
     capabilities: ["OpenUSD scene", "PhysX contacts", "LiDAR + RGB", "ROS2 bridge"],
+    assets: [
+      { id: "amr", label: "AMR-07", path: "/World/Warehouse_A/Robots/AMR_07", status: "navigating", type: "robot" },
+      { id: "rack", label: "Rack Row B", path: "/World/Warehouse_A/Racks/Row_B", status: "static collider", type: "warehouse asset" },
+      { id: "pallet", label: "Blocked Pallet P-17", path: "/World/Warehouse_A/Props/Pallet_P17", status: "dynamic obstacle", type: "prop" },
+      { id: "human", label: "Worker H-03", path: "/World/Warehouse_A/Actors/Worker_H03", status: "crossing zone", type: "actor" },
+    ],
     tools: [
       { label: "world.usd", status: "Shelf rows, dock lane, occluders" },
       { label: "policy.eval", status: "Navigation model candidate" },
@@ -270,10 +292,18 @@ const playgroundScenarios: PlaygroundScenario[] = [
     scene: "Bin picking cell",
     model: "Vision-language grasp planner",
     nvidiaPath: "GR00T-Mimic style synthetic motion -> Isaac Sim manipulation eval",
+    primRoot: "/World/PickCell_A",
+    runtime: "Browser WebGL demo; Isaac manipulation runtime not connected",
     intent:
       "Compare grasp candidates for a cluttered bin where reflective parts, bad normals, and occluded edges break naive pick policies.",
     outcome: "Pass when the robot picks the target without disturbing adjacent parts",
     capabilities: ["RGB-D camera", "Articulation", "Contact sensors", "Synthetic motion"],
+    assets: [
+      { id: "arm", label: "Manipulator UR-Style Arm", path: "/World/PickCell_A/Robots/Arm_01", status: "planning grasp", type: "robot articulation" },
+      { id: "bin", label: "Mixed Part Bin", path: "/World/PickCell_A/Bins/Tote_04", status: "segmented", type: "container" },
+      { id: "target", label: "Reflective Target Part", path: "/World/PickCell_A/Parts/Target_11", status: "grasp candidate", type: "part" },
+      { id: "camera", label: "RGBD Camera", path: "/World/PickCell_A/Sensors/RGBD_Top", status: "streaming", type: "sensor" },
+    ],
     tools: [
       { label: "grasp.sample", status: "Candidate wrist poses" },
       { label: "contact.solve", status: "Finger contacts and slip" },
@@ -367,10 +397,18 @@ const playgroundScenarios: PlaygroundScenario[] = [
     scene: "Mixed human-robot aisle",
     model: "Safety supervisor + local planner",
     nvidiaPath: "Isaac Sim software-in-the-loop -> hardware-in-the-loop checklist",
+    primRoot: "/World/SafetyAisle",
+    runtime: "Browser WebGL demo; SIL/HIL runtime not connected",
     intent:
       "Demonstrate a supervisor that detects a human entering the route and switches from navigation to controlled stop before recovery.",
     outcome: "Pass when stop time and restart conditions satisfy the safety case",
     capabilities: ["Actor injection", "Safety envelope", "Supervisor state", "Recovery policy"],
+    assets: [
+      { id: "amr", label: "AMR Safety Runner", path: "/World/SafetyAisle/Robots/AMR_Safe", status: "supervised", type: "robot" },
+      { id: "human", label: "Worker Crossing", path: "/World/SafetyAisle/Actors/Worker_H11", status: "yellow zone", type: "actor" },
+      { id: "zone", label: "Safety Envelope", path: "/World/SafetyAisle/Safety/Envelope", status: "armed", type: "safety volume" },
+      { id: "gate", label: "Restart Gate", path: "/World/SafetyAisle/Controls/RestartGate", status: "clear pending", type: "control" },
+    ],
     tools: [
       { label: "actor.inject", status: "Human crossing event" },
       { label: "envelope.watch", status: "Proximity zones" },
@@ -459,10 +497,18 @@ const playgroundScenarios: PlaygroundScenario[] = [
     scene: "Randomized inspection station",
     model: "Vision model dataset builder",
     nvidiaPath: "Omniverse Replicator / physical AI skills -> dataset review",
+    primRoot: "/World/InspectionStation",
+    runtime: "Browser WebGL demo; Replicator runtime not connected",
     intent:
       "Generate a test packet for perception models by randomizing lights, camera pose, object color, defects, and background clutter.",
     outcome: "Pass when coverage expands the hard cases without corrupt labels",
     capabilities: ["Domain randomization", "RGB + depth labels", "Defect injection", "Dataset QA"],
+    assets: [
+      { id: "camera", label: "Synthetic Camera Rig", path: "/World/InspectionStation/Sensors/CameraRig", status: "128-frame sweep", type: "sensor" },
+      { id: "target", label: "Inspection Target", path: "/World/InspectionStation/Parts/TargetPanel", status: "defect variants", type: "asset" },
+      { id: "light", label: "Randomized Light Rig", path: "/World/InspectionStation/Lights/AreaRig", status: "domain randomized", type: "light" },
+      { id: "dataset", label: "Label Export Packet", path: "/World/InspectionStation/Outputs/DatasetPacket", status: "QA running", type: "dataset" },
+    ],
     tools: [
       { label: "replicator.seed", status: "Lighting and material ranges" },
       { label: "defect.inject", status: "Scratch, dent, contamination" },
@@ -1020,169 +1066,583 @@ function toneClasses(tone?: PlaygroundTone) {
     : "border-emerald-300/25 bg-emerald-300/10 text-emerald-100";
 }
 
-function SimulationStage({
+function scenarioPointToVector(THREE: ThreeModule, step: PlaygroundTraceStep) {
+  return new THREE.Vector3((step.position.x - 50) / 7.5, 0.28, (step.position.y - 50) / 7.5);
+}
+
+function materialForMode(THREE: ThreeModule, color: number, renderMode: PlaygroundRenderMode, index = 0) {
+  if (renderMode === "segmentation") {
+    const colors = [0x76b900, 0x22d3ee, 0xfbbf24, 0xf472b6, 0xa3e635, 0x60a5fa];
+    return new THREE.MeshStandardMaterial({
+      color: colors[index % colors.length],
+      emissive: colors[index % colors.length],
+      emissiveIntensity: 0.08,
+      roughness: 0.58,
+      metalness: 0.05,
+    });
+  }
+
+  if (renderMode === "depth") {
+    const shade = 0x333a3f + index * 0x111111;
+    return new THREE.MeshStandardMaterial({
+      color: shade,
+      emissive: 0x0b1113,
+      roughness: 0.82,
+      metalness: 0.02,
+    });
+  }
+
+  if (renderMode === "sensor") {
+    return new THREE.MeshStandardMaterial({
+      color,
+      emissive: 0x052a2f,
+      emissiveIntensity: 0.22,
+      roughness: 0.5,
+      metalness: 0.12,
+      wireframe: index % 3 === 0,
+    });
+  }
+
+  return new THREE.MeshStandardMaterial({
+    color,
+    roughness: 0.48,
+    metalness: 0.18,
+  });
+}
+
+function addSelectable(
+  mesh: Object3D,
+  assetId: string,
+  selectable: Object3D[],
+  label?: string,
+) {
+  mesh.userData.assetId = assetId;
+  mesh.userData.assetLabel = label ?? assetId;
+  selectable.push(mesh);
+  return mesh;
+}
+
+function createBox(
+  THREE: ThreeModule,
+  size: [number, number, number],
+  position: [number, number, number],
+  material: Material,
+  assetId: string,
+  selectable: Object3D[],
+  label?: string,
+) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), material);
+  mesh.position.set(...position);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  return addSelectable(mesh, assetId, selectable, label);
+}
+
+function ThreeSimulationViewport({
   activeStep,
   isRunning,
+  onSelectAsset,
   prefersReducedMotion,
+  renderMode,
+  resetSignal,
   scenario,
+  selectedAssetId,
 }: {
   activeStep: number;
   isRunning: boolean;
+  onSelectAsset: (assetId: string) => void;
   prefersReducedMotion: boolean | null;
+  renderMode: PlaygroundRenderMode;
+  resetSignal: number;
   scenario: PlaygroundScenario;
+  selectedAssetId: string;
 }) {
-  const activeTrace = scenario.trace[activeStep] ?? scenario.trace[0];
-  const routePoints = scenario.trace.map((step) => `${step.position.x},${step.position.y}`).join(" ");
-  const completedPoints = scenario.trace
-    .slice(0, activeStep + 1)
-    .map((step) => `${step.position.x},${step.position.y}`)
-    .join(" ");
-  const robotColor = scenario.id === "dataset" ? "#67e8f9" : "#76B900";
-  const showHuman = scenario.id === "route" || scenario.id === "safety";
-  const showBin = scenario.id === "pick" || scenario.id === "dataset";
+  const mountRef = useRef<HTMLDivElement | null>(null);
+  const activeStepRef = useRef(activeStep);
+  const runningRef = useRef(isRunning);
+  const selectedAssetRef = useRef(selectedAssetId);
+
+  useEffect(() => {
+    activeStepRef.current = activeStep;
+  }, [activeStep]);
+
+  useEffect(() => {
+    runningRef.current = isRunning;
+  }, [isRunning]);
+
+  useEffect(() => {
+    selectedAssetRef.current = selectedAssetId;
+  }, [selectedAssetId]);
+
+  useEffect(() => {
+    let cleanupScene: (() => void) | undefined;
+    let cancelled = false;
+
+    void import("three").then((THREE) => {
+      if (cancelled) {
+        return;
+      }
+
+      const mount = mountRef.current;
+      if (!mount) {
+        return;
+      }
+
+      mount.replaceChildren();
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x050706);
+    scene.fog = new THREE.Fog(0x050706, 10, 31);
+
+    const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 100);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.domElement.className = "h-full w-full";
+    renderer.domElement.dataset.testid = "omniverse-3d-canvas";
+    mount.appendChild(renderer.domElement);
+
+    const ambient = new THREE.AmbientLight(0x93a19a, 0.55);
+    scene.add(ambient);
+
+    const key = new THREE.DirectionalLight(0xffffff, 3.2);
+    key.position.set(7, 11, 4);
+    key.castShadow = true;
+    key.shadow.mapSize.set(2048, 2048);
+    scene.add(key);
+
+    const cyanLight = new THREE.PointLight(0x22d3ee, 2.2, 15);
+    cyanLight.position.set(-5, 4, 3);
+    scene.add(cyanLight);
+
+    const greenLight = new THREE.PointLight(0x76b900, 2.5, 18);
+    greenLight.position.set(5, 5, -5);
+    scene.add(greenLight);
+
+    const floorMaterial = new THREE.MeshStandardMaterial({
+      color: renderMode === "depth" ? 0x111820 : 0x0a0d0a,
+      roughness: 0.72,
+      metalness: 0.06,
+    });
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(24, 18), floorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    const grid = new THREE.GridHelper(24, 24, renderMode === "sensor" ? 0x22d3ee : 0x31402f, 0x152014);
+    grid.position.y = 0.012;
+    scene.add(grid);
+
+    const selectable: Object3D[] = [];
+    const assetObjects = new Map<string, Object3D[]>();
+    const registerAsset = (object: Object3D, assetId: string) => {
+      const current = assetObjects.get(assetId) ?? [];
+      current.push(object);
+      assetObjects.set(assetId, current);
+      return object;
+    };
+
+    const rackMaterial = materialForMode(THREE, 0x1c271f, renderMode, 1);
+    const palletMaterial = materialForMode(THREE, 0x7a5432, renderMode, 2);
+    const binMaterial = materialForMode(THREE, 0x172332, renderMode, 3);
+
+    for (let row = 0; row < 4; row += 1) {
+      const z = -6 + row * 3.7;
+      const rack = createBox(THREE, [10.5, 0.55, 0.62], [-0.7, 1.1, z], rackMaterial, "rack", selectable, "Rack Row");
+      registerAsset(rack, "rack");
+      for (let bay = 0; bay < 6; bay += 1) {
+        const shelf = createBox(
+          THREE,
+          [0.1, 1.7, 0.72],
+          [-5.2 + bay * 1.85, 1.12, z],
+          rackMaterial,
+          "rack",
+          selectable,
+          "Rack Upright",
+        );
+        registerAsset(shelf, "rack");
+      }
+    }
+
+    for (let index = 0; index < 7; index += 1) {
+      const pallet = createBox(
+        THREE,
+        [1.05, 0.42, 0.8],
+        [-5.7 + index * 1.75, 0.24, -2.4 + (index % 2) * 0.5],
+        palletMaterial,
+        index === 3 ? "pallet" : "rack",
+        selectable,
+        "Pallet Stack",
+      );
+      registerAsset(pallet, index === 3 ? "pallet" : "rack");
+    }
+
+    const route = scenario.trace.map((step) => scenarioPointToVector(THREE, step));
+    const routeGeometry = new THREE.BufferGeometry().setFromPoints(route.map((point) => point.clone().setY(0.08)));
+    const routeLine = new THREE.Line(
+      routeGeometry,
+      new THREE.LineBasicMaterial({ color: renderMode === "depth" ? 0x94a3b8 : 0x76b900, linewidth: 2 }),
+    );
+    scene.add(routeLine);
+
+    const breadcrumbMaterial = new THREE.MeshStandardMaterial({
+      color: 0x76b900,
+      emissive: 0x76b900,
+      emissiveIntensity: 0.35,
+      roughness: 0.4,
+    });
+    route.forEach((point, index) => {
+      const marker = new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 16), breadcrumbMaterial);
+      marker.position.copy(point).setY(0.12);
+      marker.scale.setScalar(index <= activeStepRef.current ? 1.2 : 0.72);
+      scene.add(marker);
+    });
+
+    const robotGroup = new THREE.Group();
+    const robotBase = createBox(
+      THREE,
+      [1.45, 0.34, 1.02],
+      [0, 0.23, 0],
+      materialForMode(THREE, 0x162034, renderMode, 0),
+      scenario.id === "pick" ? "arm" : "amr",
+      selectable,
+      "Autonomous Robot",
+    );
+    const robotTop = createBox(
+      THREE,
+      [1.08, 0.56, 0.76],
+      [0.04, 0.72, 0],
+      materialForMode(THREE, 0x76b900, renderMode, 4),
+      scenario.id === "pick" ? "arm" : "amr",
+      selectable,
+      "Robot Body",
+    );
+    robotGroup.add(robotBase, robotTop);
+
+    const wheelMaterial = materialForMode(THREE, 0x050607, renderMode, 5);
+    for (const x of [-0.52, 0.52]) {
+      for (const z of [-0.42, 0.42]) {
+        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.18, 18), wheelMaterial);
+        wheel.rotation.z = Math.PI / 2;
+        wheel.position.set(x, 0.16, z);
+        robotGroup.add(wheel);
+      }
+    }
+    robotGroup.position.copy(route[0] ?? new THREE.Vector3());
+    registerAsset(robotGroup, scenario.id === "pick" ? "arm" : "amr");
+    scene.add(robotGroup);
+
+    if (scenario.id === "pick") {
+      const armMaterial = materialForMode(THREE, 0xcbd5e1, renderMode, 6);
+      const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 0.42, 24), armMaterial);
+      shoulder.position.set(2.8, 0.45, -1.4);
+      shoulder.castShadow = true;
+      addSelectable(shoulder, "arm", selectable, "Manipulator Shoulder");
+      registerAsset(shoulder, "arm");
+      scene.add(shoulder);
+      const upper = createBox(THREE, [0.26, 1.8, 0.26], [3.18, 1.32, -1.15], armMaterial, "arm", selectable, "Manipulator Link");
+      upper.rotation.z = -0.44;
+      registerAsset(upper, "arm");
+      scene.add(upper);
+      const forearm = createBox(THREE, [0.24, 1.46, 0.24], [3.78, 1.25, -0.1], armMaterial, "arm", selectable, "Manipulator Forearm");
+      forearm.rotation.z = 0.68;
+      registerAsset(forearm, "arm");
+      scene.add(forearm);
+    }
+
+    if (scenario.id === "pick" || scenario.id === "dataset") {
+      const binAssetId = scenario.id === "dataset" ? "target" : "bin";
+      const bin = createBox(
+        THREE,
+        [2.4, 0.52, 1.55],
+        [2.8, 0.34, 1.7],
+        binMaterial,
+        binAssetId,
+        selectable,
+        scenario.id === "dataset" ? "Inspection Target Tray" : "Part Bin",
+      );
+      registerAsset(bin, binAssetId);
+      scene.add(bin);
+      for (let i = 0; i < 8; i += 1) {
+        const partAssetId = scenario.id === "dataset" ? "target" : i === 2 ? "target" : "bin";
+        const part = new THREE.Mesh(new THREE.DodecahedronGeometry(0.18 + (i % 3) * 0.04), materialForMode(THREE, 0x22d3ee, renderMode, i));
+        part.position.set(2.1 + (i % 4) * 0.42, 0.76, 1.28 + Math.floor(i / 4) * 0.46);
+        part.castShadow = true;
+        addSelectable(part, partAssetId, selectable, scenario.id === "dataset" ? "Defect Variant" : "Pick Part");
+        registerAsset(part, partAssetId);
+        scene.add(part);
+      }
+    }
+
+    if (scenario.id === "pick" || scenario.id === "dataset") {
+      const cameraMaterial = materialForMode(THREE, 0x4b5563, renderMode, 8);
+      const mast = createBox(THREE, [0.12, 2.2, 0.12], [-2.8, 1.12, 2.6], cameraMaterial, "camera", selectable, "Camera Mast");
+      registerAsset(mast, "camera");
+      scene.add(mast);
+
+      const cameraHousing = createBox(THREE, [0.64, 0.34, 0.42], [-2.8, 2.28, 1.72], cameraMaterial, "camera", selectable, "RGBD Camera");
+      cameraHousing.rotation.x = -0.32;
+      registerAsset(cameraHousing, "camera");
+      scene.add(cameraHousing);
+
+      const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.16, 24), materialForMode(THREE, 0x020617, renderMode, 9));
+      lens.rotation.x = Math.PI / 2;
+      lens.position.set(-2.8, 2.18, 1.48);
+      lens.castShadow = true;
+      addSelectable(lens, "camera", selectable, "Camera Lens");
+      registerAsset(lens, "camera");
+      scene.add(lens);
+
+      const frustum = new THREE.Mesh(
+        new THREE.ConeGeometry(0.86, 1.8, 36, 1, true),
+        new THREE.MeshBasicMaterial({ color: 0x22d3ee, opacity: renderMode === "sensor" ? 0.22 : 0.12, transparent: true, wireframe: renderMode === "sensor" }),
+      );
+      frustum.rotation.x = -Math.PI / 2;
+      frustum.position.set(-2.8, 1.9, 0.68);
+      addSelectable(frustum, "camera", selectable, "Camera Frustum");
+      registerAsset(frustum, "camera");
+      scene.add(frustum);
+    }
+
+    if (scenario.id === "route" || scenario.id === "safety") {
+      const humanMaterial = materialForMode(THREE, 0xfbbf24, renderMode, 7);
+      const human = new THREE.Group();
+      const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.18, 0.72, 8, 16), humanMaterial);
+      body.position.y = 0.78;
+      body.castShadow = true;
+      addSelectable(body, "human", selectable, "Worker Actor");
+      human.add(body);
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), humanMaterial);
+      head.position.y = 1.32;
+      addSelectable(head, "human", selectable, "Worker Head");
+      human.add(head);
+      human.position.set(1.25, 0, -0.5);
+      registerAsset(human, "human");
+      scene.add(human);
+    }
+
+    if (scenario.id === "safety") {
+      const gateMaterial = materialForMode(THREE, 0xfbbf24, renderMode, 10);
+      const gateLeft = createBox(THREE, [0.16, 1.25, 0.16], [3.55, 0.65, -2.6], gateMaterial, "gate", selectable, "Restart Gate Post");
+      const gateRight = createBox(THREE, [0.16, 1.25, 0.16], [4.65, 0.65, -2.6], gateMaterial, "gate", selectable, "Restart Gate Post");
+      const gateBar = createBox(THREE, [1.28, 0.12, 0.14], [4.1, 1.24, -2.6], gateMaterial, "gate", selectable, "Restart Gate Bar");
+      const gatePanel = createBox(THREE, [0.56, 0.4, 0.08], [4.1, 0.58, -2.45], materialForMode(THREE, 0x162034, renderMode, 11), "gate", selectable, "Restart Gate Panel");
+      [gateLeft, gateRight, gateBar, gatePanel].forEach((part) => {
+        registerAsset(part, "gate");
+        scene.add(part);
+      });
+    }
+
+    if (scenario.id === "dataset") {
+      const lightRig = createBox(THREE, [0.92, 0.08, 0.54], [-3.85, 3.18, -1.35], materialForMode(THREE, 0xf8fafc, renderMode, 12), "light", selectable, "Randomized Area Light");
+      lightRig.rotation.z = 0.18;
+      registerAsset(lightRig, "light");
+      scene.add(lightRig);
+
+      const lightBeam = new THREE.Mesh(
+        new THREE.ConeGeometry(1.24, 2.55, 36, 1, true),
+        new THREE.MeshBasicMaterial({ color: 0xfbbf24, opacity: renderMode === "sensor" ? 0.18 : 0.1, transparent: true }),
+      );
+      lightBeam.position.set(-3.85, 1.78, -1.35);
+      addSelectable(lightBeam, "light", selectable, "Light Randomization Cone");
+      registerAsset(lightBeam, "light");
+      scene.add(lightBeam);
+
+      const datasetPacket = createBox(THREE, [1.44, 0.82, 0.08], [-2.1, 1.02, 3.25], materialForMode(THREE, 0x22d3ee, renderMode, 13), "dataset", selectable, "Label Export Packet");
+      registerAsset(datasetPacket, "dataset");
+      scene.add(datasetPacket);
+    }
+
+    const zoneMaterial = new THREE.MeshBasicMaterial({
+      color: scenario.id === "safety" ? 0xfbbf24 : 0x22d3ee,
+      transparent: true,
+      opacity: renderMode === "sensor" ? 0.22 : 0.13,
+      side: THREE.DoubleSide,
+    });
+    const safetyZone = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.8, 48), zoneMaterial);
+    safetyZone.rotation.x = -Math.PI / 2;
+    safetyZone.position.set(1.25, 0.045, -0.5);
+    safetyZone.userData.assetId = scenario.id === "safety" ? "zone" : "human";
+    selectable.push(safetyZone);
+    registerAsset(safetyZone, scenario.id === "safety" ? "zone" : "human");
+    scene.add(safetyZone);
+
+    const sensorCone = new THREE.Mesh(
+      new THREE.ConeGeometry(1.7, 3.4, 48, 1, true),
+      new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.16, wireframe: renderMode === "sensor" }),
+    );
+    sensorCone.rotation.x = Math.PI / 2;
+    sensorCone.position.set(0, 0.52, -1.72);
+    robotGroup.add(sensorCone);
+
+    const outlineMaterial = new THREE.LineBasicMaterial({ color: 0x9dff3a, transparent: true, opacity: 0.95 });
+    const selectionOutline = new THREE.BoxHelper(robotGroup, 0x9dff3a);
+    selectionOutline.material = outlineMaterial;
+    scene.add(selectionOutline);
+
+    let radius = 13;
+    let theta = 0.74;
+    let phi = 0.95;
+    const target = new THREE.Vector3(0, 0.45, 0);
+
+    const updateCamera = () => {
+      const x = radius * Math.sin(phi) * Math.sin(theta);
+      const y = radius * Math.cos(phi);
+      const z = radius * Math.sin(phi) * Math.cos(theta);
+      camera.position.set(x, y, z);
+      camera.lookAt(target);
+    };
+    updateCamera();
+
+    const resize = () => {
+      const rect = mount.getBoundingClientRect();
+      renderer.setSize(Math.max(rect.width, 1), Math.max(rect.height, 1), false);
+      camera.aspect = Math.max(rect.width, 1) / Math.max(rect.height, 1);
+      camera.updateProjectionMatrix();
+    };
+    resize();
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(mount);
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let dragging = false;
+    let moved = false;
+    let previousX = 0;
+    let previousY = 0;
+
+    const pointerToRay = (event: PointerEvent) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      dragging = true;
+      moved = false;
+      previousX = event.clientX;
+      previousY = event.clientY;
+      renderer.domElement.setPointerCapture(event.pointerId);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (!dragging) {
+        return;
+      }
+
+      const dx = event.clientX - previousX;
+      const dy = event.clientY - previousY;
+      if (Math.abs(dx) + Math.abs(dy) > 3) {
+        moved = true;
+      }
+      theta -= dx * 0.0075;
+      phi = Math.min(Math.PI * 0.48, Math.max(0.38, phi + dy * 0.006));
+      previousX = event.clientX;
+      previousY = event.clientY;
+      updateCamera();
+    };
+
+    const onPointerUp = (event: PointerEvent) => {
+      dragging = false;
+      renderer.domElement.releasePointerCapture(event.pointerId);
+
+      if (moved) {
+        return;
+      }
+
+      pointerToRay(event);
+      const hits = raycaster.intersectObjects(selectable, true);
+      const hit = hits.find((item) => item.object.userData.assetId);
+      const assetId = hit?.object.userData.assetId;
+      if (typeof assetId === "string") {
+        onSelectAsset(assetId);
+      }
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      radius = Math.min(22, Math.max(6, radius + event.deltaY * 0.012));
+      updateCamera();
+    };
+
+    renderer.domElement.addEventListener("pointerdown", onPointerDown);
+    renderer.domElement.addEventListener("pointermove", onPointerMove);
+    renderer.domElement.addEventListener("pointerup", onPointerUp);
+    renderer.domElement.addEventListener("wheel", onWheel, { passive: false });
+
+    let frameId = 0;
+    const startedAt = window.performance.now();
+    const targetPosition = new THREE.Vector3();
+
+    const animate = () => {
+      frameId = window.requestAnimationFrame(animate);
+      const elapsed = (window.performance.now() - startedAt) / 1000;
+      const nextPoint = route[activeStepRef.current] ?? route[0] ?? new THREE.Vector3();
+      targetPosition.copy(nextPoint);
+      robotGroup.position.lerp(targetPosition, prefersReducedMotion ? 1 : 0.055);
+      const lookPoint = route[Math.min(activeStepRef.current + 1, route.length - 1)] ?? nextPoint;
+      robotGroup.lookAt(lookPoint.x, robotGroup.position.y, lookPoint.z);
+
+      if (runningRef.current && !prefersReducedMotion) {
+        robotTop.position.y = 0.72 + Math.sin(elapsed * 7) * 0.025;
+        sensorCone.rotation.z = Math.sin(elapsed * 2.4) * 0.24;
+      }
+
+      safetyZone.rotation.z += runningRef.current && !prefersReducedMotion ? 0.006 : 0;
+      cyanLight.intensity = 1.8 + Math.sin(elapsed * 1.7) * 0.4;
+
+      const selectedObjects = assetObjects.get(selectedAssetRef.current) ?? [robotGroup];
+      const selectedObject = selectedObjects[0] ?? robotGroup;
+      selectionOutline.setFromObject(selectedObject);
+      selectionOutline.visible = true;
+      renderer.render(scene, camera);
+    };
+    animate();
+
+      cleanupScene = () => {
+      window.cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+      renderer.domElement.removeEventListener("pointerdown", onPointerDown);
+      renderer.domElement.removeEventListener("pointermove", onPointerMove);
+      renderer.domElement.removeEventListener("pointerup", onPointerUp);
+      renderer.domElement.removeEventListener("wheel", onWheel);
+      const geometries = new Set<{ dispose: () => void }>();
+      const materials = new Set<Material>();
+      scene.traverse((object) => {
+        const mesh = object as Mesh;
+        if (mesh.geometry) {
+          geometries.add(mesh.geometry);
+        }
+        const material = mesh.material;
+        if (Array.isArray(material)) {
+          material.forEach((item) => materials.add(item));
+        } else if (material) {
+          materials.add(material);
+        }
+      });
+      geometries.forEach((geometry) => geometry.dispose());
+      materials.forEach((material) => material.dispose());
+      renderer.dispose();
+      mount.replaceChildren();
+      };
+    });
+
+    return () => {
+      cancelled = true;
+      cleanupScene?.();
+    };
+  }, [onSelectAsset, prefersReducedMotion, renderMode, resetSignal, scenario]);
 
   return (
-    <section className="overflow-hidden rounded-lg border border-white/10 bg-[#070907]/88 backdrop-blur-xl">
-      <div className="flex flex-col gap-4 border-b border-white/10 p-4 md:flex-row md:items-start md:justify-between md:p-5">
-        <div>
-          <p className="text-xs uppercase text-muted">Simulation stage</p>
-          <h2 className="mt-2 text-3xl leading-tight text-text-primary md:text-4xl">
-            {activeTrace.title}
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">{activeTrace.detail}</p>
-        </div>
-        <div className="grid min-w-48 gap-2 text-sm">
-          <div className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">
-            <p className="text-xs uppercase text-muted">Scene</p>
-            <p className="mt-1 text-text-primary">{scenario.scene}</p>
-          </div>
-          <div className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">
-            <p className="text-xs uppercase text-muted">Model</p>
-            <p className="mt-1 text-text-primary">{scenario.model}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="p-3 md:p-5">
-        <div className="relative min-h-[360px] overflow-hidden rounded-lg border border-white/10 bg-[#050705] md:min-h-[520px]">
-          <div className="simulation-grid absolute inset-0" />
-          <div className="absolute left-4 top-4 z-10 flex flex-wrap gap-2">
-            <span className="rounded-full border border-[#76B900]/35 bg-[#76B900]/10 px-3 py-1.5 text-xs text-[#d6ff99]">
-              Browser demo
-            </span>
-            <span className="rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1.5 text-xs text-cyan-100">
-              {isRunning ? "Sim running" : "Ready"}
-            </span>
-          </div>
-
-          <svg
-            aria-label={`${scenario.title} simulation visualization`}
-            className="absolute inset-0 h-full w-full"
-            preserveAspectRatio="none"
-            role="img"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id={`floor-${scenario.id}`} x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stopColor="#0b0f0b" />
-                <stop offset="62%" stopColor="#0a1412" />
-                <stop offset="100%" stopColor="#050705" />
-              </linearGradient>
-              <filter id={`soft-glow-${scenario.id}`} x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur result="coloredBlur" stdDeviation="1.4" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-            <rect fill={`url(#floor-${scenario.id})`} height="100" width="100" />
-
-            <g opacity="0.9">
-              <rect fill="#101710" height="8" rx="1.2" width="64" x="16" y="17" />
-              <rect fill="#101710" height="8" rx="1.2" width="56" x="28" y="35" />
-              <rect fill="#101710" height="8" rx="1.2" width="66" x="12" y="53" />
-              <rect fill="#101710" height="8" rx="1.2" width="50" x="24" y="72" />
-              <g stroke="#263326" strokeWidth="0.35">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <line key={`rack-${index}`} x1={19 + index * 7} x2={19 + index * 7} y1="17" y2="25" />
-                ))}
-                {Array.from({ length: 7 }).map((_, index) => (
-                  <line key={`rack-mid-${index}`} x1={31 + index * 7} x2={31 + index * 7} y1="35" y2="43" />
-                ))}
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <line key={`rack-low-${index}`} x1={15 + index * 7.5} x2={15 + index * 7.5} y1="53" y2="61" />
-                ))}
-              </g>
-            </g>
-
-            <g opacity="0.72">
-              <rect fill="rgba(251,191,36,0.16)" height="16" rx="2" stroke="#fbbf24" strokeDasharray="2 2" strokeWidth="0.45" width="18" x="49" y="41" />
-              <rect fill="rgba(118,185,0,0.12)" height="18" rx="2" stroke="#76B900" strokeWidth="0.45" width="18" x="75" y="20" />
-              <rect fill="rgba(34,211,238,0.1)" height="16" rx="2" stroke="#67e8f9" strokeWidth="0.45" width="18" x="9" y="67" />
-            </g>
-
-            {showBin ? (
-              <g opacity="0.95">
-                <rect fill="#141a16" height="17" rx="2" stroke="#3f4b42" strokeWidth="0.7" width="18" x="31" y="27" />
-                <circle cx="36" cy="34" fill="#76B900" opacity="0.72" r="2.3" />
-                <circle cx="42" cy="36" fill="#67e8f9" opacity="0.62" r="1.8" />
-                <path d="M62 69h14l-3 8H59z" fill="#111913" stroke="#3f4b42" strokeWidth="0.6" />
-              </g>
-            ) : null}
-
-            {showHuman ? (
-              <g filter={`url(#soft-glow-${scenario.id})`} opacity="0.9">
-                <circle cx="56" cy="44" fill="rgba(251,191,36,0.14)" r="8" stroke="#fbbf24" strokeDasharray="2 2" strokeWidth="0.55" />
-                <circle cx="56" cy="44" fill="#fbbf24" r="1.8" />
-                <path d="M56 46v5m-3-2 3-3 3 3" stroke="#fef3c7" strokeLinecap="round" strokeWidth="0.8" />
-              </g>
-            ) : null}
-
-            <polyline fill="none" opacity="0.5" points={routePoints} stroke="#6b7280" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3" />
-            <polyline className={isRunning ? "route-flow" : ""} fill="none" points={routePoints} stroke="#67e8f9" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.7" />
-            <polyline fill="none" points={completedPoints} stroke={robotColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-
-            {scenario.trace.map((step, index) => (
-              <g key={step.title} opacity={index <= activeStep ? 1 : 0.35}>
-                <circle cx={step.position.x} cy={step.position.y} fill={index <= activeStep ? robotColor : "#64748b"} r="1.3" />
-                <text fill="#cbd5e1" fontSize="2.2" x={step.position.x + 2.2} y={step.position.y - 1.8}>
-                  {index + 1}
-                </text>
-              </g>
-            ))}
-
-            <m.g
-              animate={{ x: activeTrace.position.x, y: activeTrace.position.y }}
-              initial={false}
-              transition={{ duration: prefersReducedMotion ? 0 : 0.72, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <circle className={isRunning ? "sensor-ring" : ""} fill="none" r="9" stroke={robotColor} strokeOpacity="0.34" strokeWidth="0.7" />
-              <path className={isRunning ? "sensor-sweep" : ""} d="M0 0 13 -5 A14 14 0 0 1 13 5Z" fill="rgba(103,232,249,0.16)" />
-              <rect fill="#0f172a" height="7" rx="1.6" stroke={robotColor} strokeWidth="0.8" width="9" x="-4.5" y="-3.5" />
-              <circle cx="2.4" cy="0" fill={robotColor} r="1.1" />
-              <path d="M-2.6-1.6h2.8M-2.6 1.6h2.8" stroke="#d1fae5" strokeLinecap="round" strokeWidth="0.55" />
-            </m.g>
-          </svg>
-
-          <div className="absolute bottom-4 left-4 right-4 z-10 grid gap-2 md:grid-cols-3">
-            {activeTrace.telemetry.map((item) => (
-              <div key={item.label} className="rounded-lg border border-white/10 bg-black/55 px-3 py-2 backdrop-blur-md">
-                <p className="text-xs uppercase text-muted">{item.label}</p>
-                <p className={item.tone === "watch" ? "mt-1 text-sm text-amber-100" : "mt-1 text-sm text-text-primary"}>
-                  {item.value}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <p className="mt-3 border-l border-white/15 pl-3 text-sm leading-6 text-text-primary/80">
-          {activeTrace.evidence}
-        </p>
-      </div>
-    </section>
+    <div
+      ref={mountRef}
+      aria-label={`${scenario.title} interactive 3D simulation viewport`}
+      className="h-full min-h-[440px] w-full cursor-grab overflow-hidden rounded-lg bg-black active:cursor-grabbing md:min-h-[620px]"
+      data-render-mode={renderMode}
+    />
   );
 }
 
@@ -1191,12 +1651,20 @@ function AgentPlaygroundPage() {
   const [selectedId, setSelectedId] = useState(playgroundScenarios[0].id);
   const [isRunning, setIsRunning] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [renderMode, setRenderMode] = useState<PlaygroundRenderMode>("rtx");
+  const [resetSignal, setResetSignal] = useState(0);
+  const [selectedAssetId, setSelectedAssetId] = useState(playgroundScenarios[0].assets[0].id);
   const selectedScenario =
     playgroundScenarios.find((scenario) => scenario.id === selectedId) ?? playgroundScenarios[0];
-  const visibleSteps = isRunning
-    ? selectedScenario.trace.slice(0, activeStep + 1)
-    : selectedScenario.trace;
   const activeTrace = selectedScenario.trace[activeStep] ?? selectedScenario.trace[0];
+  const selectedAsset =
+    selectedScenario.assets.find((asset) => asset.id === selectedAssetId) ?? selectedScenario.assets[0];
+  const renderModes: Array<{ id: PlaygroundRenderMode; label: string }> = [
+    { id: "rtx", label: "RTX preview" },
+    { id: "segmentation", label: "Segmentation" },
+    { id: "depth", label: "Depth" },
+    { id: "sensor", label: "Sensors" },
+  ];
 
   useEffect(() => {
     if (!isRunning) {
@@ -1209,40 +1677,48 @@ function AgentPlaygroundPage() {
       return undefined;
     }
 
-    if (activeStep >= selectedScenario.trace.length - 1) {
-      const timer = window.setTimeout(() => setIsRunning(false), 520);
-      return () => window.clearTimeout(timer);
-    }
-
     const timer = window.setTimeout(() => {
-      setActiveStep((step) => Math.min(step + 1, selectedScenario.trace.length - 1));
-    }, 760);
+      setActiveStep((step) => (step >= selectedScenario.trace.length - 1 ? 0 : step + 1));
+    }, 900);
 
     return () => window.clearTimeout(timer);
   }, [activeStep, isRunning, prefersReducedMotion, selectedScenario.trace.length]);
 
   const selectScenario = (scenarioId: string) => {
+    const nextScenario = playgroundScenarios.find((scenario) => scenario.id === scenarioId) ?? playgroundScenarios[0];
     setSelectedId(scenarioId);
     setIsRunning(false);
     setActiveStep(0);
+    setSelectedAssetId(nextScenario.assets[0].id);
+    setResetSignal((value) => value + 1);
   };
 
-  const runScenario = () => {
-    setActiveStep(0);
-    setIsRunning(true);
+  const togglePlayback = () => {
+    setIsRunning((running) => !running);
   };
+
+  const resetScenario = () => {
+    setIsRunning(false);
+    setActiveStep(0);
+    setSelectedAssetId(selectedScenario.assets[0].id);
+    setResetSignal((value) => value + 1);
+  };
+
+  const handleSelectAsset = useCallback((assetId: string) => {
+    setSelectedAssetId(assetId);
+  }, []);
 
   return (
-    <div className="min-h-screen overflow-hidden bg-bg text-text-primary">
+    <div className="min-h-screen overflow-hidden bg-[#030403] text-text-primary">
       <div className="fixed inset-0 -z-10">
-        <img alt="" className="h-full w-full object-cover opacity-32" src={HERO_IMAGE} srcSet={HERO_IMAGE_SRCSET} />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.76),#050505_66%),radial-gradient(circle_at_64%_18%,rgba(118,185,0,0.18),transparent_32%)]" />
+        <img alt="" className="h-full w-full object-cover opacity-20" src={HERO_IMAGE} srcSet={HERO_IMAGE_SRCSET} />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.86),#030403_58%),radial-gradient(circle_at_64%_18%,rgba(118,185,0,0.2),transparent_30%)]" />
       </div>
 
-      <header className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-5 py-5 md:px-8">
+      <header className="mx-auto flex max-w-[1720px] flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-6">
         <a
           aria-label="Back to Zach Wright portfolio"
-          className="inline-flex min-h-11 items-center gap-3 rounded-full border border-white/10 bg-bg/80 px-3 py-2 text-sm text-text-primary backdrop-blur-md transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+          className="inline-flex min-h-10 items-center gap-3 rounded-full border border-white/10 bg-black/70 px-3 py-2 text-sm text-text-primary backdrop-blur-md transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
           href="/"
         >
           <span className="grid h-7 w-7 place-items-center rounded-full bg-[#76B900] p-[1px]">
@@ -1252,16 +1728,23 @@ function AgentPlaygroundPage() {
           </span>
           <span>Physical AI Playground</span>
         </a>
-        <div className="flex items-center gap-2">
+
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex min-h-10 items-center rounded-full border border-[#76B900]/25 bg-[#76B900]/10 px-4 py-2 text-xs text-[#d6ff99]">
+            WebGL 3D demo active
+          </span>
+          <span className="hidden min-h-10 items-center rounded-full border border-amber-200/25 bg-amber-200/10 px-4 py-2 text-xs text-amber-100 md:inline-flex">
+            Omniverse stream not connected
+          </span>
           <a
-            className="hidden min-h-11 items-center gap-2 rounded-full border border-white/10 bg-bg/70 px-4 py-2 text-sm text-muted backdrop-blur-md transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary sm:inline-flex"
+            className="hidden min-h-10 items-center gap-2 rounded-full border border-white/10 bg-black/60 px-4 py-2 text-sm text-muted backdrop-blur-md transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary sm:inline-flex"
             href="https://developer.nvidia.com/omniverse?size=n_12_n&sort-field=featured&sort-direction=desc"
           >
             NVIDIA Omniverse
             <ArrowIcon className="h-4 w-4" />
           </a>
           <a
-            className="hidden min-h-11 items-center gap-2 rounded-full border border-white/10 bg-bg/70 px-4 py-2 text-sm text-muted backdrop-blur-md transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary md:inline-flex"
+            className="hidden min-h-10 items-center gap-2 rounded-full border border-white/10 bg-black/60 px-4 py-2 text-sm text-muted backdrop-blur-md transition-colors hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary lg:inline-flex"
             href={GITHUB_URL}
           >
             Code record
@@ -1270,17 +1753,15 @@ function AgentPlaygroundPage() {
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-[1500px] gap-5 px-5 pb-10 md:px-8 xl:grid-cols-[20rem_minmax(0,1fr)_23rem]">
-        <aside className="grid content-start gap-5">
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
-            <div className="mb-5 flex items-start justify-between gap-3">
+      <main className="mx-auto grid max-w-[1720px] gap-4 px-4 pb-8 md:px-6 xl:grid-cols-[19rem_minmax(0,1fr)_22rem]">
+        <aside className="grid content-start gap-4">
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs uppercase text-muted">Scenario queue</p>
-                <h1 className="mt-2 text-2xl leading-tight md:text-3xl">Robot test bench</h1>
+                <p className="text-xs uppercase text-muted">Stage browser</p>
+                <h1 className="mt-2 text-2xl leading-tight">3D robot lab</h1>
               </div>
-              <span className="rounded-full border border-[#76B900]/25 bg-[#76B900]/10 px-2.5 py-1 text-xs text-[#d6ff99]">
-                Local demo
-              </span>
+              <span className="rounded-full border border-[#76B900]/25 bg-[#76B900]/10 px-2.5 py-1 text-xs text-[#d6ff99]">Live</span>
             </div>
 
             <div className="space-y-2">
@@ -1303,96 +1784,223 @@ function AgentPlaygroundPage() {
                 );
               })}
             </div>
-
-            <div className="mt-5 border-t border-white/10 pt-5">
-              <p className="text-xs uppercase text-muted">Test objective</p>
-              <p className="mt-3 text-sm leading-6 text-text-primary/85">{selectedScenario.intent}</p>
-              <button
-                className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#76B900] px-5 py-3 text-sm font-medium text-black transition-colors hover:bg-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                onClick={runScenario}
-                type="button"
-              >
-                {isRunning ? "Running simulation" : "Run simulation"}
-                <ArrowIcon className="h-4 w-4" />
-              </button>
-            </div>
           </section>
 
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
-            <p className="text-xs uppercase text-muted">NVIDIA handoff path</p>
-            <p className="mt-3 text-sm leading-6 text-text-primary/85">{selectedScenario.nvidiaPath}</p>
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase text-muted">OpenUSD-style prims</p>
+            <p className="mt-2 font-mono text-xs text-[#d6ff99]">{selectedScenario.primRoot}</p>
+            <div className="mt-4 grid gap-2">
+              {selectedScenario.assets.map((asset) => (
+                <button
+                  key={asset.id}
+                  className={`rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary ${
+                    asset.id === selectedAsset.id
+                      ? "border-[#76B900]/45 bg-[#76B900]/10 text-text-primary"
+                      : "border-white/10 bg-white/[0.03] text-muted hover:border-white/20 hover:text-text-primary"
+                  }`}
+                  onClick={() => setSelectedAssetId(asset.id)}
+                  type="button"
+                >
+                  <span className="block text-sm font-medium">{asset.label}</span>
+                  <span className="mt-1 block font-mono text-[11px] leading-4 text-muted">{asset.path}</span>
+                </button>
+              ))}
+            </div>
           </section>
         </aside>
 
-        <div className="grid min-w-0 content-start gap-5">
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl md:p-5">
-            <div className="flex flex-col gap-4">
+        <div className="grid min-w-0 content-start gap-4">
+          <section className="overflow-hidden rounded-lg border border-white/10 bg-black/75 backdrop-blur-xl">
+            <div className="flex flex-col gap-4 border-b border-white/10 p-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-xs uppercase text-muted">Active model test</p>
-                <h2 className="mt-2 text-4xl leading-tight md:text-5xl">{selectedScenario.title}</h2>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-muted">{selectedScenario.outcome}</p>
+                <p className="text-xs uppercase text-muted">Interactive physical-AI scene</p>
+                <h2 className="mt-2 text-3xl leading-tight md:text-5xl">{selectedScenario.title}</h2>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">{selectedScenario.outcome}</p>
               </div>
-              <div className="grid gap-2 sm:grid-cols-2">
-                {selectedScenario.capabilities.map((capability) => (
-                  <span key={capability} className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-text-primary/85">
-                    {capability}
-                  </span>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#76B900] px-5 py-2 text-sm font-medium text-black transition-colors hover:bg-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+                  onClick={togglePlayback}
+                  type="button"
+                >
+                  {isRunning ? "Pause" : "Play scenario"}
+                </button>
+                <button
+                  className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-text-primary transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+                  onClick={resetScenario}
+                  type="button"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <div className="relative">
+              <ThreeSimulationViewport
+                activeStep={activeStep}
+                isRunning={isRunning}
+                onSelectAsset={handleSelectAsset}
+                prefersReducedMotion={prefersReducedMotion}
+                renderMode={renderMode}
+                resetSignal={resetSignal}
+                scenario={selectedScenario}
+                selectedAssetId={selectedAsset.id}
+              />
+
+              <div className="pointer-events-none absolute left-4 top-4 z-10 flex flex-wrap gap-2">
+                <span className="rounded-full border border-[#76B900]/35 bg-black/65 px-3 py-1.5 text-xs text-[#d6ff99] backdrop-blur-md">
+                  {renderModes.find((mode) => mode.id === renderMode)?.label}
+                </span>
+                <span className="rounded-full border border-cyan-300/25 bg-black/65 px-3 py-1.5 text-xs text-cyan-100 backdrop-blur-md">
+                  {isRunning ? "Playback running" : "Playback paused"}
+                </span>
+              </div>
+
+              <div className="absolute bottom-4 left-4 right-4 z-10 grid gap-2 md:grid-cols-3">
+                {activeTrace.telemetry.map((item) => (
+                  <div key={item.label} className="rounded-lg border border-white/10 bg-black/70 px-3 py-2 backdrop-blur-md">
+                    <p className="text-xs uppercase text-muted">{item.label}</p>
+                    <p className={item.tone === "watch" ? "mt-1 text-sm text-amber-100" : "mt-1 text-sm text-text-primary"}>
+                      {item.value}
+                    </p>
+                  </div>
                 ))}
               </div>
             </div>
           </section>
 
-          <SimulationStage
-            activeStep={activeStep}
-            isRunning={isRunning}
-            prefersReducedMotion={prefersReducedMotion}
-            scenario={selectedScenario}
-          />
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <div className="grid gap-4 lg:grid-cols-[1fr_0.82fr]">
+              <div>
+                <p className="text-xs uppercase text-muted">Scenario objective</p>
+                <p className="mt-3 text-sm leading-6 text-text-primary/85">{selectedScenario.intent}</p>
+                <p className="mt-3 border-l border-white/15 pl-3 text-sm leading-6 text-text-primary/80">{activeTrace.evidence}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase text-muted">Render modes</p>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  {renderModes.map((mode) => (
+                    <button
+                      key={mode.id}
+                      className={`rounded-lg border px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary ${
+                        mode.id === renderMode
+                          ? "border-[#76B900]/45 bg-[#76B900]/10 text-text-primary"
+                          : "border-white/10 bg-white/[0.03] text-muted hover:text-text-primary"
+                      }`}
+                      onClick={() => setRenderMode(mode.id)}
+                      type="button"
+                    >
+                      {mode.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
 
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl md:p-5">
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs uppercase text-muted">Run timeline</p>
-                <h2 className="mt-2 text-2xl leading-tight">Trace and evidence</h2>
+                <p className="text-xs uppercase text-muted">Timeline</p>
+                <h2 className="mt-2 text-2xl leading-tight">{activeTrace.title}</h2>
               </div>
               <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-muted">
                 Step {activeStep + 1}/{selectedScenario.trace.length}
               </span>
             </div>
 
-            <div className="grid gap-3">
-              {visibleSteps.map((step, index) => {
-                const current = index === activeStep;
-                return (
-                  <m.article
-                    key={`${selectedScenario.id}-${step.title}`}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`grid gap-4 rounded-lg border p-4 transition-colors md:grid-cols-[8rem_1fr] ${
-                      current ? "border-[#76B900]/35 bg-[#76B900]/10" : "border-white/10 bg-white/[0.025]"
-                    }`}
-                    initial={{ opacity: 0, y: 16 }}
-                    transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <div>
-                      <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs ${kindStyles[step.kind] ?? kindStyles.plan}`}>
-                        {step.kind}
-                      </span>
-                      <p className="mt-3 text-xs uppercase text-muted">{step.agent}</p>
-                    </div>
-                    <div>
-                      <h3 className="text-xl leading-tight text-text-primary">{step.title}</h3>
-                      <p className="mt-3 text-sm leading-6 text-muted">{step.detail}</p>
-                      <p className="mt-4 border-l border-white/15 pl-3 text-sm text-text-primary/85">{step.evidence}</p>
-                    </div>
-                  </m.article>
-                );
-              })}
+            <div className="grid gap-2 md:grid-cols-4">
+              {selectedScenario.trace.map((step, index) => (
+                <button
+                  key={`${selectedScenario.id}-${step.title}`}
+                  className={`rounded-lg border p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary ${
+                    index === activeStep ? "border-[#76B900]/45 bg-[#76B900]/10" : "border-white/10 bg-white/[0.03] hover:border-white/25"
+                  }`}
+                  onClick={() => {
+                    setActiveStep(index);
+                    setIsRunning(false);
+                  }}
+                  type="button"
+                >
+                  <span className={`inline-flex rounded-full border px-2 py-0.5 text-[11px] ${kindStyles[step.kind] ?? kindStyles.plan}`}>
+                    {step.kind}
+                  </span>
+                  <span className="mt-3 block text-sm font-medium text-text-primary">{step.title}</span>
+                  <span className="mt-2 block text-xs leading-5 text-muted">{step.agent}</span>
+                </button>
+              ))}
             </div>
           </section>
         </div>
 
-        <aside className="grid content-start gap-5">
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+        <aside className="grid content-start gap-4">
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase text-muted">Selected asset</p>
+            <h2 className="mt-2 text-2xl leading-tight">{selectedAsset.label}</h2>
+            <div className="mt-4 grid gap-3">
+              <div>
+                <p className="text-xs uppercase text-muted">Prim path</p>
+                <p className="mt-1 break-all font-mono text-xs leading-5 text-text-primary/85">{selectedAsset.path}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">
+                  <p className="text-xs uppercase text-muted">Type</p>
+                  <p className="mt-1 text-sm text-text-primary">{selectedAsset.type}</p>
+                </div>
+                <div className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2">
+                  <p className="text-xs uppercase text-muted">Status</p>
+                  <p className="mt-1 text-sm text-[#d6ff99]">{selectedAsset.status}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase text-muted">Omniverse runtime</p>
+            <p className="mt-3 text-sm leading-6 text-text-primary/85">{selectedScenario.runtime}</p>
+            <div className="mt-4 grid gap-2 text-sm">
+              {[
+                ["USD renderer", "ovrtx required"],
+                ["Browser delivery", "ovstream WebRTC"],
+                ["Current viewport", "Three.js demo"],
+                ["Isaac runtime", "not connected"],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between gap-3 border-b border-white/10 pb-2 last:border-b-0 last:pb-0">
+                  <span className="text-muted">{label}</span>
+                  <span className={value.includes("not") || value.includes("required") ? "text-amber-100" : "text-text-primary"}>
+                    {value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase text-muted">Eval gates</p>
+            <div className="mt-4 grid gap-2">
+              {selectedScenario.evals.map((evaluation) => (
+                <div key={evaluation.label} className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                  <span className="text-sm text-muted">{evaluation.label}</span>
+                  <span className={`rounded-full border px-2.5 py-1 text-xs ${toneClasses(evaluation.tone)}`}>
+                    {evaluation.result}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase text-muted">Capabilities</p>
+            <div className="mt-4 grid gap-2">
+              {selectedScenario.capabilities.map((capability) => (
+                <span key={capability} className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-text-primary/85">
+                  {capability}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <p className="text-xs uppercase text-muted">Test design</p>
             <div className="mt-4 grid gap-2">
               {selectedScenario.tests.map((test) => (
@@ -1404,7 +2012,7 @@ function AgentPlaygroundPage() {
             </div>
           </section>
 
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <p className="text-xs uppercase text-muted">Tool stack</p>
             <div className="mt-4 space-y-3">
               {selectedScenario.tools.map((tool) => (
@@ -1419,21 +2027,7 @@ function AgentPlaygroundPage() {
             </div>
           </section>
 
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
-            <p className="text-xs uppercase text-muted">Eval gates</p>
-            <div className="mt-4 grid gap-2">
-              {selectedScenario.evals.map((evaluation) => (
-                <div key={evaluation.label} className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                  <span className="text-sm text-muted">{evaluation.label}</span>
-                  <span className={`rounded-full border px-2.5 py-1 text-xs ${toneClasses(evaluation.tone)}`}>
-                    {evaluation.result}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <p className="text-xs uppercase text-muted">Artifacts</p>
             <div className="mt-4 grid gap-2">
               {selectedScenario.artifacts.map((artifact) => (
@@ -1452,15 +2046,9 @@ function AgentPlaygroundPage() {
             </div>
           </section>
 
-          <section className="rounded-lg border border-white/10 bg-bg/78 p-4 backdrop-blur-xl">
-            <p className="text-xs uppercase text-muted">Scoped memory</p>
-            <ul className="mt-4 space-y-3">
-              {selectedScenario.memory.map((memory) => (
-                <li key={memory} className="text-sm leading-6 text-text-primary/85">
-                  {memory}
-                </li>
-              ))}
-            </ul>
+          <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
+            <p className="text-xs uppercase text-muted">NVIDIA handoff path</p>
+            <p className="mt-3 text-sm leading-6 text-text-primary/85">{selectedScenario.nvidiaPath}</p>
           </section>
         </aside>
       </main>
