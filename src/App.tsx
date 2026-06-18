@@ -181,6 +181,7 @@ type PlaygroundScenario = {
   primRoot: string;
   runtime: string;
   scene: string;
+  simulationMode?: PlaygroundFact[];
   successCriteria?: PlaygroundFact[];
   tests: Array<{ label: string; status: string; tone: PlaygroundTone }>;
   title: string;
@@ -194,16 +195,16 @@ const playgroundScenarios: PlaygroundScenario[] = [
     id: "forklift",
     title: "Robotic forklift stacking trial",
     scene: "High-bay warehouse bay B-12",
-    model: "Forklift policy + lift controller",
+    model: "Deterministic demo + Isaac Lab policy plan",
     nvidiaPath: "Isaac Sim full_warehouse.usd -> rigged forklift USD -> ROS 2 sensor graph -> Isaac Lab policy eval -> Replicator SDG expansion",
     primRoot: "/World/ForkliftWarehouse",
-    runtime: "Browser WebGL demo; production run targets Isaac Sim forklift assets and an ovrtx/ovstream viewer",
+    runtime: "Browser WebGL deterministic trace; production run targets Isaac Sim forklift assets and an ovrtx/ovstream viewer",
     intent:
       "Validate an autonomous forklift that retrieves a 480 kg pallet from inbound staging, drives a mixed warehouse aisle, stacks it into rack bay B-12 level 2, then retrieves a return pallet without rack contact, load drop, or safety-zone breach.",
     outcome: "Pass when stacking and retrieval stay inside pose, clearance, load-stability, safety, and cycle-time gates",
     capabilities: ["Rigged 7-DOF forklift", "Prismatic fork lift", "RTX LiDAR + RGB-D", "ROS 2 bridge", "Replicator SDG", "Isaac Lab curriculum"],
     assets: [
-      { id: "forklift", label: "Autonomous Forklift F-12", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01", status: "policy running", type: "robot articulation" },
+      { id: "forklift", label: "Autonomous Forklift F-12", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01", status: "scripted eval", type: "robot articulation" },
       { id: "forks", label: "Fork Carriage + Tines", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01/Forks", status: "0.2-1.6 m lift", type: "actuated prismatic joint" },
       { id: "pallet", label: "Inbound Pallet P-42", path: "/World/ForkliftWarehouse/Pallets/Inbound_Pallet_42", status: "480 kg payload", type: "dynamic rigid body" },
       { id: "rack", label: "Rack Bay B-12 Level 2", path: "/World/ForkliftWarehouse/Racks/Bay_B12/Level_02", status: "target slot", type: "warehouse collider" },
@@ -229,6 +230,11 @@ const playgroundScenarios: PlaygroundScenario[] = [
       { label: "Lift and pallet stability", status: "pass", tone: "pass" },
       { label: "Retrieval cycle", status: "pass", tone: "pass" },
     ],
+    simulationMode: [
+      { label: "Website runtime", value: "Deterministic Three.js trace: route points, lift height, sensor volumes, and telemetry are scripted from scenario data.", tone: "pass" },
+      { label: "ML status", value: "No trained forklift policy runs in this browser demo; training is the Isaac Lab handoff defined below.", tone: "watch" },
+      { label: "Trial result", value: "The scripted single run reaches a pass gate; 94% is the multi-seed policy target that still needs training.", tone: "pass" },
+    ],
     successCriteria: [
       { label: "Place pose", value: "<= 5 cm XY and <= 3 deg yaw", tone: "pass" },
       { label: "Fork depth", value: ">= 85% tine insertion before lift", tone: "pass" },
@@ -245,7 +251,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
     ],
     trainingMetrics: [
       { label: "Reward terms", value: "Pose, fork depth, clearance, load stability, time" },
-      { label: "Policy success", value: "94% current / 98% target", tone: "watch" },
+      { label: "Policy target", value: "94% current / 98% target in Isaac Lab", tone: "watch" },
       { label: "Curriculum", value: "Empty pallet -> 480 kg load -> occluded rack" },
       { label: "Randomization", value: "1,280 seeds for lights, pallet mass, friction, rack pose" },
       { label: "Artifacts", value: "USD capture, ROS bag, Replicator labels, Isaac Lab metrics" },
@@ -324,16 +330,16 @@ const playgroundScenarios: PlaygroundScenario[] = [
         telemetry: [
           { label: "Success", value: "94%", tone: "watch" },
           { label: "Cycle", value: "82 s", tone: "pass" },
-          { label: "Gate", value: "train more", tone: "watch" },
+          { label: "Gate", value: "trial pass", tone: "pass" },
         ],
         title: "Score the experiment",
       },
     ],
     evals: [
+      { label: "Scripted trial result", result: "pass", tone: "pass" },
       { label: "Placement error", result: "3.2 cm", tone: "pass" },
       { label: "Rack/fork contacts", result: "0", tone: "pass" },
-      { label: "Load stability", result: "1.1 deg", tone: "pass" },
-      { label: "Policy success", result: "94%", tone: "watch" },
+      { label: "Policy target", result: "94%", tone: "watch" },
     ],
     artifacts: [
       { href: "https://docs.isaacsim.omniverse.nvidia.com/5.1.0/assets/usd_assets_environments.html", label: "Warehouse USD assets", metric: "scene" },
@@ -1923,7 +1929,7 @@ function ThreeSimulationViewport({
     <div
       ref={mountRef}
       aria-label={`${scenario.title} interactive 3D simulation viewport`}
-      className="h-full min-h-[440px] w-full cursor-grab overflow-hidden rounded-lg bg-black active:cursor-grabbing md:min-h-[620px]"
+      className="h-[58vh] min-h-[420px] max-h-[620px] w-full cursor-grab overflow-hidden rounded-lg bg-black active:cursor-grabbing"
       data-render-mode={renderMode}
     />
   );
@@ -1949,6 +1955,9 @@ function AgentPlaygroundPage() {
     { id: "sensor", label: "Sensors" },
   ];
   const experimentPanels: Array<{ items: PlaygroundFact[]; title: string }> = [];
+  if (selectedScenario.simulationMode?.length) {
+    experimentPanels.push({ items: selectedScenario.simulationMode, title: "Simulation structure" });
+  }
   if (selectedScenario.hardware?.length) {
     experimentPanels.push({ items: selectedScenario.hardware, title: "Hardware model" });
   }
@@ -1973,9 +1982,14 @@ function AgentPlaygroundPage() {
       return undefined;
     }
 
+    if (activeStep >= selectedScenario.trace.length - 1) {
+      setIsRunning(false);
+      return undefined;
+    }
+
     const timer = window.setTimeout(() => {
-      setActiveStep((step) => (step >= selectedScenario.trace.length - 1 ? 0 : step + 1));
-    }, 900);
+      setActiveStep((step) => Math.min(step + 1, selectedScenario.trace.length - 1));
+    }, 1100);
 
     return () => window.clearTimeout(timer);
   }, [activeStep, isRunning, prefersReducedMotion, selectedScenario.trace.length]);
@@ -1990,6 +2004,10 @@ function AgentPlaygroundPage() {
   };
 
   const togglePlayback = () => {
+    if (!isRunning && activeStep >= selectedScenario.trace.length - 1) {
+      setActiveStep(0);
+      setResetSignal((value) => value + 1);
+    }
     setIsRunning((running) => !running);
   };
 
@@ -2011,7 +2029,7 @@ function AgentPlaygroundPage() {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.86),#030403_58%),radial-gradient(circle_at_64%_18%,rgba(118,185,0,0.2),transparent_30%)]" />
       </div>
 
-      <header className="mx-auto flex max-w-[1720px] flex-wrap items-center justify-between gap-3 px-4 py-4 md:px-6">
+      <header className="mx-auto flex max-w-[1840px] flex-col items-start justify-between gap-3 px-4 py-4 sm:flex-row sm:items-center md:px-6">
         <a
           aria-label="Back to Zach Wright portfolio"
           className="inline-flex min-h-10 items-center gap-3 rounded-full border border-white/10 bg-black/70 px-3 py-2 text-sm text-text-primary backdrop-blur-md transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
@@ -2025,7 +2043,7 @@ function AgentPlaygroundPage() {
           <span>Physical AI Playground</span>
         </a>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
           <span className="inline-flex min-h-10 items-center rounded-full border border-[#76B900]/25 bg-[#76B900]/10 px-4 py-2 text-xs text-[#d6ff99]">
             WebGL 3D demo active
           </span>
@@ -2049,8 +2067,8 @@ function AgentPlaygroundPage() {
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-[1720px] gap-4 px-4 pb-8 md:px-6 xl:grid-cols-[19rem_minmax(0,1fr)_22rem]">
-        <aside className="grid content-start gap-4">
+      <main className="mx-auto grid max-w-[1840px] gap-5 px-4 pb-8 md:px-6 xl:grid-cols-[18rem_minmax(0,1fr)] min-[1850px]:grid-cols-[18rem_minmax(0,1fr)_20rem]">
+        <aside className="grid min-w-0 content-start gap-4">
           <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
@@ -2098,22 +2116,22 @@ function AgentPlaygroundPage() {
                   type="button"
                 >
                   <span className="block text-sm font-medium">{asset.label}</span>
-                  <span className="mt-1 block font-mono text-[11px] leading-4 text-muted">{asset.path}</span>
+                  <span className="mt-1 block break-all font-mono text-[11px] leading-4 text-muted">{asset.path}</span>
                 </button>
               ))}
             </div>
           </section>
         </aside>
 
-        <div className="grid min-w-0 content-start gap-4">
+        <div className="grid min-w-0 content-start gap-4 overflow-hidden">
           <section className="overflow-hidden rounded-lg border border-white/10 bg-black/75 backdrop-blur-xl">
-            <div className="flex flex-col gap-4 border-b border-white/10 p-4 md:flex-row md:items-center md:justify-between">
-              <div>
+            <div className="grid gap-4 border-b border-white/10 p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+              <div className="min-w-0">
                 <p className="text-xs uppercase text-muted">Interactive physical-AI scene</p>
-                <h2 className="mt-2 text-3xl leading-tight md:text-5xl">{selectedScenario.title}</h2>
+                <h2 className="mt-2 break-words text-3xl leading-tight md:text-5xl">{selectedScenario.title}</h2>
                 <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">{selectedScenario.outcome}</p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 md:justify-end">
                 <button
                   className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#76B900] px-5 py-2 text-sm font-medium text-black transition-colors hover:bg-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
                   onClick={togglePlayback}
@@ -2229,7 +2247,7 @@ function AgentPlaygroundPage() {
           </section>
         </div>
 
-        <aside className="grid content-start gap-4">
+        <aside className="grid min-w-0 content-start gap-4 xl:col-start-2 min-[1850px]:col-start-auto">
           <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <p className="text-xs uppercase text-muted">Selected asset</p>
             <h2 className="mt-2 text-2xl leading-tight">{selectedAsset.label}</h2>
@@ -2258,7 +2276,8 @@ function AgentPlaygroundPage() {
               {[
                 ["USD renderer", "ovrtx required"],
                 ["Browser delivery", "ovstream WebRTC"],
-                ["Current viewport", "Three.js demo"],
+                ["Current viewport", "deterministic Three.js"],
+                ["ML policy", selectedScenario.simulationMode?.length ? "Isaac Lab handoff" : "not connected"],
                 ["Isaac runtime", "not connected"],
               ].map(([label, value]) => (
                 <div key={label} className="flex items-center justify-between gap-3 border-b border-white/10 pb-2 last:border-b-0 last:pb-0">
