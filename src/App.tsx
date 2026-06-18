@@ -195,16 +195,16 @@ const playgroundScenarios: PlaygroundScenario[] = [
     id: "forklift",
     title: "Robotic forklift stacking trial",
     scene: "High-bay warehouse bay B-12",
-    model: "Deterministic demo + Isaac Lab policy plan",
+    model: "Deterministic task playback + Isaac Lab policy plan",
     nvidiaPath: "Isaac Sim full_warehouse.usd -> rigged forklift USD -> ROS 2 sensor graph -> Isaac Lab policy eval -> Replicator SDG expansion",
     primRoot: "/World/ForkliftWarehouse",
-    runtime: "Browser WebGL deterministic trace; production run targets Isaac Sim forklift assets and an ovrtx/ovstream viewer",
+    runtime: "Browser WebGL deterministic task playback; production run targets Isaac Sim forklift assets and an ovrtx/ovstream viewer",
     intent:
       "Validate an autonomous forklift that retrieves a 480 kg pallet from inbound staging, drives a mixed warehouse aisle, stacks it into rack bay B-12 level 2, then retrieves a return pallet without rack contact, load drop, or safety-zone breach.",
     outcome: "Pass when stacking and retrieval stay inside pose, clearance, load-stability, safety, and cycle-time gates",
     capabilities: ["Rigged 7-DOF forklift", "Prismatic fork lift", "RTX LiDAR + RGB-D", "ROS 2 bridge", "Replicator SDG", "Isaac Lab curriculum"],
     assets: [
-      { id: "forklift", label: "Autonomous Forklift F-12", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01", status: "scripted eval", type: "robot articulation" },
+      { id: "forklift", label: "Autonomous Forklift F-12", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01", status: "state-machine eval", type: "robot articulation" },
       { id: "forks", label: "Fork Carriage + Tines", path: "/World/ForkliftWarehouse/Robots/Forklift_Rigged_01/Forks", status: "0.2-1.6 m lift", type: "actuated prismatic joint" },
       { id: "pallet", label: "Inbound Pallet P-42", path: "/World/ForkliftWarehouse/Pallets/Inbound_Pallet_42", status: "480 kg payload", type: "dynamic rigid body" },
       { id: "rack", label: "Rack Bay B-12 Level 2", path: "/World/ForkliftWarehouse/Racks/Bay_B12/Level_02", status: "target slot", type: "warehouse collider" },
@@ -231,7 +231,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
       { label: "Retrieval cycle", status: "pass", tone: "pass" },
     ],
     simulationMode: [
-      { label: "Website runtime", value: "Deterministic Three.js trace: route points, lift height, sensor volumes, and telemetry are scripted from scenario data.", tone: "pass" },
+      { label: "Website runtime", value: "Deterministic Three.js task playback: route, fork insertion, lift, pallet ownership, rack placement, retrieval, and telemetry are driven as a visible state machine.", tone: "pass" },
       { label: "ML status", value: "No trained forklift policy runs in this browser demo; training is the Isaac Lab handoff defined below.", tone: "watch" },
       { label: "Trial result", value: "The scripted single run reaches a pass gate; 94% is the multi-seed policy target that still needs training.", tone: "pass" },
     ],
@@ -272,9 +272,9 @@ const playgroundScenarios: PlaygroundScenario[] = [
         kind: "sim",
         position: { x: 34, y: 62 },
         telemetry: [
-          { label: "Sim", value: "00:00" },
-          { label: "Payload", value: "480 kg", tone: "pass" },
-          { label: "Fork", value: "0.20 m", tone: "pass" },
+          { label: "Pallet", value: "staged", tone: "pass" },
+          { label: "Fork", value: "lowered", tone: "pass" },
+          { label: "Task", value: "ready", tone: "pass" },
         ],
         title: "Build the forklift world",
       },
@@ -286,8 +286,8 @@ const playgroundScenarios: PlaygroundScenario[] = [
         kind: "sensor",
         position: { x: 42, y: 58 },
         telemetry: [
-          { label: "Offset", value: "1.8 cm", tone: "pass" },
           { label: "Tine", value: "92%", tone: "pass" },
+          { label: "Payload", value: "attached", tone: "pass" },
           { label: "Slip", value: "0.04 g", tone: "pass" },
         ],
         title: "Acquire the pallet",
@@ -301,7 +301,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
         position: { x: 56, y: 52 },
         telemetry: [
           { label: "Lift", value: "1.62 m", tone: "pass" },
-          { label: "Clear", value: "7.5 cm", tone: "watch" },
+          { label: "Slot", value: "inserting", tone: "watch" },
           { label: "Contact", value: "0", tone: "pass" },
         ],
         title: "Stack level B-12",
@@ -314,9 +314,9 @@ const playgroundScenarios: PlaygroundScenario[] = [
         kind: "retrieve",
         position: { x: 64, y: 47 },
         telemetry: [
-          { label: "Error", value: "3.2 cm", tone: "pass" },
-          { label: "Sway", value: "1.1 deg", tone: "pass" },
-          { label: "Rack", value: "clear", tone: "pass" },
+          { label: "Placed", value: "rack L2", tone: "pass" },
+          { label: "Backout", value: "clear", tone: "pass" },
+          { label: "Rack", value: "0 contact", tone: "pass" },
         ],
         title: "Retrieve the return pallet",
       },
@@ -328,7 +328,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
         kind: "gate",
         position: { x: 76, y: 38 },
         telemetry: [
-          { label: "Success", value: "94%", tone: "watch" },
+          { label: "Retrieved", value: "payload", tone: "pass" },
           { label: "Cycle", value: "82 s", tone: "pass" },
           { label: "Gate", value: "trial pass", tone: "pass" },
         ],
@@ -1271,6 +1271,11 @@ function readInitialPlaygroundStep(scenario: PlaygroundScenario) {
   return Math.min(Math.max(parsedStep - 1, 0), scenario.trace.length - 1);
 }
 
+function smoothUnit(value: number) {
+  const clamped = Math.min(1, Math.max(0, value));
+  return clamped * clamped * (3 - 2 * clamped);
+}
+
 function replacePlaygroundScenarioParam(scenarioId: string) {
   if (typeof window === "undefined") {
     return;
@@ -1371,11 +1376,13 @@ function ThreeSimulationViewport({
 }) {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const activeStepRef = useRef(activeStep);
+  const activeStepStartedAtRef = useRef(0);
   const runningRef = useRef(isRunning);
   const selectedAssetRef = useRef(selectedAssetId);
 
   useEffect(() => {
     activeStepRef.current = activeStep;
+    activeStepStartedAtRef.current = window.performance.now();
   }, [activeStep]);
 
   useEffect(() => {
@@ -1542,6 +1549,9 @@ function ThreeSimulationViewport({
     const robotTopPosition: [number, number, number] =
       isForkliftScenario ? [-0.28, robotTopBaseY, 0.08] : [0.04, robotTopBaseY, 0];
     let forkliftLiftGroup: Object3D | null = null;
+    let carriedPallet: Object3D | null = null;
+    let stagedPallet: Object3D | null = null;
+    let placedPallet: Object3D | null = null;
     let sensorCone: Mesh | null = null;
     let safetyZone: Mesh | null = null;
     const robotBase = createBox(
@@ -1603,7 +1613,7 @@ function ThreeSimulationViewport({
         liftGroup.add(part);
       });
 
-      const carriedPallet = createBox(
+      carriedPallet = createBox(
         THREE,
         [1.18, 0.46, 0.92],
         [0, 0.54, -1.52],
@@ -1612,6 +1622,7 @@ function ThreeSimulationViewport({
         selectable,
         "Carried Pallet P-42",
       );
+      carriedPallet.visible = false;
       registerAsset(carriedPallet, "pallet");
       liftGroup.add(carriedPallet);
       robotGroup.add(liftGroup);
@@ -1643,6 +1654,43 @@ function ThreeSimulationViewport({
 
     if (isForkliftScenario) {
       const targetMaterial = materialForMode(THREE, 0x9dff3a, renderMode, 9);
+      const stagingForward = (route[1] ?? new THREE.Vector3(1, 0, 0))
+        .clone()
+        .sub(route[0] ?? new THREE.Vector3())
+        .setY(0)
+        .normalize();
+      const stagingPosition = (route[0] ?? new THREE.Vector3())
+        .clone()
+        .add(stagingForward.multiplyScalar(1.42));
+      const stagingPad = createBox(
+        THREE,
+        [1.9, 0.04, 1.2],
+        [stagingPosition.x, 0.03, stagingPosition.z],
+        new THREE.MeshStandardMaterial({
+          color: 0x15331f,
+          emissive: 0x102a16,
+          emissiveIntensity: 0.16,
+          roughness: 0.7,
+        }),
+        "pallet",
+        selectable,
+        "Inbound Staging Pad",
+      );
+      registerAsset(stagingPad, "pallet");
+      scene.add(stagingPad);
+
+      stagedPallet = createBox(
+        THREE,
+        [1.18, 0.46, 0.92],
+        [stagingPosition.x, 0.31, stagingPosition.z],
+        palletMaterial,
+        "pallet",
+        selectable,
+        "Inbound Pallet P-42",
+      );
+      registerAsset(stagedPallet, "pallet");
+      scene.add(stagedPallet);
+
       const slotParts = [
         createBox(THREE, [1.85, 0.08, 0.12], [0.92, 1.62, 0.36], targetMaterial, "rack", selectable, "Target Slot Front Beam"),
         createBox(THREE, [1.85, 0.08, 0.12], [0.92, 1.18, 0.36], targetMaterial, "rack", selectable, "Target Slot Lower Beam"),
@@ -1654,24 +1702,18 @@ function ThreeSimulationViewport({
         scene.add(part);
       });
 
-      const targetPallet = createBox(
+      placedPallet = createBox(
         THREE,
         [1.18, 0.38, 0.86],
         [0.92, 1.38, 0.78],
-        new THREE.MeshStandardMaterial({
-          color: 0x76b900,
-          emissive: 0x3a5e00,
-          emissiveIntensity: renderMode === "sensor" ? 0.32 : 0.12,
-          opacity: 0.42,
-          transparent: true,
-          roughness: 0.42,
-        }),
-        "rack",
+        palletMaterial,
+        "pallet",
         selectable,
-        "Target Pallet Ghost",
+        "Placed Pallet P-42",
       );
-      registerAsset(targetPallet, "rack");
-      scene.add(targetPallet);
+      placedPallet.visible = false;
+      registerAsset(placedPallet, "pallet");
+      scene.add(placedPallet);
     }
 
     if (isPickCellScenario) {
@@ -1931,11 +1973,20 @@ function ThreeSimulationViewport({
     const animate = () => {
       frameId = window.requestAnimationFrame(animate);
       const elapsed = (window.performance.now() - startedAt) / 1000;
+      const stepElapsed = activeStepStartedAtRef.current
+        ? (window.performance.now() - activeStepStartedAtRef.current) / 1000
+        : 1;
+      const stepProgress = runningRef.current && !prefersReducedMotion ? smoothUnit(stepElapsed / 1.05) : 1;
       const nextPoint = route[activeStepRef.current] ?? route[0] ?? new THREE.Vector3();
       targetPosition.copy(nextPoint);
       if (isMobileRobotScenario) {
-        robotGroup.position.lerp(targetPosition, prefersReducedMotion ? 1 : 0.055);
-        const lookPoint = route[Math.min(activeStepRef.current + 1, route.length - 1)] ?? nextPoint;
+        robotGroup.position.lerp(targetPosition, runningRef.current && !prefersReducedMotion ? 0.055 : 1);
+        const lookPoint =
+          activeStepRef.current < route.length - 1
+            ? route[activeStepRef.current + 1]
+            : nextPoint
+                .clone()
+                .add(nextPoint.clone().sub(route[Math.max(activeStepRef.current - 1, 0)] ?? nextPoint));
         robotGroup.lookAt(lookPoint.x, robotGroup.position.y, lookPoint.z);
       } else if (stationaryRigPosition) {
         robotGroup.position.copy(stationaryRigPosition);
@@ -1951,9 +2002,27 @@ function ThreeSimulationViewport({
       }
 
       if (forkliftLiftGroup) {
-        const liftTarget = activeStepRef.current >= 2 ? 0.92 : activeStepRef.current >= 1 ? 0.18 : 0;
-        forkliftLiftGroup.position.y += (liftTarget - forkliftLiftGroup.position.y) * (prefersReducedMotion ? 1 : 0.08);
+        const forkliftStep = activeStepRef.current;
+        const liftTarget = forkliftStep === 2 || forkliftStep === 3 ? 0.92 : forkliftStep >= 1 ? 0.18 : 0;
+        const forkInsertionTarget = forkliftStep === 2 ? -0.34 : forkliftStep === 3 ? -0.48 : forkliftStep >= 1 ? -0.16 : 0;
+        const liftAlpha = runningRef.current && !prefersReducedMotion ? 0.08 : 1;
+        forkliftLiftGroup.position.y += (liftTarget - forkliftLiftGroup.position.y) * liftAlpha;
+        forkliftLiftGroup.position.z += (forkInsertionTarget - forkliftLiftGroup.position.z) * liftAlpha;
         forkliftLiftGroup.rotation.x = runningRef.current && !prefersReducedMotion ? Math.sin(elapsed * 4.2) * 0.015 : 0;
+
+        if (stagedPallet) {
+          stagedPallet.visible = forkliftStep === 0 || (forkliftStep === 1 && stepProgress < 0.42);
+        }
+        if (placedPallet) {
+          placedPallet.visible = forkliftStep === 3 && stepProgress < 0.54;
+        }
+        if (carriedPallet) {
+          carriedPallet.visible =
+            (forkliftStep === 1 && stepProgress >= 0.42) ||
+            forkliftStep === 2 ||
+            (forkliftStep === 3 && stepProgress >= 0.54) ||
+            forkliftStep >= 4;
+        }
       }
 
       if (safetyZone) {
@@ -1962,7 +2031,7 @@ function ThreeSimulationViewport({
       cyanLight.intensity = 1.8 + Math.sin(elapsed * 1.7) * 0.4;
 
       const selectedObjects = assetObjects.get(selectedAssetRef.current) ?? [robotGroup];
-      const selectedObject = selectedObjects[0] ?? robotGroup;
+      const selectedObject = selectedObjects.find((object) => object.visible) ?? selectedObjects[0] ?? robotGroup;
       selectionOutline.setFromObject(selectedObject);
       selectionOutline.visible = true;
       renderer.render(scene, camera);
@@ -2071,12 +2140,13 @@ function AgentPlaygroundPage() {
       return undefined;
     }
 
+    const playbackStepMs = selectedScenario.id === "forklift" ? 1650 : 1100;
     const timer = window.setTimeout(() => {
       setActiveStep((step) => Math.min(step + 1, selectedScenario.trace.length - 1));
-    }, 1100);
+    }, playbackStepMs);
 
     return () => window.clearTimeout(timer);
-  }, [activeStep, isRunning, prefersReducedMotion, selectedScenario.trace.length]);
+  }, [activeStep, isRunning, prefersReducedMotion, selectedScenario.id, selectedScenario.trace.length]);
 
   const selectScenario = (scenarioId: string) => {
     const nextScenario = getPlaygroundScenarioById(scenarioId);
