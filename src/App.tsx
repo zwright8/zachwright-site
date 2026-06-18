@@ -7,7 +7,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import type { Material, Mesh, Object3D } from "three";
-import { type MouseEvent, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { type MouseEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import updatesIndex from "../updates/index.json";
 
@@ -191,6 +191,139 @@ type PlaygroundScenario = {
   validationNote?: string;
 };
 
+type ForkliftTrial = {
+  aisleWidthM: number;
+  description: string;
+  forkInsertionPct: number;
+  frictionCoefficient: number;
+  id: string;
+  label: string;
+  liftHeightM: number;
+  obstacleDistanceM: number;
+  palletMassKg: number;
+  placementOffsetCm: number;
+  rackClearanceCm: number;
+  routeDeviationCm: number;
+  seed: string;
+  speedMps: number;
+  yawErrorDeg: number;
+};
+
+type ForkliftGate = {
+  label: string;
+  passed: boolean;
+  target: string;
+  value: string;
+};
+
+type ForkliftExperimentResult = {
+  evidenceGates: Array<{ label: string; result: string; tone: PlaygroundTone }>;
+  failureReasons: string[];
+  gates: ForkliftGate[];
+  handoff: PlaygroundFact[];
+  metrics: {
+    contactCount: number;
+    cycleTimeSec: number;
+    loadSwayDeg: number;
+    minRackClearanceCm: number;
+    placementErrorCm: number;
+    safetyMarginM: number;
+    slipSpikeG: number;
+  };
+  primaryFailure: "clearance" | "cycle" | "fork-insertion" | "placement" | "safety" | "stability" | null;
+  score: number;
+  success: boolean;
+  trial: ForkliftTrial;
+};
+
+const forkliftTrials: ForkliftTrial[] = [
+  {
+    aisleWidthM: 3.1,
+    description: "Baseline rack placement with a 480 kg load, dry floor, and generous aisle clearance.",
+    forkInsertionPct: 92,
+    frictionCoefficient: 0.72,
+    id: "nominal",
+    label: "Nominal stack + retrieve",
+    liftHeightM: 1.62,
+    obstacleDistanceM: 2.6,
+    palletMassKg: 480,
+    placementOffsetCm: 1.8,
+    rackClearanceCm: 9.2,
+    routeDeviationCm: 2.2,
+    seed: "FLT-NOM-042",
+    speedMps: 0.95,
+    yawErrorDeg: 1.1,
+  },
+  {
+    aisleWidthM: 2.62,
+    description: "Tight rack pose with limited side clearance and higher yaw error at insertion.",
+    forkInsertionPct: 88,
+    frictionCoefficient: 0.7,
+    id: "tight-rack",
+    label: "Tight rack clearance",
+    liftHeightM: 1.62,
+    obstacleDistanceM: 2.25,
+    palletMassKg: 480,
+    placementOffsetCm: 4.8,
+    rackClearanceCm: 4.8,
+    routeDeviationCm: 6.6,
+    seed: "FLT-RCK-117",
+    speedMps: 0.88,
+    yawErrorDeg: 3.6,
+  },
+  {
+    aisleWidthM: 2.95,
+    description: "Overweight pallet on a lower-friction floor to expose load sway and slip margins.",
+    forkInsertionPct: 92,
+    frictionCoefficient: 0.46,
+    id: "heavy-wet-floor",
+    label: "Heavy pallet / wet floor",
+    liftHeightM: 1.58,
+    obstacleDistanceM: 2.4,
+    palletMassKg: 720,
+    placementOffsetCm: 3.0,
+    rackClearanceCm: 8.0,
+    routeDeviationCm: 4.2,
+    seed: "FLT-FRC-209",
+    speedMps: 1.0,
+    yawErrorDeg: 2.2,
+  },
+  {
+    aisleWidthM: 3.05,
+    description: "Fork pockets are partially missed; the controller should fail the lift before accepting the run.",
+    forkInsertionPct: 72,
+    frictionCoefficient: 0.71,
+    id: "under-inserted",
+    label: "Under-inserted forks",
+    liftHeightM: 1.2,
+    obstacleDistanceM: 2.5,
+    palletMassKg: 480,
+    placementOffsetCm: 2.5,
+    rackClearanceCm: 8.5,
+    routeDeviationCm: 3.0,
+    seed: "FLT-TIN-066",
+    speedMps: 0.82,
+    yawErrorDeg: 1.8,
+  },
+  {
+    aisleWidthM: 3.0,
+    description: "A worker enters the protective field during retrieval; the trial should fail the safety margin.",
+    forkInsertionPct: 91,
+    frictionCoefficient: 0.69,
+    id: "human-encroachment",
+    label: "Human encroachment",
+    liftHeightM: 1.62,
+    obstacleDistanceM: 0.82,
+    palletMassKg: 480,
+    placementOffsetCm: 2.1,
+    rackClearanceCm: 8.4,
+    routeDeviationCm: 2.8,
+    seed: "FLT-SAFE-314",
+    speedMps: 1.1,
+    yawErrorDeg: 1.4,
+  },
+];
+
 const playgroundScenarios: PlaygroundScenario[] = [
   {
     id: "forklift",
@@ -236,7 +369,7 @@ const playgroundScenarios: PlaygroundScenario[] = [
     simulationMode: [
       { label: "Website runtime", value: "Deterministic Three.js task playback: route, fork insertion, lift, pallet ownership, rack placement, retrieval, and telemetry are driven as a visible state machine.", tone: "pass" },
       { label: "ML status", value: "No trained forklift policy runs in this browser demo; training is the Isaac Lab handoff defined below.", tone: "watch" },
-      { label: "Trial result", value: "The scripted single run reaches a pass gate; 94% is the multi-seed policy target that still needs training.", tone: "pass" },
+      { label: "Trial result", value: "The selected seed is scored by deterministic browser gates; policy success still needs Isaac Lab rollout evidence.", tone: "watch" },
     ],
     successCriteria: [
       { label: "Place pose", value: "<= 5 cm XY and <= 3 deg yaw", tone: "pass" },
@@ -1287,6 +1420,153 @@ function smoothUnit(value: number) {
   return clamped * clamped * (3 - 2 * clamped);
 }
 
+function roundTo(value: number, decimals: number) {
+  const scale = 10 ** decimals;
+  return Math.round(value * scale) / scale;
+}
+
+function getForkliftTrialById(trialId: string | null | undefined) {
+  return forkliftTrials.find((trial) => trial.id === trialId) ?? forkliftTrials[0];
+}
+
+function readInitialForkliftTrialId() {
+  if (typeof window === "undefined") {
+    return forkliftTrials[0].id;
+  }
+
+  return getForkliftTrialById(new URLSearchParams(window.location.search).get("trial")).id;
+}
+
+function replacePlaygroundTrialParam(trialId: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set("scenario", "forklift");
+  nextUrl.searchParams.set("trial", trialId);
+  nextUrl.searchParams.delete("step");
+  window.history.replaceState(null, "", `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+}
+
+function evaluateForkliftTrial(trial: ForkliftTrial): ForkliftExperimentResult {
+  const massPenalty = Math.max(0, (trial.palletMassKg - 480) / 160);
+  const lowFrictionPenalty = Math.max(0, (0.68 - trial.frictionCoefficient) * 4);
+  const speedPenalty = Math.max(0, trial.speedMps - 0.9);
+  const shallowForkPenalty = Math.max(0, 92 - trial.forkInsertionPct);
+
+  const placementErrorCm = roundTo(
+    Math.abs(trial.placementOffsetCm) + Math.abs(trial.yawErrorDeg) * 0.8 + shallowForkPenalty * 0.12,
+    1,
+  );
+  const minRackClearanceCm = roundTo(
+    trial.rackClearanceCm - Math.abs(trial.yawErrorDeg) * 1.6 - Math.max(0, trial.routeDeviationCm - 4) * 0.8,
+    1,
+  );
+  const loadSwayDeg = roundTo(
+    0.7 + massPenalty * 1.2 + lowFrictionPenalty * 1.1 + speedPenalty * 0.8 + Math.max(0, 90 - trial.forkInsertionPct) * 0.08,
+    1,
+  );
+  const slipSpikeG = roundTo(0.03 + massPenalty * 0.03 + lowFrictionPenalty * 0.05 + shallowForkPenalty * 0.002, 2);
+  const cycleTimeSec = Math.round(
+    72 + massPenalty * 5 + Math.max(0, 0.95 - trial.speedMps) * 12 + Math.max(0, 2.8 - trial.aisleWidthM) * 12,
+  );
+  const brakingDistanceM = 0.45 + trial.speedMps * 0.6;
+  const safetyMarginM = roundTo(trial.obstacleDistanceM - brakingDistanceM, 2);
+  const contactCount = minRackClearanceCm >= 3 ? 0 : 1;
+
+  const gates: ForkliftGate[] = [
+    {
+      label: "Place pose",
+      passed: placementErrorCm <= 5 && Math.abs(trial.yawErrorDeg) <= 3,
+      target: "<= 5 cm XY, <= 3 deg yaw",
+      value: `${placementErrorCm} cm / ${trial.yawErrorDeg.toFixed(1)} deg`,
+    },
+    {
+      label: "Fork insertion",
+      passed: trial.forkInsertionPct >= 85,
+      target: ">= 85% tine depth before lift",
+      value: `${trial.forkInsertionPct}%`,
+    },
+    {
+      label: "Rack clearance",
+      passed: minRackClearanceCm >= 3 && contactCount === 0,
+      target: ">= 3 cm clearance, 0 contacts",
+      value: `${minRackClearanceCm} cm / ${contactCount} contacts`,
+    },
+    {
+      label: "Load stability",
+      passed: loadSwayDeg <= 2 && slipSpikeG <= 0.15,
+      target: "<= 2 deg sway, <= 0.15 g slip",
+      value: `${loadSwayDeg} deg / ${slipSpikeG.toFixed(2)} g`,
+    },
+    {
+      label: "Safety field",
+      passed: safetyMarginM >= 0.5,
+      target: ">= 0.5 m after braking distance",
+      value: `${safetyMarginM} m margin`,
+    },
+    {
+      label: "Cycle time",
+      passed: cycleTimeSec <= 90,
+      target: "<= 90 s stack + retrieve",
+      value: `${cycleTimeSec} s`,
+    },
+  ];
+
+  const failureReasons = gates.filter((gate) => !gate.passed).map((gate) => `${gate.label}: ${gate.value} misses ${gate.target}`);
+  const primaryFailure = !gates[0].passed
+    ? "placement"
+    : !gates[1].passed
+      ? "fork-insertion"
+      : !gates[2].passed
+        ? "clearance"
+        : !gates[3].passed
+          ? "stability"
+          : !gates[4].passed
+            ? "safety"
+            : !gates[5].passed
+              ? "cycle"
+              : null;
+  const passedGateCount = gates.filter((gate) => gate.passed).length;
+  const score = Math.max(0, Math.min(100, Math.round((passedGateCount / gates.length) * 100 - failureReasons.length * 4)));
+  const success = failureReasons.length === 0;
+
+  return {
+    evidenceGates: [
+      { label: "Deterministic trial", result: success ? "pass" : "fail", tone: success ? "pass" : "watch" },
+      { label: "Gate score", result: `${score}/100`, tone: success ? "pass" : "watch" },
+      { label: "Contacts model", result: `${contactCount}`, tone: contactCount === 0 ? "pass" : "watch" },
+      { label: "Isaac proof", result: "artifact needed", tone: "watch" },
+    ],
+    failureReasons,
+    gates,
+    handoff: [
+      { label: "Run id", value: trial.seed, tone: success ? "pass" : "watch" },
+      { label: "Inputs", value: `${trial.palletMassKg} kg, friction ${trial.frictionCoefficient.toFixed(2)}, ${trial.aisleWidthM.toFixed(2)} m aisle` },
+      { label: "Isaac evidence to attach", value: "USD capture, contact CSV, ROS bag, TF/odom, RGB-D frames, policy rollout table" },
+      {
+        label: "Next training batch",
+        value: success ? "Promote as baseline regression seed" : `Prioritize ${primaryFailure ?? "failed"} seed expansion in Isaac Lab`,
+        tone: success ? "pass" : "watch",
+      },
+    ],
+    metrics: {
+      contactCount,
+      cycleTimeSec,
+      loadSwayDeg,
+      minRackClearanceCm,
+      placementErrorCm,
+      safetyMarginM,
+      slipSpikeG,
+    },
+    primaryFailure,
+    score,
+    success,
+    trial,
+  };
+}
+
 function replacePlaygroundScenarioParam(scenarioId: string) {
   if (typeof window === "undefined") {
     return;
@@ -1295,6 +1575,9 @@ function replacePlaygroundScenarioParam(scenarioId: string) {
   const nextUrl = new URL(window.location.href);
   nextUrl.searchParams.set("scenario", scenarioId);
   nextUrl.searchParams.delete("step");
+  if (scenarioId !== "forklift") {
+    nextUrl.searchParams.delete("trial");
+  }
   window.history.replaceState(null, "", `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
 }
 
@@ -1303,17 +1586,17 @@ function getValidationContract(scenarioId: string): PlaygroundFact[] {
     return [
       {
         label: "Browser-valid",
-        value: "Deterministic task sequence: staged pallet, fork pickup, lift, rack placement, retrieval, final telemetry, and UI state consistency.",
+        value: "Deterministic forklift trial inputs, gate math, pass/fail state, visible violation marker, seed sweep summary, and UI/telemetry consistency.",
         tone: "pass",
       },
       {
         label: "Not proven here",
-        value: "No PhysX contacts, tire friction, load slip, LiDAR/RGB-D perception, ROS control loop, or trained policy runs in the browser.",
+        value: "No PhysX contact solver, tire friction model, LiDAR/RGB-D perception, ROS control loop, hardware interlock, or trained policy rollout runs in-browser.",
         tone: "watch",
       },
       {
         label: "Useful evidence",
-        value: "Attach Isaac Sim/Isaac Lab artifacts: USD capture, ROS bag, contact log, seed table, placement error distribution, and policy success histogram.",
+        value: "Use these browser gates as assertions, then attach Isaac artifacts: USD capture, ROS bag, contact CSV, seed table, placement distribution, and policy histogram.",
         tone: "watch",
       },
     ];
@@ -1468,6 +1751,7 @@ function createBox(
 
 function ThreeSimulationViewport({
   activeStep,
+  forkliftExperiment,
   isRunning,
   onSelectAsset,
   prefersReducedMotion,
@@ -1477,6 +1761,7 @@ function ThreeSimulationViewport({
   selectedAssetId,
 }: {
   activeStep: number;
+  forkliftExperiment?: ForkliftExperimentResult;
   isRunning: boolean;
   onSelectAsset: (assetId: string) => void;
   prefersReducedMotion: boolean | null;
@@ -1665,6 +1950,7 @@ function ThreeSimulationViewport({
     let placedPallet: Object3D | null = null;
     let sensorCone: Mesh | null = null;
     let safetyZone: Mesh | null = null;
+    let failureMarker: Mesh | null = null;
     const robotBase = createBox(
       THREE,
       robotBaseSize,
@@ -1825,6 +2111,20 @@ function ThreeSimulationViewport({
       placedPallet.visible = false;
       registerAsset(placedPallet, "pallet");
       scene.add(placedPallet);
+
+      failureMarker = new THREE.Mesh(
+        new THREE.SphereGeometry(0.28, 28, 28),
+        new THREE.MeshStandardMaterial({
+          color: 0xff7a18,
+          emissive: 0xff3b0f,
+          emissiveIntensity: 0.75,
+          roughness: 0.25,
+        }),
+      );
+      failureMarker.visible = false;
+      failureMarker.castShadow = true;
+      addSelectable(failureMarker, "forks", selectable, "Trial Violation Marker");
+      scene.add(failureMarker);
     }
 
     if (isPickCellScenario) {
@@ -2119,13 +2419,24 @@ function ThreeSimulationViewport({
         const liftAlpha = runningRef.current && !prefersReducedMotion ? 0.08 : 1;
         forkliftLiftGroup.position.y += (liftTarget - forkliftLiftGroup.position.y) * liftAlpha;
         forkliftLiftGroup.position.z += (forkInsertionTarget - forkliftLiftGroup.position.z) * liftAlpha;
-        forkliftLiftGroup.rotation.x = runningRef.current && !prefersReducedMotion ? Math.sin(elapsed * 4.2) * 0.015 : 0;
+        const failureSway =
+          forkliftExperiment && !forkliftExperiment.success && forkliftExperiment.primaryFailure === "stability"
+            ? Math.min(0.16, forkliftExperiment.metrics.loadSwayDeg / 30)
+            : 0;
+        forkliftLiftGroup.rotation.x =
+          runningRef.current && !prefersReducedMotion ? Math.sin(elapsed * 4.2) * (0.015 + failureSway) : failureSway;
 
         if (stagedPallet) {
           stagedPallet.visible = forkliftStep === 0 || (forkliftStep === 1 && stepProgress < 0.42);
         }
         if (placedPallet) {
-          placedPallet.visible = forkliftStep === 3 && stepProgress < 0.54;
+          placedPallet.visible =
+            (forkliftStep === 3 && stepProgress < 0.54) ||
+            Boolean(forkliftExperiment && !forkliftExperiment.success && forkliftExperiment.primaryFailure === "clearance" && forkliftStep >= 2);
+          placedPallet.rotation.y =
+            forkliftExperiment && !forkliftExperiment.success && forkliftExperiment.primaryFailure === "placement"
+              ? forkliftExperiment.trial.yawErrorDeg * 0.017
+              : 0;
         }
         if (carriedPallet) {
           carriedPallet.visible =
@@ -2133,6 +2444,28 @@ function ThreeSimulationViewport({
             forkliftStep === 2 ||
             (forkliftStep === 3 && stepProgress >= 0.54) ||
             forkliftStep >= 4;
+          carriedPallet.rotation.z =
+            forkliftExperiment && !forkliftExperiment.success && forkliftExperiment.primaryFailure === "fork-insertion"
+              ? -0.18
+              : 0;
+        }
+
+        if (failureMarker) {
+          const failed = Boolean(forkliftExperiment && !forkliftExperiment.success && forkliftStep >= 1);
+          failureMarker.visible = failed;
+          if (failed && forkliftExperiment) {
+            if (forkliftExperiment.primaryFailure === "safety") {
+              const markerPosition = robotGroup.position.clone();
+              markerPosition.z -= 1.95;
+              markerPosition.y = 0.44;
+              failureMarker.position.copy(markerPosition);
+            } else if (forkliftExperiment.primaryFailure === "fork-insertion" && carriedPallet) {
+              failureMarker.position.copy(robotGroup.position.clone().add(new THREE.Vector3(0, 0.82, -1.7)));
+            } else {
+              failureMarker.position.set(0.92, 1.58, 0.36);
+            }
+            failureMarker.scale.setScalar(1 + Math.sin(elapsed * 8) * 0.16);
+          }
         }
       }
 
@@ -2181,7 +2514,7 @@ function ThreeSimulationViewport({
       cancelled = true;
       cleanupScene?.();
     };
-  }, [onSelectAsset, prefersReducedMotion, renderMode, resetSignal, scenario]);
+  }, [forkliftExperiment, onSelectAsset, prefersReducedMotion, renderMode, resetSignal, scenario]);
 
   return (
     <div
@@ -2190,6 +2523,165 @@ function ThreeSimulationViewport({
       className="h-[58vh] min-h-[420px] max-h-[620px] w-full cursor-grab overflow-hidden rounded-lg bg-black active:cursor-grabbing"
       data-render-mode={renderMode}
     />
+  );
+}
+
+function ForkliftExperimentPanel({
+  onRunTrial,
+  onSelectTrial,
+  result,
+  selectedTrialId,
+  sweepResults,
+}: {
+  onRunTrial: () => void;
+  onSelectTrial: (trialId: string) => void;
+  result: ForkliftExperimentResult;
+  selectedTrialId: string;
+  sweepResults: ForkliftExperimentResult[];
+}) {
+  const metricCards = [
+    { label: "Placement", value: `${result.metrics.placementErrorCm} cm`, target: "<= 5 cm" },
+    { label: "Fork depth", value: `${result.trial.forkInsertionPct}%`, target: ">= 85%" },
+    { label: "Clearance", value: `${result.metrics.minRackClearanceCm} cm`, target: ">= 3 cm" },
+    { label: "Load sway", value: `${result.metrics.loadSwayDeg} deg`, target: "<= 2 deg" },
+    { label: "Safety margin", value: `${result.metrics.safetyMarginM} m`, target: ">= 0.5 m" },
+    { label: "Cycle", value: `${result.metrics.cycleTimeSec} s`, target: "<= 90 s" },
+  ];
+  const passedTrials = sweepResults.filter((trialResult) => trialResult.success).length;
+
+  return (
+    <section className="rounded-lg border border-[#76B900]/25 bg-[#76B900]/[0.055] p-4 backdrop-blur-xl" data-testid="forklift-experiment-runner">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <div className="min-w-0">
+          <p className="text-xs uppercase text-[#d6ff99]/80">Forklift experiment runner</p>
+          <h2 className="mt-2 text-2xl leading-tight text-text-primary">Seeded trial harness</h2>
+          <p className="mt-3 text-sm leading-6 text-text-primary/80">
+            Pick a warehouse edge case, run the browser-side evaluator, and inspect the gates that would become Isaac Sim assertions.
+            The math is deterministic and visible so this page can fail usefully instead of looping through a pretty route.
+          </p>
+
+          <div className="mt-4 grid gap-2">
+            {forkliftTrials.map((trial) => {
+              const selected = trial.id === selectedTrialId;
+              return (
+                <button
+                  key={trial.id}
+                  aria-pressed={selected}
+                  className={`rounded-lg border p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary ${
+                    selected
+                      ? "border-[#76B900]/50 bg-black/50 text-text-primary"
+                      : "border-white/10 bg-black/25 text-muted hover:border-white/25 hover:text-text-primary"
+                  }`}
+                  onClick={() => onSelectTrial(trial.id)}
+                  type="button"
+                >
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-medium">{trial.label}</span>
+                    <span className="font-mono text-[11px] text-muted">{trial.seed}</span>
+                  </span>
+                  <span className="mt-2 block text-xs leading-5 text-muted">{trial.description}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            className="mt-4 inline-flex min-h-10 w-full items-center justify-center rounded-lg bg-[#76B900] px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
+            onClick={onRunTrial}
+            type="button"
+          >
+            Run selected trial
+          </button>
+        </div>
+
+        <div className="grid min-w-0 gap-3">
+          <div className={`rounded-lg border p-4 ${result.success ? "border-emerald-300/25 bg-emerald-300/10" : "border-amber-200/25 bg-amber-200/10"}`}>
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-xs uppercase text-muted">Current result</p>
+                <h3 className="mt-2 text-3xl leading-none text-text-primary">{result.success ? "PASS" : "FAIL"}</h3>
+              </div>
+              <span className={`rounded-full border px-3 py-1.5 text-xs ${toneClasses(result.success ? "pass" : "watch")}`}>
+                {result.score}/100
+              </span>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-text-primary/85">
+              {result.success
+                ? "All deterministic browser gates passed. This is a regression seed, not proof of real physics or policy performance."
+                : `Primary blocker: ${result.primaryFailure ?? "gate failure"}. The scene now marks the violation while the table explains the failed gate.`}
+            </p>
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+            {metricCards.map((metric) => (
+              <div key={metric.label} className="rounded-lg border border-white/10 bg-black/45 p-3">
+                <p className="text-xs uppercase text-muted">{metric.label}</p>
+                <p className="mt-1 text-lg leading-tight text-text-primary">{metric.value}</p>
+                <p className="mt-1 text-[11px] leading-4 text-muted">{metric.target}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="rounded-lg border border-white/10 bg-black/45 p-3">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs uppercase text-muted">Gate assertions</p>
+              <span className="text-xs text-muted">
+                Sweep: {passedTrials}/{sweepResults.length} pass
+              </span>
+            </div>
+            <div className="grid gap-2">
+              {result.gates.map((gate) => (
+                <div key={gate.label} className="grid gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 md:grid-cols-[0.8fr_1fr_auto] md:items-center">
+                  <span className="text-sm text-text-primary/90">{gate.label}</span>
+                  <span className="text-xs leading-5 text-muted">{gate.value} / {gate.target}</span>
+                  <span className={`w-fit rounded-full border px-2.5 py-1 text-[11px] ${toneClasses(gate.passed ? "pass" : "watch")}`}>
+                    {gate.passed ? "pass" : "fail"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-3 lg:grid-cols-2">
+            <div className="rounded-lg border border-white/10 bg-black/45 p-3">
+              <p className="text-xs uppercase text-muted">Failure report</p>
+              {result.failureReasons.length ? (
+                <ul className="mt-3 grid gap-2">
+                  {result.failureReasons.map((reason) => (
+                    <li key={reason} className="rounded-lg border border-amber-200/20 bg-amber-200/10 px-3 py-2 text-xs leading-5 text-amber-100">
+                      {reason}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-3 rounded-lg border border-emerald-300/20 bg-emerald-300/10 px-3 py-2 text-xs leading-5 text-emerald-100">
+                  No deterministic gate violations in this browser run.
+                </p>
+              )}
+            </div>
+
+            <div className="rounded-lg border border-white/10 bg-black/45 p-3">
+              <p className="text-xs uppercase text-muted">Isaac handoff manifest</p>
+              <div className="mt-3 grid gap-2">
+                {result.handoff.map((item) => (
+                  <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-sm text-text-primary/90">{item.label}</span>
+                      {item.tone ? (
+                        <span className={`rounded-full border px-2.5 py-1 text-[11px] ${toneClasses(item.tone)}`}>
+                          {item.tone === "pass" ? "ready" : "needed"}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 text-xs leading-5 text-muted">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -2208,11 +2700,16 @@ function AgentPlaygroundPage() {
   const [renderMode, setRenderMode] = useState<PlaygroundRenderMode>("rtx");
   const [resetSignal, setResetSignal] = useState(0);
   const [selectedAssetId, setSelectedAssetId] = useState(initialScenario.assets[0].id);
+  const [selectedForkliftTrialId, setSelectedForkliftTrialId] = useState(readInitialForkliftTrialId);
   const selectedScenario = getPlaygroundScenarioById(selectedId);
   const activeTrace = selectedScenario.trace[activeStep] ?? selectedScenario.trace[0];
   const selectedAsset =
     selectedScenario.assets.find((asset) => asset.id === selectedAssetId) ?? selectedScenario.assets[0];
   const validationContract = getValidationContract(selectedScenario.id);
+  const selectedForkliftTrial = getForkliftTrialById(selectedForkliftTrialId);
+  const forkliftExperiment = useMemo(() => evaluateForkliftTrial(selectedForkliftTrial), [selectedForkliftTrial]);
+  const forkliftSweepResults = useMemo(() => forkliftTrials.map(evaluateForkliftTrial), []);
+  const evidenceGates = selectedScenario.id === "forklift" ? forkliftExperiment.evidenceGates : selectedScenario.evals;
   const renderModes: Array<{ id: PlaygroundRenderMode; label: string }> = [
     { id: "rtx", label: "RTX preview" },
     { id: "segmentation", label: "Segmentation" },
@@ -2268,6 +2765,27 @@ function AgentPlaygroundPage() {
     setSelectedAssetId(nextScenario.assets[0].id);
     setResetSignal((value) => value + 1);
     replacePlaygroundScenarioParam(nextScenario.id);
+  };
+
+  const selectForkliftTrial = (trialId: string) => {
+    const nextTrial = getForkliftTrialById(trialId);
+    setSelectedForkliftTrialId(nextTrial.id);
+    setIsRunning(false);
+    setActiveStep(0);
+    setResetSignal((value) => value + 1);
+    if (selectedScenario.id === "forklift") {
+      replacePlaygroundTrialParam(nextTrial.id);
+    }
+  };
+
+  const runForkliftTrial = () => {
+    const forkliftScenario = getPlaygroundScenarioById("forklift");
+    setSelectedId("forklift");
+    setIsRunning(false);
+    setActiveStep(forkliftScenario.trace.length - 1);
+    setSelectedAssetId(forkliftExperiment.success ? "pallet" : forkliftExperiment.primaryFailure === "safety" ? "scanner" : "forks");
+    setResetSignal((value) => value + 1);
+    replacePlaygroundTrialParam(forkliftExperiment.trial.id);
   };
 
   const togglePlayback = () => {
@@ -2405,7 +2923,7 @@ function AgentPlaygroundPage() {
                   onClick={togglePlayback}
                   type="button"
                 >
-                  {isRunning ? "Pause" : "Run playback"}
+                  {isRunning ? "Pause" : selectedScenario.id === "forklift" ? "Play trial" : "Run playback"}
                 </button>
                 <button
                   className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-text-primary transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
@@ -2420,6 +2938,7 @@ function AgentPlaygroundPage() {
             <div className="relative">
               <ThreeSimulationViewport
                 activeStep={activeStep}
+                forkliftExperiment={selectedScenario.id === "forklift" ? forkliftExperiment : undefined}
                 isRunning={isRunning}
                 onSelectAsset={handleSelectAsset}
                 prefersReducedMotion={prefersReducedMotion}
@@ -2450,6 +2969,16 @@ function AgentPlaygroundPage() {
               </div>
             </div>
           </section>
+
+          {selectedScenario.id === "forklift" ? (
+            <ForkliftExperimentPanel
+              onRunTrial={runForkliftTrial}
+              onSelectTrial={selectForkliftTrial}
+              result={forkliftExperiment}
+              selectedTrialId={selectedForkliftTrial.id}
+              sweepResults={forkliftSweepResults}
+            />
+          ) : null}
 
           <section className="rounded-lg border border-amber-200/20 bg-amber-200/[0.06] p-4 backdrop-blur-xl">
             <div className="mb-4">
@@ -2581,7 +3110,7 @@ function AgentPlaygroundPage() {
           <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
             <p className="text-xs uppercase text-muted">Evidence gates</p>
             <div className="mt-4 grid gap-2">
-              {selectedScenario.evals.map((evaluation) => (
+              {evidenceGates.map((evaluation) => (
                 <div key={evaluation.label} className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
                   <span className="text-sm text-muted">{evaluation.label}</span>
                   <span className={`rounded-full border px-2.5 py-1 text-xs ${toneClasses(evaluation.tone)}`}>
