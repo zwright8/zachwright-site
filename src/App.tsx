@@ -188,6 +188,7 @@ type PlaygroundScenario = {
   tools: Array<{ label: string; status: string }>;
   trace: PlaygroundTraceStep[];
   trainingMetrics?: PlaygroundFact[];
+  validationNote?: string;
 };
 
 const playgroundScenarios: PlaygroundScenario[] = [
@@ -199,6 +200,8 @@ const playgroundScenarios: PlaygroundScenario[] = [
     nvidiaPath: "Isaac Sim full_warehouse.usd -> rigged forklift USD -> ROS 2 sensor graph -> Isaac Lab policy eval -> Replicator SDG expansion",
     primRoot: "/World/ForkliftWarehouse",
     runtime: "Browser WebGL deterministic task playback; production run targets Isaac Sim forklift assets and an ovrtx/ovstream viewer",
+    validationNote:
+      "Browser mode validates task sequencing and UI telemetry only. Real forklift usefulness requires Isaac Sim or hardware logs for contacts, dynamics, perception, and policy generalization.",
     intent:
       "Validate an autonomous forklift that retrieves a 480 kg pallet from inbound staging, drives a mixed warehouse aisle, stacks it into rack bay B-12 level 2, then retrieves a return pallet without rack contact, load drop, or safety-zone breach.",
     outcome: "Pass when stacking and retrieval stay inside pose, clearance, load-stability, safety, and cycle-time gates",
@@ -336,10 +339,10 @@ const playgroundScenarios: PlaygroundScenario[] = [
       },
     ],
     evals: [
-      { label: "Scripted trial result", result: "pass", tone: "pass" },
-      { label: "Placement error", result: "3.2 cm", tone: "pass" },
-      { label: "Rack/fork contacts", result: "0", tone: "pass" },
-      { label: "Policy target", result: "94%", tone: "watch" },
+      { label: "Browser task sequence", result: "pass", tone: "pass" },
+      { label: "Physics contacts", result: "Isaac required", tone: "watch" },
+      { label: "Policy success", result: "not run", tone: "watch" },
+      { label: "Evidence status", result: "handoff", tone: "watch" },
     ],
     artifacts: [
       { href: "https://docs.isaacsim.omniverse.nvidia.com/5.1.0/assets/usd_assets_environments.html", label: "Warehouse USD assets", metric: "scene" },
@@ -357,6 +360,8 @@ const playgroundScenarios: PlaygroundScenario[] = [
     nvidiaPath: "Omniverse libraries -> Isaac Sim -> Isaac Lab policy eval",
     primRoot: "/World/Warehouse_A",
     runtime: "Browser WebGL demo; ovrtx/ovstream runtime not connected",
+    validationNote:
+      "Browser mode visualizes the route and obstacle case only. Useful navigation validation requires Isaac Sim/Isaac Lab logs for collisions, safety margin, recovery, and policy performance across seeds.",
     intent:
       "Stress-test an autonomous mobile robot through a warehouse route with blocked aisles, pallet shadows, and a human crossing zone.",
     outcome: "Pass when the robot reroutes without entering the safety envelope",
@@ -442,9 +447,9 @@ const playgroundScenarios: PlaygroundScenario[] = [
       },
     ],
     evals: [
-      { label: "Collision count", result: "0", tone: "pass" },
-      { label: "Min safety margin", result: "0.42 m", tone: "watch" },
-      { label: "Dock error", result: "0.08 m", tone: "pass" },
+      { label: "Browser route sequence", result: "pass", tone: "pass" },
+      { label: "Collision proof", result: "Isaac required", tone: "watch" },
+      { label: "Policy score", result: "not run", tone: "watch" },
     ],
     artifacts: [
       { href: "https://developer.nvidia.com/isaac/sim", label: "Isaac Sim reference", metric: "runtime" },
@@ -463,6 +468,8 @@ const playgroundScenarios: PlaygroundScenario[] = [
     nvidiaPath: "GR00T-Mimic style synthetic motion -> Isaac Sim manipulation eval",
     primRoot: "/World/PickCell_A",
     runtime: "Browser WebGL demo; Isaac manipulation runtime not connected",
+    validationNote:
+      "Browser mode is a workcell storyboard. Useful grasp validation requires a manipulation runtime for contact normals, slip, force closure, camera frames, and repeated seed performance.",
     intent:
       "Compare grasp candidates for a cluttered bin where reflective parts, bad normals, and occluded edges break naive pick policies.",
     outcome: "Pass when the robot picks the target without disturbing adjacent parts",
@@ -547,9 +554,9 @@ const playgroundScenarios: PlaygroundScenario[] = [
       },
     ],
     evals: [
-      { label: "Pick success", result: "96%", tone: "pass" },
-      { label: "Mask confidence", result: "0.86", tone: "pass" },
-      { label: "Glare seeds", result: "expand", tone: "watch" },
+      { label: "Browser pick sequence", result: "pass", tone: "pass" },
+      { label: "Contact physics", result: "Isaac required", tone: "watch" },
+      { label: "Vision policy", result: "not run", tone: "watch" },
     ],
     artifacts: [
       { href: "https://developer.nvidia.com/isaac/lab", label: "Isaac Lab reference", metric: "policy" },
@@ -568,6 +575,8 @@ const playgroundScenarios: PlaygroundScenario[] = [
     nvidiaPath: "Isaac Sim software-in-the-loop -> hardware-in-the-loop checklist",
     primRoot: "/World/SafetyAisle",
     runtime: "Browser WebGL demo; SIL/HIL runtime not connected",
+    validationNote:
+      "Browser mode shows the stop-state storyboard. Useful safety validation requires SIL/HIL evidence for measured stop distance, red-zone entry, restart interlock, and repeated actor trajectories.",
     intent:
       "Demonstrate a supervisor that detects a human entering the route and switches from navigation to controlled stop before recovery.",
     outcome: "Pass when stop time and restart conditions satisfy the safety case",
@@ -651,9 +660,9 @@ const playgroundScenarios: PlaygroundScenario[] = [
       },
     ],
     evals: [
-      { label: "Stop time", result: "1.1 s", tone: "pass" },
-      { label: "Envelope entry", result: "0", tone: "pass" },
-      { label: "Restart guard", result: "2.0 s", tone: "pass" },
+      { label: "Browser stop sequence", result: "pass", tone: "pass" },
+      { label: "Safety case proof", result: "SIL/HIL required", tone: "watch" },
+      { label: "Restart guard", result: "scripted", tone: "watch" },
     ],
     artifacts: [
       { href: "https://developer.nvidia.com/isaac/sim", label: "SIL/HIL workflow", metric: "testing" },
@@ -668,6 +677,8 @@ const playgroundScenarios: PlaygroundScenario[] = [
     nvidiaPath: "Omniverse Replicator / physical AI skills -> dataset review",
     primRoot: "/World/InspectionStation",
     runtime: "Browser WebGL demo; Replicator runtime not connected",
+    validationNote:
+      "Browser mode visualizes the data workflow. Useful dataset validation requires Replicator outputs, label files, quarantined frames, and model recall deltas from real evaluation artifacts.",
     intent:
       "Generate a test packet for perception models by randomizing lights, camera pose, object color, defects, and background clutter.",
     outcome: "Pass when coverage expands the hard cases without corrupt labels",
@@ -753,9 +764,9 @@ const playgroundScenarios: PlaygroundScenario[] = [
       },
     ],
     evals: [
-      { label: "Hard-case recall", result: "+14%", tone: "pass" },
-      { label: "Label pass rate", result: "99.2%", tone: "pass" },
-      { label: "Quarantined seed", result: "1", tone: "watch" },
+      { label: "Browser data sequence", result: "pass", tone: "pass" },
+      { label: "Replicator output", result: "not connected", tone: "watch" },
+      { label: "Label audit", result: "artifact required", tone: "watch" },
     ],
     artifacts: [
       {
@@ -1285,6 +1296,106 @@ function replacePlaygroundScenarioParam(scenarioId: string) {
   nextUrl.searchParams.set("scenario", scenarioId);
   nextUrl.searchParams.delete("step");
   window.history.replaceState(null, "", `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+}
+
+function getValidationContract(scenarioId: string): PlaygroundFact[] {
+  if (scenarioId === "forklift") {
+    return [
+      {
+        label: "Browser-valid",
+        value: "Deterministic task sequence: staged pallet, fork pickup, lift, rack placement, retrieval, final telemetry, and UI state consistency.",
+        tone: "pass",
+      },
+      {
+        label: "Not proven here",
+        value: "No PhysX contacts, tire friction, load slip, LiDAR/RGB-D perception, ROS control loop, or trained policy runs in the browser.",
+        tone: "watch",
+      },
+      {
+        label: "Useful evidence",
+        value: "Attach Isaac Sim/Isaac Lab artifacts: USD capture, ROS bag, contact log, seed table, placement error distribution, and policy success histogram.",
+        tone: "watch",
+      },
+    ];
+  }
+
+  if (scenarioId === "route") {
+    return [
+      {
+        label: "Browser-valid",
+        value: "Route storyboard, obstacle/human placement, timeline state, and expected gate labels render consistently.",
+        tone: "pass",
+      },
+      {
+        label: "Not proven here",
+        value: "No occupancy grid update, LiDAR replay, dynamic collision checking, stop-distance calculation, or policy rollout is executed.",
+        tone: "watch",
+      },
+      {
+        label: "Useful evidence",
+        value: "Run Isaac Sim route seeds and attach collision counts, min clearance, recovery time, dock error, and route oscillation metrics.",
+        tone: "watch",
+      },
+    ];
+  }
+
+  if (scenarioId === "pick") {
+    return [
+      {
+        label: "Browser-valid",
+        value: "Workcell geometry, target/bin/camera assets, and grasp-test timeline render as a repeatable storyboard.",
+        tone: "pass",
+      },
+      {
+        label: "Not proven here",
+        value: "No contact solver, wrist trajectory, depth image, segmentation model, slip check, or gripper force closure is executed.",
+        tone: "watch",
+      },
+      {
+        label: "Useful evidence",
+        value: "Attach Isaac manipulation run logs: grasp pose table, contact normals, slip probability, disturbance distance, and camera frames.",
+        tone: "watch",
+      },
+    ];
+  }
+
+  if (scenarioId === "safety") {
+    return [
+      {
+        label: "Browser-valid",
+        value: "Supervisor-state storyboard, human actor position, stop/resume timeline, and UI status labels render consistently.",
+        tone: "pass",
+      },
+      {
+        label: "Not proven here",
+        value: "No measured braking curve, predictive collision model, certified safety envelope, or hardware interlock timing is executed.",
+        tone: "watch",
+      },
+      {
+        label: "Useful evidence",
+        value: "Attach SIL/HIL logs: stop distance, red-zone entry, restart guard duration, speed cap, and actor trajectory sweep.",
+        tone: "watch",
+      },
+    ];
+  }
+
+  return [
+    {
+      label: "Browser-valid",
+      value: "Inspection station, randomized-light storyboard, dataset packet handoff, and QA timeline render consistently.",
+      tone: "pass",
+    },
+    {
+      label: "Not proven here",
+      value: "No Replicator images, label files, depth maps, segmentation masks, or model recall measurements are generated in-browser.",
+      tone: "watch",
+    },
+    {
+      label: "Useful evidence",
+      value: "Attach Replicator output: image/depth sample, label audit, quarantined frames, randomization seed ranges, and model delta report.",
+      tone: "watch",
+    },
+  ];
 }
 
 function materialForMode(THREE: ThreeModule, color: number, renderMode: PlaygroundRenderMode, index = 0) {
@@ -2101,6 +2212,7 @@ function AgentPlaygroundPage() {
   const activeTrace = selectedScenario.trace[activeStep] ?? selectedScenario.trace[0];
   const selectedAsset =
     selectedScenario.assets.find((asset) => asset.id === selectedAssetId) ?? selectedScenario.assets[0];
+  const validationContract = getValidationContract(selectedScenario.id);
   const renderModes: Array<{ id: PlaygroundRenderMode; label: string }> = [
     { id: "rtx", label: "RTX preview" },
     { id: "segmentation", label: "Segmentation" },
@@ -2200,7 +2312,7 @@ function AgentPlaygroundPage() {
 
         <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
           <span className="inline-flex min-h-10 items-center rounded-full border border-[#76B900]/25 bg-[#76B900]/10 px-4 py-2 text-xs text-[#d6ff99]">
-            WebGL 3D demo active
+            Browser evaluator active
           </span>
           <span className="hidden min-h-10 items-center rounded-full border border-amber-200/25 bg-amber-200/10 px-4 py-2 text-xs text-amber-100 md:inline-flex">
             Omniverse stream not connected
@@ -2282,9 +2394,10 @@ function AgentPlaygroundPage() {
           <section className="overflow-hidden rounded-lg border border-white/10 bg-black/75 backdrop-blur-xl">
             <div className="grid gap-4 border-b border-white/10 p-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
               <div className="min-w-0">
-                <p className="text-xs uppercase text-muted">Interactive physical-AI scene</p>
+                <p className="text-xs uppercase text-muted">Browser validation scene</p>
                 <h2 className="mt-2 break-words text-3xl leading-tight md:text-5xl">{selectedScenario.title}</h2>
                 <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">{selectedScenario.outcome}</p>
+                <p className="mt-2 max-w-3xl text-xs leading-5 text-amber-100">{selectedScenario.validationNote}</p>
               </div>
               <div className="flex flex-wrap gap-2 md:justify-end">
                 <button
@@ -2292,7 +2405,7 @@ function AgentPlaygroundPage() {
                   onClick={togglePlayback}
                   type="button"
                 >
-                  {isRunning ? "Pause" : "Play scenario"}
+                  {isRunning ? "Pause" : "Run playback"}
                 </button>
                 <button
                   className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-text-primary transition-colors hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary"
@@ -2335,6 +2448,26 @@ function AgentPlaygroundPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-amber-200/20 bg-amber-200/[0.06] p-4 backdrop-blur-xl">
+            <div className="mb-4">
+              <p className="text-xs uppercase text-amber-100/80">Validation contract</p>
+              <h2 className="mt-2 text-2xl leading-tight text-text-primary">What this page can prove</h2>
+            </div>
+            <div className="grid gap-3 lg:grid-cols-3">
+              {validationContract.map((item) => (
+                <div key={item.label} className="rounded-lg border border-white/10 bg-black/45 p-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm font-medium text-text-primary">{item.label}</p>
+                    <span className={`rounded-full border px-2.5 py-1 text-[11px] ${toneClasses(item.tone)}`}>
+                      {item.tone === "pass" ? "browser" : "external"}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-xs leading-5 text-muted">{item.value}</p>
+                </div>
+              ))}
             </div>
           </section>
 
@@ -2446,7 +2579,7 @@ function AgentPlaygroundPage() {
           </section>
 
           <section className="rounded-lg border border-white/10 bg-black/70 p-4 backdrop-blur-xl">
-            <p className="text-xs uppercase text-muted">Eval gates</p>
+            <p className="text-xs uppercase text-muted">Evidence gates</p>
             <div className="mt-4 grid gap-2">
               {selectedScenario.evals.map((evaluation) => (
                 <div key={evaluation.label} className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
