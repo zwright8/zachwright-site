@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-19",
+    "slug": "2026-06-19",
+    "title": "Swarm Daily: CI Is Getting an Admission Controller",
+    "url": "/updates/2026-06-19.html",
+    "preview": "GitHub Actions policies, checkout v7 pwn-request defaults, layered runner images, issue-field MCP writes, Cloudflare route inventory, Netlify React Router 8 support, and sandbox risk notes move automation from YAML trust to enforceable run admission."
+  },
+  {
     "date": "2026-06-18",
     "slug": "2026-06-18",
     "title": "Swarm Daily: Agent Work Is Getting a Byline",

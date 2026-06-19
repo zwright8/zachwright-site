@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: CI Is Getting an Admission Controller | zachwright.xyz</title>
+  <meta name="description" content="GitHub Actions policies, checkout v7 pwn-request defaults, layered runner images, issue-field MCP writes, Cloudflare route inventory, Netlify React Router 8 support, and sandbox risk notes move automation from YAML trust to enforceable run admission." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: CI Is Getting an Admission Controller</h1>
+          <p>GitHub Actions policies, checkout v7 pwn-request defaults, layered runner images, issue-field MCP writes, Cloudflare route inventory, Netlify React Router 8 support, and sandbox risk notes move automation from YAML trust to enforceable run admission.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that CI is getting a policy layer outside the workflow file. Before a run touches secrets, runners, caches, or privileged events, the platform is starting to ask who triggered it, which event fired, and whether the code path is allowed to execute.</strong></p>
+          <p>GitHub Actions workflow execution protections are now in public preview for enterprises, organizations, and repositories. Admins can define actor and event allow lists through rulesets, apply them broadly, and use evaluate mode before enforcement. That is the key move: stop treating every repo's YAML as the only source of truth for whether automation may run.</p>
+          <ul>
+            <li>Workflow execution protections let admins control which actors and events can trigger Actions runs, including <code>pull_request</code>, <code>pull_request_target</code>, <code>workflow_dispatch</code>, Copilot, Dependabot, apps, roles, and users.
+            <a href="https://github.blog/changelog/2026-06-18-control-who-and-what-triggers-github-actions-workflows/">https://github.blog/changelog/2026-06-18-control-who-and-what-triggers-github-actions-workflows/</a></li>
+            <li><code>actions/checkout</code> v7 now refuses common pwn-request patterns by default when privileged workflows try to check out unreviewed fork PR code. GitHub says enforcement backports land on July 16, 2026 for supported floating major tags.
+            <a href="https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/">https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/</a></li>
+            <li>Custom GitHub-hosted runner images can now be layered from other custom images, and <code>snapshot</code> can use conditional logic. That turns runner build pipelines into governed artifacts, not one-off machine recipes.
+            <a href="https://github.blog/changelog/2026-06-18-actions-build-custom-images-from-custom-images/">https://github.blog/changelog/2026-06-18-actions-build-custom-images-from-custom-images/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Actions workflow execution protections</strong> - put actor and event allow lists in front of CI, then test rollout with evaluate mode before enforcement.
+            <a href="https://github.blog/changelog/2026-06-18-control-who-and-what-triggers-github-actions-workflows/">https://github.blog/changelog/2026-06-18-control-who-and-what-triggers-github-actions-workflows/</a></li>
+            <li><strong><code>actions/checkout</code> v7 guardrails</strong> - audit <code>pull_request_target</code> workflows before July 16 if you depend on floating checkout major tags or privileged fork checks.
+            <a href="https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/">https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/</a></li>
+            <li><strong>Layered runner images</strong> - keep one hardened base image, let teams layer dependencies on top, and generate snapshots only when rollout conditions match.
+            <a href="https://github.blog/changelog/2026-06-18-actions-build-custom-images-from-custom-images/">https://github.blog/changelog/2026-06-18-actions-build-custom-images-from-custom-images/</a></li>
+            <li><strong>Issue fields in GitHub MCP</strong> - agents connected to the GitHub MCP server can read and write issue fields, so priority, area, and dates can be part of triage automation.
+            <a href="https://github.blog/changelog/2026-06-18-duplicate-detection-and-issue-fields-mcp-support-for-github-issues/">https://github.blog/changelog/2026-06-18-duplicate-detection-and-issue-fields-mcp-support-for-github-issues/</a></li>
+            <li><strong>Cloudflare unified routes page</strong> - Mesh, Tunnel, WAN, and Magic Transit routes now show in one dashboard table, which makes overlapping route checks less tribal.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-19-unified-routes-page/">https://developers.cloudflare.com/changelog/post/2026-06-19-unified-routes-page/</a></li>
+            <li><strong>React Router 8 on Netlify</strong> - day-one support includes serverless and edge functions plus local platform emulation for developers and agents.
+            <a href="https://www.netlify.com/changelog/2026-06-18-react-router-8-support/">https://www.netlify.com/changelog/2026-06-18-react-router-8-support/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>CI admission is becoming separate from CI code.</strong> The workflow file can be compromised or misconfigured; the platform policy deciding whether it may run needs its own owner and audit path.</li>
+            <li><strong>Unsafe exceptions need searchable names.</strong> A flag like <code>allow-unsafe-pr-checkout</code> is useful because reviewers, scanners, and agents can find intentional risk, not infer it from YAML shape.</li>
+            <li><strong>Runner images are supply-chain assets.</strong> Once teams layer on shared bases, image ownership, snapshot timing, and dependency drift become platform controls.</li>
+            <li><strong>Agents need inventories, not lore.</strong> Issue fields and route tables are the kind of structured state automation can inspect without guessing from Slack threads or repo conventions.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Authorization.</strong> - because "the workflow exists" and "the workflow is allowed to run with secrets" should not be the same decision.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/authorization.png">https://imgs.xkcd.com/comics/authorization.png</a><br>Post: <a href="https://xkcd.com/1200/">https://xkcd.com/1200/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
