@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: AI Spend Needs a Trace ID | zachwright.xyz</title>
+  <meta name="description" content="Copilot credit reports, AI Gateway user agents, Durable Object metrics, per-key budgets, gateway observability, GLM 5.2, and API tool limits turn AI spend and runtime behavior into queryable operating evidence." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: AI Spend Needs a Trace ID</h1>
+          <p>Copilot credit reports, AI Gateway user agents, Durable Object metrics, per-key budgets, gateway observability, GLM 5.2, and API tool limits turn AI spend and runtime behavior into queryable operating evidence.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that AI cost is becoming a trace problem. "The bill went up" is too late and too blunt. Operators need to know which user, client, API key, model, request, and stateful runtime created the spend or changed behavior.</strong></p>
+          <p>GitHub now includes <code>ai_credits_used</code> in user-level Copilot usage metrics for single-day and 28-day reports at enterprise and organization levels. It is not a billed total and it is not broken down by feature, model, or surface, but it puts consumption next to the adoption data teams already inspect.</p>
+          <ul>
+            <li>Copilot usage metrics now expose per-user AI credit consumption for budget planning and adoption review.
+            <a href="https://github.blog/changelog/2026-06-19-ai-credits-consumed-per-user-now-in-the-copilot-usage-metrics-api/">https://github.blog/changelog/2026-06-19-ai-credits-consumed-per-user-now-in-the-copilot-usage-metrics-api/</a></li>
+            <li>Cloudflare AI Gateway logs now capture and filter by user agent, which makes SDK, Worker, and custom-app traffic separable during investigations.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-12-user-agent-logging/">https://developers.cloudflare.com/changelog/post/2026-06-12-user-agent-logging/</a></li>
+            <li>Durable Objects metrics can now be filtered by object ID or name, so a hot object, error spike, or storage anomaly does not disappear inside namespace averages.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-12-durable-objects-metrics-filter-by-id-name/">https://developers.cloudflare.com/changelog/post/2026-06-12-durable-objects-metrics-filter-by-id-name/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Copilot credit metrics</strong> - pull <code>ai_credits_used</code> into the same admin report that tracks seats, adoption, and active users; treat it as an operating signal, not the invoice.
+            <a href="https://github.blog/changelog/2026-06-19-ai-credits-consumed-per-user-now-in-the-copilot-usage-metrics-api/">https://github.blog/changelog/2026-06-19-ai-credits-consumed-per-user-now-in-the-copilot-usage-metrics-api/</a></li>
+            <li><strong>Cloudflare AI Gateway user agents</strong> - filter model traffic by SDK, Worker, or custom client before guessing which app caused a latency, cost, or policy issue.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-12-user-agent-logging/">https://developers.cloudflare.com/changelog/post/2026-06-12-user-agent-logging/</a></li>
+            <li><strong>Durable Object metric filters</strong> - debug one object by ID or name when stateful workloads have uneven traffic, storage growth, or reconnect churn.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-12-durable-objects-metrics-filter-by-id-name/">https://developers.cloudflare.com/changelog/post/2026-06-12-durable-objects-metrics-filter-by-id-name/</a></li>
+            <li><strong>Vercel AI Gateway observability</strong> - use request logs and summaries by project and API key to connect model usage, latency, and spend before it hits finance.
+            <a href="https://vercel.com/docs/ai-gateway/capabilities/observability">https://vercel.com/docs/ai-gateway/capabilities/observability</a></li>
+            <li><strong>API key budgets</strong> - cap spend per key so experiments, agents, and production paths have different economic blast radii.
+            <a href="https://vercel.com/docs/ai-gateway/observability-and-spend/api-key-budgets">https://vercel.com/docs/ai-gateway/observability-and-spend/api-key-budgets</a></li>
+            <li><strong>GLM 5.2 on AI Gateway</strong> - a 1M-context engineering model is useful, but the operator feature is the gateway layer: reporting, retries, failover, key budgets, and BYOK routing.
+            <a href="https://vercel.com/changelog/glm-5-2-now-available-on-ai-gateway">https://vercel.com/changelog/glm-5-2-now-available-on-ai-gateway</a></li>
+            <li><strong>Anthropic API tool limits</strong> - execution tools now disclose the 90-second per-cell limit, and web search/fetch can drop consumed result blocks from agent responses.
+            <a href="https://platform.claude.com/docs/en/release-notes/overview">https://platform.claude.com/docs/en/release-notes/overview</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Budget review moves into daily telemetry.</strong> The team that sees usage by user, key, and client can intervene before billing review becomes archaeology.</li>
+            <li><strong>Attribution needs a naming policy.</strong> User agent, API key, project, and object labels only work if teams give production, agents, experiments, and sandboxes distinct identities.</li>
+            <li><strong>Stateful serverless needs per-instance evidence.</strong> Agent backplanes, chats, queues, and browser sessions will not behave like flat request pools; object-level metrics are table stakes.</li>
+            <li><strong>Model gateways become the control ledger.</strong> Once routing, fallback, budgets, spend, and logs sit at the gateway, bypass traffic becomes operational debt.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Data Pipeline.</strong> - because every AI spend dashboard eventually needs a second pipeline explaining which pipeline paid for the first one.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/data_pipeline.png">https://imgs.xkcd.com/comics/data_pipeline.png</a><br>Post: <a href="https://xkcd.com/2054/">https://xkcd.com/2054/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

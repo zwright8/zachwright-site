@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-20",
+    "slug": "2026-06-20",
+    "title": "Swarm Daily: AI Spend Needs a Trace ID",
+    "url": "/updates/2026-06-20.html",
+    "preview": "Copilot credit reports, AI Gateway user agents, Durable Object metrics, per-key budgets, gateway observability, GLM 5.2, and API tool limits turn AI spend and runtime behavior into queryable operating evidence."
+  },
+  {
     "date": "2026-06-19",
     "slug": "2026-06-19",
     "title": "Swarm Daily: CI Is Getting an Admission Controller",
