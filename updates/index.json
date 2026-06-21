@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-21",
+    "slug": "2026-06-21",
+    "title": "Swarm Daily: Agent Consoles Need Live I/O",
+    "url": "/updates/2026-06-21.html",
+    "preview": "Docker Gordon streams, Copilot CLI shell hardening, Cloudflare sandbox RPC defaults, AI Search Wrangler commands, and Inspect Agent Bridge state capture make agent work observable while it runs."
+  },
+  {
     "date": "2026-06-20",
     "slug": "2026-06-20",
     "title": "Swarm Daily: AI Spend Needs a Trace ID",

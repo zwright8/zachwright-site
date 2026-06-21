@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Consoles Need Live I/O | zachwright.xyz</title>
+  <meta name="description" content="Docker Gordon streams, Copilot CLI shell hardening, Cloudflare sandbox RPC defaults, AI Search Wrangler commands, and Inspect Agent Bridge state capture make agent work observable while it runs." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Consoles Need Live I/O</h1>
+          <p>Docker Gordon streams, Copilot CLI shell hardening, Cloudflare sandbox RPC defaults, AI Search Wrangler commands, and Inspect Agent Bridge state capture make agent work observable while it runs.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that the agent console is becoming a runtime boundary. Tool access is table stakes. The operator problem is whether a run exposes live output, explicit state, parseable commands, and recoverable transport defaults before the run burns time.</strong></p>
+          <p>Docker Desktop 4.78 now streams Gordon tool-call output so long-running commands like <code>docker compose up</code> show stdout and stderr in real time. The same release fixes a log-streaming out-of-memory crash, makes container log sources easier to distinguish, and turns blocked outbound HTTPS into a concrete VPN, proxy, or firewall diagnosis instead of a generic agent error.</p>
+          <ul>
+            <li>Docker Desktop 4.78 makes agent-visible command output and log reliability first-class local-dev concerns.
+            <a href="https://docs.docker.com/desktop/release-notes/">https://docs.docker.com/desktop/release-notes/</a></li>
+            <li>Copilot CLI has been hardening the terminal loop: large interactive shell output no longer hangs, false-positive shell validation blocks were fixed, malformed UTF-8 and terminal disconnect crashes were addressed, and Windows command discovery no longer silently searches the working directory.
+            <a href="https://github.com/github/copilot-cli/blob/main/changelog.md">https://github.com/github/copilot-cli/blob/main/changelog.md</a></li>
+            <li>Cloudflare is pushing the Sandbox SDK toward explicit RPC transport, explicit sessions, and streaming-first APIs, while AI Search namespace commands now return JSON that scripts and agents can consume.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Docker Desktop 4.78</strong> - treat live stdout/stderr, log stability, source-colored logs, and actionable network errors as part of the agent runtime, not desktop polish.
+            <a href="https://docs.docker.com/desktop/release-notes/">https://docs.docker.com/desktop/release-notes/</a></li>
+            <li><strong>Copilot CLI changelog</strong> - the high-signal fixes are terminal-operating fixes: large output hangs, shell validation false positives, malformed UTF-8, terminal disconnects, PATH expectations, and command provenance.
+            <a href="https://github.com/github/copilot-cli/blob/main/changelog.md">https://github.com/github/copilot-cli/blob/main/changelog.md</a></li>
+            <li><strong>Cloudflare Sandbox SDK migration</strong> - move to <code>SANDBOX_TRANSPORT=rpc</code>, stop depending on hidden default sessions, and expect streaming defaults around file and exec APIs.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li><strong>AI Search Wrangler commands</strong> - namespace list, create, get, update, and delete now have terminal surfaces with <code>--json</code>, which makes search tenancy manageable by automation.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li><strong>Inspect Agent Bridge</strong> - bridge OpenAI Responses, Anthropic, Google, and sandboxed agents into an eval harness that can inspect model traffic and track agent state instead of only scoring the final answer.
+            <a href="https://inspect.aisi.org.uk/agent-bridge.html">https://inspect.aisi.org.uk/agent-bridge.html</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Runbooks move from transcripts to streams.</strong> If the operator only sees output after a command exits, the agent has already converted uncertainty into wait time.</li>
+            <li><strong>Hidden state becomes incident material.</strong> Cwd, PATH, default shell sessions, sandbox transport, model fallback, and repo instructions need names because agents will otherwise inherit invisible context.</li>
+            <li><strong>Evals need runtime evidence.</strong> Final-answer scoring misses the failure mode; preserve tool calls, state transitions, provenance, fallback records, and stop reasons.</li>
+            <li><strong>CLI JSON is an agent affordance.</strong> Admin surfaces that emit structured output become schedulable control loops instead of screenshots in a runbook.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Workflow.</strong> - because every "simple" agent workflow eventually depends on the one terminal behavior nobody wrote down.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/workflow.png">https://imgs.xkcd.com/comics/workflow.png</a><br>Post: <a href="https://xkcd.com/1172/">https://xkcd.com/1172/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
