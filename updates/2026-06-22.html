@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Tools Need a Registry Card | zachwright.xyz</title>
+  <meta name="description" content="ARD, GitHub Agent Finder, Hugging Face Discover, skills.sh, MCP Registry, and Copilot managed settings move agent capabilities from preloaded configs to scoped discovery." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Tools Need a Registry Card</h1>
+          <p>ARD, GitHub Agent Finder, Hugging Face Discover, skills.sh, MCP Registry, and Copilot managed settings move agent capabilities from preloaded configs to scoped discovery.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that agent capability selection is moving out of static config and prompt stuffing. The next operating surface is a governed registry: searchable enough for intent, explicit enough for trust, and constrained enough that discovery does not become silent installation.</strong></p>
+          <p>Google announced Agentic Resource Discovery as an open specification for publishing, discovering, and verifying tools, skills, agents, MCP servers, A2A agents, APIs, and callable services. The model is simple: publishers host catalogs under their own domains, registries index those catalogs, and clients resolve the right capability at runtime with publisher and trust metadata attached.</p>
+          <ul>
+            <li>ARD makes <code>ai-catalog.json</code> and registry search the discovery layer in front of MCP, Skills, A2A, and ordinary APIs.
+            <a href="https://developers.googleblog.com/announcing-the-agentic-resource-discovery-specification/">https://developers.googleblog.com/announcing-the-agentic-resource-discovery-specification/</a></li>
+            <li>GitHub Agent Finder is the first operator-facing proof point: Copilot can search a chosen registry, rank matching AI resources, and load only what the task calls for.
+            <a href="https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/">https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/</a></li>
+            <li>The ARD spec repo is already concrete enough to matter: schemas, OpenAPI definitions, ADRs, conformance tooling, and draft v0.9 status make this an implementation target, not just ecosystem language.
+            <a href="https://github.com/ards-project/ard-spec">https://github.com/ards-project/ard-spec</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Agentic Resource Discovery</strong> - publish capabilities under a domain, index them through registries, and make publisher identity plus verification metadata part of the handoff.
+            <a href="https://developers.googleblog.com/announcing-the-agentic-resource-discovery-specification/">https://developers.googleblog.com/announcing-the-agentic-resource-discovery-specification/</a></li>
+            <li><strong>GitHub Agent Finder</strong> - point Copilot at a public or private registry, search in plain language, and keep install approval separate from discovery.
+            <a href="https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/">https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/</a></li>
+            <li><strong>Hugging Face Discover</strong> - search Spaces, Skills, and MCP servers through ARD, filter for running Spaces, and return skill or MCP server-card artifacts that clients can load normally.
+            <a href="https://huggingface.co/blog/agentic-resource-discovery-launch">https://huggingface.co/blog/agentic-resource-discovery-launch</a></li>
+            <li><strong>hf-discover</strong> - use the CLI/server to query ARD registries, navigate <code>/.well-known/ai-catalog.json</code>, emit JSON, and test referral-aware discovery flows.
+            <a href="https://github.com/huggingface/hf-discover">https://github.com/huggingface/hf-discover</a></li>
+            <li><strong>skills.sh API</strong> - query more than 600,000 skills with project-scoped Vercel OIDC, security-audit metadata, and no long-lived shared secret.
+            <a href="https://vercel.com/changelog/the-skills-sh-api-is-now-available">https://vercel.com/changelog/the-skills-sh-api-is-now-available</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Context windows stop being tool inventories.</strong> The registry should carry the catalog; the model should receive only the capability the current job needs.</li>
+            <li><strong>Discovery policy becomes an enterprise control.</strong> Decide which registries are allowed, which publishers are trusted, and which clients may connect before the agent starts searching.</li>
+            <li><strong>Runtime readiness becomes routing data.</strong> A tool that is listed but not currently runnable is noise; readiness, version, protocol, and compliance tags need to be first-class fields.</li>
+            <li><strong>Bad metadata becomes production risk.</strong> Thin descriptions, stale endpoints, spoofed publishers, and unbounded referrals will route agents into the wrong tool with confidence.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Standards.</strong> - because every solution to discovery eventually becomes one more thing operators have to catalog.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/standards.png">https://imgs.xkcd.com/comics/standards.png</a><br>Post: <a href="https://xkcd.com/927/">https://xkcd.com/927/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

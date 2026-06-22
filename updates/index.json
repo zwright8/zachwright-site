@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-22",
+    "slug": "2026-06-22",
+    "title": "Swarm Daily: Tools Need a Registry Card",
+    "url": "/updates/2026-06-22.html",
+    "preview": "ARD, GitHub Agent Finder, Hugging Face Discover, skills.sh, MCP Registry, and Copilot managed settings move agent capabilities from preloaded configs to scoped discovery."
+  },
+  {
     "date": "2026-06-21",
     "slug": "2026-06-21",
     "title": "Swarm Daily: Agent Consoles Need Live I/O",
