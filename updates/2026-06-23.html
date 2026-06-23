@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Prototypes Need a Ship Ledger | zachwright.xyz</title>
+  <meta name="description" content="Claude Design to Vercel, Vercel Drop, Codex Sites, Copilot JetBrains agent controls, and Cloudflare Images updates make generated prototypes deployable before normal repo review catches up." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Prototypes Need a Ship Ledger</h1>
+          <p>Claude Design to Vercel, Vercel Drop, Codex Sites, Copilot JetBrains agent controls, and Cloudflare Images updates make generated prototypes deployable before normal repo review catches up.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that the prototype is becoming a deployable artifact, not a screenshot, Figma comment, or handoff bundle. The operator problem is no longer "can this become a URL?" It is "who owns this URL, what produced it, and when does it graduate or get deleted?"</strong></p>
+          <p>Vercel is now a send-to destination inside Claude Design. Finish a design, choose Vercel from the share flow, connect the Vercel MCP server, and the design deploys as a new project in the connected Vercel account with a live URL returned to the canvas.</p>
+          <ul>
+            <li>Claude Design to Vercel makes canvas-to-live-URL a first-class publish path instead of a manual export, repo setup, and deploy chain.
+            <a href="https://vercel.com/changelog/claude-design-and-vercel">https://vercel.com/changelog/claude-design-and-vercel</a></li>
+            <li>Vercel Drop broadens the same pattern: drag a file, folder, or zip into the browser, let Vercel detect framework or static output, and publish a new project without Git or CLI setup.
+            <a href="https://vercel.com/changelog/vercel-drop">https://vercel.com/changelog/vercel-drop</a></li>
+            <li>Codex Sites and annotations point at the same operating shape from another surface: generated work becomes a shareable URL with in-place refinement, not just a diff waiting in a repo.
+            <a href="https://openai.com/index/codex-for-every-role-tool-workflow/">https://openai.com/index/codex-for-every-role-tool-workflow/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Claude Design to Vercel</strong> - treat every design-canvas deploy as a project creation event with owner, source artifact, audience, cleanup date, and promotion path.
+            <a href="https://vercel.com/changelog/claude-design-and-vercel">https://vercel.com/changelog/claude-design-and-vercel</a></li>
+            <li><strong>Vercel Drop</strong> - fast enough for sales demos and internal previews, but easy to lose in inventory if each drop creates a new project outside normal Git-connected deploy flow.
+            <a href="https://vercel.com/changelog/vercel-drop">https://vercel.com/changelog/vercel-drop</a></li>
+            <li><strong>Codex Sites and annotations</strong> - use URL-based review and inline annotation as the review layer for generated apps, dashboards, decks, and prototypes before they enter a production repo.
+            <a href="https://openai.com/index/codex-for-every-role-tool-workflow/">https://openai.com/index/codex-for-every-role-tool-workflow/</a></li>
+            <li><strong>Copilot for JetBrains update</strong> - organization agents, queued and steered CLI messages, debug summaries, Claude provider preview, and per-turn credits make agent sessions easier to govern while the output surface expands.
+            <a href="https://github.blog/changelog/2026-06-22-new-features-and-claude-as-agent-provider-preview-in-jetbrains-ides/">https://github.blog/changelog/2026-06-22-new-features-and-claude-as-agent-provider-preview-in-jetbrains-ides/</a></li>
+            <li><strong>Cloudflare Images optimization</strong> - composition controls, percentage overlays, fit modes, and upscaling are turning post-generation visual cleanup into API-level release plumbing.
+            <a href="https://developers.cloudflare.com/changelog/">https://developers.cloudflare.com/changelog/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Prototype deploys need a classification gate.</strong> Mark each URL as disposable, internal preview, customer-facing preview, or production before it leaves the canvas.</li>
+            <li><strong>Review has to follow the artifact.</strong> If the first useful output is a live URL, attach comments, accessibility notes, screenshots, source prompt, and security review to that URL before waiting for a Git diff.</li>
+            <li><strong>Project inventory gets noisier.</strong> Browser drops and canvas sends create real cloud projects; tag them or the account turns into a pile of abandoned demos with unclear billing and ownership.</li>
+            <li><strong>Promotion paths beat export paths.</strong> The durable workflow is not "download and rebuild." It is "capture provenance, connect Git when it matters, and preserve the review trail."</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Tar.</strong> - because every drag-and-drop deploy still starts with a bundle someone swears is probably the right one.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/tar.png">https://imgs.xkcd.com/comics/tar.png</a><br>Post: <a href="https://xkcd.com/1168/">https://xkcd.com/1168/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

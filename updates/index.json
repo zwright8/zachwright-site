@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-23",
+    "slug": "2026-06-23",
+    "title": "Swarm Daily: Prototypes Need a Ship Ledger",
+    "url": "/updates/2026-06-23.html",
+    "preview": "Claude Design to Vercel, Vercel Drop, Codex Sites, Copilot JetBrains agent controls, and Cloudflare Images updates make generated prototypes deployable before normal repo review catches up."
+  },
+  {
     "date": "2026-06-22",
     "slug": "2026-06-22",
     "title": "Swarm Daily: Tools Need a Registry Card",
