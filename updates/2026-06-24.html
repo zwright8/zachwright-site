@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Findings Need a Patch Queue | zachwright.xyz</title>
+  <meta name="description" content="OpenAI Daybreak, Patch the Planet, Trail of Bits, HackerOne, GitHub Code Quality APIs, secret metadata, Dependabot package access, and Vercel OIDC audiences move security automation from reports to remediated queues." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Findings Need a Patch Queue</h1>
+          <p>OpenAI Daybreak, Patch the Planet, Trail of Bits, HackerOne, GitHub Code Quality APIs, secret metadata, Dependabot package access, and Vercel OIDC audiences move security automation from reports to remediated queues.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that AI security work is moving past alert volume. The operator problem is no longer "can the model find issues?" It is "which findings are real, who owns the patch, what evidence proves the fix, and how does it land without dumping noise on maintainers?"</strong></p>
+          <p>OpenAI's Daybreak expansion makes that explicit: discovery is faster, but protection comes from validation, severity review, tested patches, coordinated disclosure, and maintainer-controlled remediation. Patch the Planet turns that into an operating lane by pairing Codex-assisted research with Trail of Bits engineers, HackerOne triage, Calif, and project maintainers.</p>
+          <ul>
+            <li>OpenAI frames Daybreak around the full remediation loop: Codex Security, trusted cyber access, partner integrations, and open-source patching.
+            <a href="https://openai.com/index/daybreak-securing-the-world/">https://openai.com/index/daybreak-securing-the-world/</a></li>
+            <li>Patch the Planet is built to reduce maintainer load: researchers validate, deduplicate, develop patches, add tests, and coordinate disclosure before work reaches the project.
+            <a href="https://openai.com/index/patch-the-planet/">https://openai.com/index/patch-the-planet/</a></li>
+            <li>Trail of Bits published first-week operating evidence: 19 projects, hundreds of discovered bugs, 64 pull requests, 51 issues, and 37 merged patches, with more private disclosure work still underway.
+            <a href="https://blog.trailofbits.com/2026/06/22/introducing-patch-the-planet/">https://blog.trailofbits.com/2026/06/22/introducing-patch-the-planet/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>OpenAI Daybreak and Codex Security</strong> - use the security agent as a remediation harness: scan, validate reachability, build threat models, generate patches, export evidence, and keep humans in control of what lands.
+            <a href="https://openai.com/index/daybreak-securing-the-world/">https://openai.com/index/daybreak-securing-the-world/</a></li>
+            <li><strong>Patch the Planet partner lane</strong> - Trail of Bits brings patch execution, HackerOne supplies intake, triage, tracking, and disclosure workflow, and maintainers keep priority and release control.
+            <a href="https://www.hackerone.com/blog/patch-the-planet-open-source-security">https://www.hackerone.com/blog/patch-the-planet-open-source-security</a></li>
+            <li><strong>GitHub Code Quality REST API</strong> - repository-level endpoints can list and fetch CodeQL findings, which makes code-quality debt addressable by tools and agentic remediation queues instead of only the UI.
+            <a href="https://github.blog/changelog/2026-06-23-fetch-code-quality-findings-via-rest-api/">https://github.blog/changelog/2026-06-23-fetch-code-quality-findings-via-rest-api/</a></li>
+            <li><strong>Secret scanning and Dependabot access</strong> - Replicate secrets now include extended metadata, and Dependabot can read private GitHub Packages and GHCR through repository grants instead of PAT-backed registry entries.
+            <a href="https://github.blog/changelog/2026-06-23-secret-scanning-adds-extended-metadata-for-replicate-secrets/">https://github.blog/changelog/2026-06-23-secret-scanning-adds-extended-metadata-for-replicate-secrets/</a>
+            <a href="https://github.blog/changelog/2026-06-23-automatic-dependabot-access-to-github-hosted-registries/">https://github.blog/changelog/2026-06-23-automatic-dependabot-access-to-github-hosted-registries/</a></li>
+            <li><strong>Vercel OIDC audiences and workflow traces</strong> - provider-specific deployment tokens, actor-chain metadata, optional JWT IDs, searchable spans, and local workflow trace inspection give remediation runs better identity and evidence.
+            <a href="https://vercel.com/changelog/custom-oidc-token-audiences">https://vercel.com/changelog/custom-oidc-token-audiences</a>
+            <a href="https://vercel.com/changelog/redesigned-trace-viewer-for-vercel-workflows">https://vercel.com/changelog/redesigned-trace-viewer-for-vercel-workflows</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Findings need lifecycle state.</strong> Track source, validation evidence, owner, proposed patch, tests, disclosure state, rollout state, and residual risk in one queue.</li>
+            <li><strong>False-positive filtering protects capacity.</strong> For maintainers, removing noise before it arrives is an operational control, not dashboard cleanup.</li>
+            <li><strong>Credentials become remediation evidence.</strong> Provider-scoped OIDC audiences, package read grants, and local keychain BYOK flows make it easier to prove which automation had access to what.</li>
+            <li><strong>Agent fixes need replayable proof.</strong> Store inputs, outputs, spans, token exchanges, and validation steps so a reviewer can inspect why the patch is safe to merge.</li>
+            <li><strong>Model routing becomes governance.</strong> GPT-5.5, trusted cyber access, BYOK providers, local models, and enterprise gateways are policy choices, not just quality or cost toggles.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>Exploits of a Mom.</strong> - because the best security automation still starts by proving the input is real before the queue catches fire.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/exploits_of_a_mom.png">https://imgs.xkcd.com/comics/exploits_of_a_mom.png</a><br>Post: <a href="https://xkcd.com/327/">https://xkcd.com/327/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

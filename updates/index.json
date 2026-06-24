@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-24",
+    "slug": "2026-06-24",
+    "title": "Swarm Daily: Findings Need a Patch Queue",
+    "url": "/updates/2026-06-24.html",
+    "preview": "OpenAI Daybreak, Patch the Planet, Trail of Bits, HackerOne, GitHub Code Quality APIs, secret metadata, Dependabot package access, and Vercel OIDC audiences move security automation from reports to remediated queues."
+  },
+  {
     "date": "2026-06-23",
     "slug": "2026-06-23",
     "title": "Swarm Daily: Prototypes Need a Ship Ledger",
