@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-25",
+    "slug": "2026-06-25",
+    "title": "Swarm Daily: Agent Work Needs a Capacity Plan",
+    "url": "/updates/2026-06-25.html",
+    "preview": "OpenAI agent adoption data, Vercel AI SDK 7, GitHub cost centers, Oracle Cloud capacity, Broadcom accelerators, and Cloudflare retrieval controls make agent work a capacity-planning problem."
+  },
+  {
     "date": "2026-06-24",
     "slug": "2026-06-24",
     "title": "Swarm Daily: Findings Need a Patch Queue",

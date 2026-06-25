@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Work Needs a Capacity Plan | zachwright.xyz</title>
+  <meta name="description" content="OpenAI agent adoption data, Vercel AI SDK 7, GitHub cost centers, Oracle Cloud capacity, Broadcom accelerators, and Cloudflare retrieval controls make agent work a capacity-planning problem." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Work Needs a Capacity Plan</h1>
+          <p>OpenAI agent adoption data, Vercel AI SDK 7, GitHub cost centers, Oracle Cloud capacity, Broadcom accelerators, and Cloudflare retrieval controls make agent work a capacity-planning problem.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that agent work is becoming a measurable capacity unit. Once teams can run agents for hours, resume work, route model calls, and attach usage to org structure, the operator question changes from "does it work?" to "who gets the capacity, who pays for it, and what proof comes back?"</strong></p>
+          <p>OpenAI's internal adoption readout gives the shape: agents are being used across coding, research, writing, operations, and support work, with Codex runs turning into measurable daily throughput. Vercel AI SDK 7 points at the runtime layer operators need next: durable agents, human approvals, telemetry, resumable streams, and eval hooks.</p>
+          <ul>
+            <li>OpenAI frames agents as active internal labor, with usage spreading across teams and work types instead of sitting in a lab demo.
+            <a href="https://openai.com/index/how-agents-are-transforming-work/">https://openai.com/index/how-agents-are-transforming-work/</a></li>
+            <li>Vercel AI SDK 7 Alpha adds production agent primitives: WorkflowAgent, approvals, telemetry, resumable streams, and evaluation support.
+            <a href="https://vercel.com/blog/ai-sdk-7">https://vercel.com/blog/ai-sdk-7</a></li>
+            <li>GitHub cost centers attribute usage and spending to business units, improving accountability, forecasting, cost allocation, and budget control.
+            <a href="https://docs.github.com/en/billing/concepts/cost-centers">https://docs.github.com/en/billing/concepts/cost-centers</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>OpenAI agent adoption data</strong> - treat agent-hours like capacity: track task class, owner, duration, handoff rate, acceptance rate, and downstream impact instead of only prompt volume.
+            <a href="https://openai.com/index/how-agents-are-transforming-work/">https://openai.com/index/how-agents-are-transforming-work/</a></li>
+            <li><strong>Vercel AI SDK 7 Alpha</strong> - use runtime approvals, telemetry, resumable streams, and evals as the default production contract for agents that can take side effects.
+            <a href="https://vercel.com/blog/ai-sdk-7">https://vercel.com/blog/ai-sdk-7</a></li>
+            <li><strong>GitHub cost centers and budgets</strong> - map GitHub usage and billing to business owners before agent automation makes shared platform spend impossible to explain.
+            <a href="https://docs.github.com/en/billing/concepts/cost-centers">https://docs.github.com/en/billing/concepts/cost-centers</a></li>
+            <li><strong>OpenAI on Oracle Cloud and Broadcom accelerators</strong> - capacity planning is now part of AI product strategy: where inference runs will shape latency, cost, reliability, and procurement.
+            <a href="https://openai.com/index/openai-on-oracle-cloud/">https://openai.com/index/openai-on-oracle-cloud/</a>
+            <a href="https://openai.com/index/openai-broadcom-jalapeno-inference-chip/">https://openai.com/index/openai-broadcom-jalapeno-inference-chip/</a></li>
+            <li><strong>Cloudflare retrieval controls</strong> - AI Search similarity-cache settings give agent-facing knowledge a freshness dial when indexed content changes often.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-24-ai-search-similarity-cache-controls/">https://developers.cloudflare.com/changelog/post/2026-06-24-ai-search-similarity-cache-controls/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Agent quotas need owners.</strong> Put budgets, priority, run class, escalation path, and expected evidence on every recurring or long-running automation lane.</li>
+            <li><strong>Approvals belong in the runtime.</strong> Side-effect gates, telemetry, and resumability should be part of the agent harness, not buried in chat history.</li>
+            <li><strong>Retrieval freshness becomes an SLO.</strong> If agents act on indexed knowledge, stale cache windows and search shaping are production controls.</li>
+            <li><strong>Procurement shapes product behavior.</strong> Cloud regions, accelerator supply, model availability, and gateway policy decide which agent workflows can run continuously.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Is It Worth the Time?</strong> - because capacity planning starts when the automation spreadsheet gets more honest than the demo.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/is_it_worth_the_time.png">https://imgs.xkcd.com/comics/is_it_worth_the_time.png</a><br>Post: <a href="https://xkcd.com/1205/">https://xkcd.com/1205/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
