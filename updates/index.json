@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-26",
+    "slug": "2026-06-26",
+    "title": "Swarm Daily: Parallel Work Needs Lanes",
+    "url": "/updates/2026-06-26.html",
+    "preview": "GitHub Desktop worktrees, Copilot app sessions, parallel Actions steps, Vercel harness adapters, build concurrency, metrics CLI, and trusted remote control make parallel dev work a lane-management problem."
+  },
+  {
     "date": "2026-06-25",
     "slug": "2026-06-25",
     "title": "Swarm Daily: Agent Work Needs a Capacity Plan",

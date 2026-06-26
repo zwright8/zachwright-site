@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Parallel Work Needs Lanes | zachwright.xyz</title>
+  <meta name="description" content="GitHub Desktop worktrees, Copilot app sessions, parallel Actions steps, Vercel harness adapters, build concurrency, metrics CLI, and trusted remote control make parallel dev work a lane-management problem." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Parallel Work Needs Lanes</h1>
+          <p>GitHub Desktop worktrees, Copilot app sessions, parallel Actions steps, Vercel harness adapters, build concurrency, metrics CLI, and trusted remote control make parallel dev work a lane-management problem.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is not "run more agents" or "run more CI." It is giving every concurrent lane a workspace, syntax, evidence stream, owner, and cleanup rule.</strong></p>
+          <p>GitHub Desktop 3.6 brings worktrees, Copilot-assisted commits, conflict help, model choice, BYOK, and repo instruction files into the local Git client. GitHub's Copilot app docs make the next layer explicit: parallel sessions can run across repos, worktrees, cloud sandboxes, issues, PRs, automations, and canvases.</p>
+          <ul>
+            <li>GitHub Desktop now treats worktrees and Copilot-backed Git operations as first-class desktop workflows.
+            <a href="https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/">https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/</a></li>
+            <li>The Copilot app docs frame agents as parallel sessions that can operate locally, in worktrees, or in cloud sandboxes.
+            <a href="https://docs.github.com/en/copilot/responsible-use/agents">https://docs.github.com/en/copilot/responsible-use/agents</a></li>
+            <li>GitHub Actions adds native same-job parallelism with `background`, `parallel`, `wait`, `wait-all`, and `cancel`, replacing ad hoc shell concurrency with declarative lanes.
+            <a href="https://github.blog/changelog/2026-06-25-actions-steps-can-now-be-run-in-parallel/">https://github.blog/changelog/2026-06-25-actions-steps-can-now-be-run-in-parallel/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub Desktop 3.6</strong> - use worktrees as the default boundary for parallel agent or branch work, and keep `AGENTS.md`, `.github/copilot-instructions.md`, and commit metadata visible to the tool doing the edit.
+            <a href="https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/">https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/</a></li>
+            <li><strong>Actions parallel steps</strong> - move background services, concurrent checks, wait points, and cleanup into workflow syntax so logs and cancellation remain inspectable.
+            <a href="https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax">https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax</a></li>
+            <li><strong>Vercel AI SDK Harness</strong> - Deep Agents and OpenCode join Claude Code, Codex, and Pi behind `HarnessAgent`, giving teams one adapter surface for sandboxed agent runs.
+            <a href="https://vercel.com/changelog/deepagents-and-opencode-harness-adapters">https://vercel.com/changelog/deepagents-and-opencode-harness-adapters</a></li>
+            <li><strong>Vercel build concurrency</strong> - Pro teams can run up to 500 concurrent builds, which turns branch priority, spend limits, and deploy queue rules into explicit operating policy.
+            <a href="https://vercel.com/changelog/pro-teams-can-now-run-up-to-500-concurrent-builds">https://vercel.com/changelog/pro-teams-can-now-run-up-to-500-concurrent-builds</a></li>
+            <li><strong>Vercel metrics CLI</strong> - pull Web Analytics, custom events, UTM dimensions, feature flags, and team-wide metrics into terminal checks instead of forcing every review back to a dashboard.
+            <a href="https://vercel.com/docs/analytics/accessing-metrics-with-vercel-cli">https://vercel.com/docs/analytics/accessing-metrics-with-vercel-cli</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Worktrees become the isolation primitive.</strong> Parallel agents need separate filesystems, branch targets, and merge paths before they need more autonomy.</li>
+            <li><strong>CI YAML needs lane ownership.</strong> Background steps should declare who owns the service, what unblocks downstream work, what gets cancelled, and where evidence lands.</li>
+            <li><strong>Harness swaps make policy portable.</strong> If Claude Code, Codex, Deep Agents, OpenCode, and Pi can sit behind one adapter, approvals, sandboxing, telemetry, and budgets have to live above the brand layer.</li>
+            <li><strong>Remote control needs device trust.</strong> Claude's Trusted Devices for Remote Control is the right direction: shared local sessions need verified operators, not just valid accounts.
+            <a href="https://support.claude.com/en/articles/12138966-release-notes">https://support.claude.com/en/articles/12138966-release-notes</a></li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Git</strong> - because every parallel lane eventually becomes a merge strategy question.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/git_2x.png">https://imgs.xkcd.com/comics/git_2x.png</a><br>Post: <a href="https://xkcd.com/1597/">https://xkcd.com/1597/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
