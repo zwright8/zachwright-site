@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-27",
+    "slug": "2026-06-27",
+    "title": "Swarm Daily: Agent Standards Need a Test Suite",
+    "url": "/updates/2026-06-27.html",
+    "preview": "Vercel agent design standards, Cloudflare background subagents, Copilot review-depth controls, marketplace policy, fast model lanes, and session traces move agent quality from prompts to tested operating assets."
+  },
+  {
     "date": "2026-06-26",
     "slug": "2026-06-26",
     "title": "Swarm Daily: Parallel Work Needs Lanes",

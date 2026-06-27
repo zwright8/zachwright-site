@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Standards Need a Test Suite | zachwright.xyz</title>
+  <meta name="description" content="Vercel agent design standards, Cloudflare background subagents, Copilot review-depth controls, marketplace policy, fast model lanes, and session traces move agent quality from prompts to tested operating assets." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Standards Need a Test Suite</h1>
+          <p>Vercel agent design standards, Cloudflare background subagents, Copilot review-depth controls, marketplace policy, fast model lanes, and session traces move agent quality from prompts to tested operating assets.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that agent quality is leaving the prompt box. Teams now need standards that can be versioned, linted, evaluated, traced, and rolled back like production code.</strong></p>
+          <p>Vercel's product-design writeup is the cleanest signal: better agents come from maintained skills, examples, lint rules, evals, and human review loops. Cloudflare's Agents SDK update points at the runtime side of the same problem with background subagents, schedulers, and explicit turn execution. GitHub's Copilot code review controls make the operator decision visible: choose depth, latency, and evidence based on risk.</p>
+          <ul>
+            <li>Vercel frames agent design quality as maintained instruction infrastructure, not a better one-shot prompt.
+            <a href="https://vercel.com/blog/teaching-agents-product-design-at-vercel">https://vercel.com/blog/teaching-agents-product-design-at-vercel</a></li>
+            <li>Cloudflare Agents SDK v0.17.0 adds background subagents, scheduled runs, and `runTurn`, giving teams a clearer execution contract.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/">https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/</a></li>
+            <li>Copilot code review now exposes analysis depth and efficiency controls, making review intensity an explicit setting.
+            <a href="https://github.blog/changelog/2026-06-25-copilot-code-review-analysis-depth-and-efficiency-updates/">https://github.blog/changelog/2026-06-25-copilot-code-review-analysis-depth-and-efficiency-updates/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel design-agent standards</strong> - treat skills, examples, lint rules, eval cases, and reviewer feedback as a maintained repo surface with ownership and regression checks.
+            <a href="https://vercel.com/blog/teaching-agents-product-design-at-vercel">https://vercel.com/blog/teaching-agents-product-design-at-vercel</a></li>
+            <li><strong>Cloudflare Agents SDK v0.17.0</strong> - use background subagents and explicit turn execution when agent work needs a durable run boundary instead of an invisible chat continuation.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/">https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/</a></li>
+            <li><strong>Copilot code review depth</strong> - set review intensity by change class: quick checks for low-risk diffs, deeper analysis for auth, data, infra, and migration work.
+            <a href="https://github.blog/changelog/2026-06-25-copilot-code-review-analysis-depth-and-efficiency-updates/">https://github.blog/changelog/2026-06-25-copilot-code-review-analysis-depth-and-efficiency-updates/</a></li>
+            <li><strong>Copilot marketplace policy</strong> - enterprise-managed `strictKnownMarketplaces` now reaches VS Code and CLI surfaces, tightening the assistant extension supply chain.
+            <a href="https://github.blog/changelog/2026-06-25-enterprise-managed-settings-now-support-strictknownmarketplaces-in-vs-code-and-the-cli/">https://github.blog/changelog/2026-06-25-enterprise-managed-settings-now-support-strictknownmarketplaces-in-vs-code-and-the-cli/</a></li>
+            <li><strong>Fast model and trace lanes</strong> - MAI-Code-1-Flash gives Copilot Business and Enterprise a low-latency coding option, while Eve session observability makes agent decisions inspectable after the run.
+            <a href="https://github.blog/changelog/2026-06-26-mai-code-1-flash-for-copilot-business-and-copilot-enterprise/">https://github.blog/changelog/2026-06-26-mai-code-1-flash-for-copilot-business-and-copilot-enterprise/</a>
+            <a href="https://vercel.com/changelog/eve-agent-observability">https://vercel.com/changelog/eve-agent-observability</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Agent instructions need maintainers.</strong> Put an owner, review cadence, changelog, and regression set on the rules agents use to create code, designs, and operations changes.</li>
+            <li><strong>Review depth becomes routing policy.</strong> Speed models, deep reviewers, and human gates should be selected by blast radius, not whoever launched the session.</li>
+            <li><strong>Extension policy is AI policy.</strong> If the assistant ships through IDE and CLI extensions, marketplace allow lists become part of the agent trust boundary.</li>
+            <li><strong>Traces close the loop.</strong> Standards only improve when teams can connect a rule change to the agent run, the reviewer decision, and the shipped outcome.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Standards</strong> - because every agent platform eventually discovers it needs one more rule format to unify all the rule formats.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/standards.png">https://imgs.xkcd.com/comics/standards.png</a><br>Post: <a href="https://xkcd.com/927/">https://xkcd.com/927/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
