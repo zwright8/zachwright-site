@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Access Needs a Consent Plane | zachwright.xyz</title>
+  <meta name="description" content="Cloudflare self-managed OAuth, Vercel Connect, MCP enterprise authorization, AI SDK 7 MCP Apps, OIDC defaults, and Copilot BYOK push agent access from static secrets to governed grants." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Access Needs a Consent Plane</h1>
+          <p>Cloudflare self-managed OAuth, Vercel Connect, MCP enterprise authorization, AI SDK 7 MCP Apps, OIDC defaults, and Copilot BYOK push agent access from static secrets to governed grants.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that agent access is becoming a consent and identity surface, not a pile of environment variables. Operators now need to track grants, claims, scopes, revocation paths, and tool visibility with the same care they give deploy permissions.</strong></p>
+          <p>Cloudflare's self-managed OAuth gives third-party apps scoped, user-consented access to Cloudflare accounts instead of broad API tokens. Vercel Connect points the same pattern at agents: short-lived tokens, connector-level revocation, environment isolation, provider-specific scopes, and adapters for MCP clients. The MCP Enterprise-Managed Authorization extension takes the enterprise path: centralize server access through the identity provider so approved tools appear on first login.</p>
+          <ul>
+            <li>Cloudflare self-managed OAuth turns account access into scoped consent with private/public app visibility and domain verification.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-03-public-oauth-clients/">https://developers.cloudflare.com/changelog/post/2026-06-03-public-oauth-clients/</a></li>
+            <li>Vercel Connect gives agents runtime tokens for Slack, GitHub, Linear, Salesforce, Snowflake, Figma, generic OAuth, API-key connectors, and MCP servers.
+            <a href="https://vercel.com/changelog/vercel-connect-secure-access-to-external-services-for-your-agents">https://vercel.com/changelog/vercel-connect-secure-access-to-external-services-for-your-agents</a></li>
+            <li>MCP Enterprise-Managed Authorization makes centrally provisioned server access a stable protocol extension.
+            <a href="https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/">https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Cloudflare OAuth clients</strong> - use scoped OAuth applications when a tool needs to act on a user's Cloudflare account, and make requested scopes visible before consent.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-03-public-oauth-clients/">https://developers.cloudflare.com/changelog/post/2026-06-03-public-oauth-clients/</a></li>
+            <li><strong>Vercel Connect</strong> - replace bespoke agent credential plumbing with connectors that issue short-lived runtime tokens, isolate environments, and support connector-wide token revocation.
+            <a href="https://vercel.com/changelog/vercel-connect-secure-access-to-external-services-for-your-agents">https://vercel.com/changelog/vercel-connect-secure-access-to-external-services-for-your-agents</a></li>
+            <li><strong>MCP enterprise auth</strong> - map MCP server access to identity-provider policy so connected tools follow users, groups, and roles instead of one-off per-app OAuth setup.
+            <a href="https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/">https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/</a></li>
+            <li><strong>AI SDK 7 MCP Apps</strong> - separate model-visible tools from app-only tools, use scoped tool context, and treat approval replay hardening as part of the agent auth boundary.
+            <a href="https://vercel.com/changelog/ai-sdk-7">https://vercel.com/changelog/ai-sdk-7</a></li>
+            <li><strong>Vercel OIDC defaults</strong> - use custom OIDC audiences, Flags OIDC, and Blob OIDC to remove long-lived deployment secrets where platform-issued identity is enough.
+            <a href="https://vercel.com/changelog/custom-oidc-token-audiences">https://vercel.com/changelog/custom-oidc-token-audiences</a>
+            <a href="https://vercel.com/changelog/authenticate-vercel-flags-with-openid-connect-by-default">https://vercel.com/changelog/authenticate-vercel-flags-with-openid-connect-by-default</a>
+            <a href="https://vercel.com/changelog/vercel-blob-now-supports-oidc-authentication">https://vercel.com/changelog/vercel-blob-now-supports-oidc-authentication</a></li>
+            <li><strong>Copilot app BYOK</strong> - make provider choice, key ownership, and compatible endpoints explicit policy for enterprise agent sessions.
+            <a href="https://github.blog/changelog/2026-06-23-github-copilot-app-support-for-byok/">https://github.blog/changelog/2026-06-23-github-copilot-app-support-for-byok/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Static secrets need an exception record.</strong> If OIDC or OAuth can cover the workflow, long-lived tokens should have a named owner, rotation plan, and reason to survive.</li>
+            <li><strong>Authorization UX is now ops UX.</strong> Consent screens, scope labels, grant revocation, connector attachment, and audit logs become part of the production control plane.</li>
+            <li><strong>Tool visibility is a security boundary.</strong> Model-visible tools, app-only tools, remote MCP servers, and provider-side approvals need separate threat models.</li>
+            <li><strong>Contracts need to match runbooks.</strong> Connected AI tools can spend money and change infrastructure, so legal responsibility and internal approval policy have to line up.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Authorization</strong> - because the protected admin account is not the same thing as protecting the workflows, apps, and money already reachable from the session.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/authorization.png">https://imgs.xkcd.com/comics/authorization.png</a><br>Post: <a href="https://xkcd.com/1200/">https://xkcd.com/1200/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

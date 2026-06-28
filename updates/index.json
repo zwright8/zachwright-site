@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-28",
+    "slug": "2026-06-28",
+    "title": "Swarm Daily: Agent Access Needs a Consent Plane",
+    "url": "/updates/2026-06-28.html",
+    "preview": "Cloudflare self-managed OAuth, Vercel Connect, MCP enterprise authorization, AI SDK 7 MCP Apps, OIDC defaults, and Copilot BYOK push agent access from static secrets to governed grants."
+  },
+  {
     "date": "2026-06-27",
     "slug": "2026-06-27",
     "title": "Swarm Daily: Agent Standards Need a Test Suite",
