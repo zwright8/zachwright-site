@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent State Needs a Custody Clock | zachwright.xyz</title>
+  <meta name="description" content="Vercel sandbox snapshot expiry, eve Agent Runs, Cloudflare temporary accounts, Durable Object stream lifetimes, Codex Remote pairing, and Claude Code sandbox controls turn agent state into a retention-and-claim problem." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent State Needs a Custody Clock</h1>
+          <p>Vercel sandbox snapshot expiry, eve Agent Runs, Cloudflare temporary accounts, Durable Object stream lifetimes, Codex Remote pairing, and Claude Code sandbox controls turn agent state into a retention-and-claim problem.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that agent runtime state is becoming reusable, inspectable, and claimable. That makes it valuable, but it also means operators need clocks, owners, promotion paths, and cleanup rules before temporary work becomes production residue.</strong></p>
+          <p>Vercel Sandbox snapshots now expire from last use, not creation time. Cloudflare temporary accounts give agents a 60-minute deploy, verify, redeploy, and claim window. Durable Objects can stay alive while streaming over outbound connections, but the keepalive protection has a 15-minute cap. The common thread: agent work no longer disappears when a chat turn ends, so state custody becomes a real operating surface.</p>
+          <ul>
+            <li>Vercel Sandbox snapshots can use shorter retention windows without breaking active workflows because each use resets the expiration timer.
+            <a href="https://vercel.com/changelog/sandboxes-now-expire-based-on-last-use">https://vercel.com/changelog/sandboxes-now-expire-based-on-last-use</a></li>
+            <li>Cloudflare temporary accounts let unauthenticated agent deploys stay live for 60 minutes and then move into a permanent account through a claim URL.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-19-temporary-accounts-for-agents/">https://developers.cloudflare.com/changelog/post/2026-06-19-temporary-accounts-for-agents/</a></li>
+            <li>Durable Object outbound connections now protect long LLM streams from eviction, but only up to a bounded keepalive window.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-19-outbound-connections-keep-dos-alive/">https://developers.cloudflare.com/changelog/post/2026-06-19-outbound-connections-keep-dos-alive/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel Sandbox snapshot expiry</strong> - tie snapshot retention to last use, then set shorter cleanup windows for idle agent workspaces without breaking active long-running workflows.
+            <a href="https://vercel.com/changelog/sandboxes-now-expire-based-on-last-use">https://vercel.com/changelog/sandboxes-now-expire-based-on-last-use</a></li>
+            <li><strong>Cloudflare temporary accounts</strong> - treat every agent-created preview as a 60-minute custody object with URL, claim link, supported resources, and owner decision.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-19-temporary-accounts-for-agents/">https://developers.cloudflare.com/changelog/post/2026-06-19-temporary-accounts-for-agents/</a></li>
+            <li><strong>Durable Object stream lifetimes</strong> - design LLM streams around connection caps, heartbeat handling, and eviction after the active outbound connection closes.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-19-outbound-connections-keep-dos-alive/">https://developers.cloudflare.com/changelog/post/2026-06-19-outbound-connections-keep-dos-alive/</a></li>
+            <li><strong>eve Agent Runs</strong> - inspect trigger, duration, token usage, turns, model calls, tool calls, and runtime errors from one dashboard record instead of reconstructing sessions from logs.
+            <a href="https://vercel.com/changelog/eve-agent-observability">https://vercel.com/changelog/eve-agent-observability</a></li>
+            <li><strong>Codex Remote GA</strong> - make host-device pairing, stale-connection re-pairing, and remote workspace provisioning explicit parts of the operating runbook.
+            <a href="https://developers.openai.com/codex/changelog/#codex-2026-06-25">https://developers.openai.com/codex/changelog/#codex-2026-06-25</a></li>
+            <li><strong>Claude Code session controls</strong> - use sandbox credential blocking, MCP idle timeouts, resume fixes, and background/worktree cleanup as concrete guardrails for carried-over agent state.
+            <a href="https://github.com/anthropics/claude-code/releases">https://github.com/anthropics/claude-code/releases</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Retention windows become API contracts.</strong> Snapshot TTL, trace retention, account claim windows, and stream caps should be documented where engineers build, not buried in billing or support pages.</li>
+            <li><strong>Preview deploys need provenance.</strong> A claim URL should carry source prompt, workspace, actor, resources created, verification result, and deletion deadline.</li>
+            <li><strong>"Still running" is not enough evidence.</strong> Long streams and detached runs need heartbeat, budget, cancellation, and recovery state that another operator can trust.</li>
+            <li><strong>Traces become audit artifacts.</strong> Agent Runs and workflow traces are now the record that proves which tool acted, which model called it, and what happened next.</li>
+            <li><strong>Remote workspaces need custody maps.</strong> Device pairing, host trust, cloud droplets, local credentials, and stale sessions all need named owners and revocation paths.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Expiration Date High Score</strong> - because every snapshot, preview account, pairing, and trace needs a visible clock before it becomes archaeology.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/expiration_date_high_score.png">https://imgs.xkcd.com/comics/expiration_date_high_score.png</a><br>Post: <a href="https://xkcd.com/2178/">https://xkcd.com/2178/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

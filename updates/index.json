@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-29",
+    "slug": "2026-06-29",
+    "title": "Swarm Daily: Agent State Needs a Custody Clock",
+    "url": "/updates/2026-06-29.html",
+    "preview": "Vercel sandbox snapshot expiry, eve Agent Runs, Cloudflare temporary accounts, Durable Object stream lifetimes, Codex Remote pairing, and Claude Code sandbox controls turn agent state into a retention-and-claim problem."
+  },
+  {
     "date": "2026-06-28",
     "slug": "2026-06-28",
     "title": "Swarm Daily: Agent Access Needs a Consent Plane",
