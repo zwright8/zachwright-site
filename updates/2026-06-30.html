@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Functions Need a Runtime Contract | zachwright.xyz</title>
+  <meta name="description" content="Netlify agent-ready functions, Vercel 5 GB function bundles, Cloudflare background sub-agents, Durable Object jurisdictions, and read-only cache defaults make generated deploy units reviewable operating contracts." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Functions Need a Runtime Contract</h1>
+          <p>Netlify agent-ready functions, Vercel 5 GB function bundles, Cloudflare background sub-agents, Durable Object jurisdictions, and read-only cache defaults make generated deploy units reviewable operating contracts.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that deployable units are starting to describe their behavior, weight, data placement, trust boundary, and runtime evidence in surfaces that agents and reviewers can inspect. Functions are no longer just files that happen to run; they are contracts operators have to review.</strong></p>
+          <p>Netlify is redesigning functions so agent-generated serverless code is easier to understand and operate. Vercel Functions can now carry bundles up to 5 GB. Cloudflare Agents SDK 0.17.0 adds background sub-agents and a unified turn API. Put together, the production question changes from "did it deploy?" to "what exactly did this unit promise to do, where can it run, and what evidence proves it behaved?"</p>
+          <ul>
+            <li>Netlify Functions are being redesigned around clearer contracts for agent-generated serverless code.
+            <a href="https://www.netlify.com/changelog/2026-06-25-functions-redesigned-for-agents/">https://www.netlify.com/changelog/2026-06-25-functions-redesigned-for-agents/</a></li>
+            <li>Vercel Functions can now be up to 5 GB in package size for heavier workloads that do not fit normal serverless packaging assumptions.
+            <a href="https://vercel.com/changelog/vercel-functions-can-now-be-up-to-5-gb-in-package-size">https://vercel.com/changelog/vercel-functions-can-now-be-up-to-5-gb-in-package-size</a></li>
+            <li>Cloudflare Agents SDK 0.17.0 makes multi-step agent work more explicit with background sub-agents and a unified runTurn API.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/">https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Netlify agent-ready functions</strong> - review generated serverless code as an explicit function contract before it hits production.
+            <a href="https://www.netlify.com/changelog/2026-06-25-functions-redesigned-for-agents/">https://www.netlify.com/changelog/2026-06-25-functions-redesigned-for-agents/</a></li>
+            <li><strong>Vercel 5 GB Functions</strong> - reserve large bundles for deliberate heavy paths, then review cold starts, memory pressure, dependency provenance, and rollback cost.
+            <a href="https://vercel.com/changelog/vercel-functions-can-now-be-up-to-5-gb-in-package-size">https://vercel.com/changelog/vercel-functions-can-now-be-up-to-5-gb-in-package-size</a></li>
+            <li><strong>Cloudflare Agents SDK 0.17.0</strong> - use background sub-agents and unified turns to make long agent work visible as a runtime surface, not hidden chat residue.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/">https://developers.cloudflare.com/changelog/post/2026-06-26-agents-sdk-v0170/</a></li>
+            <li><strong>Durable Objects US jurisdiction</strong> - document data placement when durable agent memory, workflow state, or customer records persist beyond one request.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-26-durable-objects-us-jurisdiction/">https://developers.cloudflare.com/changelog/post/2026-06-26-durable-objects-us-jurisdiction/</a></li>
+            <li><strong>GitHub Actions read-only cache</strong> - preserve trust boundaries between untrusted pull requests and mutable build cache in deploy pipelines.
+            <a href="https://github.blog/changelog/2026-06-26-read-only-actions-cache-for-untrusted-triggers/">https://github.blog/changelog/2026-06-26-read-only-actions-cache-for-untrusted-triggers/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Function review needs a manifest pass.</strong> Check trigger, auth, state placement, dependency weight, timeout, cost ceiling, and observability before approval.</li>
+            <li><strong>Bigger bundles widen the supply-chain surface.</strong> A 5 GB serverless unit can carry more useful runtime, but also more stale packages, native edges, and surprise transitive risk.</li>
+            <li><strong>Agents will outpace convention-based review.</strong> Generated functions need behavior encoded beside the code because reviewers cannot infer intent from filenames fast enough.</li>
+            <li><strong>Runtime evidence belongs in the loop.</strong> Audit drains, platform logs, and deployment metrics should feed the same review packet as the diff.</li>
+            <li><strong>Data locality is now part of the handler contract.</strong> Durable state and regional constraints should be visible where the function or agent run is defined.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Dependencies</strong> - because every "just one larger function" ships with an invisible stack of assumptions underneath it.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/dependency.png">https://imgs.xkcd.com/comics/dependency.png</a><br>Post: <a href="https://xkcd.com/2347/">https://xkcd.com/2347/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

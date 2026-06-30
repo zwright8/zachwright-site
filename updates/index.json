@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-06-30",
+    "slug": "2026-06-30",
+    "title": "Swarm Daily: Functions Need a Runtime Contract",
+    "url": "/updates/2026-06-30.html",
+    "preview": "Netlify agent-ready functions, Vercel 5 GB function bundles, Cloudflare background sub-agents, Durable Object jurisdictions, and read-only cache defaults make generated deploy units reviewable operating contracts."
+  },
+  {
     "date": "2026-06-29",
     "slug": "2026-06-29",
     "title": "Swarm Daily: Agent State Needs a Custody Clock",
