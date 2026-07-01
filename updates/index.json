@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-01",
+    "slug": "2026-07-01",
+    "title": "Swarm Daily: Shipping Needs Policy Gates",
+    "url": "/updates/2026-07-01.html",
+    "preview": "GitHub coverage gates, license rulesets, explicit registry auth, Vercel private blobs, container provenance, audit drains, and Cloudflare WAF updates move shipping policy into the path to production."
+  },
+  {
     "date": "2026-06-30",
     "slug": "2026-06-30",
     "title": "Swarm Daily: Functions Need a Runtime Contract",

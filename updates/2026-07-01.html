@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Shipping Needs Policy Gates | zachwright.xyz</title>
+  <meta name="description" content="GitHub coverage gates, license rulesets, explicit registry auth, Vercel private blobs, container provenance, audit drains, and Cloudflare WAF updates move shipping policy into the path to production." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Shipping Needs Policy Gates</h1>
+          <p>GitHub coverage gates, license rulesets, explicit registry auth, Vercel private blobs, container provenance, audit drains, and Cloudflare WAF updates move shipping policy into the path to production.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from advisory checks to enforceable gates. AI-assisted changes can add packages, alter test risk, move private data, boot custom images, and touch production faster than a reviewer can manually reconstruct the blast radius. The gate has to live where the work ships.</strong></p>
+          <p>GitHub now lets branch rulesets block pull requests when coverage falls below configured thresholds, and its license-compliance preview can stop noncompliant dependencies before they reach production. Vercel Private Blob moves sensitive files and agent memory behind private stores, signed URLs, and project-scoped OIDC. Add audit-log drains, first-party container registry support, custom sandbox images, and Cloudflare's latest WAF rule changes, and the operator question gets sharper: what must be true before this change can merge, build, store data, boot, or go live?</p>
+          <ul>
+            <li>GitHub coverage merge protection turns coverage loss into branch-ruleset policy, with evaluate mode before enforcement.
+            <a href="https://github.blog/changelog/2026-06-30-github-code-coverage-merge-protection-for-pull-requests/">https://github.blog/changelog/2026-06-30-github-code-coverage-merge-protection-for-pull-requests/</a></li>
+            <li>GitHub license compliance gives enterprises centralized ruleset checks that can block noncompliant dependencies.
+            <a href="https://github.blog/changelog/2026-06-30-open-source-license-compliance-is-in-public-preview/">https://github.blog/changelog/2026-06-30-open-source-license-compliance-is-in-public-preview/</a></li>
+            <li>Vercel Private Blob is GA with private stores, signed URLs, and OIDC authentication for sensitive files and agent memory.
+            <a href="https://vercel.com/changelog/vercel-private-blob-is-now-generally-available">https://vercel.com/changelog/vercel-private-blob-is-now-generally-available</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub coverage merge protection</strong> - start thresholds in evaluate mode, measure fallout, then promote the rule from warning to blocker.
+            <a href="https://github.blog/changelog/2026-06-30-github-code-coverage-merge-protection-for-pull-requests/">https://github.blog/changelog/2026-06-30-github-code-coverage-merge-protection-for-pull-requests/</a></li>
+            <li><strong>GitHub license compliance preview</strong> - centralize dependency license policy before generated code quietly lands a new package.
+            <a href="https://github.blog/changelog/2026-06-30-open-source-license-compliance-is-in-public-preview/">https://github.blog/changelog/2026-06-30-open-source-license-compliance-is-in-public-preview/</a></li>
+            <li><strong>Dependabot explicit npm registry config</strong> - stop relying on lockfile inference; private registry auth now needs deliberate configuration.
+            <a href="https://github.blog/changelog/2026-06-30-dependabot-no-longer-infers-npmrc/">https://github.blog/changelog/2026-06-30-dependabot-no-longer-infers-npmrc/</a></li>
+            <li><strong>Vercel Private Blob</strong> - use private stores, signed URLs, and project-scoped OIDC for user files, invoices, and persistent agent memory.
+            <a href="https://vercel.com/changelog/vercel-private-blob-is-now-generally-available">https://vercel.com/changelog/vercel-private-blob-is-now-generally-available</a></li>
+            <li><strong>Vercel Container Registry plus custom sandbox images</strong> - standardize the toolchain images agents run, then review image ownership, auth scope, and rebuild path.
+            <a href="https://vercel.com/changelog/introducing-vcr-vercel-container-registry">https://vercel.com/changelog/introducing-vcr-vercel-container-registry</a> / <a href="https://vercel.com/changelog/vercel-sandbox-now-support-custom-images">https://vercel.com/changelog/vercel-sandbox-now-support-custom-images</a></li>
+            <li><strong>Vercel Audit Log Drains and Cloudflare WAF updates</strong> - route activity events and edge-rule changes into the same evidence loop as deploy review.
+            <a href="https://vercel.com/changelog/expanded-audit-log-coverage-now-delivered-through-vercel-drains">https://vercel.com/changelog/expanded-audit-log-coverage-now-delivered-through-vercel-drains</a> / <a href="https://developers.cloudflare.com/changelog/post/2026-07-01-waf-release/">https://developers.cloudflare.com/changelog/post/2026-07-01-waf-release/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Review moves from taste to admission control.</strong> Coverage, license, registry, storage, image, and WAF policy should be explicit before code reaches production.</li>
+            <li><strong>Generated changes need repository-level brakes.</strong> Faster code paths make manual package, test, and provenance review too slow unless the repo encodes the rules.</li>
+            <li><strong>Private artifacts need lifecycle metadata.</strong> Agent memory, uploads, and custom images should carry owner, scope, expiry, and audit expectations.</li>
+            <li><strong>Evaluate mode is the rollout pattern.</strong> Measure how a gate behaves against real work, then turn it on when the false-positive rate is understood.</li>
+            <li><strong>Security evidence has a clock.</strong> GitHub's closed-alert retention policy means remediation history should be exported before it leaves hot UI and API paths.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Standards</strong> - because every team wants one clean policy layer and somehow ships three more controls.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/standards.png">https://imgs.xkcd.com/comics/standards.png</a><br>Post: <a href="https://xkcd.com/927/">https://xkcd.com/927/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
