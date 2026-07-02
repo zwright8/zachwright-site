@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Sessions Need a Work Order | zachwright.xyz</title>
+  <meta name="description" content="GitHub issue fields, Copilot session limits, Vercel dry-run deploys, browser and vision tools, enterprise model defaults, and structural linting turn agent work into bounded, inspectable work orders." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Sessions Need a Work Order</h1>
+          <p>GitHub issue fields, Copilot session limits, Vercel dry-run deploys, browser and vision tools, enterprise model defaults, and structural linting turn agent work into bounded, inspectable work orders.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that agent work is starting to look less like an open-ended prompt and more like a bounded work order. The packet needs typed metadata, a spend ceiling, a model policy, and preflight evidence before the run creates artifacts.</strong></p>
+          <p>GitHub Issue fields are now generally available, so teams can add typed, searchable fields to issues across repositories and make work visible in tables, boards, roadmaps, and reports. Copilot CLI and SDK now support AI credit session limits, which lets an operator cap a run before it starts. Vercel CLI dry-run deployments show the detected framework preset plus included and ignored files without creating a deployment. Put together, the question changes from "what did the agent try?" to "what was the work order, what was its budget, and what would it ship?"</p>
+          <ul>
+            <li>GitHub Issue fields move work metadata into the issue itself instead of side-channel trackers.
+            <a href="https://github.blog/changelog/2026-07-02-issue-fields-are-now-generally-available/">https://github.blog/changelog/2026-07-02-issue-fields-are-now-generally-available/</a></li>
+            <li>Copilot AI credit session limits put a run-level cap on CLI and SDK agent work.
+            <a href="https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/">https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/</a></li>
+            <li>Vercel CLI dry-run deployments expose deploy inputs before a deployment exists.
+            <a href="https://vercel.com/changelog/dry-run-deployments-with-vercel-cli">https://vercel.com/changelog/dry-run-deployments-with-vercel-cli</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub Issue fields GA</strong> - add typed fields for priority, owner, status, surface area, customer, or risk so agent queues can be sorted before execution.
+            <a href="https://github.blog/changelog/2026-07-02-issue-fields-are-now-generally-available/">https://github.blog/changelog/2026-07-02-issue-fields-are-now-generally-available/</a></li>
+            <li><strong>Copilot session limits</strong> - set AI credit caps at run scope for CLI and SDK work, especially for unattended loops and batch tasks.
+            <a href="https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/">https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/</a></li>
+            <li><strong>Vercel dry-run deployments</strong> - preview included files, ignored files, and framework detection before a deployment is created.
+            <a href="https://vercel.com/changelog/dry-run-deployments-with-vercel-cli">https://vercel.com/changelog/dry-run-deployments-with-vercel-cli</a></li>
+            <li><strong>Copilot browser tools and vision</strong> - give agents controlled access to live pages, console errors, screenshots, PDFs, and images when the task depends on UI evidence.
+            <a href="https://github.blog/changelog/2026-07-01-browser-tools-for-github-copilot-in-vs-code-are-generally-available/">https://github.blog/changelog/2026-07-01-browser-tools-for-github-copilot-in-vs-code-are-generally-available/</a> / <a href="https://github.blog/changelog/2026-07-01-copilot-vision-is-generally-available/">https://github.blog/changelog/2026-07-01-copilot-vision-is-generally-available/</a></li>
+            <li><strong>Enterprise Copilot defaults</strong> - managed settings and auto model selection let platform teams define defaults before every user chooses their own path.
+            <a href="https://github.blog/changelog/2026-07-01-enterprise-managed-settings-json-is-generally-available/">https://github.blog/changelog/2026-07-01-enterprise-managed-settings-json-is-generally-available/</a> / <a href="https://github.blog/changelog/2026-07-01-enterprises-can-default-to-auto-model-selection/">https://github.blog/changelog/2026-07-01-enterprises-can-default-to-auto-model-selection/</a></li>
+            <li><strong>Vercel konsistent</strong> - enforce structural TypeScript conventions for humans and agents where TypeScript and ESLint do not describe the shape of the codebase.
+            <a href="https://vercel.com/changelog/enforce-consistent-code-for-agents-and-humans-with-konsistent">https://vercel.com/changelog/enforce-consistent-code-for-agents-and-humans-with-konsistent</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Agent tasks need fields, not folklore.</strong> Priority, owner, budget, blast radius, data access, and acceptance evidence should be visible before a run starts.</li>
+            <li><strong>Spend control belongs at session scope.</strong> Monthly budgets catch the bill; run-level caps keep a single loop from becoming the incident.</li>
+            <li><strong>Preflight becomes the review packet.</strong> Dry-run deploy output, browser evidence, screenshots, and structural checks are cheaper to inspect than a bad artifact after creation.</li>
+            <li><strong>Enterprise defaults will shape model behavior.</strong> Managed settings and auto routing make the platform policy more important than individual prompt taste.</li>
+            <li><strong>UI evidence is entering the build loop.</strong> Browser tools and vision make visual state reviewable by agents, so teams need clear rules for when that evidence is sufficient.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Is It Worth the Time?</strong> - because every agent run deserves a budget before it becomes a lifestyle.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/is_it_worth_the_time.png">https://imgs.xkcd.com/comics/is_it_worth_the_time.png</a><br>Post: <a href="https://xkcd.com/1205/">https://xkcd.com/1205/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

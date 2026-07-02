@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-02",
+    "slug": "2026-07-02",
+    "title": "Swarm Daily: Agent Sessions Need a Work Order",
+    "url": "/updates/2026-07-02.html",
+    "preview": "GitHub issue fields, Copilot session limits, Vercel dry-run deploys, browser and vision tools, enterprise model defaults, and structural linting turn agent work into bounded, inspectable work orders."
+  },
+  {
     "date": "2026-07-01",
     "slug": "2026-07-01",
     "title": "Swarm Daily: Shipping Needs Policy Gates",
