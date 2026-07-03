@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-03",
+    "slug": "2026-07-03",
+    "title": "Swarm Daily: AI Traffic Needs a Price Sheet",
+    "url": "/updates/2026-07-03.html",
+    "preview": "Cloudflare x402 monetization, AI traffic classes, bot attribution, Vercel gateway routes, scriptable flag segments, and Wrangler profiles turn machine traffic into priced, routed production inventory."
+  },
+  {
     "date": "2026-07-02",
     "slug": "2026-07-02",
     "title": "Swarm Daily: Agent Sessions Need a Work Order",

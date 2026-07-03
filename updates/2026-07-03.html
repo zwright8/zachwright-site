@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: AI Traffic Needs a Price Sheet | zachwright.xyz</title>
+  <meta name="description" content="Cloudflare x402 monetization, AI traffic classes, bot attribution, Vercel gateway routes, scriptable flag segments, and Wrangler profiles turn machine traffic into priced, routed production inventory." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: AI Traffic Needs a Price Sheet</h1>
+          <p>Cloudflare x402 monetization, AI traffic classes, bot attribution, Vercel gateway routes, scriptable flag segments, and Wrangler profiles turn machine traffic into priced, routed production inventory.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from "block AI bots" to "route machine traffic by value." Search, agent, training, paid API calls, paid MCP tools, and denied models now need separate rules because they do different work against your business.</strong></p>
+          <p>Cloudflare's Monetization Gateway puts x402 payment policy at the edge for web pages, datasets, APIs, and MCP tools. Its new AI traffic controls split machine visitors into Search, Agent, and Training categories instead of one blunt toggle. BotBase and Attribution Business Insights add a directory and value dashboard for crawler conversations. Put together, the operator question changes from "is this a bot?" to "what is this traffic allowed to do, what does it pay, and where does it route?"</p>
+          <ul>
+            <li>Cloudflare Monetization Gateway turns HTTP 402/x402 into edge-enforced payment rules for protected resources.
+            <a href="https://blog.cloudflare.com/monetization-gateway/">https://blog.cloudflare.com/monetization-gateway/</a></li>
+            <li>Cloudflare AI traffic options let every customer manage Search, Agent, and Training traffic independently.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-01-ai-traffic-options/">https://developers.cloudflare.com/changelog/post/2026-07-01-ai-traffic-options/</a></li>
+            <li>BotBase and Attribution Business Insights move crawler review from raw logs into business attribution.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-01-botbase-attribution-business-insights/">https://developers.cloudflare.com/changelog/post/2026-07-01-botbase-attribution-business-insights/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Cloudflare Monetization Gateway</strong> - put payment policy in front of pages, datasets, APIs, and MCP tools without building a separate payments stack.
+            <a href="https://blog.cloudflare.com/monetization-gateway/">https://blog.cloudflare.com/monetization-gateway/</a></li>
+            <li><strong>Cloudflare AI traffic controls</strong> - manage Search, Agent, and Training crawlers separately; new domains get updated defaults on September 15, 2026.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-01-ai-traffic-options/">https://developers.cloudflare.com/changelog/post/2026-07-01-ai-traffic-options/</a></li>
+            <li><strong>BotBase and Attribution Business Insights</strong> - use the bot directory and value dashboard to decide which crawlers deserve access, pricing, or a block.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-01-botbase-attribution-business-insights/">https://developers.cloudflare.com/changelog/post/2026-07-01-botbase-attribution-business-insights/</a></li>
+            <li><strong>Vercel AI Gateway routing rules</strong> - rewrite or deny model traffic at gateway scope when a model is down, retired, too expensive, or unapproved.
+            <a href="https://vercel.com/changelog/ai-gateway-routing-rules">https://vercel.com/changelog/ai-gateway-routing-rules</a></li>
+            <li><strong>Vercel Flags segments CLI</strong> - manage targeting segments with include, exclude, and rule tokens from CI or local automation.
+            <a href="https://vercel.com/changelog/manage-vercel-flags-segments-with-vercel-cli">https://vercel.com/changelog/manage-vercel-flags-segments-with-vercel-cli</a></li>
+            <li><strong>Wrangler auth profiles and AI Search sync jobs</strong> - bind Cloudflare accounts to project directories and operate AI Search freshness from the CLI.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-wrangler-auth-profiles/">https://developers.cloudflare.com/changelog/post/2026-07-02-wrangler-auth-profiles/</a> / <a href="https://developers.cloudflare.com/changelog/">https://developers.cloudflare.com/changelog/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Bot policy becomes go-to-market infrastructure.</strong> The same route can be a free search surface, paid agent endpoint, blocked training source, or partner-only feed.</li>
+            <li><strong>Pricing needs owners before traffic arrives.</strong> Agent-access rules need product ownership, limits, analytics, and dispute handling before they become billing incidents.</li>
+            <li><strong>Gateway rules are migration tools.</strong> When models retire or incentives change, rewrite and deny policies let teams move traffic without a code deploy.</li>
+            <li><strong>Attribution beats raw volume.</strong> Crawlers that return users, revenue, or strategic distribution should be treated differently from crawlers that only extract.</li>
+            <li><strong>Feature targeting joins the same control loop.</strong> Scriptable flag segments make paid access, crawler classes, and customer rollout rules easier to keep in sync.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: API</strong> - because every useful endpoint eventually needs a contract, a meter, and a reason to answer.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/api.png">https://imgs.xkcd.com/comics/api.png</a><br>Post: <a href="https://xkcd.com/1481/">https://xkcd.com/1481/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
