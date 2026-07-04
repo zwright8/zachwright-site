@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-04",
+    "slug": "2026-07-04",
+    "title": "Swarm Daily: Interfaces Need Shape Contracts",
+    "url": "/updates/2026-07-04.html",
+    "preview": "Cloudflare Workers types v5, Vercel konsistent, Sandbox FUSE mounts, Cache Vary rules, AI Search jobs, and Mesh hostname routes move operator interfaces from loose strings to explicit shape contracts."
+  },
+  {
     "date": "2026-07-03",
     "slug": "2026-07-03",
     "title": "Swarm Daily: AI Traffic Needs a Price Sheet",

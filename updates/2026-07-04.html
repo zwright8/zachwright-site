@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Interfaces Need Shape Contracts | zachwright.xyz</title>
+  <meta name="description" content="Cloudflare Workers types v5, Vercel konsistent, Sandbox FUSE mounts, Cache Vary rules, AI Search jobs, and Mesh hostname routes move operator interfaces from loose strings to explicit shape contracts." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Interfaces Need Shape Contracts</h1>
+          <p>Cloudflare Workers types v5, Vercel konsistent, Sandbox FUSE mounts, Cache Vary rules, AI Search jobs, and Mesh hostname routes move operator interfaces from loose strings to explicit shape contracts.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from "the tool knows what I mean" to "the interface has a declared shape." Agents, CI, and platform teams can move faster only when runtime APIs, repo structure, mounted data, cache variants, and internal routes are explicit enough to validate.</strong></p>
+          <p>Cloudflare's Workers types v5 simplifies the package to latest and experimental entrypoints, while pushing compatibility-date safety into generated <code>wrangler types</code> output. Vercel's open-source <code>konsistent</code> linter catches structural TypeScript conventions that TypeScript and ESLint do not model. Vercel Sandbox FUSE support lets remote storage look like a normal filesystem to tools. Add Cloudflare's Cache Rules support for <code>Vary</code> and the pattern is clear: the next reliability layer is not another prompt. It is a contract the automation can read before it writes.</p>
+          <ul>
+            <li>Cloudflare Workers types v5 removes dated package entrypoints and recommends generated types locked to each Worker's compatibility date.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-03-workers-types-v5/">https://developers.cloudflare.com/changelog/post/2026-07-03-workers-types-v5/</a></li>
+            <li>Vercel <code>konsistent</code> enforces structural codebase conventions for humans and agents.
+            <a href="https://vercel.com/changelog/enforce-consistent-code-for-agents-and-humans-with-konsistent">https://vercel.com/changelog/enforce-consistent-code-for-agents-and-humans-with-konsistent</a></li>
+            <li>Vercel Sandbox FUSE mounts let tools work against remote filesystems without copying large state into the sandbox first.
+            <a href="https://vercel.com/changelog/vercel-sandbox-now-supports-fuse-based-filesystems">https://vercel.com/changelog/vercel-sandbox-now-supports-fuse-based-filesystems</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Cloudflare Workers types v5</strong> - use the latest or experimental package entrypoint directly, but generate compatibility-date-specific Worker types with <code>wrangler types</code> for production projects.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-03-workers-types-v5/">https://developers.cloudflare.com/changelog/post/2026-07-03-workers-types-v5/</a></li>
+            <li><strong>Vercel konsistent</strong> - encode repo-specific structural rules like required exports, sibling files, and class interfaces so agents inherit the local architecture instead of guessing it.
+            <a href="https://vercel.com/changelog/enforce-consistent-code-for-agents-and-humans-with-konsistent">https://vercel.com/changelog/enforce-consistent-code-for-agents-and-humans-with-konsistent</a></li>
+            <li><strong>Vercel Sandbox FUSE filesystems</strong> - mount S3-compatible or shared filesystems in a sandbox when tools expect POSIX paths but the data should stay outside the working image.
+            <a href="https://vercel.com/changelog/vercel-sandbox-now-supports-fuse-based-filesystems">https://vercel.com/changelog/vercel-sandbox-now-supports-fuse-based-filesystems</a></li>
+            <li><strong>Cloudflare Cache Rules with Vary</strong> - make content negotiation cacheable by choosing normalize, passthrough, or bypass behavior for headers named in the origin's <code>Vary</code> response.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-vary-for-cache-rules/">https://developers.cloudflare.com/changelog/post/2026-07-02-vary-for-cache-rules/</a></li>
+            <li><strong>Cloudflare AI Search jobs in Wrangler</strong> - trigger, list, inspect, cancel, and read logs for index sync jobs from CI or automation, with JSON output for agent callers.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/">https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/</a></li>
+            <li><strong>Cloudflare Mesh hostname routing</strong> - route private or public hostnames through Mesh nodes instead of maintaining fragile IP range maps for internal applications.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-mesh-hostname-routing/">https://developers.cloudflare.com/changelog/post/2026-07-02-mesh-hostname-routing/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Generated code needs shape tests.</strong> Prompt instructions are not enough when the repo depends on required exports, folder pairs, compatibility dates, or local service contracts.</li>
+            <li><strong>Remote state can stay governed.</strong> Mounted filesystems let sandboxes work near large data without turning every run into a copy, cleanup, and retention problem.</li>
+            <li><strong>Cache correctness becomes configurable infrastructure.</strong> Standard HTTP <code>Vary</code> behavior can now be expressed at the edge instead of buried in custom Worker logic.</li>
+            <li><strong>Freshness needs an API.</strong> Search indexes that expose create, list, cancel, logs, and JSON output are easier to put under deploy hooks and incident review.</li>
+            <li><strong>Names beat address books.</strong> Hostname routes are easier for operators and agents to reason about than private IP inventory that changes under them.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Workflow</strong> - because every implicit interface is somebody's production dependency.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/workflow.png">https://imgs.xkcd.com/comics/workflow.png</a><br>Post: <a href="https://xkcd.com/1172/">https://xkcd.com/1172/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
