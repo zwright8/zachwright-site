@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-05",
+    "slug": "2026-07-05",
+    "title": "Swarm Daily: Model Access Needs a Fallback Route",
+    "url": "/updates/2026-07-05.html",
+    "preview": "Anthropic Fable 5 restoration, Vercel AI Gateway routing rules, GitHub Copilot model deprecations, Auto model selection, credit pools, and usage metrics turn model choice into live routing policy."
+  },
+  {
     "date": "2026-07-04",
     "slug": "2026-07-04",
     "title": "Swarm Daily: Interfaces Need Shape Contracts",

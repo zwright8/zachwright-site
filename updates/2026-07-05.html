@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Model Access Needs a Fallback Route | zachwright.xyz</title>
+  <meta name="description" content="Anthropic Fable 5 restoration, Vercel AI Gateway routing rules, GitHub Copilot model deprecations, Auto model selection, credit pools, and usage metrics turn model choice into live routing policy." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Model Access Needs a Fallback Route</h1>
+          <p>Anthropic Fable 5 restoration, Vercel AI Gateway routing rules, GitHub Copilot model deprecations, Auto model selection, credit pools, and usage metrics turn model choice into live routing policy.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that model access is no longer a static config value. A production AI workflow now needs a fallback route because models can be restored, blocked, retired, repriced, or rerouted while the workload is still live.</strong></p>
+          <p>Anthropic restored Fable 5 and Mythos 5 after export controls were lifted, but with updated cybersecurity classifiers that can flag more benign coding and debugging requests. Vercel's AI Gateway restoration note tells operators to use model fallbacks when a classifier refusal hits Fable 5. Vercel also shipped gateway-level routing rules that can rewrite or deny model traffic without an application deploy. GitHub is deprecating Gemini 2.5 Pro and Gemini 3 Flash across Copilot on July 31, 2026. The operator question is no longer "which model is best?" It is "what happens when this model is unavailable, unapproved, too expensive, or no longer allowed?"</p>
+          <ul>
+            <li>Anthropic restored Fable 5 and Mythos 5 after the June export-control disruption, with stricter safeguards and a proposed jailbreak-severity framework.
+            <a href="https://www.anthropic.com/news/redeploying-fable-5">https://www.anthropic.com/news/redeploying-fable-5</a></li>
+            <li>Vercel restored Fable 5 on AI Gateway and recommends fallbacks because routine tasks may trigger the updated classifiers.
+            <a href="https://vercel.com/changelog/claude-fable-5-access-restored-on-ai-gateway">https://vercel.com/changelog/claude-fable-5-access-restored-on-ai-gateway</a></li>
+            <li>Vercel AI Gateway routing rules let teams rewrite or deny model requests at gateway scope.
+            <a href="https://vercel.com/changelog/ai-gateway-routing-rules">https://vercel.com/changelog/ai-gateway-routing-rules</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel AI Gateway routing rules</strong> - add rewrite rules for outages, retirements, standardization, or cost moves; add deny rules for unapproved models.
+            <a href="https://vercel.com/changelog/ai-gateway-routing-rules">https://vercel.com/changelog/ai-gateway-routing-rules</a></li>
+            <li><strong>Fable 5 on AI Gateway</strong> - call <code>anthropic/claude-fable-5</code> with ordered fallbacks so classifier refusals degrade to another approved model instead of dropping the request.
+            <a href="https://vercel.com/changelog/claude-fable-5-access-restored-on-ai-gateway">https://vercel.com/changelog/claude-fable-5-access-restored-on-ai-gateway</a></li>
+            <li><strong>GitHub Copilot model deprecations</strong> - move workflows off Gemini 2.5 Pro and Gemini 3 Flash before July 31, 2026, and make sure enterprise model policies expose the replacements.
+            <a href="https://github.blog/changelog/2026-07-02-upcoming-deprecation-of-gemini-2-5-pro-and-gemini-3-flash/">https://github.blog/changelog/2026-07-02-upcoming-deprecation-of-gemini-2-5-pro-and-gemini-3-flash/</a></li>
+            <li><strong>Copilot CLI Auto</strong> - let the CLI route by task shape, model health, reliability, admin policy, cache boundaries, and AI credit cost when a pinned model is not required.
+            <a href="https://github.blog/changelog/2026-07-01-copilot-cli-auto-model-selection-routes-based-on-task/">https://github.blog/changelog/2026-07-01-copilot-cli-auto-model-selection-routes-based-on-task/</a></li>
+            <li><strong>AI credit pools</strong> - cap how much shared included usage a cost center can draw before routing decisions turn into chargeback disputes.
+            <a href="https://github.blog/changelog/2026-07-02-cost-centers-now-support-included-usage-caps/">https://github.blog/changelog/2026-07-02-cost-centers-now-support-included-usage-caps/</a></li>
+            <li><strong>Copilot usage metrics</strong> - use improved CLI, IDE, server-side, and credit attribution data to measure whether routing changes actually reduce blind spots.
+            <a href="https://github.blog/changelog/2026-07-02-improved-accuracy-and-coverage-in-copilot-usage-metrics-reports/">https://github.blog/changelog/2026-07-02-improved-accuracy-and-coverage-in-copilot-usage-metrics-reports/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Model choice becomes incident response.</strong> Retirements, outages, policy blocks, and classifier false positives need a playbook that can route traffic before a deploy lands.</li>
+            <li><strong>Safety policy has product latency.</strong> Stronger classifiers may protect the system and still interrupt normal workflows, so graceful degradation is part of the user experience.</li>
+            <li><strong>Admin defaults become production architecture.</strong> Model allowlists, Auto settings, gateway rules, and enterprise policies now decide which capabilities users can reach.</li>
+            <li><strong>Spend attribution shapes routing.</strong> A fallback that keeps quality high can still be wrong if it crosses a cost-center boundary or burns a shared credit pool.</li>
+            <li><strong>Evaluation needs a calendar.</strong> Track model retirements and safety changes the same way teams track API deprecations, not as a surprise inside the IDE.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Tech Support Cheat Sheet</strong> - because the first fallback route is still "try the next branch before escalating."</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/tech_support_cheat_sheet.png">https://imgs.xkcd.com/comics/tech_support_cheat_sheet.png</a><br>Post: <a href="https://xkcd.com/627/">https://xkcd.com/627/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
