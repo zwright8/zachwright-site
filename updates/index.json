@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-06",
+    "slug": "2026-07-06",
+    "title": "Swarm Daily: Runtime Defaults Need Receipts",
+    "url": "/updates/2026-07-06.html",
+    "preview": "Vercel Agent Runs traces, AI SDK Anthropic and OpenAI adapter patches, Copilot CLI GITHUB_TOKEN auth, Cloudflare memory metrics, and account firewall logs turn hidden runtime defaults into inspectable operating evidence."
+  },
+  {
     "date": "2026-07-05",
     "slug": "2026-07-05",
     "title": "Swarm Daily: Model Access Needs a Fallback Route",

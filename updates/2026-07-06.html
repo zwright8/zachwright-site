@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Runtime Defaults Need Receipts | zachwright.xyz</title>
+  <meta name="description" content="Vercel Agent Runs traces, AI SDK Anthropic and OpenAI adapter patches, Copilot CLI GITHUB_TOKEN auth, Cloudflare memory metrics, and account firewall logs turn hidden runtime defaults into inspectable operating evidence." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Runtime Defaults Need Receipts</h1>
+          <p>Vercel Agent Runs traces, AI SDK Anthropic and OpenAI adapter patches, Copilot CLI GITHUB_TOKEN auth, Cloudflare memory metrics, and account firewall logs turn hidden runtime defaults into inspectable operating evidence.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that invisible runtime defaults are becoming auditable artifacts. Agent operators now need receipts for provider payloads, workflow identity, token usage, tool calls, memory pressure, and security-event scope.</strong></p>
+          <p>Vercel Agent Runs are now available through the Vercel MCP and CLI, exposing run metadata, lifecycle events, subagent data, full traces, reasoning, tool calls, token usage, and JSON output. Vercel's AI SDK also patched two small-but-real adapter behaviors: Anthropic <code>thinking: { type: 'disabled' }</code> was accepted by schema but stripped before the API call, and OpenAI inline image parts now ship as data URLs instead of bare base64. GitHub moved Copilot CLI automation in Actions off long-lived PATs and onto the built-in <code>GITHUB_TOKEN</code> with <code>copilot-requests: write</code>. The pattern is simple: if a default can change cost, capability, security, or modality handling, it needs a receipt operators can inspect.</p>
+          <ul>
+            <li>Vercel Agent Runs can now be listed, inspected, and traced from MCP tools or CLI commands with machine-readable output.
+            <a href="https://vercel.com/changelog/agent-runs-vercel-mcp-cli">https://vercel.com/changelog/agent-runs-vercel-mcp-cli</a></li>
+            <li>AI SDK's Anthropic adapter now forwards disabled thinking instead of silently dropping that provider option.
+            <a href="https://github.com/vercel/ai/releases/tag/%40ai-sdk%2Fanthropic%403.0.93">https://github.com/vercel/ai/releases/tag/%40ai-sdk%2Fanthropic%403.0.93</a></li>
+            <li>Copilot CLI in GitHub Actions can now use the workflow <code>GITHUB_TOKEN</code> instead of a personal access token.
+            <a href="https://github.blog/changelog/2026-07-02-copilot-cli-no-longer-needs-a-personal-access-token-in-github-actions/">https://github.blog/changelog/2026-07-02-copilot-cli-no-longer-needs-a-personal-access-token-in-github-actions/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel Agent Runs CLI/MCP</strong> - pull recent runs, inspect metadata, and fetch traces with tool calls, reasoning, usage, and subagent data.
+            <a href="https://vercel.com/changelog/agent-runs-vercel-mcp-cli">https://vercel.com/changelog/agent-runs-vercel-mcp-cli</a></li>
+            <li><strong>AI SDK Anthropic 3.0.93</strong> - verify adapter upgrades when relying on provider options like disabled thinking, especially on low <code>max_tokens</code> runs.
+            <a href="https://github.com/vercel/ai/releases/tag/%40ai-sdk%2Fanthropic%403.0.93">https://github.com/vercel/ai/releases/tag/%40ai-sdk%2Fanthropic%403.0.93</a></li>
+            <li><strong>AI SDK OpenAI 4.0.8</strong> - inline image file parts now go out as data URLs, which matters for multimodal request reproducibility.
+            <a href="https://github.com/vercel/ai/releases/tag/%40ai-sdk%2Fopenai%404.0.8">https://github.com/vercel/ai/releases/tag/%40ai-sdk%2Fopenai%404.0.8</a></li>
+            <li><strong>Copilot CLI with <code>GITHUB_TOKEN</code></strong> - use <code>copilot-requests: write</code> for organization-owned Actions workflows and avoid stored PAT rotation.
+            <a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-in-actions">https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli-in-actions</a></li>
+            <li><strong>Cloudflare memory usage metrics</strong> - watch Workers and Durable Objects across P50, P90, P99, and P999 memory usage with deployment correlation.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-30-memory-usage-metrics/">https://developers.cloudflare.com/changelog/post/2026-06-30-memory-usage-metrics/</a></li>
+            <li><strong>Account-scoped firewall Logpush</strong> - export firewall events once per account with zone identity instead of maintaining zone-level jobs.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-30-account-level-firewall-events/">https://developers.cloudflare.com/changelog/post/2026-06-30-account-level-firewall-events/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Adapter behavior is production behavior.</strong> Provider glue can change token spend, model mode, image handling, and user-visible output without touching app code.</li>
+            <li><strong>Agent traces become review packets.</strong> Reasoning, tool calls, lifecycle events, and token usage are the artifacts reviewers need after a run mutates real systems.</li>
+            <li><strong>Workflow identity is moving closer to the repo.</strong> Short-lived Actions tokens are easier to scope, bill, and revoke than personal automation secrets.</li>
+            <li><strong>Account-level telemetry reduces setup drift.</strong> Logs and metrics that cross zones or services catch problems that per-resource dashboards miss.</li>
+            <li><strong>Ownership needs the same granularity as observability.</strong> Gateway roles, memory metrics, and trace access all need scoped responsibility, not just broader dashboards.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Debugging</strong> - because the receipt you need is always just below the adapter you trusted.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/debugging.png">https://imgs.xkcd.com/comics/debugging.png</a><br>Post: <a href="https://xkcd.com/1722/">https://xkcd.com/1722/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
