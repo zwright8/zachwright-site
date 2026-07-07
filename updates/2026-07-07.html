@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Fresh Data Needs a Control Plane | zachwright.xyz</title>
+  <meta name="description" content="R2 Data Catalog delete warnings, AI Search sync-job commands, Vectorize WAL latency cuts, Safari MCP, and Vite+ Beta move freshness from background hope into operator-controlled workflows." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Fresh Data Needs a Control Plane</h1>
+          <p>R2 Data Catalog delete warnings, AI Search sync-job commands, Vectorize WAL latency cuts, Safari MCP, and Vite+ Beta move freshness from background hope into operator-controlled workflows.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is that freshness is becoming an explicit operator surface. Data lakes, search indexes, vector stores, and agent-visible runtimes now need controls for when state changes, how it is verified, and what can safely mutate it.</strong></p>
+          <p>Cloudflare's R2 Data Catalog now warns before manual deletes on catalog-enabled buckets because Iceberg tables depend on transaction-managed metadata, not raw object removal. AI Search added Wrangler commands to create, list, inspect, cancel, and read logs for sync jobs, with <code>--json</code> output for automation. Vectorize improved write-ahead-log throughput so vector changes become queryable much faster. The pattern is operational: if the system serves answers from derived state, freshness cannot stay buried in background machinery.</p>
+          <ul>
+            <li>R2 Data Catalog warnings put a guard in front of deletes that could leave Iceberg metadata pointing at missing files.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-06-r2-data-catalog-delete-warnings/">https://developers.cloudflare.com/changelog/post/2026-07-06-r2-data-catalog-delete-warnings/</a></li>
+            <li>AI Search sync jobs can now be managed from Wrangler, including CI-triggered refreshes and structured job logs.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/">https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/</a></li>
+            <li>Vectorize says median vector-change queryability dropped from 2 minutes to under 30 seconds, with p99 under 2 minutes.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-30-improved-wal-throughput/">https://developers.cloudflare.com/changelog/post/2026-06-30-improved-wal-throughput/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>R2 Data Catalog delete warnings</strong> - treat catalog-enabled buckets like transactional tables; route deletes through the catalog path instead of object-store muscle memory.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-06-r2-data-catalog-delete-warnings/">https://developers.cloudflare.com/changelog/post/2026-07-06-r2-data-catalog-delete-warnings/</a></li>
+            <li><strong>AI Search sync jobs in Wrangler</strong> - wire <code>wrangler ai-search jobs create</code>, <code>list</code>, <code>get</code>, <code>cancel</code>, and <code>logs</code> into release or content-update pipelines.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/">https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/</a></li>
+            <li><strong>Vectorize WAL throughput</strong> - review RAG freshness assumptions if your app waits on inserts, upserts, or deletes before serving answers.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-30-improved-wal-throughput/">https://developers.cloudflare.com/changelog/post/2026-06-30-improved-wal-throughput/</a></li>
+            <li><strong>Safari MCP server</strong> - give compatible agents Safari DOM, network, screenshot, console, viewport, and interaction tools from Safari Technology Preview.
+            <a href="https://webkit.org/blog/18136/introducing-the-safari-mcp-server-for-web-developers/">https://webkit.org/blog/18136/introducing-the-safari-mcp-server-for-web-developers/</a></li>
+            <li><strong>Vite+ Beta</strong> - use one <code>vp</code> entry point for dev, check, test, build, pack, and cached task runs when repo setup drift is the bottleneck.
+            <a href="https://voidzero.dev/posts/announcing-vite-plus-beta">https://voidzero.dev/posts/announcing-vite-plus-beta</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Freshness becomes a release concern.</strong> Search and vector indexes should refresh from the same pipeline that changes the content they answer from.</li>
+            <li><strong>Catalog metadata is production state.</strong> Object stores look simple until table pointers, manifests, and deletes disagree.</li>
+            <li><strong>Lag needs a budget.</strong> "Eventually queryable" is not enough for support bots, recommendations, docs search, or incident workflows.</li>
+            <li><strong>Agent tools are better with live state.</strong> Browser inspection and structured sync logs beat prompt descriptions of what might be stale.</li>
+            <li><strong>Unified commands help humans and agents.</strong> Stable verbs like <code>vp check</code> and Wrangler job commands reduce repo-specific instruction overhead.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Data Pipeline</strong> - because the data is fresh right up until the pipeline turns out to be somebody's phone.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/data_pipeline.png">https://imgs.xkcd.com/comics/data_pipeline.png</a><br>Post: <a href="https://xkcd.com/2054/">https://xkcd.com/2054/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
