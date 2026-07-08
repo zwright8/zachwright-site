@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agents Need Delivery Contracts | zachwright.xyz</title>
+  <meta name="description" content="Vercel Chat SDK Dial, Photon, Connect, and eve channels, GitHub Copilot app GA, Workers Cache, and GitHub secret metadata move agents from demos into channel-bound production endpoints." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agents Need Delivery Contracts</h1>
+          <p>Vercel Chat SDK Dial, Photon, Connect, and eve channels, GitHub Copilot app GA, Workers Cache, and GitHub secret metadata move agents from demos into channel-bound production endpoints.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from "the agent has a chat UI" to "the agent has delivery contracts." Once an agent sends texts, iMessages, Slack replies, support emails, and app messages, the product contract includes credentials, webhooks, thread identity, media, transcripts, latency, and escalation paths.</strong></p>
+          <p>Vercel shipped a tight cluster around Chat SDK channels: Dial support gives bots SMS, MMS, iMessage, bidirectional media, inbound voice-call transcripts, HMAC-verified webhooks, and stable per-conversation threading. Photon support adds native iMessage group chats, media, and tapbacks. Vercel Connect lets Chat SDK bots use managed Slack, GitHub, and Linear connector credentials instead of app-owned tokens and signing secrets. The new eve Chat SDK channel then turns those adapters into agent surfaces, so one eve agent can run through Facebook Messenger, WhatsApp, Resend, Liveblocks, or any other adapter. This is not just more integrations. It is the channel layer becoming production infrastructure.</p>
+          <ul>
+            <li>Chat SDK Dial support turns phone-number bots into adapter-backed SMS, MMS, iMessage, media, transcript, webhook, and thread workflows.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-dial-support">https://vercel.com/changelog/chat-sdk-adds-dial-support</a></li>
+            <li>Vercel Connect gives Chat SDK bots managed connector credentials for Slack, GitHub, and Linear without storing tokens or signing secrets in the app.
+            <a href="https://vercel.com/changelog/chat-sdk-vercel-connect">https://vercel.com/changelog/chat-sdk-vercel-connect</a></li>
+            <li>eve can now mount any Chat SDK adapter as an agent channel with normal handler code and channel-specific webhook routes.
+            <a href="https://vercel.com/changelog/eve-chat-sdk-channel">https://vercel.com/changelog/eve-chat-sdk-channel</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Chat SDK Dial adapter</strong> - build phone-number bots with SMS, MMS, iMessage, media, voice-call transcripts, signed webhooks, and stable conversation threads.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-dial-support">https://vercel.com/changelog/chat-sdk-adds-dial-support</a></li>
+            <li><strong>Vercel Connect for Chat SDK</strong> - spread connector-backed Slack, GitHub, and Linear configs into adapter factories instead of copying bot credentials into runtime secrets.
+            <a href="https://vercel.com/changelog/chat-sdk-vercel-connect">https://vercel.com/changelog/chat-sdk-vercel-connect</a></li>
+            <li><strong>Chat SDK Photon adapter</strong> - ship iMessage bots that support direct chats, group chats, media, and tapbacks through Spectrum Cloud, self-hosting, or a Mac.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-photon-support">https://vercel.com/changelog/chat-sdk-adds-photon-support</a></li>
+            <li><strong>eve Chat SDK channel</strong> - expose the same agent through Facebook Messenger, WhatsApp, Resend, Liveblocks, or any Chat SDK adapter while keeping normal Chat SDK handler code.
+            <a href="https://vercel.com/changelog/eve-chat-sdk-channel">https://vercel.com/changelog/eve-chat-sdk-channel</a></li>
+            <li><strong>GitHub Copilot app GA</strong> - run desktop agent sessions across Copilot plans, or bring your own model key when a Copilot subscription is not the right control surface.
+            <a href="https://github.blog/changelog/2026-07-07-github-copilot-app-available-to-all/">https://github.blog/changelog/2026-07-07-github-copilot-app-available-to-all/</a></li>
+            <li><strong>Cloudflare Workers Cache</strong> - put a tiered HTTP cache in front of Worker-origin channel endpoints with Wrangler config, Cache-Control, tags, and scoped purges.
+            <a href="https://blog.cloudflare.com/workers-cache/">https://blog.cloudflare.com/workers-cache/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Adapters become product contracts.</strong> Thread IDs, webhook signatures, media behavior, transcript handling, retries, and delivery failures need tests, not just docs.</li>
+            <li><strong>Credential custody moves up a layer.</strong> Connector UIDs are easier to rotate, audit, and scope than copied bot tokens spread across app environments.</li>
+            <li><strong>Native channels raise the support bar.</strong> A bad agent reply is now a wrong-thread text, stale iMessage, missed support email, or broken escalation path.</li>
+            <li><strong>Multi-channel parity is an ops problem.</strong> Opt-outs, retention, audit logs, human handoff, and rate limits need the same semantics across every surface.</li>
+            <li><strong>Latency has user-visible blast radius.</strong> Cached Worker endpoints can make channel bots cheaper and faster, but cache keys must respect tenant and user boundaries.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Chat Systems</strong> - because every agent channel strategy eventually turns into a diagram of where the conversation actually lives.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/chat_systems.png">https://imgs.xkcd.com/comics/chat_systems.png</a><br>Post: <a href="https://xkcd.com/1810/">https://xkcd.com/1810/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

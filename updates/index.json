@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-08",
+    "slug": "2026-07-08",
+    "title": "Swarm Daily: Agents Need Delivery Contracts",
+    "url": "/updates/2026-07-08.html",
+    "preview": "Vercel Chat SDK Dial, Photon, Connect, and eve channels, GitHub Copilot app GA, Workers Cache, and GitHub secret metadata move agents from demos into channel-bound production endpoints."
+  },
+  {
     "date": "2026-07-07",
     "slug": "2026-07-07",
     "title": "Swarm Daily: Fresh Data Needs a Control Plane",
