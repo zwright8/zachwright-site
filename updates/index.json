@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-09",
+    "slug": "2026-07-09",
+    "title": "Swarm Daily: Agents Need Fast Senses",
+    "url": "/updates/2026-07-09.html",
+    "preview": "OpenAI GPT-Live, Cloudflare Moondream 3.1, AI Search media conversion, Browser Run accessibility trees, and GitHub Mobile Copilot signals make agent input latency-sensitive sensing infrastructure."
+  },
+  {
     "date": "2026-07-08",
     "slug": "2026-07-08",
     "title": "Swarm Daily: Agents Need Delivery Contracts",

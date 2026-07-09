@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agents Need Fast Senses | zachwright.xyz</title>
+  <meta name="description" content="OpenAI GPT-Live, Cloudflare Moondream 3.1, AI Search media conversion, Browser Run accessibility trees, and GitHub Mobile Copilot signals make agent input latency-sensitive sensing infrastructure." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agents Need Fast Senses</h1>
+          <p>OpenAI GPT-Live, Cloudflare Moondream 3.1, AI Search media conversion, Browser Run accessibility trees, and GitHub Mobile Copilot signals make agent input latency-sensitive sensing infrastructure.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from agents that wait for typed prompts to agents that sense work in real time. Voice, images, page structure, and mobile session state are becoming production inputs, which means they need latency budgets, logs, fixtures, redaction paths, and failure handling.</strong></p>
+          <p>OpenAI introduced GPT-Live for ChatGPT Voice, with more natural interruption handling, background reasoning levels, better listening in noisy environments, and visual answers while a conversation is still happening. Cloudflare added Moondream 3.1 to Workers AI with query, caption, point, and detect modes for fast vision workloads, plus GIF and BMP support in Workers AI toMarkdown and AI Search. The pattern is clear: sensing is moving into the request path. Operators should treat media and voice as first-class runtime contracts, not UX garnish.</p>
+          <ul>
+            <li>GPT-Live turns voice into a continuous agent surface with interruption, listening, visual answers, and deeper reasoning modes.
+            <a href="https://openai.com/index/introducing-gpt-live/">https://openai.com/index/introducing-gpt-live/</a></li>
+            <li>Moondream 3.1 gives Workers AI low-latency vision primitives for query, caption, point, and detect workflows at the edge.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li>Workers AI toMarkdown and AI Search now ingest GIF and BMP files, turning old screenshots and scans into searchable Markdown during sync.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GPT-Live</strong> - roll out voice agents that can wait, be interrupted, show visual cards, and route harder turns to deeper reasoning without changing the user surface.
+            <a href="https://openai.com/index/introducing-gpt-live/">https://openai.com/index/introducing-gpt-live/</a></li>
+            <li><strong>Moondream 3.1 on Workers AI</strong> - run image query, caption, point, and detect tasks close enough to users for inline moderation, overlays, document intake, and screenshot inspection.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li><strong>AI Search media conversion</strong> - include GIF and BMP assets in searchable Markdown pipelines without a separate conversion job, while remembering animated GIFs use the first frame.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li><strong>Browser Run accessibility trees</strong> - give automation and agents semantic page structure through `/accessibilityTree` instead of forcing every inspection through screenshots or HTML parsing.
+            <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li><strong>GitHub Mobile live Copilot notifications</strong> - monitor remote Copilot CLI sessions from mobile with in-progress, waiting-for-input, idle, and finished states.
+            <a href="https://github.blog/changelog/2026-07-08-github-mobile-live-notifications-for-copilot-cli-sessions/">https://github.blog/changelog/2026-07-08-github-mobile-live-notifications-for-copilot-cli-sessions/</a></li>
+            <li><strong>npm v12 install-time defaults</strong> - lifecycle scripts, git dependencies, and remote URL dependencies now require explicit approval, tightening the intake path for generated projects.
+            <a href="https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/">https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Media becomes an ops surface.</strong> Image formats, first-frame behavior, object detection confidence, and markdown extraction need regression fixtures before agents depend on them.</li>
+            <li><strong>Latency budgets move upstream.</strong> If vision runs inline, a slow image call is now a delayed form submit, moderation miss, stuck overlay, or stalled agent turn.</li>
+            <li><strong>Voice safety is runtime safety.</strong> Interruptions, quiet listening, escalation, and mid-sentence safeguards belong in the product runbook, not only the model card.</li>
+            <li><strong>Page semantics beat pixel guessing.</strong> Accessibility trees are cheaper and more stable than screenshots for many browser-agent actions, but they still need permission and scope controls.</li>
+            <li><strong>Agent status becomes pager material.</strong> Mobile live states turn "waiting for input" into an operational signal that can unblock work before the desktop session gets attention.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Tasks</strong> - because the punchline about image understanding being hard is now an infra planning meeting.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/tasks.png">https://imgs.xkcd.com/comics/tasks.png</a><br>Post: <a href="https://xkcd.com/1425/">https://xkcd.com/1425/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
