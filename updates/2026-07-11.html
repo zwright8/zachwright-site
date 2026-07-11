@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Generated Code Needs Leak Fences | zachwright.xyz</title>
+  <meta name="description" content="CodeQL prompt-injection queries, Cloudflare source-code DLP, Vercel build-log redaction, GitHub AI-detected secrets, and Wrangler dependency metadata make generated code leakage a named operating surface." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Generated Code Needs Leak Fences</h1>
+          <p>CodeQL prompt-injection queries, Cloudflare source-code DLP, Vercel build-log redaction, GitHub AI-detected secrets, and Wrangler dependency metadata make generated code leakage a named operating surface.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from broad "secure the code" posture to specific leak fences around the artifacts agents actually touch: system prompts, source files, build logs, secrets, and deploy metadata.</strong></p>
+          <p>GitHub CodeQL 2.26.0 added a JavaScript and TypeScript query for system prompt injection and expanded prompt-injection sinks across OpenAI, Anthropic, Google GenAI, Realtime instructions, Sora prompts, and cached-content APIs. Cloudflare tightened DLP source-code detection around whole source-code file uploads and downloads, with a 500-character floor and confidence tuning so snippets in docs, chat, and examples stop flooding queues. Vercel now redacts Sensitive Environment Variable values in build logs and records redaction metadata without exposing the value. The pattern is clear: generated-code safety is moving from generic scanning to artifact-specific boundaries.</p>
+          <ul>
+            <li>CodeQL now treats untrusted flow into AI system prompts as a static-analysis finding.
+            <a href="https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection/">https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection/</a></li>
+            <li>Cloudflare DLP source-code detection now focuses on whole source files instead of flagging every code-looking fragment.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-10-source-code-detection-improvements/">https://developers.cloudflare.com/changelog/post/2026-07-10-source-code-detection-improvements/</a></li>
+            <li>Vercel build logs now redact sensitive environment-variable values and leave activity-log evidence that masking happened.
+            <a href="https://vercel.com/changelog/build-logs-now-redact-sensitive-environment-variable-values">https://vercel.com/changelog/build-logs-now-redact-sensitive-environment-variable-values</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>CodeQL 2.26.0 prompt-injection query</strong> - scan JavaScript and TypeScript for user-controlled values flowing into system prompts and expanded AI SDK prompt sinks.
+            <a href="https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection/">https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection/</a></li>
+            <li><strong>Cloudflare source-code DLP</strong> - tune Gateway HTTP policies for standalone source files, a 500-character evaluation floor, and confidence levels that trade recall against queue noise.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-10-source-code-detection-improvements/">https://developers.cloudflare.com/changelog/post/2026-07-10-source-code-detection-improvements/</a></li>
+            <li><strong>Vercel Sensitive Environment Variable redaction</strong> - keep 32-character-plus sensitive values out of build logs while preserving project, deployment, and key metadata in Activity Log.
+            <a href="https://vercel.com/changelog/build-logs-now-redact-sensitive-environment-variable-values">https://vercel.com/changelog/build-logs-now-redact-sensitive-environment-variable-values</a></li>
+            <li><strong>GitHub AI-detected secrets naming</strong> - separate deterministic provider or generic patterns from AI-detected secrets without changing webhook, audit-log, or REST API behavior.
+            <a href="https://github.blog/changelog/2026-07-10-clearer-names-for-secret-scanning-detector-types/">https://github.blog/changelog/2026-07-10-clearer-names-for-secret-scanning-detector-types/</a></li>
+            <li><strong>Wrangler dependency metadata uploads</strong> - send package names, declared ranges, and installed versions during Worker deploys for dependency analytics and future supply-chain alerts.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-07-wrangler-deploy-upload-dependencies-metadata/">https://developers.cloudflare.com/changelog/post/2026-07-07-wrangler-deploy-upload-dependencies-metadata/</a></li>
+            <li><strong>GitHub Code Quality targeting</strong> - enable or enforce Code Quality on selected repositories by custom property, manual list, visibility, or fork status instead of flipping the whole org.
+            <a href="https://github.blog/changelog/2026-07-09-organization-level-targeting-for-github-code-quality/">https://github.blog/changelog/2026-07-09-organization-level-targeting-for-github-code-quality/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Prompt injection is now code flow.</strong> If system prompts are assembled from user, repo, ticket, or document input, they belong in static-analysis and review policy.</li>
+            <li><strong>False positives are an operating cost.</strong> DLP that cannot tell a source file from a snippet trains teams to ignore the queue.</li>
+            <li><strong>Build logs are inside the secret boundary.</strong> Generated build steps, verbose package scripts, and agent-created deploy fixes need log redaction by default.</li>
+            <li><strong>Deploy metadata becomes supply-chain evidence.</strong> Package ranges and installed versions at upload time give operators a stronger ledger than repo files alone.</li>
+            <li><strong>AI-detected secrets need different triage.</strong> Unstructured findings should carry context, confidence, and review paths distinct from deterministic provider-token alerts.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Code Quality 2</strong> - because naming the failure mode is the first step toward making the scanner useful.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/code_quality_2.png">https://imgs.xkcd.com/comics/code_quality_2.png</a><br>Post: <a href="https://xkcd.com/1695/">https://xkcd.com/1695/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

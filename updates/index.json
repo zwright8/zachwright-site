@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-11",
+    "slug": "2026-07-11",
+    "title": "Swarm Daily: Generated Code Needs Leak Fences",
+    "url": "/updates/2026-07-11.html",
+    "preview": "CodeQL prompt-injection queries, Cloudflare source-code DLP, Vercel build-log redaction, GitHub AI-detected secrets, and Wrangler dependency metadata make generated code leakage a named operating surface."
+  },
+  {
     "date": "2026-07-09",
     "slug": "2026-07-09",
     "title": "Swarm Daily: Agents Need Fast Senses",
