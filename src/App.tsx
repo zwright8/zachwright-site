@@ -18,6 +18,7 @@ const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
 const GITHUB_URL = "https://github.com/zwright8";
 const SITE_REPO_URL = "https://github.com/zwright8/zachwright-site";
 const PRODUCT_URL = "/products/ai-operator-kit/";
+const AI_OPERATOR_CASE_STUDY_URL = "/case-studies/ai-operator-kit/";
 const DASHBOARD_URL = "/dashboard.html";
 const UPDATES_URL = "/updates/index.html";
 
@@ -88,6 +89,14 @@ const proofSurfaces = [
 ];
 
 const engineeringSignals = [
+  {
+    kind: "Product architecture",
+    title: "AI Operator Kit has a case-study trail",
+    summary:
+      "The product package now has a compact case study that explains the artifact structure, fulfillment shape, QA loop, and constraints behind the bundle.",
+    cta: "Read case study",
+    href: AI_OPERATOR_CASE_STUDY_URL,
+  },
   {
     kind: "Deploy confidence",
     title: "Protected previews fail loudly",

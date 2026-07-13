@@ -6,6 +6,7 @@ import { resolve } from "node:path";
 const legacyStaticEntries = [
   "updates",
   "products",
+  "case-studies",
   "research",
   "assets",
   "dashboard.html",
