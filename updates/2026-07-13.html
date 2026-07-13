@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Service Graphs Need a Manifest | zachwright.xyz</title>
+  <meta name="description" content="Vercel Services, Cloudflare private-origin routing, Zero Trust route IDs, DNS Firewall UX, Vercel traces, and R2 read-only tokens turn app topology into a reviewable operating artifact." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Service Graphs Need a Manifest</h1>
+          <p>Vercel Services, Cloudflare private-origin routing, Zero Trust route IDs, DNS Firewall UX, Vercel traces, and R2 read-only tokens turn app topology into a reviewable operating artifact.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from app topology as dashboard folklore to app topology as a manifest. Frontends, backends, private origins, DNS clusters, route IDs, trace trees, and data-reader boundaries are becoming things operators can diff, deploy, observe, and migrate.</strong></p>
+          <p>Vercel Services makes multiple frontends and backends part of one project, with service definitions in <code>vercel.json</code>, private service-to-service routing, shared previews, shared rollbacks, service-filtered logs, and local multi-service dev. Cloudflare is pushing the same idea down the network stack: public application controls can now sit in front of private origins, and Zero Trust route APIs are moving away from CIDR-encoded paths toward stable <code>route_id</code> resources. Add dashboard-managed DNS Firewall clusters and trace tree/waterfall views, and the pattern is clear: the production graph is becoming the artifact.</p>
+          <ul>
+            <li>Vercel Services lets one project define, build, preview, and roll back a multi-framework service graph.
+            <a href="https://vercel.com/changelog/run-multiple-frameworks-in-one-project-with-vercel-services">https://vercel.com/changelog/run-multiple-frameworks-in-one-project-with-vercel-services</a></li>
+            <li>Cloudflare Application Services for Private Origins puts WAF, bot management, rate limiting, caching, rewrites, and Workers in front of private IP origins without public exposure.
+            <a href="https://blog.cloudflare.com/private-origins-dns-routing/">https://blog.cloudflare.com/private-origins-dns-routing/</a></li>
+            <li>Cloudflare Zero Trust route endpoints are consolidating on <code>route_id</code>, so route automation stops encoding network topology into URL paths.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-09-tunnel-routes-and-connections-api-changes/">https://developers.cloudflare.com/changelog/post/2026-07-09-tunnel-routes-and-connections-api-changes/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel Services</strong> - define multiple frameworks and backend entrypoints in one <code>vercel.json</code>, route only the public surface, and keep internal services private.
+            <a href="https://vercel.com/changelog/run-multiple-frameworks-in-one-project-with-vercel-services">https://vercel.com/changelog/run-multiple-frameworks-in-one-project-with-vercel-services</a></li>
+            <li><strong>Cloudflare private-origin routing</strong> - put application-layer controls in front of private network targets without public IPs, inbound firewall holes, or origin-side connector software.
+            <a href="https://blog.cloudflare.com/private-origins-dns-routing/">https://blog.cloudflare.com/private-origins-dns-routing/</a></li>
+            <li><strong>Zero Trust route endpoint migration</strong> - capture <code>route_id</code> values and update scripts, CI jobs, Terraform resources, and dashboards before the October 5, 2026 endpoint removal.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-09-tunnel-routes-and-connections-api-changes/">https://developers.cloudflare.com/changelog/post/2026-07-09-tunnel-routes-and-connections-api-changes/</a></li>
+            <li><strong>Cloudflare DNS Firewall UX</strong> - manage cluster settings that were previously API-only, including attack mitigation, rate limiting, negative TTL, and resolver subnet.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-09-new-dns-firewall-ux/">https://developers.cloudflare.com/changelog/post/2026-07-09-new-dns-firewall-ux/</a></li>
+            <li><strong>Vercel Trace Tree and Waterfall views</strong> - inspect span hierarchy, parallel execution, critical path, and timing directly from the log entry.
+            <a href="https://vercel.com/changelog/traces-now-support-tree-and-waterfall-views">https://vercel.com/changelog/traces-now-support-tree-and-waterfall-views</a></li>
+            <li><strong>R2 Data Catalog read-only tokens</strong> - let Iceberg readers query namespaces, load tables, and read data without carrying write permissions.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-09-r2-data-catalog-read-only-tokens/">https://developers.cloudflare.com/changelog/post/2026-07-09-r2-data-catalog-read-only-tokens/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Topology belongs in review.</strong> Service boundaries, public routes, private-only backends, and rollback units should be visible in PRs, not reconstructed during incidents.</li>
+            <li><strong>Private origins still need public-layer controls.</strong> Internal apps deserve WAF, cache, bot rules, rewrites, rate limits, and Worker logic without forcing public exposure.</li>
+            <li><strong>Stable IDs beat encoded networks.</strong> Agents, Terraform, and scripts need resource identifiers that survive escaping rules, CIDR formatting, and route renames.</li>
+            <li><strong>Flat logs are losing ground.</strong> Once services build and ship as a graph, the debugging view has to show parent-child spans and critical paths.</li>
+            <li><strong>Reader credentials should read.</strong> Analytics engines, notebooks, and query clients should not inherit write paths just because the old catalog token model was coarse.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Dependency</strong> - because the production graph always has one load-bearing box nobody modeled.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/dependency.png">https://imgs.xkcd.com/comics/dependency.png</a><br>Post: <a href="https://xkcd.com/2347/">https://xkcd.com/2347/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

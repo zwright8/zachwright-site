@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-13",
+    "slug": "2026-07-13",
+    "title": "Swarm Daily: Service Graphs Need a Manifest",
+    "url": "/updates/2026-07-13.html",
+    "preview": "Vercel Services, Cloudflare private-origin routing, Zero Trust route IDs, DNS Firewall UX, Vercel traces, and R2 read-only tokens turn app topology into a reviewable operating artifact."
+  },
+  {
     "date": "2026-07-11",
     "slug": "2026-07-11",
     "title": "Swarm Daily: Generated Code Needs Leak Fences",
