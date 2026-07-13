@@ -17,7 +17,7 @@ const CONTACT_EMAIL = "zach@zachwright.xyz";
 const CAL_URL = "https://cal.com/zachary-wright-l9sdgm/30min";
 const GITHUB_URL = "https://github.com/zwright8";
 const SITE_REPO_URL = "https://github.com/zwright8/zachwright-site";
-const PRODUCT_URL = "/products/ai-operator-kit/";
+const PRODUCT_URL = `${SITE_REPO_URL}/tree/main/products/ai-operator-kit`;
 const DASHBOARD_URL = "/dashboard.html";
 const UPDATES_URL = "/updates/index.html";
 
@@ -32,6 +32,7 @@ type UpdateEntry = {
 };
 
 const latestJournalEntries = (updatesIndex as UpdateEntry[]).slice(0, 4);
+const journalEntryCount = (updatesIndex as UpdateEntry[]).length;
 
 const updateDateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
@@ -43,14 +44,17 @@ const updateDateFormatter = new Intl.DateTimeFormat("en-US", {
 const proofSurfaces = [
   {
     title: "AI Operator Kit",
-    cta: "Open product surface",
+    cta: "Inspect product files",
     href: PRODUCT_URL,
-    kind: "Product",
-    summary: "A real product page with package tiers, fulfillment files, policy docs, and checkout wiring.",
-    image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80",
+    kind: "Artifact package",
+    summary: "A repo-visible product package with tiers, fulfillment files, policy docs, and operating templates.",
+    evidence: [
+      ["Repo path", "products/ai-operator-kit"],
+      ["Artifacts", "README, fulfillment files, policy docs"],
+      ["Signal", "Product packaging is inspectable"],
+    ],
     span: "md:col-span-7",
-    ratio: "aspect-[1.18/1]",
+    ratio: "min-h-[28rem] md:min-h-[30rem] lg:min-h-0 lg:aspect-[1.18/1]",
   },
   {
     title: "Daily Drop Archive",
@@ -58,10 +62,13 @@ const proofSurfaces = [
     href: UPDATES_URL,
     kind: "Archive",
     summary: "A dated archive of AI-era engineering notes with source links and concrete operating takeaways.",
-    image:
-      "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1100&q=80",
+    evidence: [
+      ["Route", "/updates/index.html"],
+      ["Source", "updates/index.json"],
+      ["Depth", `${journalEntryCount} dated drops`],
+    ],
     span: "md:col-span-5",
-    ratio: "aspect-[0.86/1]",
+    ratio: "min-h-[28rem] md:min-h-[30rem] lg:min-h-0 lg:aspect-[0.86/1]",
   },
   {
     title: "Operations Dashboard",
@@ -69,10 +76,13 @@ const proofSurfaces = [
     href: DASHBOARD_URL,
     kind: "Dashboard",
     summary: "A site-owned dashboard surface for checking the portfolio's data presentation and supporting assets.",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1100&q=80",
+    evidence: [
+      ["Route", "/dashboard.html"],
+      ["Data", "dashboard-data.json"],
+      ["Signal", "Static telemetry surface"],
+    ],
     span: "md:col-span-5",
-    ratio: "aspect-[0.86/1]",
+    ratio: "min-h-[28rem] md:min-h-[30rem] lg:min-h-0 lg:aspect-[0.86/1]",
   },
   {
     title: "GitHub Implementation Trail",
@@ -80,10 +90,13 @@ const proofSurfaces = [
     href: GITHUB_URL,
     kind: "Code record",
     summary: "Public code history for inspecting how the site and related software work are actually built.",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
+    evidence: [
+      ["Repository", "zwright8/zachwright-site"],
+      ["Checks", "build, smoke, newsletter scripts"],
+      ["Signal", "Work history is public"],
+    ],
     span: "md:col-span-7",
-    ratio: "aspect-[1.18/1]",
+    ratio: "min-h-[28rem] md:min-h-[30rem] lg:min-h-0 lg:aspect-[1.18/1]",
   },
 ];
 
@@ -117,7 +130,7 @@ const engineeringSignals = [
 const socialLinks = [
   ["Email Zach", `mailto:${CONTACT_EMAIL}?subject=AI%20strategy%20inquiry`],
   ["Read Daily Drop archive", UPDATES_URL],
-  ["Open AI Operator Kit", PRODUCT_URL],
+  ["Inspect AI Operator Kit files", PRODUCT_URL],
   ["View GitHub work", GITHUB_URL],
   ["Book 30-min call", CAL_URL],
 ];
@@ -414,9 +427,12 @@ function ProofSurfaceCard({
     >
       <img
         alt=""
-        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-35 transition-transform duration-700 ease-out group-hover:scale-105"
         loading="lazy"
-        src={surface.image}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        src={HERO_IMAGE}
+        srcSet={HERO_IMAGE_SRCSET}
       />
       <div
         className="absolute inset-0 opacity-20 mix-blend-multiply"
@@ -425,15 +441,33 @@ function ProofSurfaceCard({
           backgroundSize: "4px 4px",
         }}
       />
-      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-bg via-bg/50 to-transparent p-5 md:p-7">
-        <p className="mb-3 text-xs uppercase tracking-[0.22em] text-text-primary/70">
-          {surface.kind}
-        </p>
-        <h3 className="text-2xl leading-tight text-text-primary md:text-3xl">
-          {surface.title}
-        </h3>
-        <p className="mt-3 max-w-md text-sm leading-6 text-muted">{surface.summary}</p>
-        <span className="mt-5 inline-flex min-h-8 items-center gap-2 text-sm font-medium text-text-primary">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_18%,rgba(137,170,204,0.22),transparent_34%),linear-gradient(145deg,rgba(5,5,5,0.62)_0%,rgba(5,5,5,0.9)_64%,rgba(5,5,5,0.98)_100%)]" />
+      <div className="relative z-10 flex h-full w-full flex-col justify-between p-5 md:p-7">
+        <div>
+          <p className="mb-3 text-xs uppercase tracking-[0.22em] text-text-primary/70">
+            {surface.kind}
+          </p>
+          <h3 className="text-2xl leading-tight text-text-primary md:text-3xl">
+            {surface.title}
+          </h3>
+          <p className="mt-3 max-w-md text-sm leading-6 text-text-primary/75">
+            {surface.summary}
+          </p>
+        </div>
+
+        <dl className="my-6 space-y-3 border-y border-white/10 py-4 md:my-7">
+          {surface.evidence.map(([label, value]) => (
+            <div
+              key={`${surface.title}-${label}`}
+              className="grid grid-cols-[5.75rem_minmax(0,1fr)] gap-3 text-xs leading-5 md:grid-cols-[7rem_minmax(0,1fr)]"
+            >
+              <dt className="uppercase tracking-[0.18em] text-text-primary/45">{label}</dt>
+              <dd className="min-w-0 font-medium text-text-primary/90">{value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <span className="inline-flex min-h-8 items-center gap-2 text-sm font-medium text-text-primary">
           {surface.cta}
           <ArrowIcon className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
         </span>
@@ -447,7 +481,7 @@ function SelectedWorks() {
     <section id="work" className="bg-bg py-12 md:py-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-16">
         <SectionHeader
-          action={<GradientAction href={PRODUCT_URL}>Open product surface</GradientAction>}
+          action={<GradientAction href={PRODUCT_URL}>Inspect product files</GradientAction>}
           eyebrow="Proof surfaces"
           italic="work"
           text="Each item below is a live surface or external record that can be opened, inspected, and used."
