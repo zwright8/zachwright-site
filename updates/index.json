@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-14",
+    "slug": "2026-07-14",
+    "title": "Swarm Daily: Shipping Gates Move Upstream",
+    "url": "/updates/2026-07-14.html",
+    "preview": "Vercel Deployment Policies, Flags CLI rules, Cloudflare MCP elicitation, Claude key expirations, Microsoft 365 write-tool consent, and IPsec downgrade protection move production control before execution."
+  },
+  {
     "date": "2026-07-13",
     "slug": "2026-07-13",
     "title": "Swarm Daily: Service Graphs Need a Manifest",

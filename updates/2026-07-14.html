@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Shipping Gates Move Upstream | zachwright.xyz</title>
+  <meta name="description" content="Vercel Deployment Policies, Flags CLI rules, Cloudflare MCP elicitation, Claude key expirations, Microsoft 365 write-tool consent, and IPsec downgrade protection move production control before execution." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Shipping Gates Move Upstream</h1>
+          <p>Vercel Deployment Policies, Flags CLI rules, Cloudflare MCP elicitation, Claude key expirations, Microsoft 365 write-tool consent, and IPsec downgrade protection move production control before execution.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from reviewing production changes after they land to gating the source before it acts. Deploy origin, rollout rule, tool consent, connector write scope, key lifetime, and tunnel negotiation are becoming explicit control-plane objects.</strong></p>
+          <p>That matters because agents and CLIs make mutation cheap. Vercel Deployment Policies decide which mechanisms, organizations, and repositories can create deployments for an environment. Vercel Flags now lets operators and agents add, move, inspect, and export targeting rules from the terminal. Cloudflare Agents can pause an MCP tool call for structured input or URL-mode consent. The durable control surface is no longer just the dashboard that explains what happened. It is the policy that decides which source can act.</p>
+          <ul>
+            <li>Vercel Deployment Policies restrict deployment creation sources by mechanism, organization, repository, project, and environment.
+            <a href="https://vercel.com/changelog/configure-which-sources-can-create-deployments-with-deployment-policies">https://vercel.com/changelog/configure-which-sources-can-create-deployments-with-deployment-policies</a></li>
+            <li>Vercel Flags targeting rules are now scriptable from the CLI, including rule ordering and JSON export for automation.
+            <a href="https://vercel.com/changelog/manage-vercel-flags-targeting-rules-from-the-cli">https://vercel.com/changelog/manage-vercel-flags-targeting-rules-from-the-cli</a></li>
+            <li>Cloudflare Agents can handle MCP elicitation, so servers can request input or explicit consent before continuing a tool call.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-13-mcp-client-elicitation/">https://developers.cloudflare.com/changelog/post/2026-07-13-mcp-client-elicitation/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel Deployment Policies</strong> - pin production deploy rights to approved sources instead of assuming every Git, CLI, API, or upload path should reach every environment.
+            <a href="https://vercel.com/changelog/configure-which-sources-can-create-deployments-with-deployment-policies">https://vercel.com/changelog/configure-which-sources-can-create-deployments-with-deployment-policies</a></li>
+            <li><strong>Vercel Flags CLI rules</strong> - add, move, inspect, and export targeting rules with <code>vercel flags rules</code>; treat rule order as a release artifact.
+            <a href="https://vercel.com/changelog/manage-vercel-flags-targeting-rules-from-the-cli">https://vercel.com/changelog/manage-vercel-flags-targeting-rules-from-the-cli</a></li>
+            <li><strong>Cloudflare MCP elicitation</strong> - let connected agents surface form-mode input or URL-mode consent while an MCP server handles a tool call.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-13-mcp-client-elicitation/">https://developers.cloudflare.com/changelog/post/2026-07-13-mcp-client-elicitation/</a></li>
+            <li><strong>Claude API key expirations</strong> - set API and Admin API key lifetimes at creation time and inventory them through the Admin API <code>expires_at</code> field.
+            <a href="https://platform.claude.com/docs/en/release-notes/overview">https://platform.claude.com/docs/en/release-notes/overview</a></li>
+            <li><strong>Claude Microsoft 365 write tools</strong> - require Entra admin consent and org admin enablement before Claude can draft, send, organize, or update M365 objects.
+            <a href="https://support.claude.com/en/articles/12138966-release-notes">https://support.claude.com/en/articles/12138966-release-notes</a></li>
+            <li><strong>Cloudflare IPsec downgrade protection</strong> - use IKEv2 full-transcript authentication to stop tunnels from silently negotiating weaker protection.
+            <a href="https://developers.cloudflare.com/changelog/product-group/cloudflare-one/">https://developers.cloudflare.com/changelog/product-group/cloudflare-one/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Deployment rights are policy objects.</strong> Review who or what can create a production deployment beside branch protection, CI checks, and environment approvals.</li>
+            <li><strong>Flag edits are production edits.</strong> Rule order, progressive rollouts, and targeting JSON need review, audit, and rollback paths before agents start moving them.</li>
+            <li><strong>Agent consent needs state.</strong> The interface should show server, reason, requested input, URL target, and accept/decline/cancel history.</li>
+            <li><strong>Credentials should carry time bounds.</strong> Expiration is not a calendar chore if key lifetime is visible in inventory from day one.</li>
+            <li><strong>Negotiation is part of security.</strong> Strong tunnel settings do less if the handshake can be downgraded before traffic starts.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Authorization</strong> - because the most polished permission gate can still protect the wrong surface.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/authorization.png">https://imgs.xkcd.com/comics/authorization.png</a><br>Post: <a href="https://xkcd.com/1200/">https://xkcd.com/1200/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
