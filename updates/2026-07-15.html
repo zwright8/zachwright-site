@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: State Needs a Claim Check | zachwright.xyz</title>
+  <meta name="description" content="GitHub immutable OIDC subjects, Vercel Blob consistent reads, Cloudflare Temporary Accounts, Claude Admin API controls, AI Gateway exports, and DNSSEC EDE 33 make production state verifiable." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: State Needs a Claim Check</h1>
+          <p>GitHub immutable OIDC subjects, Vercel Blob consistent reads, Cloudflare Temporary Accounts, Claude Admin API controls, AI Gateway exports, and DNSSEC EDE 33 make production state verifiable.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from trusting names, dashboards, and cached reads to asking every production object for a fresh claim: which repo, which object version, which account owner, which org member, which usage dataset, and which resolver exception.</strong></p>
+          <p>Today, GitHub's OIDC subject change becomes operationally real for new repositories and post-July-15 renames or transfers: cloud roles can bind to owner and repository IDs instead of mutable names alone. Vercel Blob added a deliberate latest-state path for private objects, so agent memory, session transcripts, and scheduled JSON reports can bypass a stale cached read when correctness matters. Cloudflare's Temporary Accounts API gives generated Workers a preview-and-claim lifecycle before a user commits permanent ownership. The pattern is not another dashboard. It is proof at the point of use.</p>
+          <ul>
+            <li>GitHub Actions OIDC tokens now use immutable owner and repository IDs for new repos, renames, and transfers after July 15, 2026.
+            <a href="https://github.blog/changelog/2026-04-23-immutable-subject-claims-for-github-actions-oidc-tokens/">https://github.blog/changelog/2026-04-23-immutable-subject-claims-for-github-actions-oidc-tokens/</a></li>
+            <li>GitHub's OIDC reference shows the exact immutable subject formats cloud trust policies need to match.
+            <a href="https://docs.github.com/actions/reference/openid-connect-reference">https://docs.github.com/actions/reference/openid-connect-reference</a></li>
+            <li>Vercel Blob private storage can force a consistent read with <code>useCache: false</code> or <code>cache=0</code>.
+            <a href="https://vercel.com/changelog/vercel-blob-now-supports-consistent-reads-on-private-storage">https://vercel.com/changelog/vercel-blob-now-supports-consistent-reads-on-private-storage</a></li>
+            <li>Cloudflare Temporary Accounts let platforms deploy, verify, and hand off a claimable Worker preview without taking permanent account access.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-14-temporary-accounts-api/">https://developers.cloudflare.com/changelog/post/2026-07-14-temporary-accounts-api/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub immutable OIDC subjects</strong> - audit AWS, Azure, GCP, and Vault trust policies for repos created, renamed, or transferred after July 15; copy the real <code>sub</code> before widening conditions.
+            <a href="https://docs.github.com/actions/reference/openid-connect-reference">https://docs.github.com/actions/reference/openid-connect-reference</a></li>
+            <li><strong>Vercel Blob consistent reads</strong> - use <code>useCache: false</code> when private blob reads back agent state, transcripts, reports, or any overwritten path that cannot tolerate a 60-second stale window.
+            <a href="https://vercel.com/changelog/vercel-blob-now-supports-consistent-reads-on-private-storage">https://vercel.com/changelog/vercel-blob-now-supports-consistent-reads-on-private-storage</a></li>
+            <li><strong>Cloudflare Temporary Accounts API</strong> - build preview-and-claim flows for generated Workers with terms acceptance, proof-of-work, a temporary account ID, an API token, and a claim URL.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-14-temporary-accounts-api/">https://developers.cloudflare.com/changelog/post/2026-07-14-temporary-accounts-api/</a></li>
+            <li><strong>Claude Admin API user management</strong> - list members, find users by email, change roles, remove members, manage invites, and operate groups or custom roles through beta Admin API surfaces.
+            <a href="https://docs.anthropic.com/en/release-notes/api">https://docs.anthropic.com/en/release-notes/api</a></li>
+            <li><strong>AI Gateway leaderboard exports</strong> - pull model, lab, app, and provider rankings through the <code>leaderboard-export</code> endpoint instead of screenshotting adoption charts.
+            <a href="https://vercel.com/changelog/open-data-and-shareable-charts-for-ai-gateway-leaderboards">https://vercel.com/changelog/open-data-and-shareable-charts-for-ai-gateway-leaderboards</a></li>
+            <li><strong>Vercel Node.js 20 deprecation</strong> - run <code>vercel project ls --update-required</code>, move projects toward Node 24, and verify the deployed <code>process.version</code> before the October 1, 2026 cutoff.
+            <a href="https://vercel.com/changelog/node-js-20-is-being-deprecated">https://vercel.com/changelog/node-js-20-is-being-deprecated</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Names are weak trust anchors.</strong> Cloud roles should match the real immutable subject emitted by CI, not a hand-typed repo path that can be renamed, transferred, or recycled.</li>
+            <li><strong>Freshness needs an explicit knob.</strong> Agent memory and reports need a documented latest-read path; CDN speed is a bad default when the next action depends on the newest write.</li>
+            <li><strong>Preview ownership should be claimable.</strong> Generated apps need a clean transition from platform-owned sandbox to user-owned resource without borrowing permanent credentials.</li>
+            <li><strong>Dashboards should export evidence.</strong> Model routing, procurement, and migration decisions get better when the usage dataset is queryable and licensed for reuse.</li>
+            <li><strong>Exceptions should ride the protocol.</strong> Cloudflare's EDE 33 for Negative Trust Anchors shows why resolver, security, and platform bypasses need machine-readable disclosure in-band.
+            <a href="https://blog.cloudflare.com/dnssec-nta-ede-33/">https://blog.cloudflare.com/dnssec-nta-ede-33/</a></li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Identity</strong> - because the name is never the hard part until a policy needs to prove who it actually belongs to.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/identity.png">https://imgs.xkcd.com/comics/identity.png</a><br>Post: <a href="https://xkcd.com/1121/">https://xkcd.com/1121/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
