@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Automation Needs a Known Scope | zachwright.xyz</title>
+  <meta name="description" content="Vercel CLI 55 promptless linking, Connect-backed GitHub tools, safer checkout defaults, Cloudflare email events, KV route migration, and workflow minimaps make automation declare its scope." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Automation Needs a Known Scope</h1>
+          <p>Vercel CLI 55 promptless linking, Connect-backed GitHub tools, safer checkout defaults, Cloudflare email events, KV route migration, and workflow minimaps make automation declare its scope.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from automation inheriting whatever context happens to be nearby to automation proving its scope before it acts: team, project, repo, installation, permissions, event source, and run segment.</strong></p>
+          <p>Vercel CLI 55 now resolves team scope first and fails non-interactive commands with a structured missing-scope error when it cannot know where to link. GitHub Tools can now use Vercel Connect to mint short-lived, scoped GitHub tokens at runtime instead of storing personal access tokens. GitHub's safer checkout defaults keep privileged <code>pull_request_target</code> workflows from checking out attacker-controlled fork code by accident. The operator pattern is clean: no ambient authority before the action, and machine-readable evidence after the side effect lands.</p>
+          <ul>
+            <li>Vercel CLI 55 makes promptless linking depend on explicit signals such as <code>VERCEL_ORG_ID</code>, <code>VERCEL_PROJECT_ID</code>, <code>--team</code>, or <code>--scope</code>.
+            <a href="https://vercel.com/changelog/faster-predictable-project-linking-in-the-vercel-cli">https://vercel.com/changelog/faster-predictable-project-linking-in-the-vercel-cli</a></li>
+            <li>Vercel Connect support in GitHub Tools lets agents mint scoped GitHub tokens from connector presets and narrow them per repo or installation.
+            <a href="https://vercel.com/changelog/vercel-connect-support-in-github-tools">https://vercel.com/changelog/vercel-connect-support-in-github-tools</a></li>
+            <li>GitHub Actions checkout v7 refuses common privileged fork-PR checkout patterns, with supported-version backport enforcement now revised to July 20, 2026.
+            <a href="https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/">https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel CLI 55 linking</strong> - set <code>VERCEL_ORG_ID</code> and <code>VERCEL_PROJECT_ID</code> in CI and agents; treat missing scope as a deployment blocker, not a prompt to guess.
+            <a href="https://vercel.com/changelog/faster-predictable-project-linking-in-the-vercel-cli">https://vercel.com/changelog/faster-predictable-project-linking-in-the-vercel-cli</a></li>
+            <li><strong>Connect-backed GitHub Tools</strong> - replace stored PATs with connector-minted tokens and choose presets such as <code>code-review</code>, <code>issue-triage</code>, or <code>maintainer</code>.
+            <a href="https://vercel.com/changelog/vercel-connect-support-in-github-tools">https://vercel.com/changelog/vercel-connect-support-in-github-tools</a></li>
+            <li><strong>Safer Actions checkout</strong> - audit <code>pull_request_target</code> workflows pinned to specific SHAs, minor versions, or patch versions; floating supported majors will receive the backport.
+            <a href="https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/">https://github.blog/changelog/2026-06-18-safer-pull_request_target-defaults-for-github-actions-checkout/</a></li>
+            <li><strong>Cloudflare Email Sending events</strong> - subscribe one sending domain at a time and route delivered, deferred, bounced, failed, rejected, and complained events into Queues.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-15-event-subscriptions/">https://developers.cloudflare.com/changelog/post/2026-07-15-event-subscriptions/</a></li>
+            <li><strong>Workers KV API route migration</strong> - move integrations from <code>/workers/namespaces/</code> to <code>/storage/kv/namespaces/</code> before the October 15, 2026 cutoff.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-15-kv-legacy-namespace-routes-deprecation/">https://developers.cloudflare.com/changelog/post/2026-07-15-kv-legacy-namespace-routes-deprecation/</a></li>
+            <li><strong>Vercel Workflows minimap</strong> - use the trace viewer, including <code>npx workflow@beta web</code>, when a long run needs fast navigation to the failing section.
+            <a href="https://vercel.com/changelog/vercel-workflows-trace-viewer-now-has-a-minimap">https://vercel.com/changelog/vercel-workflows-trace-viewer-now-has-a-minimap</a></li>
+            <li><strong>Discord Components V2 in Chat SDK</strong> - send native cards, sections, media, buttons, and selects while keeping embeds as the default for existing bots.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-discord-components-v2-support">https://vercel.com/changelog/chat-sdk-adds-discord-components-v2-support</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Ambient defaults are production risk.</strong> Agents should not inherit a human's last selected team, globally selected account, or broad token just because a command can run locally.</li>
+            <li><strong>Credentials should be task-shaped.</strong> Runtime-minted tokens with presets and per-call narrowing are easier to revoke, audit, and reason about than stored all-purpose secrets.</li>
+            <li><strong>Side effects need callbacks.</strong> Email delivery, bounces, complaints, and failures should drive suppression, retry, and customer workflows without scraping dashboards.</li>
+            <li><strong>Route names become contracts.</strong> API path deprecations are boring until every agent, deploy hook, and ops script has the old path baked in.</li>
+            <li><strong>Long runs need maps.</strong> Workflow traces are only useful if operators can jump to the slow, failed, or retried segment before the next automation cycle starts.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Automation</strong> - because every "just make it automatic" script eventually needs a scope, a queue, and someone watching the trace.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/automation.png">https://imgs.xkcd.com/comics/automation.png</a><br>Post: <a href="https://xkcd.com/1319/">https://xkcd.com/1319/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

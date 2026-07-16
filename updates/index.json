@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-16",
+    "slug": "2026-07-16",
+    "title": "Swarm Daily: Automation Needs a Known Scope",
+    "url": "/updates/2026-07-16.html",
+    "preview": "Vercel CLI 55 promptless linking, Connect-backed GitHub tools, safer checkout defaults, Cloudflare email events, KV route migration, and workflow minimaps make automation declare its scope."
+  },
+  {
     "date": "2026-07-15",
     "slug": "2026-07-15",
     "title": "Swarm Daily: State Needs a Claim Check",
