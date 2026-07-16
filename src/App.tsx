@@ -23,6 +23,12 @@ const FIX_PLAN_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md";
 const FIX_PLAN_CHECKOUT_URL =
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG";
+const BOUNTY_CARD_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card";
+const BOUNTY_CARD_RELEASE_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0";
+const BOUNTY_REVIEW_REQUEST_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml";
 
 const engagementOptions = [
   {
@@ -172,6 +178,11 @@ const faqs = [
     answer:
       "WrightOps is AI-operated on behalf of Zachary Wright. Zachary remains the accountable human owner for scope, payment, delivery, and refund decisions.",
   },
+  {
+    question: "What is the $49 Bounty GO/NO-GO Review?",
+    answer:
+      "It is an evidence-backed review of exactly one public bounty or listing. After written scope confirmation and payment, WrightOps delivers a GO, HOLD, or NO-GO recommendation within one business day. It does not guarantee a payout or replace professional advice.",
+  },
 ];
 
 function Arrow({ className = "" }: { className?: string }) {
@@ -284,8 +295,8 @@ function Navbar() {
 
         <div className="nav-links">
           <a href="#offers">Offers</a>
+          <a href="#bounty-review">Bounty review</a>
           <a href="#proof">Proof</a>
-          <a href="#process">Process</a>
           <a href="#faq">FAQ</a>
         </div>
 
@@ -495,6 +506,96 @@ function Offers() {
   );
 }
 
+function BountyReview() {
+  return (
+    <section className="bounty-section" id="bounty-review">
+      <div className="site-shell">
+        <SectionHeading
+          eyebrow="Bounty triage"
+          title={
+            <>
+              Decide before you spend the <span>time.</span>
+            </>
+          }
+          text="Screen the public evidence first. Start with the free Bounty Red-Flag Card, then request a bounded review when the payout decision needs a second set of eyes."
+        />
+
+        <div className="bounty-funnel">
+          <Reveal className="bounty-free-card">
+            <div>
+              <p className="eyebrow">Free decision aid</p>
+              <h3>Bounty Red-Flag Card</h3>
+              <p>
+                Check funding, payout authority, competition, delivery terms,
+                and other early warning signs before committing work to a
+                public bounty or listing.
+              </p>
+            </div>
+
+            <ul aria-label="Red-Flag Card checks">
+              <li>
+                <span aria-hidden="true">01</span>
+                Funding and payout evidence
+              </li>
+              <li>
+                <span aria-hidden="true">02</span>
+                Claim, review, and acceptance authority
+              </li>
+              <li>
+                <span aria-hidden="true">03</span>
+                Competition, delivery, and dispute risk
+              </li>
+            </ul>
+
+            <div className="bounty-actions">
+              <PrimaryAction href={BOUNTY_CARD_URL}>
+                Open the free card
+              </PrimaryAction>
+              <SecondaryAction href={BOUNTY_CARD_RELEASE_URL}>
+                Get the v1.0.0 release
+              </SecondaryAction>
+            </div>
+          </Reveal>
+
+          <Reveal className="bounty-paid-card" delay={0.06}>
+            <div className="bounty-price-row">
+              <p className="eyebrow">Bounded paid review</p>
+              <strong>$49</strong>
+            </div>
+            <h3>Bounty GO/NO-GO Review</h3>
+            <p>
+              WrightOps reviews exactly one public bounty or listing and
+              returns an evidence-backed GO, HOLD, or NO-GO recommendation
+              within one business day after written scope confirmation and
+              payment.
+            </p>
+            <ul>
+              <li>Public evidence only</li>
+              <li>No secrets, private code, or private data</li>
+              <li>No guaranteed payout or professional advice</li>
+            </ul>
+            <div className="bounty-actions">
+              <PrimaryAction href={BOUNTY_REVIEW_REQUEST_URL}>
+                Request review scope
+              </PrimaryAction>
+              <SecondaryAction href={FIX_PLAN_REQUEST_URL}>
+                Need repo fixes? Request the $149 plan
+              </SecondaryAction>
+            </div>
+          </Reveal>
+        </div>
+
+        <p className="bounty-disclaimer">
+          The free card and paid review are decision aids based on public
+          evidence. They are not legal, tax, financial, investment, security,
+          or other professional advice, and no payout or business outcome is
+          guaranteed.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function Proof() {
   return (
     <section className="content-section proof-section" id="proof">
@@ -685,18 +786,22 @@ function Footer() {
             <ExternalLink href={AUDIT_REQUEST_URL}>Free audit request</ExternalLink>
             <ExternalLink href={AUDITOR_URL}>Inspect the auditor</ExternalLink>
             <ExternalLink href={FIX_PLAN_REQUEST_URL}>Fix Plan request</ExternalLink>
-            <ExternalLink href={FIX_PLAN_SAMPLE_URL}>Sample delivery</ExternalLink>
+            <ExternalLink href={BOUNTY_REVIEW_REQUEST_URL}>
+              Bounty review request
+            </ExternalLink>
           </div>
           <div>
             <strong>Verify</strong>
             <ExternalLink href={GITHUB_ORG_URL}>WrightOps on GitHub</ExternalLink>
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
-            <ExternalLink href={FIX_PLAN_TERMS_URL}>Fix Plan terms</ExternalLink>
+            <ExternalLink href={BOUNTY_CARD_URL}>Bounty Red-Flag Card</ExternalLink>
           </div>
           <div>
             <strong>Contact</strong>
             <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            <ExternalLink href={FIX_PLAN_SAMPLE_URL}>Sample Fix Plan</ExternalLink>
+            <ExternalLink href={FIX_PLAN_TERMS_URL}>Fix Plan terms</ExternalLink>
             <a href="#offers">Offers</a>
             <a href="#faq">FAQ</a>
           </div>
@@ -723,6 +828,7 @@ export default function App() {
           <Hero />
           <EntryPoint />
           <Offers />
+          <BountyReview />
           <Proof />
           <Process />
           <Boundaries />

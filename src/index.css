@@ -817,6 +817,172 @@ section[id] {
   line-height: 1.65;
 }
 
+.bounty-section[id] {
+  padding: clamp(5rem, 8vw, 7.5rem) 0;
+  scroll-margin-top: 0;
+  border-top: 1px solid var(--line-light);
+  border-bottom: 1px solid var(--line-light);
+  background: var(--paper);
+}
+
+.bounty-section .section-heading {
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.bounty-funnel {
+  display: grid;
+  border: 1px solid var(--line-light);
+  background: var(--cloud);
+  grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.92fr);
+}
+
+.bounty-free-card,
+.bounty-paid-card {
+  display: flex;
+  min-width: 0;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  flex-direction: column;
+}
+
+.bounty-free-card {
+  justify-content: space-between;
+  border-right: 1px solid var(--line-light);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(183, 243, 74, 0.13), transparent 29%),
+    var(--paper);
+}
+
+.bounty-paid-card {
+  color: #fff;
+  background: var(--midnight);
+}
+
+.bounty-free-card h3,
+.bounty-paid-card h3 {
+  max-width: 34rem;
+  margin: 0;
+  font-size: clamp(1.9rem, 3.5vw, 3.25rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.bounty-free-card > div:first-child > p:last-child,
+.bounty-paid-card > p {
+  max-width: 39rem;
+  margin: 1.2rem 0 0;
+  color: var(--slate);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+.bounty-paid-card > p {
+  color: #bcc6d1;
+}
+
+.bounty-free-card > ul,
+.bounty-paid-card > ul {
+  display: grid;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bounty-free-card > ul {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line-light);
+}
+
+.bounty-free-card li {
+  display: grid;
+  min-height: 6.5rem;
+  padding: 1.1rem 1rem 0 0;
+  align-content: start;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.5;
+  gap: 0.65rem;
+}
+
+.bounty-free-card li + li {
+  padding-left: 1rem;
+  border-left: 1px solid var(--line-light);
+}
+
+.bounty-free-card li span {
+  color: #6a7a8d;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.68rem;
+}
+
+.bounty-price-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.bounty-price-row .eyebrow {
+  margin-bottom: 1.2rem;
+  color: var(--signal);
+}
+
+.bounty-price-row strong {
+  color: var(--signal);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.bounty-paid-card > ul {
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-dark);
+  gap: 0.7rem;
+}
+
+.bounty-paid-card li {
+  display: flex;
+  align-items: flex-start;
+  color: #d2d9e1;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  gap: 0.65rem;
+}
+
+.bounty-paid-card li::before {
+  color: var(--signal);
+  content: "✓";
+  font-weight: 800;
+}
+
+.bounty-actions {
+  display: flex;
+  margin-top: auto;
+  padding-top: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.bounty-paid-card .secondary-action {
+  color: #fff;
+  border-color: var(--line-dark);
+}
+
+.bounty-paid-card .secondary-action:hover {
+  color: var(--midnight);
+  border-color: var(--signal);
+  background: var(--signal);
+}
+
+.bounty-disclaimer {
+  max-width: 60rem;
+  margin: 1.25rem 0 0;
+  color: var(--slate);
+  font-size: 0.74rem;
+  line-height: 1.65;
+}
+
 .proof-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1150,6 +1316,15 @@ footer {
     grid-template-columns: 1fr;
   }
 
+  .bounty-funnel {
+    grid-template-columns: 1fr;
+  }
+
+  .bounty-free-card {
+    border-right: 0;
+    border-bottom: 1px solid var(--line-light);
+  }
+
   .offer-card {
     min-height: auto;
   }
@@ -1271,6 +1446,33 @@ footer {
 
   .offer-title-row {
     grid-template-columns: 1fr;
+  }
+
+  .bounty-free-card > ul {
+    grid-template-columns: 1fr;
+  }
+
+  .bounty-free-card li {
+    min-height: auto;
+    padding: 0.9rem 0;
+    grid-template-columns: 2rem 1fr;
+    gap: 0.5rem;
+  }
+
+  .bounty-free-card li + li {
+    padding-left: 0;
+    border-top: 1px solid var(--line-light);
+    border-left: 0;
+  }
+
+  .bounty-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bounty-actions .primary-action,
+  .bounty-actions .secondary-action {
+    width: 100%;
   }
 
   .process-list li {

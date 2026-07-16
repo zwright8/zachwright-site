@@ -1,6 +1,6 @@
 # WrightOps
 
-WrightOps provides public-repository evidence audits, fixed-price Fix Plans, and bounded remediation work.
+WrightOps provides public-repository evidence audits, fixed-price Fix Plans, bounty decision aids, and bounded remediation work.
 
 Canonical website: https://zachwright.xyz/
 Free audit request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml
@@ -8,10 +8,21 @@ Public auditor: https://github.com/wrightops-ai/agent-ready-repo-auditor
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
+Free Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card
+Bounty Red-Flag Card v1.0.0: https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0
+Bounty GO/NO-GO Review request: https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml
+
+Bounty review:
+- $49 after written scope confirmation and payment.
+- Exactly one public bounty or listing.
+- Evidence-backed GO, HOLD, or NO-GO recommendation.
+- One-business-day delivery after written scope confirmation and payment.
+- No guaranteed payout or professional advice.
 
 Scope:
 - Public GitHub repositories only.
 - Never submit credentials, secrets, private code, customer data, or personal data.
+- Bounty reviews use public evidence only.
 - No production or deployment access.
 - No vulnerability research or security, privacy, legal, or compliance assessment.
 - Paid work begins only after written scope confirmation.

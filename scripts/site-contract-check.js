@@ -23,6 +23,12 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
+  "https://github.com/wrightops-ai/bounty-red-flag-card",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
+  "Bounty GO/NO-GO Review",
+  "reviews exactly one public bounty or listing",
+  "No guaranteed payout or professional advice",
 ];
 
 const requiredHtmlMarkers = [
@@ -31,6 +37,9 @@ const requiredHtmlMarkers = [
   'property="og:image" content="https://zachwright.xyz/og.png"',
   '"@type": "ProfessionalService"',
   '"price": "149"',
+  '"name": "Bounty Red-Flag Card"',
+  '"name": "Bounty GO/NO-GO Review"',
+  '"price": "49"',
 ];
 
 const forbiddenMarkers = [
