@@ -70,7 +70,7 @@ const engagementOptions = [
     description:
       "One focused pull request for one public repository, delivering exactly two repository-specific instruction files from public evidence.",
     bullets: [
-      "Root AGENTS.md and .github/copilot-instructions.md",
+      "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
       "One public PR at a pinned revision with evidence, limits, and checks",
       "No application-code, CI, dependency, security, or deployment changes",
       "No review, merge, adoption, or outcome guarantee",

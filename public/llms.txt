@@ -28,9 +28,9 @@ Bounty review:
 
 Founding Agent-Ready Instructions PR:
 - $249 for one public GitHub repository.
-- Exactly two files: repository-root AGENTS.md and .github/copilot-instructions.md.
+- Exactly two files: repository-root AGENTS.md plus one companion selected during written scope confirmation—repository-root CLAUDE.md or .github/copilot-instructions.md.
 - One public pull request at a pinned revision with evidence, limitations, and acceptance checks.
-- A real merged two-file sample is public at https://github.com/wrightops-ai/bounty-red-flag-card/pull/1.
+- A real merged sample of the Copilot companion variant is public at https://github.com/wrightops-ai/bounty-red-flag-card/pull/1.
 - Excludes application-code, CI, dependency, security, and deployment changes.
 - No review, merge, adoption, or business-outcome guarantee.
 - Written scope confirmation is required before payment.

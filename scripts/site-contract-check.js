@@ -27,7 +27,7 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
   "Agent-Ready Instructions PR",
-  "Root AGENTS.md and .github/copilot-instructions.md",
+  "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
   "delivering exactly two repository-specific instruction files",
   "No application-code, CI, dependency, security, or deployment changes",
   "private, dedicated PayPal Goods",
