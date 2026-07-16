@@ -23,6 +23,15 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
+  "Agent-Ready Instructions PR",
+  "Root AGENTS.md and .github/copilot-instructions.md",
+  "delivering exactly two repository-specific instruction files",
+  "No application-code, CI, dependency, security, or deployment changes",
+  "private, dedicated PayPal Goods",
+  "the full purchase price is refunded",
   "https://github.com/wrightops-ai/bounty-red-flag-card",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
@@ -41,6 +50,8 @@ const requiredHtmlMarkers = [
   'property="og:image" content="https://zachwright.xyz/og.png"',
   '"@type": "ProfessionalService"',
   '"price": "149"',
+  '"name": "Founding Agent-Ready Instructions PR"',
+  '"price": "249"',
   '"name": "Bounty Red-Flag Card"',
   '"name": "Bounty GO/NO-GO Review"',
   '"price": "49"',
@@ -55,6 +66,8 @@ const forbiddenMarkers = [
   "Software Engineering Portfolio",
   "Daily Drop",
   "AI Operator Kit",
+  "Repository Remediation Sprint",
+  "$1,500",
 ];
 
 function missing(source, markers) {

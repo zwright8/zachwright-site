@@ -23,6 +23,12 @@ const FIX_PLAN_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md";
 const FIX_PLAN_CHECKOUT_URL =
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG";
+const INSTRUCTIONS_PR_REQUEST_URL =
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml";
+const INSTRUCTIONS_PR_TERMS_URL =
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md";
+const INSTRUCTIONS_PR_SAMPLE_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1";
 const BOUNTY_CARD_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card";
 const BOUNTY_CARD_OPEN_URL =
@@ -54,6 +60,25 @@ const engagementOptions = [
     primaryHref: FIX_PLAN_REQUEST_URL,
     secondaryLabel: "Scope confirmed? Pay $149",
     secondaryHref: FIX_PLAN_CHECKOUT_URL,
+    featured: false,
+  },
+  {
+    eyebrow: "Founding implementation offer",
+    title: "Agent-Ready Instructions PR",
+    price: "$249",
+    timing: "Private PayPal G&S checkout after written scope confirmation",
+    description:
+      "One focused pull request for one public repository, delivering exactly two repository-specific instruction files from public evidence.",
+    bullets: [
+      "Root AGENTS.md and .github/copilot-instructions.md",
+      "One public PR at a pinned revision with evidence, limits, and checks",
+      "No application-code, CI, dependency, security, or deployment changes",
+      "No review, merge, adoption, or outcome guarantee",
+    ],
+    primaryLabel: "Request written scope",
+    primaryHref: INSTRUCTIONS_PR_REQUEST_URL,
+    secondaryLabel: "Inspect the merged sample PR",
+    secondaryHref: INSTRUCTIONS_PR_SAMPLE_URL,
     featured: true,
   },
   {
@@ -73,25 +98,6 @@ const engagementOptions = [
     primaryHref: `mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit`,
     secondaryLabel: "Inspect the free auditor",
     secondaryHref: AUDITOR_URL,
-    featured: false,
-  },
-  {
-    eyebrow: "Implementation",
-    title: "Repository Remediation Sprint",
-    price: "$1,500",
-    timing: "Buyer-specific scope before invoicing",
-    description:
-      "A bounded implementation sprint for one to three agreed gaps after the repository evidence and acceptance tests are clear.",
-    bullets: [
-      "One public GitHub repository",
-      "One to three agreed gaps",
-      "Up to eight changed files",
-      "Acceptance criteria set in writing",
-    ],
-    primaryLabel: "Request sprint scope",
-    primaryHref: `mailto:${CONTACT_EMAIL}?subject=Repository%20Remediation%20Sprint`,
-    secondaryLabel: "Start with the $149 plan",
-    secondaryHref: FIX_PLAN_REQUEST_URL,
     featured: false,
   },
 ];
@@ -172,12 +178,12 @@ const faqs = [
   {
     question: "Do I pay before scope is confirmed?",
     answer:
-      "No. Submit the public scope request first. Use the PayPal Goods & Services checkout only after WrightOps confirms the repository and deliverable in writing.",
+      "No. Submit the public scope request first. For the $249 Instructions PR, WrightOps sends a private, dedicated PayPal Goods & Services checkout only after confirming the repository, deliverable, exclusions, and timing in writing.",
   },
   {
     question: "What happens if the agreed work cannot be delivered?",
     answer:
-      "WrightOps does not retain payment for work it cannot fulfill under the agreed scope. Any owed refund covers the full purchase price.",
+      "WrightOps does not retain payment for work it cannot fulfill under the agreed scope. If the scoped Agent-Ready Instructions PR cannot be delivered, the full purchase price is refunded.",
   },
   {
     question: "Who is accountable for the work?",
@@ -332,7 +338,7 @@ function Hero() {
           </h1>
           <p className="hero-lede">
             WrightOps turns public-repository friction into inspectable work:
-            a free audit, a fixed-price Fix Plan, and bounded remediation with
+            a free audit, fixed-price plans, and a scoped instructions PR with
             acceptance criteria.
           </p>
 
@@ -504,8 +510,10 @@ function Offers() {
         </div>
 
         <p className="payment-note">
-          PayPal Goods &amp; Services is used only after scope confirmation.
-          Never send payment through Friends and Family for WrightOps work.
+          The $249 Instructions PR uses a private, dedicated PayPal Goods
+          &amp; Services checkout sent only after written scope confirmation.
+          If WrightOps cannot deliver the scoped PR, the full purchase price is
+          refunded. Never use Friends and Family for WrightOps work.
         </p>
       </div>
     </section>
@@ -799,6 +807,9 @@ function Footer() {
             <ExternalLink href={AUDIT_REQUEST_URL}>Free audit request</ExternalLink>
             <ExternalLink href={AUDITOR_URL}>Inspect the auditor</ExternalLink>
             <ExternalLink href={FIX_PLAN_REQUEST_URL}>Fix Plan request</ExternalLink>
+            <ExternalLink href={INSTRUCTIONS_PR_REQUEST_URL}>
+              Instructions PR request
+            </ExternalLink>
             <ExternalLink href={BOUNTY_REVIEW_REQUEST_URL}>
               Bounty review request
             </ExternalLink>
@@ -808,6 +819,12 @@ function Footer() {
             <ExternalLink href={GITHUB_ORG_URL}>WrightOps on GitHub</ExternalLink>
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
+            <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
+              Instructions PR terms
+            </ExternalLink>
+            <ExternalLink href={INSTRUCTIONS_PR_SAMPLE_URL}>
+              Instructions PR sample
+            </ExternalLink>
             <ExternalLink href={BOUNTY_CARD_URL}>Bounty Red-Flag Card</ExternalLink>
           </div>
           <div>
