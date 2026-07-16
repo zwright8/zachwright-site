@@ -25,10 +25,16 @@ const FIX_PLAN_CHECKOUT_URL =
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG";
 const BOUNTY_CARD_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card";
+const BOUNTY_CARD_OPEN_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md";
 const BOUNTY_CARD_RELEASE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0";
 const BOUNTY_REVIEW_REQUEST_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml";
+const BOUNTY_REVIEW_SAMPLE_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md";
+const BOUNTY_REVIEW_TERMS_URL =
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md";
 
 const engagementOptions = [
   {
@@ -548,7 +554,7 @@ function BountyReview() {
             </ul>
 
             <div className="bounty-actions">
-              <PrimaryAction href={BOUNTY_CARD_URL}>
+              <PrimaryAction href={BOUNTY_CARD_OPEN_URL}>
                 Open the free card
               </PrimaryAction>
               <SecondaryAction href={BOUNTY_CARD_RELEASE_URL}>
@@ -576,12 +582,19 @@ function BountyReview() {
             </ul>
             <div className="bounty-actions">
               <PrimaryAction href={BOUNTY_REVIEW_REQUEST_URL}>
-                Request review scope
+                Open public GitHub request
               </PrimaryAction>
-              <SecondaryAction href={FIX_PLAN_REQUEST_URL}>
-                Need repo fixes? Request the $149 plan
+              <SecondaryAction href={BOUNTY_REVIEW_SAMPLE_URL}>
+                View sample report
               </SecondaryAction>
             </div>
+            <p className="bounty-intake-note">
+              GitHub sign-in is required to submit. Review the{" "}
+              <ExternalLink href={BOUNTY_REVIEW_TERMS_URL}>
+                service and refund terms
+              </ExternalLink>{" "}
+              before requesting scope.
+            </p>
           </Reveal>
         </div>
 
@@ -802,6 +815,12 @@ function Footer() {
             <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             <ExternalLink href={FIX_PLAN_SAMPLE_URL}>Sample Fix Plan</ExternalLink>
             <ExternalLink href={FIX_PLAN_TERMS_URL}>Fix Plan terms</ExternalLink>
+            <ExternalLink href={BOUNTY_REVIEW_SAMPLE_URL}>
+              Sample bounty review
+            </ExternalLink>
+            <ExternalLink href={BOUNTY_REVIEW_TERMS_URL}>
+              Bounty review terms
+            </ExternalLink>
             <a href="#offers">Offers</a>
             <a href="#faq">FAQ</a>
           </div>

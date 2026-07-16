@@ -975,6 +975,22 @@ section[id] {
   background: var(--signal);
 }
 
+.bounty-intake-note {
+  max-width: 34rem;
+  margin: 1rem 0 0;
+  color: #aeb9c6;
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.bounty-intake-note a {
+  color: var(--signal);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
 .bounty-disclaimer {
   max-width: 60rem;
   margin: 1.25rem 0 0;

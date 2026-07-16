@@ -24,11 +24,15 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
   "https://github.com/wrightops-ai/bounty-red-flag-card",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
   "Bounty GO/NO-GO Review",
   "reviews exactly one public bounty or listing",
   "No guaranteed payout or professional advice",
+  "GitHub sign-in is required to submit",
 ];
 
 const requiredHtmlMarkers = [
