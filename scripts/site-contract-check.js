@@ -1,0 +1,130 @@
+const fs = require("node:fs");
+const path = require("node:path");
+
+const root = path.resolve(__dirname, "..");
+const app = fs.readFileSync(path.join(root, "src", "App.tsx"), "utf8");
+const css = fs.readFileSync(path.join(root, "src", "index.css"), "utf8");
+const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const main = fs.readFileSync(path.join(root, "src", "main.tsx"), "utf8");
+
+const requiredAppMarkers = [
+  "WrightOps",
+  "Public repos only",
+  "No secrets",
+  "Scope before payment",
+  "AI-operated on behalf of Zachary Wright",
+  'className="skip-link"',
+  'id="main-content" tabIndex={-1}',
+  '<ul className="scope-pills"',
+  '<dl className="entry-meta">',
+  'reducedMotion="user"',
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
+  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
+];
+
+const requiredHtmlMarkers = [
+  "<title>WrightOps | Public-Repository Fix Plans</title>",
+  '<link rel="canonical" href="https://zachwright.xyz/"',
+  'property="og:image" content="https://zachwright.xyz/og.png"',
+  '"@type": "ProfessionalService"',
+  '"price": "149"',
+];
+
+const forbiddenMarkers = [
+  "cal.com/",
+  "linkedin.com/",
+  "facebook.com/",
+  'target="_blank"',
+  "BrowserRouter",
+  "Software Engineering Portfolio",
+  "Daily Drop",
+  "AI Operator Kit",
+];
+
+function missing(source, markers) {
+  return markers.filter((marker) => !source.includes(marker));
+}
+
+const failures = [];
+const missingApp = missing(app, requiredAppMarkers);
+const missingHtml = missing(html, requiredHtmlMarkers);
+
+if (missingApp.length) {
+  failures.push(`App is missing: ${missingApp.join(", ")}`);
+}
+
+if (missingHtml.length) {
+  failures.push(`HTML is missing: ${missingHtml.join(", ")}`);
+}
+
+for (const marker of forbiddenMarkers) {
+  if (app.includes(marker) || html.includes(marker) || main.includes(marker)) {
+    failures.push(`Forbidden legacy marker remains: ${marker}`);
+  }
+}
+
+if (!css.includes("@media (prefers-reduced-motion: reduce)")) {
+  failures.push("Reduced-motion CSS contract is missing.");
+}
+
+if (!css.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
+  failures.push("Two-color keyboard focus contract is missing.");
+}
+
+const auditCtaCount = (app.match(/href=\{AUDIT_REQUEST_URL\}/g) || []).length;
+if (auditCtaCount < 4) {
+  failures.push(`Expected at least four free-audit CTAs; found ${auditCtaCount}.`);
+}
+
+const metricGroups = [
+  /<dt>public artifact checks<\/dt>\s*<dd>7<\/dd>/,
+  /<dt>to run the audit<\/dt>\s*<dd>\$0<\/dd>/,
+  /<dt>delivery formats<\/dt>\s*<dd>2<\/dd>/,
+];
+
+if (metricGroups.some((pattern) => !pattern.test(app))) {
+  failures.push("Description-list metrics must keep each dt before its dd.");
+}
+
+for (const file of ["robots.txt", "sitemap.xml", "llms.txt", "og.png"]) {
+  if (!fs.existsSync(path.join(root, "public", file))) {
+    failures.push(`Public asset is missing: ${file}`);
+  }
+}
+
+const socialImagePath = path.join(root, "public", "og.png");
+if (fs.existsSync(socialImagePath)) {
+  const png = fs.readFileSync(socialImagePath);
+  const signature = png.subarray(1, 4).toString("ascii");
+  const width = png.readUInt32BE(16);
+  const height = png.readUInt32BE(20);
+
+  if (signature !== "PNG" || width !== 1200 || height !== 630) {
+    failures.push(
+      `Social image must be a 1200x630 PNG; found ${width}x${height} ${signature}.`,
+    );
+  }
+}
+
+if (failures.length) {
+  console.error(failures.join("\n"));
+  process.exit(1);
+}
+
+console.log(
+  JSON.stringify(
+    {
+      ok: true,
+      appMarkers: requiredAppMarkers.length,
+      htmlMarkers: requiredHtmlMarkers.length,
+      forbiddenMarkers: forbiddenMarkers.length,
+      auditCtas: auditCtaCount,
+      publicAssets: 4,
+    },
+    null,
+    2,
+  ),
+);

@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "check:preview": "node scripts/preview-smoke-check.js",
+    "check:site": "node scripts/site-contract-check.js",
     "check:newsletter": "node scripts/newsletter-smoke-check.js"
   },
   "type": "commonjs",
@@ -19,7 +20,6 @@
     "framer-motion": "^12.40.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-router-dom": "^7.15.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.184.0"
   },

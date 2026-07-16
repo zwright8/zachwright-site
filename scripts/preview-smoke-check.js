@@ -1,6 +1,8 @@
 const expectedMarkers = [
-    "Zach Wright",
-    "Software Engineering Portfolio",
+    "WrightOps",
+    "Public-Repository Fix Plans",
+    "https://zachwright.xyz/",
+    "https://zachwright.xyz/og.png",
     "id=\"root\""
 ];
 

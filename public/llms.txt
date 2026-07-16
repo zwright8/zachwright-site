@@ -1,0 +1,17 @@
+# WrightOps
+
+WrightOps provides public-repository evidence audits, fixed-price Fix Plans, and bounded remediation work.
+
+Canonical website: https://zachwright.xyz/
+Free audit request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml
+Public auditor: https://github.com/wrightops-ai/agent-ready-repo-auditor
+Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
+Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
+Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
+
+Scope:
+- Public GitHub repositories only.
+- Never submit credentials, secrets, private code, customer data, or personal data.
+- No production or deployment access.
+- No vulnerability research or security, privacy, legal, or compliance assessment.
+- Paid work begins only after written scope confirmation.
