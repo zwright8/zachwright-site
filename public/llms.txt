@@ -3,6 +3,7 @@
 WrightOps provides public-repository evidence audits, fixed-price Fix Plans, scoped instructions pull requests, and bounty decision aids.
 
 Canonical website: https://zachwright.xyz/
+No-login repository preflight: https://zachwright.xyz/#preflight
 Free audit request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml
 Public auditor: https://github.com/wrightops-ai/agent-ready-repo-auditor
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
@@ -25,6 +26,13 @@ Bounty review:
 - One-business-day delivery after written scope confirmation and payment.
 - The public request form requires a GitHub sign-in.
 - No guaranteed payout or professional advice.
+
+No-login repository preflight:
+- Free browser-only check for one public GitHub repository.
+- Reads the public default branch through GitHub's unauthenticated API.
+- Evaluates seven coding-agent readiness evidence categories at one immutable revision.
+- Does not clone or execute repository code and does not send the repository URL to WrightOps.
+- It is a quick operational preflight, not a security, legal, privacy, or compliance assessment.
 
 Founding Agent-Ready Instructions PR:
 - $249 for one public GitHub repository.

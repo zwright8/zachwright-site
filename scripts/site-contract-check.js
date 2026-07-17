@@ -16,7 +16,15 @@ const requiredAppMarkers = [
   'className="skip-link"',
   'id="main-content" tabIndex={-1}',
   '<ul className="scope-pills"',
-  '<dl className="entry-meta">',
+  'id="preflight"',
+  'id="repository-url"',
+  "runRepositoryPreflight(repository)",
+  "No-login quick preflight",
+  "no account, clone, code execution, or WrightOps data storage",
+  "Qualified implementation gap",
+  "Request $249 scope",
+  "Copy preflight evidence",
+  "unauthenticated API limit applies",
   'reducedMotion="user"',
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
@@ -45,10 +53,12 @@ const requiredAppMarkers = [
 ];
 
 const requiredHtmlMarkers = [
-  "<title>WrightOps | Public-Repository Fix Plans</title>",
+  "<title>WrightOps | Free Agent-Ready Repository Preflight</title>",
   '<link rel="canonical" href="https://zachwright.xyz/"',
   'property="og:image" content="https://zachwright.xyz/og.png"',
   '"@type": "ProfessionalService"',
+  '"name": "Free no-login repository preflight"',
+  '"url": "https://zachwright.xyz/#preflight"',
   '"price": "149"',
   '"name": "Founding Agent-Ready Instructions PR"',
   '"price": "249"',
@@ -101,18 +111,13 @@ if (!css.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
 }
 
 const auditCtaCount = (app.match(/href=\{AUDIT_REQUEST_URL\}/g) || []).length;
-if (auditCtaCount < 4) {
-  failures.push(`Expected at least four free-audit CTAs; found ${auditCtaCount}.`);
+if (auditCtaCount < 3) {
+  failures.push(`Expected at least three full-audit fallbacks; found ${auditCtaCount}.`);
 }
 
-const metricGroups = [
-  /<dt>public artifact checks<\/dt>\s*<dd>7<\/dd>/,
-  /<dt>to run the audit<\/dt>\s*<dd>\$0<\/dd>/,
-  /<dt>delivery formats<\/dt>\s*<dd>2<\/dd>/,
-];
-
-if (metricGroups.some((pattern) => !pattern.test(app))) {
-  failures.push("Description-list metrics must keep each dt before its dd.");
+const preflightCtaCount = (app.match(/href="#preflight"/g) || []).length;
+if (preflightCtaCount < 3) {
+  failures.push(`Expected at least three no-login preflight CTAs; found ${preflightCtaCount}.`);
 }
 
 for (const file of ["robots.txt", "sitemap.xml", "llms.txt", "og.png"]) {
@@ -148,6 +153,7 @@ console.log(
       htmlMarkers: requiredHtmlMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
+      preflightCtas: preflightCtaCount,
       publicAssets: 4,
     },
     null,

@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "check:preview": "node scripts/preview-smoke-check.js",
+    "check:preflight": "node scripts/repo-preflight-check.mjs",
     "check:site": "node scripts/site-contract-check.js",
     "check:newsletter": "node scripts/newsletter-smoke-check.js"
   },

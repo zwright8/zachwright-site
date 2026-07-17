@@ -4,7 +4,13 @@ import {
   domAnimation,
   m,
 } from "framer-motion";
-import type { ReactNode } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
+
+import {
+  RepositoryPreflightError,
+  runRepositoryPreflight,
+} from "./repoPreflight.mjs";
+import type { PreflightCheck, PreflightResult } from "./repoPreflight.mjs";
 
 const CONTACT_EMAIL = "zach@zachwright.xyz";
 const GITHUB_ORG_URL = "https://github.com/wrightops-ai";
@@ -41,6 +47,16 @@ const BOUNTY_REVIEW_SAMPLE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md";
 const BOUNTY_REVIEW_TERMS_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md";
+
+const preflightCheckLabels = [
+  "README and setup guidance",
+  "Coding-agent instructions",
+  "Runtime environment configuration",
+  "Continuous integration",
+  "Issue and pull-request templates",
+  "Verification commands and automation",
+  "Risky-action boundaries",
+];
 
 const engagementOptions = [
   {
@@ -135,8 +151,8 @@ const proofItems = [
 const processSteps = [
   {
     number: "01",
-    title: "Run the free audit",
-    text: "Start with the public tool. It checks seven repository artifacts without cloning or executing repository code.",
+    title: "Run the no-login preflight",
+    text: "Paste one public repository. Your browser checks seven evidence categories without cloning, executing code, or storing the submitted URL with WrightOps.",
   },
   {
     number: "02",
@@ -312,8 +328,8 @@ function Navbar() {
           <a href="#faq">FAQ</a>
         </div>
 
-        <ExternalLink className="nav-action" href={AUDIT_REQUEST_URL}>
-          Request free audit <Arrow />
+        <ExternalLink className="nav-action" href="#preflight">
+          Check a repository <Arrow />
         </ExternalLink>
       </nav>
     </header>
@@ -343,11 +359,11 @@ function Hero() {
           </p>
 
           <div className="hero-actions">
-            <PrimaryAction href={AUDIT_REQUEST_URL}>
-              Request the free audit
+            <PrimaryAction href="#preflight">
+              Run the no-login preflight
             </PrimaryAction>
             <a className="text-action" href="#offers">
-              See the $149 Fix Plan <span aria-hidden="true">↓</span>
+              See the $249 Instructions PR <span aria-hidden="true">↓</span>
             </a>
           </div>
 
@@ -421,38 +437,278 @@ function Hero() {
   );
 }
 
-function EntryPoint() {
+function preflightBandLabel(band: PreflightResult["score"]["band"]) {
+  return {
+    limited_public_evidence: "Limited public evidence",
+    partially_evidenced: "Partially evidenced",
+    well_evidenced: "Well evidenced",
+  }[band];
+}
+
+function preflightStatusLabel(status: PreflightCheck["status"]) {
+  return {
+    met: "Met",
+    not_evidenced: "Not evidenced",
+    partial: "Partial",
+  }[status];
+}
+
+function instructionsRequestUrl(result: PreflightResult) {
+  const url = new URL(INSTRUCTIONS_PR_REQUEST_URL);
+  url.searchParams.set(
+    "title",
+    `[Instructions PR request] ${result.repository.fullName}`,
+  );
+  return url.toString();
+}
+
+function preflightEvidence(result: PreflightResult) {
+  return [
+    "WrightOps no-login repository preflight",
+    `Repository: ${result.repository.webUrl}`,
+    `Immutable revision: ${result.repository.revisionSha}`,
+    `Evidence score: ${result.score.earned}/${result.score.maximum} (${result.score.percentage}%)`,
+    `Band: ${preflightBandLabel(result.score.band)}`,
+    "Source: https://zachwright.xyz/#preflight",
+  ].join("\n");
+}
+
+function RepositoryPreflight() {
+  const [repository, setRepository] = useState("");
+  const [result, setResult] = useState<PreflightResult | null>(null);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">(
+    "idle",
+  );
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setResult(null);
+    setCopyState("idle");
+    setIsLoading(true);
+    try {
+      setResult(await runRepositoryPreflight(repository));
+    } catch (caught) {
+      setError(
+        caught instanceof RepositoryPreflightError
+          ? caught.message
+          : "The preflight could not complete. No partial result was emitted.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function copyEvidence() {
+    if (!result) {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(preflightEvidence(result));
+      setCopyState("copied");
+    } catch {
+      setCopyState("failed");
+    }
+  }
+
+  const check = (id: string) =>
+    result?.checks.find((item) => item.id === id);
+  const instructions = check("agent_instructions");
+  const readme = check("readme_setup");
+  const verification = check("verification");
+  const instructionsPrFit =
+    result &&
+    !result.repository.archived &&
+    instructions?.score === 0 &&
+    (readme?.score ?? 0) >= 8 &&
+    (verification?.score ?? 0) >= 8;
+
   return (
-    <section className="entry-section">
-      <div className="site-shell">
-        <Reveal className="entry-card">
+    <section className="preflight-section" id="preflight">
+      <div className="preflight-shell site-shell">
+        <Reveal className="preflight-intro">
           <div>
-            <p className="eyebrow">Start without buying</p>
-            <h2>Get the evidence baseline first.</h2>
-            <p>
-              The free auditor checks recognized repository artifacts through
-              the public GitHub API. It does not clone the repository, execute
-              its code, or turn missing evidence into a claim.
-            </p>
+            <p className="eyebrow">No-login quick preflight</p>
+            <h2>Paste one public GitHub repository.</h2>
           </div>
-          <dl className="entry-meta">
-            <div>
-              <dt>public artifact checks</dt>
-              <dd>7</dd>
-            </div>
-            <div>
-              <dt>to run the audit</dt>
-              <dd>$0</dd>
-            </div>
-            <div>
-              <dt>delivery formats</dt>
-              <dd>2</dd>
-            </div>
-          </dl>
-          <PrimaryAction href={AUDIT_REQUEST_URL}>
-            Request the free audit
-          </PrimaryAction>
+          <p>
+            See the public evidence a coding agent can actually use before you
+            buy anything. The scan runs in your browser through GitHub’s public
+            API—no account, clone, code execution, or WrightOps data storage.
+          </p>
         </Reveal>
+
+        <form className="preflight-form" onSubmit={handleSubmit}>
+          <label htmlFor="repository-url">Public repository</label>
+          <div className="preflight-input-row">
+            <input
+              aria-describedby="preflight-help"
+              autoCapitalize="none"
+              autoComplete="off"
+              autoCorrect="off"
+              id="repository-url"
+              name="repository"
+              onChange={(event) => setRepository(event.target.value)}
+              placeholder="github.com/owner/repository"
+              spellCheck={false}
+              type="text"
+              value={repository}
+            />
+            <button disabled={isLoading} type="submit">
+              {isLoading ? "Reading public evidence…" : "Run 7 checks"}
+              {!isLoading && <Arrow />}
+            </button>
+          </div>
+          <p id="preflight-help">
+            Public default branch only · 15-second request timeout · GitHub’s
+            unauthenticated API limit applies
+          </p>
+        </form>
+
+        <div aria-atomic="true" aria-live="polite" className="preflight-live">
+          {error && (
+            <m.div
+              animate={{ opacity: 1, y: 0 }}
+              className="preflight-error"
+              initial={{ opacity: 0, y: 8 }}
+              role="alert"
+            >
+              <strong>Preflight stopped.</strong>
+              <p>{error}</p>
+              <ExternalLink href={AUDIT_REQUEST_URL}>
+                Use the full free auditor instead <Arrow />
+              </ExternalLink>
+            </m.div>
+          )}
+
+          {!result && !error && (
+            <div className="preflight-empty">
+              <p>Seven evidence categories. One immutable revision.</p>
+              <ol>
+                {preflightCheckLabels.map((label, index) => (
+                  <li key={label}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    {label}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {result && (
+            <m.div
+              animate={{ opacity: 1, y: 0 }}
+              className="preflight-result"
+              initial={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="preflight-result-head">
+                <div>
+                  <p className="eyebrow">Immutable public snapshot</p>
+                  <ExternalLink href={result.repository.webUrl}>
+                    {result.repository.fullName} <Arrow />
+                  </ExternalLink>
+                  <code>{result.repository.revisionSha}</code>
+                </div>
+                <div className={`preflight-score ${result.score.band}`}>
+                  <strong>{result.score.percentage}</strong>
+                  <span>
+                    {result.score.earned}/{result.score.maximum}
+                  </span>
+                  <small>{preflightBandLabel(result.score.band)}</small>
+                </div>
+              </div>
+
+              <ol className="preflight-results-list">
+                {result.checks.map((item, index) => (
+                  <li className={item.status} key={item.id}>
+                    <span className="preflight-result-number">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <div className="preflight-result-title">
+                        <h3>{item.label}</h3>
+                        <span>{preflightStatusLabel(item.status)}</span>
+                      </div>
+                      <p>{item.summary}</p>
+                      {item.evidence[0] && (
+                        <ExternalLink href={item.evidence[0].sourceUrl}>
+                          View immutable evidence <Arrow />
+                        </ExternalLink>
+                      )}
+                    </div>
+                    <strong>
+                      {item.score}/{item.maxScore}
+                    </strong>
+                  </li>
+                ))}
+              </ol>
+
+              {result.inspectionWarnings.length > 0 && (
+                <div className="preflight-warning">
+                  <strong>Inspection limits</strong>
+                  <ul>
+                    {result.inspectionWarnings.map((warning) => (
+                      <li key={warning}>{warning}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="preflight-conversion">
+                <div>
+                  <p className="eyebrow">
+                    {instructionsPrFit
+                      ? "Qualified implementation gap"
+                      : "Preserve the evidence"}
+                  </p>
+                  <h3>
+                    {instructionsPrFit
+                      ? "No recognized coding-agent instructions were evidenced."
+                      : "Use the full auditor for a persistent public report."}
+                  </h3>
+                  <p>
+                    {instructionsPrFit
+                      ? "Public setup and verification evidence exists, so this repository may fit the fixed $249 two-file Instructions PR after written scope confirmation."
+                      : "The browser result is a quick preflight. The GitHub Action produces the durable Markdown and JSON evidence required for deeper paid work."}
+                  </p>
+                </div>
+                <div className="preflight-actions">
+                  {instructionsPrFit ? (
+                    <PrimaryAction href={instructionsRequestUrl(result)}>
+                      Request $249 scope
+                    </PrimaryAction>
+                  ) : (
+                    <PrimaryAction href={AUDIT_REQUEST_URL}>
+                      Run the full free audit
+                    </PrimaryAction>
+                  )}
+                  <button className="secondary-action" onClick={copyEvidence} type="button">
+                    {copyState === "copied"
+                      ? "Evidence copied"
+                      : copyState === "failed"
+                        ? "Select the SHA above"
+                        : "Copy preflight evidence"}
+                  </button>
+                  {instructionsPrFit && (
+                    <ExternalLink
+                      className="preflight-terms-link"
+                      href={INSTRUCTIONS_PR_TERMS_URL}
+                    >
+                      Review exact scope and refund terms <Arrow />
+                    </ExternalLink>
+                  )}
+                </div>
+              </div>
+
+              <p className="preflight-limit">
+                {result.limitations.join(" ")}
+              </p>
+            </m.div>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -767,15 +1023,15 @@ function FinalCta() {
           <span>clear.</span>
         </h2>
         <p>
-          Request the free audit now, or submit a completed audit for a $149
-          three-card Fix Plan.
+          Run the no-login preflight now. If public evidence supports a paid
+          next step, WrightOps confirms the exact scope before payment.
         </p>
         <div className="hero-actions">
-          <PrimaryAction href={AUDIT_REQUEST_URL}>
-            Request the free audit
+          <PrimaryAction href="#preflight">
+            Check a public repository
           </PrimaryAction>
-          <SecondaryAction href={FIX_PLAN_REQUEST_URL}>
-            Request the $149 Fix Plan
+          <SecondaryAction href={INSTRUCTIONS_PR_REQUEST_URL}>
+            Request the $249 Instructions PR
           </SecondaryAction>
         </div>
       </Reveal>
@@ -862,7 +1118,7 @@ export default function App() {
         <Navbar />
         <main id="main-content" tabIndex={-1}>
           <Hero />
-          <EntryPoint />
+          <RepositoryPreflight />
           <Offers />
           <BountyReview />
           <Proof />
