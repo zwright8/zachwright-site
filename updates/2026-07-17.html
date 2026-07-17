@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Caches Need a Cost Ledger | zachwright.xyz</title>
+  <meta name="description" content="Vercel cache reasons, ISR write utilization, Wrangler Flagship commands, GitHub Projects search, PR archiving, Xcode 27 runners, and Kimi K3 make hidden operating work accountable." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Caches Need a Cost Ledger</h1>
+          <p>Vercel cache reasons, ISR write utilization, Wrangler Flagship commands, GitHub Projects search, PR archiving, Xcode 27 runners, and Kimi K3 make hidden operating work accountable.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from treating cache behavior as a binary hit/miss outcome to treating every stale, bypassed, regenerated, and rewritten path as an explainable cost event.</strong></p>
+          <p>Vercel runtime logs now attach a Cache Reason to cacheable responses, so a miss can be cold, collapsed, crawler-driven, draft-mode bypassed, tag-invalidated, or a revalidation error instead of just "not a hit." Vercel ISR Observability also added write utilization: cached requests divided by ISR writes, route by route. Together they turn cache work into something operators can query, price, and tune instead of arguing from vibes when content feels slow or bills spike.</p>
+          <ul>
+            <li>Runtime logs now expose cache reasons for CDN-cacheable responses, including ISR, Partial Prerendering, and functions that set cache-control directives.
+            <a href="https://vercel.com/changelog/runtime-logs-now-show-cache-reasons">https://vercel.com/changelog/runtime-logs-now-show-cache-reasons</a></li>
+            <li>ISR Observability now shows write utilization, helping find routes that regenerate often but get too few cached reads back.
+            <a href="https://vercel.com/changelog/write-utilization-now-available-in-isr-observability">https://vercel.com/changelog/write-utilization-now-available-in-isr-observability</a></li>
+            <li>Cloudflare Wrangler now manages Flagship apps and feature flags from the CLI, including rollouts, splits, targeting rules, defaults, and kill switches.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-16-wrangler-commands/">https://developers.cloudflare.com/changelog/post/2026-07-16-wrangler-commands/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel cache reasons</strong> - inspect a request with <code>vercel logs --request-id ... --expand --json</code>, then aggregate <code>cache_reason</code> with <code>vercel metrics</code> before changing cache policy.
+            <a href="https://vercel.com/changelog/runtime-logs-now-show-cache-reasons">https://vercel.com/changelog/runtime-logs-now-show-cache-reasons</a></li>
+            <li><strong>ISR write utilization</strong> - compare cached request volume with <code>vercel.isr_operation.write_units</code>; low utilization is a candidate for longer revalidation or on-demand invalidation.
+            <a href="https://vercel.com/changelog/write-utilization-now-available-in-isr-observability">https://vercel.com/changelog/write-utilization-now-available-in-isr-observability</a></li>
+            <li><strong>Wrangler Flagship</strong> - create apps, bind flags into Workers, change defaults, run percentage rollouts, split traffic, and update targeting rules from terminal or CI.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-16-wrangler-commands/">https://developers.cloudflare.com/changelog/post/2026-07-16-wrangler-commands/</a></li>
+            <li><strong>GitHub Projects advanced search</strong> - use <code>AND</code>, <code>OR</code>, and <code>reviews:</code> filters in project views instead of multiplying dashboards for every queue question.
+            <a href="https://github.blog/changelog/2026-07-16-advanced-search-for-projects-is-generally-available/">https://github.blog/changelog/2026-07-16-advanced-search-for-projects-is-generally-available/</a></li>
+            <li><strong>GitHub PR archiving</strong> - close, lock, and hide spammy or abusive pull requests from public view while keeping admin-only history and <code>is:archived</code> search.
+            <a href="https://github.blog/changelog/2026-07-16-repository-admins-can-archive-pull-requests/">https://github.blog/changelog/2026-07-16-repository-admins-can-archive-pull-requests/</a></li>
+            <li><strong>Xcode 27 runner image</strong> - validate Apple apps against <code>xcode-27</code> or <code>xcode-27-xlarge</code> on arm64 macOS runners before the toolchain becomes the default surprise.
+            <a href="https://github.blog/changelog/2026-07-16-xcode-27-runner-image-now-in-public-preview">https://github.blog/changelog/2026-07-16-xcode-27-runner-image-now-in-public-preview</a></li>
+            <li><strong>Kimi K3 on AI Gateway</strong> - test the 1M-token, multimodal Moonshot model behind the same gateway routing, metrics, and fallback policies as the rest of your model stack.
+            <a href="https://vercel.com/changelog/kimi-k3-is-now-available-on-ai-gateway">https://vercel.com/changelog/kimi-k3-is-now-available-on-ai-gateway</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Cache policy is spend policy.</strong> Once misses, stale responses, bypasses, and writes have labels, teams can tune routes by economic behavior instead of only p95 latency.</li>
+            <li><strong>Regeneration needs a denominator.</strong> A route that writes often is not automatically bad; it is bad when the cached-read payoff is too small for the churn.</li>
+            <li><strong>Release flags are production edits.</strong> Wrangler-managed rollouts and kill switches need review, audit, and rollback paths because they change behavior without a deploy.</li>
+            <li><strong>Queues need query language.</strong> Projects advanced search, archived PR filters, and secret alert metadata all reduce dashboard archaeology when operators need the exact slice now.</li>
+            <li><strong>Toolchains should be named directly.</strong> Xcode-major runner labels make CI failures easier to reason about than implicit macOS image drift.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: The Cloud</strong> - because "there's a lot of caching" is funnier after the cache reason finally shows up in the logs.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/the_cloud.png">https://imgs.xkcd.com/comics/the_cloud.png</a><br>Post: <a href="https://xkcd.com/908/">https://xkcd.com/908/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

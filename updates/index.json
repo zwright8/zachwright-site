@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-17",
+    "slug": "2026-07-17",
+    "title": "Swarm Daily: Caches Need a Cost Ledger",
+    "url": "/updates/2026-07-17.html",
+    "preview": "Vercel cache reasons, ISR write utilization, Wrangler Flagship commands, GitHub Projects search, PR archiving, Xcode 27 runners, and Kimi K3 make hidden operating work accountable."
+  },
+  {
     "date": "2026-07-16",
     "slug": "2026-07-16",
     "title": "Swarm Daily: Automation Needs a Known Scope",
