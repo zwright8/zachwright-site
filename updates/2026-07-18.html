@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Prompts Need a Build Pipeline | zachwright.xyz</title>
+  <meta name="description" content="Google's prompt transpilation, Conductor's portable specs, Copilot review head-branch instructions, ADK Go graphs, Vercel skill plugins, and Slack agent UX make agent behavior buildable." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Prompts Need a Build Pipeline</h1>
+          <p>Google's prompt transpilation, Conductor's portable specs, Copilot review head-branch instructions, ADK Go graphs, Vercel skill plugins, and Slack agent UX make agent behavior buildable.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from treating prompts as prose to treating the instruction layer as source code: modularize it, resolve dependencies, validate it in CI, and ship a reviewable rendered artifact.</strong></p>
+          <p>Google's latest agent guidance calls out the production failure mode directly: monolithic prompts hide blast radius, drift through copy-paste, and defer missing variables or imports until runtime. Its proposed prompt transpiler turns fragments into deterministic outputs that can be tested, audited, diffed, and drift-checked before the model sees them.</p>
+          <p>Conductor makes the same move at the project level. Specs and plans remain persistent, version-controlled Markdown, while the interaction becomes conversational and portable across agent tools. The interface can change; the repository-backed contract does not.</p>
+          <ul>
+            <li>Google's prompt-transpilation pattern treats includes, variables, and skill modules as a dependency graph with a golden rendered output.
+            <a href="https://developers.googleblog.com/building-scalable-ai-agents-with-modular-prompt-transpilation/">https://developers.googleblog.com/building-scalable-ai-agents-with-modular-prompt-transpilation/</a></li>
+            <li>Conductor's portable plugin keeps <code>spec.md</code> and <code>plan.md</code> in the repo while supporting conversational work across Gemini CLI, Antigravity, Claude, and other tools.
+            <a href="https://developers.googleblog.com/evolving-spec-driven-development-conductor-now-supports-antigravity/">https://developers.googleblog.com/evolving-spec-driven-development-conductor-now-supports-antigravity/</a></li>
+            <li>GitHub Copilot code review now reads instructions from the pull request's head branch, so instruction changes can be tested in the same change that proposes them.
+            <a href="https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements/">https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>ADK Go 2.0</strong> - compose typed graph nodes with fan-out/fan-in, durable human pauses, retries, concurrency caps, and one telemetry tree for agents and workflows.
+            <a href="https://developers.googleblog.com/announcing-adk-go-20/">https://developers.googleblog.com/announcing-adk-go-20/</a></li>
+            <li><strong>Copilot review setup</strong> - add a repository-level <code>copilot-code-review.yml</code>, branch-tested instruction files, and an independent review firewall instead of sharing the cloud agent's runtime assumptions.
+            <a href="https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements/">https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements/</a></li>
+            <li><strong>Vercel Plugin for Kimi Code</strong> - install platform skills on demand so the agent can pull current Next.js and Vercel guidance without bloating every session.
+            <a href="https://vercel.com/changelog/vercel-plugin-now-available-in-kimi-code-cli">https://vercel.com/changelog/vercel-plugin-now-available-in-kimi-code-cli</a></li>
+            <li><strong>Chat SDK Slack adapter</strong> - add agent badges, suggested prompts, streaming fallback, and native feedback buttons to the Slack surface.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-native-slack-agent-support">https://vercel.com/changelog/chat-sdk-adds-native-slack-agent-support</a></li>
+            <li><strong>Vercel Sandbox inbound transfer</strong> - package installs, Git clones, and dataset pulls no longer count toward Sandbox Data Transfer usage; outbound traffic and compute remain billable.
+            <a href="https://vercel.com/changelog/data-downloaded-by-vercel-sandbox-is-now-free">https://vercel.com/changelog/data-downloaded-by-vercel-sandbox-is-now-free</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Prompt diffs become release diffs.</strong> If an instruction can change production behavior, it needs an owner, an eval, a review path, and a rollback story.</li>
+            <li><strong>Repository artifacts beat chat memory.</strong> Portable specs and compiled prompts reduce tool lock-in, but stale shared instructions become cross-agent compatibility bugs.</li>
+            <li><strong>Successful work is the metric.</strong> Retries, review time, failed tool calls, and human escalations belong beside token cost when teams score an agent workflow.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Standards</strong> - because every agent tool now has a plugin format, a skills folder, a rules file, and an opinion about where the source of truth belongs.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/standards.png">https://imgs.xkcd.com/comics/standards.png</a><br>Post: <a href="https://xkcd.com/927/">https://xkcd.com/927/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

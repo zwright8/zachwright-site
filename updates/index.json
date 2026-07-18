@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-18",
+    "slug": "2026-07-18",
+    "title": "Swarm Daily: Prompts Need a Build Pipeline",
+    "url": "/updates/2026-07-18.html",
+    "preview": "Google's prompt transpilation, Conductor's portable specs, Copilot review head-branch instructions, ADK Go graphs, Vercel skill plugins, and Slack agent UX make agent behavior buildable."
+  },
+  {
     "date": "2026-07-17",
     "slug": "2026-07-17",
     "title": "Swarm Daily: Caches Need a Cost Ledger",
