@@ -19,6 +19,7 @@ const AUDIT_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml";
 const HUMAN_AUDIT_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml";
+const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/";
 const HUMAN_AUDIT_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md";
 const AUDITOR_RELEASE_URL =
@@ -116,8 +117,8 @@ const engagementOptions = [
     ],
     primaryLabel: "Scope the audit",
     primaryHref: HUMAN_AUDIT_REQUEST_URL,
-    secondaryLabel: "Read complete terms",
-    secondaryHref: HUMAN_AUDIT_TERMS_URL,
+    secondaryLabel: "See audit deliverables",
+    secondaryHref: HUMAN_AUDIT_LANDING_URL,
     featured: false,
   },
 ];

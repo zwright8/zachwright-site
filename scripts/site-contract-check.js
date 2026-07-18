@@ -6,6 +6,16 @@ const app = fs.readFileSync(path.join(root, "src", "App.tsx"), "utf8");
 const css = fs.readFileSync(path.join(root, "src", "index.css"), "utf8");
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const main = fs.readFileSync(path.join(root, "src", "main.tsx"), "utf8");
+const sitemap = fs.readFileSync(path.join(root, "public", "sitemap.xml"), "utf8");
+const llms = fs.readFileSync(path.join(root, "public", "llms.txt"), "utf8");
+const auditPage = fs.readFileSync(
+  path.join(root, "public", "agent-ready-repository-audit", "index.html"),
+  "utf8",
+);
+const auditCss = fs.readFileSync(
+  path.join(root, "public", "agent-ready-repository-audit", "styles.css"),
+  "utf8",
+);
 
 const requiredAppMarkers = [
   "WrightOps",
@@ -28,6 +38,8 @@ const requiredAppMarkers = [
   'reducedMotion="user"',
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+  'const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/"',
+  "See audit deliverables",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
@@ -72,6 +84,22 @@ const requiredHtmlMarkers = [
   '"price": "49"',
 ];
 
+const requiredAuditPageMarkers = [
+  "<title>Agent-Ready Repository Audit | WrightOps</title>",
+  'href="https://zachwright.xyz/agent-ready-repository-audit/"',
+  '"@type": "Service"',
+  '"price": "750"',
+  "Know what your coding agents can",
+  "provider-confirmed settled payment",
+  "Markdown + JSON",
+  "Up to 5 reviewed findings",
+  "Three business days",
+  "not a vulnerability, security, privacy, legal, or",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-report-v1.md",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
+];
+
 const forbiddenMarkers = [
   "cal.com/",
   "linkedin.com/",
@@ -92,6 +120,7 @@ function missing(source, markers) {
 const failures = [];
 const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
+const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
 
 if (missingApp.length) {
   failures.push(`App is missing: ${missingApp.join(", ")}`);
@@ -101,8 +130,17 @@ if (missingHtml.length) {
   failures.push(`HTML is missing: ${missingHtml.join(", ")}`);
 }
 
+if (missingAuditPage.length) {
+  failures.push(`Audit page is missing: ${missingAuditPage.join(", ")}`);
+}
+
 for (const marker of forbiddenMarkers) {
-  if (app.includes(marker) || html.includes(marker) || main.includes(marker)) {
+  if (
+    app.includes(marker) ||
+    html.includes(marker) ||
+    main.includes(marker) ||
+    auditPage.includes(marker)
+  ) {
     failures.push(`Forbidden legacy marker remains: ${marker}`);
   }
 }
@@ -113,6 +151,23 @@ if (!css.includes("@media (prefers-reduced-motion: reduce)")) {
 
 if (!css.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
   failures.push("Two-color keyboard focus contract is missing.");
+}
+
+if (!auditCss.includes("@media (prefers-reduced-motion: reduce)")) {
+  failures.push("Audit page reduced-motion contract is missing.");
+}
+
+if (!auditCss.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
+  failures.push("Audit page two-color keyboard focus contract is missing.");
+}
+
+const auditLandingUrl = "https://zachwright.xyz/agent-ready-repository-audit/";
+if (!sitemap.includes(auditLandingUrl)) {
+  failures.push("Sitemap is missing the audit landing page.");
+}
+
+if (!llms.includes(auditLandingUrl)) {
+  failures.push("llms.txt is missing the audit landing page.");
 }
 
 if (app.includes("mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit")) {
@@ -129,7 +184,14 @@ if (preflightCtaCount < 3) {
   failures.push(`Expected at least three no-login preflight CTAs; found ${preflightCtaCount}.`);
 }
 
-for (const file of ["robots.txt", "sitemap.xml", "llms.txt", "og.png"]) {
+for (const file of [
+  "robots.txt",
+  "sitemap.xml",
+  "llms.txt",
+  "og.png",
+  "agent-ready-repository-audit/index.html",
+  "agent-ready-repository-audit/styles.css",
+]) {
   if (!fs.existsSync(path.join(root, "public", file))) {
     failures.push(`Public asset is missing: ${file}`);
   }
@@ -160,10 +222,11 @@ console.log(
       ok: true,
       appMarkers: requiredAppMarkers.length,
       htmlMarkers: requiredHtmlMarkers.length,
+      auditPageMarkers: requiredAuditPageMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 4,
+      publicAssets: 6,
     },
     null,
     2,
