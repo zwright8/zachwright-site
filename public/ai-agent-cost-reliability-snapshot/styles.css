@@ -1,0 +1,394 @@
+.cost-hero {
+  background:
+    radial-gradient(circle at 78% 26%, rgba(183, 243, 74, 0.12), transparent 22%),
+    radial-gradient(circle at 18% 90%, rgba(75, 117, 255, 0.08), transparent 28%),
+    linear-gradient(135deg, var(--midnight) 0%, #060a11 100%);
+}
+
+.cost-hero :focus-visible,
+.proof-section :focus-visible,
+.boundary-section :focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--midnight);
+}
+
+.cost-trace {
+  position: absolute;
+  z-index: -1;
+  right: -8vw;
+  bottom: 12%;
+  width: min(50vw, 48rem);
+  height: 14rem;
+  opacity: 0.32;
+  background:
+    linear-gradient(155deg, transparent 0 12%, var(--signal) 12.2% 12.7%, transparent 13% 29%, var(--signal) 29.2% 29.7%, transparent 30% 49%, var(--signal) 49.2% 49.7%, transparent 50% 69%, var(--signal) 69.2% 69.7%, transparent 70% 100%);
+  filter: drop-shadow(0 0 1.25rem rgba(183, 243, 74, 0.22));
+  transform: skewY(-5deg);
+}
+
+.cost-window {
+  animation: cost-window-enter 820ms 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cost-window-enter {
+  from { opacity: 0; transform: translateY(2rem) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cost-window-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 1.5rem 1rem;
+}
+
+.cost-window-head > div:first-child {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.cost-window-head span {
+  color: #8f9baa;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cost-window-head strong {
+  color: #fff;
+  font-size: clamp(2.7rem, 5vw, 4.4rem);
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.cost-window-head strong span {
+  margin-left: 0.18rem;
+  color: var(--signal);
+  font-size: 0.9rem;
+  letter-spacing: 0;
+}
+
+.sample-tag {
+  padding: 0.45rem 0.6rem;
+  color: var(--midnight);
+  background: var(--signal);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.reliability-plot {
+  display: grid;
+  min-height: 13rem;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.35rem;
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 100% 50%;
+}
+
+.plot-scale {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1.8rem;
+  color: #778495;
+  font: 0.58rem/1 Inter, sans-serif;
+}
+
+.plot-bars {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+  gap: clamp(0.65rem, 2.4vw, 1.25rem);
+}
+
+.plot-bars > div {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr auto;
+  gap: 0.55rem;
+  align-items: end;
+}
+
+.plot-bars i {
+  display: block;
+  width: 100%;
+  height: var(--value);
+  min-height: 0.35rem;
+  background: linear-gradient(180deg, var(--signal-bright), #83b82d);
+  box-shadow: 0 0 1.2rem rgba(183, 243, 74, 0.15);
+  transform-origin: bottom;
+  animation: bar-rise 760ms 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.plot-bars i.warn {
+  background: linear-gradient(180deg, #ffcf67, #c98424);
+  box-shadow: none;
+}
+
+@keyframes bar-rise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+.plot-bars span {
+  min-height: 1.2rem;
+  color: #9da9b7;
+  font-size: 0.58rem;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.cost-window-metrics {
+  display: grid;
+  margin: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.cost-window-metrics div {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-right: 1px solid var(--line-dark);
+}
+
+.cost-window-metrics div:last-child { border-right: 0; }
+
+.cost-window-metrics dt {
+  color: #7f8c9c;
+  font-size: 0.56rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.cost-window-metrics dd {
+  margin: 0;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.proof-section {
+  background: var(--paper);
+}
+
+.proof-ledger {
+  margin-top: clamp(3rem, 6vw, 5.5rem);
+  border-top: 1px solid var(--line-light);
+}
+
+.proof-ledger article {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(1.35rem, 3vw, 2.15rem) 0;
+  border-bottom: 1px solid var(--line-light);
+  transition: padding-inline 180ms ease, background-color 180ms ease;
+}
+
+.proof-ledger article:hover {
+  padding-inline: 0.75rem;
+  background: #f8faec;
+}
+
+.proof-ledger article > span {
+  color: #7b8795;
+  font: 0.7rem/1 Inter, sans-serif;
+  font-weight: 800;
+}
+
+.proof-ledger p {
+  margin: 0 0 0.35rem;
+  color: #718093;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.proof-ledger h3 {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+}
+
+.proof-ledger article > strong {
+  color: #4f7906;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  text-align: right;
+}
+
+.proof-links {
+  display: flex;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.35rem;
+}
+
+.delivery-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(26rem, 1fr);
+  gap: clamp(3rem, 9vw, 8rem);
+  align-items: start;
+}
+
+.delivery-layout > div:first-child {
+  position: sticky;
+  top: calc(var(--header-height) + 2.5rem);
+}
+
+.delivery-layout h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.delivery-layout > div > p:last-child {
+  max-width: 36rem;
+  color: #aeb8c6;
+  line-height: 1.75;
+}
+
+.delivery-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-dark);
+}
+
+.delivery-steps li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1.25rem;
+  padding: 1.65rem 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.delivery-steps li > span {
+  color: var(--signal);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.delivery-steps h3 {
+  margin: 0 0 0.4rem;
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+.delivery-steps p {
+  margin: 0;
+  color: #909baa;
+  line-height: 1.6;
+}
+
+.boundary-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line-light);
+  border: 1px solid var(--line-light);
+}
+
+.boundary-columns > div {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: #fff;
+}
+
+.boundary-columns h3 {
+  margin: 0 0 1.2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.boundary-columns ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 0.85rem;
+  list-style: none;
+}
+
+.boundary-columns li {
+  position: relative;
+  padding-left: 1.15rem;
+  color: #526173;
+  line-height: 1.55;
+}
+
+.boundary-columns li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 0.38rem;
+  height: 0.38rem;
+  background: var(--signal);
+  content: "";
+}
+
+.boundary-columns > div:last-child li::before {
+  background: #d1d7df;
+}
+
+@media (max-width: 920px) {
+  .delivery-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-layout > div:first-child {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .cost-trace { display: none; }
+
+  .cost-window-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .cost-window-metrics div {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .cost-window-metrics div:last-child { border-bottom: 0; }
+
+  .proof-ledger article {
+    grid-template-columns: 2rem 1fr;
+  }
+
+  .proof-ledger article > strong {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .boundary-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cost-window,
+  .plot-bars i {
+    animation: none;
+  }
+
+  .proof-ledger article {
+    transition: none;
+  }
+}

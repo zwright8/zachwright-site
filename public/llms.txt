@@ -9,6 +9,10 @@ Public auditor: https://github.com/wrightops-ai/agent-ready-repo-auditor
 Human-reviewed audit scope: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml
 Human-reviewed audit service page: https://zachwright.xyz/agent-ready-repository-audit/
 Human-reviewed audit terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md
+AI Agent Cost & Reliability Snapshot service page: https://zachwright.xyz/ai-agent-cost-reliability-snapshot/
+AI Agent Cost & Reliability Snapshot scope: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml
+AI Agent Cost & Reliability Snapshot terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md
+AI Agent Cost & Reliability normalized run contract: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
@@ -57,6 +61,14 @@ Human-reviewed Agent-Ready Repository Audit:
 - WrightOps confirms exact scope in writing before sharing the existing PayPal Business Goods & Services checkout.
 - Paid work begins only after provider-confirmed settlement.
 - No private data, credentials, production access, repository cloning, code execution, or security, privacy, legal, or compliance assessment.
+
+AI Agent Cost & Reliability Snapshot:
+- $495 for one workflow, up to 20 pseudonymous task IDs and 50 normalized attempts.
+- Prompt-free JSONL or CSV only; no prompts, responses, tool payloads, credentials, direct identifiers, customer data, or production access.
+- Deterministic aggregate JSON and Markdown, up to five human-reviewed priorities, a 30-minute readout, and one factual correction round.
+- Three-business-day delivery after written scope confirmation, complete accepted inputs, and provider-confirmed settled payment.
+- The public scope form collects no run records, contact details, or payment data and does not create a contract or payment obligation.
+- Observational summary only; not causal attribution, billing reconciliation, implementation, professional advice, or a savings, reliability, revenue, or profit guarantee.
 
 Scope:
 - Public GitHub repositories only.

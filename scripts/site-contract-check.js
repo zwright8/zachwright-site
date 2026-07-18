@@ -16,6 +16,18 @@ const auditCss = fs.readFileSync(
   path.join(root, "public", "agent-ready-repository-audit", "styles.css"),
   "utf8",
 );
+const costPage = fs.readFileSync(
+  path.join(root, "public", "ai-agent-cost-reliability-snapshot", "index.html"),
+  "utf8",
+);
+const costCss = fs.readFileSync(
+  path.join(root, "public", "ai-agent-cost-reliability-snapshot", "styles.css"),
+  "utf8",
+);
+const costSample = fs.readFileSync(
+  path.join(root, "public", "ai-agent-cost-reliability-snapshot", "synthetic-sample.md"),
+  "utf8",
+);
 
 const requiredAppMarkers = [
   "WrightOps",
@@ -47,6 +59,11 @@ const requiredAppMarkers = [
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
+  "AI Agent Cost & Reliability Snapshot",
+  'const COST_SNAPSHOT_LANDING_URL =\n  "/ai-agent-cost-reliability-snapshot/"',
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+  "One workflow, up to 50 normalized attempts",
+  "Three business days after settled payment and accepted prompt-free inputs",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
   "Agent-Ready Instructions PR",
   "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
@@ -79,6 +96,8 @@ const requiredHtmlMarkers = [
   '"price": "249"',
   '"name": "Human-reviewed Agent-Ready Repository Audit"',
   '"price": "750"',
+  '"name": "AI Agent Cost & Reliability Snapshot"',
+  '"price": "495"',
   '"name": "Bounty Red-Flag Card"',
   '"name": "Bounty GO/NO-GO Review"',
   '"price": "49"',
@@ -98,6 +117,36 @@ const requiredAuditPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-report-v1.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
+];
+
+const requiredCostPageMarkers = [
+  "<title>AI Agent Cost & Reliability Snapshot | WrightOps</title>",
+  'href="https://zachwright.xyz/ai-agent-cost-reliability-snapshot/"',
+  '"@type": "Service"',
+  '"price": "495"',
+  "Know what your agents cost",
+  "Prompt-free",
+  "83.33",
+  "27.27",
+  "2ec0de17",
+  "$495 USD",
+  "Three business days",
+  "provider-confirmed settled payment",
+  "not a customer or claimed business result",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md",
+  "Savings, reliability, revenue, or profit guarantees",
+];
+
+const requiredCostSampleMarkers = [
+  "This complete sample uses seven synthetic, prompt-free attempts",
+  "not a customer result, savings claim, revenue claim, or forecast",
+  "2ec0de17fbedc36b98862fd41ce57011feab2933142ab3e1d07fbd6a9b023259",
+  "Task completion rate | 83.33%",
+  "Failed-run waste share | 27.27%",
+  "Scenario only; not a forecast, guarantee, revenue figure, or profit",
+  "Missing evidence is never treated as zero",
 ];
 
 const forbiddenMarkers = [
@@ -121,6 +170,8 @@ const failures = [];
 const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
+const missingCostPage = missing(costPage, requiredCostPageMarkers);
+const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
 if (missingApp.length) {
   failures.push(`App is missing: ${missingApp.join(", ")}`);
@@ -134,12 +185,22 @@ if (missingAuditPage.length) {
   failures.push(`Audit page is missing: ${missingAuditPage.join(", ")}`);
 }
 
+if (missingCostPage.length) {
+  failures.push(`Cost page is missing: ${missingCostPage.join(", ")}`);
+}
+
+if (missingCostSample.length) {
+  failures.push(`Cost sample is missing: ${missingCostSample.join(", ")}`);
+}
+
 for (const marker of forbiddenMarkers) {
   if (
     app.includes(marker) ||
     html.includes(marker) ||
     main.includes(marker) ||
-    auditPage.includes(marker)
+    auditPage.includes(marker) ||
+    costPage.includes(marker) ||
+    costSample.includes(marker)
   ) {
     failures.push(`Forbidden legacy marker remains: ${marker}`);
   }
@@ -161,6 +222,14 @@ if (!auditCss.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
   failures.push("Audit page two-color keyboard focus contract is missing.");
 }
 
+if (!costCss.includes("@media (prefers-reduced-motion: reduce)")) {
+  failures.push("Cost page reduced-motion contract is missing.");
+}
+
+if (!costCss.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
+  failures.push("Cost page two-color keyboard focus contract is missing.");
+}
+
 const auditLandingUrl = "https://zachwright.xyz/agent-ready-repository-audit/";
 if (!sitemap.includes(auditLandingUrl)) {
   failures.push("Sitemap is missing the audit landing page.");
@@ -168,6 +237,15 @@ if (!sitemap.includes(auditLandingUrl)) {
 
 if (!llms.includes(auditLandingUrl)) {
   failures.push("llms.txt is missing the audit landing page.");
+}
+
+const costLandingUrl = "https://zachwright.xyz/ai-agent-cost-reliability-snapshot/";
+if (!sitemap.includes(costLandingUrl)) {
+  failures.push("Sitemap is missing the cost and reliability landing page.");
+}
+
+if (!llms.includes(costLandingUrl)) {
+  failures.push("llms.txt is missing the cost and reliability landing page.");
 }
 
 if (app.includes("mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit")) {
@@ -191,6 +269,9 @@ for (const file of [
   "og.png",
   "agent-ready-repository-audit/index.html",
   "agent-ready-repository-audit/styles.css",
+  "ai-agent-cost-reliability-snapshot/index.html",
+  "ai-agent-cost-reliability-snapshot/styles.css",
+  "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
 ]) {
   if (!fs.existsSync(path.join(root, "public", file))) {
     failures.push(`Public asset is missing: ${file}`);
@@ -223,10 +304,12 @@ console.log(
       appMarkers: requiredAppMarkers.length,
       htmlMarkers: requiredHtmlMarkers.length,
       auditPageMarkers: requiredAuditPageMarkers.length,
+      costPageMarkers: requiredCostPageMarkers.length,
+      costSampleMarkers: requiredCostSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 6,
+      publicAssets: 9,
     },
     null,
     2,

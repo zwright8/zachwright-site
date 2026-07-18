@@ -22,6 +22,10 @@ const HUMAN_AUDIT_REQUEST_URL =
 const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/";
 const HUMAN_AUDIT_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md";
+const COST_SNAPSHOT_REQUEST_URL =
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml";
+const COST_SNAPSHOT_LANDING_URL =
+  "/ai-agent-cost-reliability-snapshot/";
 const AUDITOR_RELEASE_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/releases/tag/v1.1.0";
 const AUDITOR_CI_URL =
@@ -119,6 +123,25 @@ const engagementOptions = [
     primaryHref: HUMAN_AUDIT_REQUEST_URL,
     secondaryLabel: "See audit deliverables",
     secondaryHref: HUMAN_AUDIT_LANDING_URL,
+    featured: false,
+  },
+  {
+    eyebrow: "Agent operations evidence",
+    title: "AI Agent Cost & Reliability Snapshot",
+    price: "$495",
+    timing: "Three business days after settled payment and accepted prompt-free inputs",
+    description:
+      "Aggregate cost, completion, first-pass reliability, retries, latency, and evidence gaps for one workflow—without prompts, responses, or direct identifiers.",
+    bullets: [
+      "One workflow, up to 50 normalized attempts",
+      "Deterministic JSON and Markdown",
+      "Up to five human-reviewed priorities",
+      "Thirty-minute readout and one factual correction round",
+    ],
+    primaryLabel: "See the $495 snapshot",
+    primaryHref: COST_SNAPSHOT_LANDING_URL,
+    secondaryLabel: "Request written scope",
+    secondaryHref: COST_SNAPSHOT_REQUEST_URL,
     featured: false,
   },
 ];
