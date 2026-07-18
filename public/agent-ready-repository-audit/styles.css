@@ -712,6 +712,104 @@ h1 em {
   line-height: 1.7;
 }
 
+.prospect-proof {
+  background: var(--paper);
+}
+
+.proof-ledger {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line-light);
+  list-style: none;
+}
+
+.proof-ledger li {
+  border-bottom: 1px solid var(--line-light);
+}
+
+.proof-ledger a {
+  position: relative;
+  display: grid;
+  min-height: 7.25rem;
+  padding: 1.4rem 0;
+  align-items: center;
+  grid-template-columns: 3.5rem minmax(15rem, 1fr) 7rem minmax(10rem, auto);
+  gap: clamp(1rem, 3vw, 3rem);
+  transition: background-color 180ms ease;
+}
+
+.proof-ledger a::before {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--signal);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.proof-ledger a:hover {
+  background: rgba(183, 243, 74, 0.07);
+}
+
+.proof-ledger a:hover::before {
+  transform: scaleX(1);
+}
+
+.proof-number {
+  color: #6a7a8d;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.7rem;
+}
+
+.proof-repository {
+  display: grid;
+  min-width: 0;
+  gap: 0.55rem;
+}
+
+.proof-repository strong {
+  overflow-wrap: anywhere;
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  letter-spacing: -0.035em;
+}
+
+.proof-repository small {
+  color: var(--slate);
+  font-size: 0.72rem;
+}
+
+.proof-repository code {
+  color: var(--ink);
+}
+
+.proof-score {
+  color: var(--ink);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.9rem;
+}
+
+.proof-link {
+  justify-self: end;
+  color: #466f04;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.24em;
+}
+
+.proof-disclosure {
+  max-width: 58rem;
+  margin: 1.4rem 0 0;
+  color: var(--slate);
+  font-size: 0.75rem;
+  line-height: 1.7;
+}
+
 .process-list {
   margin: 0;
   padding: 0;
@@ -1004,6 +1102,15 @@ footer {
     grid-column: 2;
   }
 
+  .proof-ledger a {
+    grid-template-columns: 2.5rem minmax(0, 1fr) 6rem;
+  }
+
+  .proof-link {
+    grid-column: 2 / -1;
+    justify-self: start;
+  }
+
   .footer-layout {
     grid-template-columns: 1fr 1fr;
   }
@@ -1076,6 +1183,18 @@ footer {
 
   .process-list li {
     grid-template-columns: 2.25rem 1fr;
+  }
+
+  .proof-ledger a {
+    min-height: 8.5rem;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 0.9rem 1rem;
+  }
+
+  .proof-score,
+  .proof-link {
+    grid-column: 2;
+    justify-self: start;
   }
 
   .footer-layout {
