@@ -40,6 +40,7 @@ const FIX_PLAN_CHECKOUT_URL =
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG";
 const INSTRUCTIONS_PR_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml";
+const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/";
 const INSTRUCTIONS_PR_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md";
 const INSTRUCTIONS_PR_SAMPLE_URL =
@@ -100,8 +101,8 @@ const engagementOptions = [
       "No application-code, CI, dependency, security, or deployment changes",
       "No review, merge, adoption, or outcome guarantee",
     ],
-    primaryLabel: "Request written scope",
-    primaryHref: INSTRUCTIONS_PR_REQUEST_URL,
+    primaryLabel: "See the $249 scope & proof",
+    primaryHref: INSTRUCTIONS_PR_LANDING_URL,
     secondaryLabel: "Inspect the merged sample PR",
     secondaryHref: INSTRUCTIONS_PR_SAMPLE_URL,
     featured: true,

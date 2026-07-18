@@ -17,6 +17,7 @@ Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issue
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
 Agent-Ready Instructions PR request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml
+Agent-Ready Instructions PR service page: https://zachwright.xyz/agent-ready-instructions-pr/
 Agent-Ready Instructions PR terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md
 Agent-Ready Instructions PR sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
 Free Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card
@@ -43,6 +44,7 @@ No-login repository preflight:
 
 Founding Agent-Ready Instructions PR:
 - $249 for one public GitHub repository.
+- Dedicated service page: https://zachwright.xyz/agent-ready-instructions-pr/
 - Exactly two files: repository-root AGENTS.md plus one companion selected during written scope confirmation—repository-root CLAUDE.md or .github/copilot-instructions.md.
 - One public pull request at a pinned revision with evidence, limitations, and acceptance checks.
 - A real merged sample of the Copilot companion variant is public at https://github.com/wrightops-ai/bounty-red-flag-card/pull/1.

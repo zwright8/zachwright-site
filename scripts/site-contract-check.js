@@ -16,6 +16,10 @@ const auditCss = fs.readFileSync(
   path.join(root, "public", "agent-ready-repository-audit", "styles.css"),
   "utf8",
 );
+const instructionsPage = fs.readFileSync(
+  path.join(root, "public", "agent-ready-instructions-pr", "index.html"),
+  "utf8",
+);
 const costPage = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "index.html"),
   "utf8",
@@ -58,6 +62,8 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
+  'const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/"',
+  "See the $249 scope & proof",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
   "AI Agent Cost & Reliability Snapshot",
   'const COST_SNAPSHOT_LANDING_URL =\n  "/ai-agent-cost-reliability-snapshot/"',
@@ -139,6 +145,26 @@ const requiredCostPageMarkers = [
   "Savings, reliability, revenue, or profit guarantees",
 ];
 
+const requiredInstructionsPageMarkers = [
+  "<title>Agent-Ready Instructions PR | WrightOps</title>",
+  'href="https://zachwright.xyz/agent-ready-instructions-pr/"',
+  '"@type": "Service"',
+  '"price": "249"',
+  "Give every coding agent the same",
+  "Exactly two repository-specific",
+  "One business day",
+  "provider-confirmed settled payment",
+  "Files changed",
+  "2<span>/2</span>",
+  "No invented commands. No implied access.",
+  "does not clone, install, build, test, or execute",
+  "No source, CI, test, dependency, or config changes",
+  "No merge, adoption, savings, or outcome guarantee",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
+];
+
 const requiredCostSampleMarkers = [
   "This complete sample uses seven synthetic, prompt-free attempts",
   "not a customer result, savings claim, revenue claim, or forecast",
@@ -170,6 +196,7 @@ const failures = [];
 const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
+const missingInstructionsPage = missing(instructionsPage, requiredInstructionsPageMarkers);
 const missingCostPage = missing(costPage, requiredCostPageMarkers);
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
@@ -183,6 +210,10 @@ if (missingHtml.length) {
 
 if (missingAuditPage.length) {
   failures.push(`Audit page is missing: ${missingAuditPage.join(", ")}`);
+}
+
+if (missingInstructionsPage.length) {
+  failures.push(`Instructions page is missing: ${missingInstructionsPage.join(", ")}`);
 }
 
 if (missingCostPage.length) {
@@ -199,6 +230,7 @@ for (const marker of forbiddenMarkers) {
     html.includes(marker) ||
     main.includes(marker) ||
     auditPage.includes(marker) ||
+    instructionsPage.includes(marker) ||
     costPage.includes(marker) ||
     costSample.includes(marker)
   ) {
@@ -235,6 +267,15 @@ if (!sitemap.includes(auditLandingUrl)) {
   failures.push("Sitemap is missing the audit landing page.");
 }
 
+const instructionsLandingUrl = "https://zachwright.xyz/agent-ready-instructions-pr/";
+if (!sitemap.includes(instructionsLandingUrl)) {
+  failures.push("Sitemap is missing the instructions PR landing page.");
+}
+
+if (!llms.includes(instructionsLandingUrl)) {
+  failures.push("llms.txt is missing the instructions PR landing page.");
+}
+
 if (!llms.includes(auditLandingUrl)) {
   failures.push("llms.txt is missing the audit landing page.");
 }
@@ -269,6 +310,7 @@ for (const file of [
   "og.png",
   "agent-ready-repository-audit/index.html",
   "agent-ready-repository-audit/styles.css",
+  "agent-ready-instructions-pr/index.html",
   "ai-agent-cost-reliability-snapshot/index.html",
   "ai-agent-cost-reliability-snapshot/styles.css",
   "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
@@ -304,12 +346,13 @@ console.log(
       appMarkers: requiredAppMarkers.length,
       htmlMarkers: requiredHtmlMarkers.length,
       auditPageMarkers: requiredAuditPageMarkers.length,
+      instructionsPageMarkers: requiredInstructionsPageMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 9,
+      publicAssets: 10,
     },
     null,
     2,
