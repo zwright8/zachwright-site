@@ -36,8 +36,7 @@ const FIX_PLAN_SAMPLE_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md";
 const FIX_PLAN_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md";
-const FIX_PLAN_CHECKOUT_URL =
-  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG";
+const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/";
 const INSTRUCTIONS_PR_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml";
 const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/";
@@ -82,10 +81,10 @@ const engagementOptions = [
       "Smallest recommended change",
       "Executable acceptance check",
     ],
-    primaryLabel: "Request scope confirmation",
-    primaryHref: FIX_PLAN_REQUEST_URL,
-    secondaryLabel: "Scope confirmed? Pay $149",
-    secondaryHref: FIX_PLAN_CHECKOUT_URL,
+    primaryLabel: "See the $149 scope & sample",
+    primaryHref: FIX_PLAN_LANDING_URL,
+    secondaryLabel: "Inspect the complete sample",
+    secondaryHref: FIX_PLAN_SAMPLE_URL,
     featured: false,
   },
   {

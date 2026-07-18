@@ -14,6 +14,7 @@ AI Agent Cost & Reliability Snapshot scope: https://github.com/wrightops-ai/agen
 AI Agent Cost & Reliability Snapshot terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md
 AI Agent Cost & Reliability normalized run contract: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
+Fix Plan service page: https://zachwright.xyz/agent-ready-fix-plan/
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
 Agent-Ready Instructions PR request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml
@@ -41,6 +42,15 @@ No-login repository preflight:
 - Evaluates seven coding-agent readiness evidence categories at one immutable revision.
 - Does not clone or execute repository code and does not send the repository URL to WrightOps.
 - It is a quick operational preflight, not a security, legal, privacy, or compliance assessment.
+
+Agent-Ready Repo Fix Plan:
+- $149 for one public GitHub repository at one immutable default-branch revision.
+- Dedicated service page: https://zachwright.xyz/agent-ready-fix-plan/
+- Exactly three human-reviewed fix cards, each with evidence, an exact path, a bounded change outline, an executable acceptance check, and limitations.
+- At most 45 minutes of human review; no implementation or repository changes.
+- One-business-day delivery after complete public inputs and provider-confirmed settled payment.
+- The public request is non-binding, collects no payment data, and requires GitHub sign-in.
+- WrightOps confirms written scope before the buyer uses the authorized PayPal Business Goods & Services checkout.
 
 Founding Agent-Ready Instructions PR:
 - $249 for one public GitHub repository.

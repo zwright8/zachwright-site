@@ -20,6 +20,10 @@ const instructionsPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-instructions-pr", "index.html"),
   "utf8",
 );
+const fixPlanPage = fs.readFileSync(
+  path.join(root, "public", "agent-ready-fix-plan", "index.html"),
+  "utf8",
+);
 const costPage = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "index.html"),
   "utf8",
@@ -60,7 +64,8 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
-  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
+  'const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/"',
+  "See the $149 scope & sample",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
   'const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/"',
   "See the $249 scope & proof",
@@ -192,6 +197,34 @@ const requiredInstructionsPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
 ];
 
+const requiredFixPlanPageMarkers = [
+  "<title>Agent-Ready Repo Fix Plan | WrightOps</title>",
+  'href="https://zachwright.xyz/agent-ready-fix-plan/"',
+  '"@type": "Service"',
+  '"price": "149"',
+  "Turn one audit into three executable",
+  "Exactly three human-reviewed fix cards",
+  "One business day",
+  "provider-confirmed settled payment",
+  "at most 45 minutes of human review",
+  "Demonstration only — not paid, commissioned, or endorsed",
+  "evidenced gap",
+  "exact file or path",
+  "Bounded change outline",
+  "acceptance check",
+  "No implementation or repository changes",
+  "not a vulnerability, security, privacy, legal, or compliance",
+  "GitHub sign-in is required to submit",
+  "Never include contact, private, payment, or transaction data",
+  "does not create a contract or payment obligation",
+  "scope before payment",
+  "full purchase-price refund",
+  "WrightOps absorbs that cost",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
+];
+
 const requiredCostSampleMarkers = [
   "This complete sample uses seven synthetic, prompt-free attempts",
   "not a customer result, savings claim, revenue claim, or forecast",
@@ -213,6 +246,7 @@ const forbiddenMarkers = [
   "AI Operator Kit",
   "Repository Remediation Sprint",
   "$1,500",
+  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
 ];
 
 function missing(source, markers) {
@@ -224,6 +258,7 @@ const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
 const missingInstructionsPage = missing(instructionsPage, requiredInstructionsPageMarkers);
+const missingFixPlanPage = missing(fixPlanPage, requiredFixPlanPageMarkers);
 const missingCostPage = missing(costPage, requiredCostPageMarkers);
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
@@ -243,6 +278,10 @@ if (missingInstructionsPage.length) {
   failures.push(`Instructions page is missing: ${missingInstructionsPage.join(", ")}`);
 }
 
+if (missingFixPlanPage.length) {
+  failures.push(`Fix Plan page is missing: ${missingFixPlanPage.join(", ")}`);
+}
+
 if (missingCostPage.length) {
   failures.push(`Cost page is missing: ${missingCostPage.join(", ")}`);
 }
@@ -258,6 +297,7 @@ for (const marker of forbiddenMarkers) {
     main.includes(marker) ||
     auditPage.includes(marker) ||
     instructionsPage.includes(marker) ||
+    fixPlanPage.includes(marker) ||
     costPage.includes(marker) ||
     costSample.includes(marker)
   ) {
@@ -307,6 +347,15 @@ if (!llms.includes(auditLandingUrl)) {
   failures.push("llms.txt is missing the audit landing page.");
 }
 
+const fixPlanLandingUrl = "https://zachwright.xyz/agent-ready-fix-plan/";
+if (!sitemap.includes(fixPlanLandingUrl)) {
+  failures.push("Sitemap is missing the Fix Plan landing page.");
+}
+
+if (!llms.includes(fixPlanLandingUrl)) {
+  failures.push("llms.txt is missing the Fix Plan landing page.");
+}
+
 const costLandingUrl = "https://zachwright.xyz/ai-agent-cost-reliability-snapshot/";
 if (!sitemap.includes(costLandingUrl)) {
   failures.push("Sitemap is missing the cost and reliability landing page.");
@@ -338,6 +387,7 @@ for (const file of [
   "agent-ready-repository-audit/index.html",
   "agent-ready-repository-audit/styles.css",
   "agent-ready-instructions-pr/index.html",
+  "agent-ready-fix-plan/index.html",
   "ai-agent-cost-reliability-snapshot/index.html",
   "ai-agent-cost-reliability-snapshot/styles.css",
   "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
@@ -374,12 +424,13 @@ console.log(
       htmlMarkers: requiredHtmlMarkers.length,
       auditPageMarkers: requiredAuditPageMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
+      fixPlanPageMarkers: requiredFixPlanPageMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 10,
+      publicAssets: 11,
     },
     null,
     2,

@@ -1,6 +1,6 @@
 const expectedMarkers = [
     "WrightOps",
-    "Public-Repository Fix Plans",
+    "Free Agent-Ready Repository Preflight",
     "https://zachwright.xyz/",
     "https://zachwright.xyz/og.png",
     "id=\"root\""
