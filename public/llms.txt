@@ -6,6 +6,8 @@ Canonical website: https://zachwright.xyz/
 No-login repository preflight: https://zachwright.xyz/#preflight
 Free audit request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml
 Public auditor: https://github.com/wrightops-ai/agent-ready-repo-auditor
+Human-reviewed audit scope: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml
+Human-reviewed audit terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
@@ -45,10 +47,19 @@ Founding Agent-Ready Instructions PR:
 - WrightOps sends a private, dedicated PayPal Goods & Services checkout after confirmation; no public checkout is provided.
 - If WrightOps cannot deliver the scoped pull request, the full purchase price is refunded.
 
+Human-reviewed Agent-Ready Repository Audit:
+- $750 for one public GitHub repository at one immutable default-branch revision.
+- Evidence-linked Markdown and JSON reports, up to five priorities, and a 30-minute handoff.
+- Three-business-day delivery after provider-confirmed settled payment and complete public inputs.
+- The public scope form collects no contact or payment data and does not create a contract or payment obligation.
+- WrightOps confirms exact scope in writing before sharing the existing PayPal Business Goods & Services checkout.
+- Paid work begins only after provider-confirmed settlement.
+- No private data, credentials, production access, repository cloning, code execution, or security, privacy, legal, or compliance assessment.
+
 Scope:
 - Public GitHub repositories only.
 - Never submit credentials, secrets, private code, customer data, or personal data.
 - Bounty reviews use public evidence only.
 - No production or deployment access.
 - No vulnerability research or security, privacy, legal, or compliance assessment.
-- Paid work begins only after written scope confirmation.
+- Paid work begins only after written scope confirmation and provider-confirmed settlement.

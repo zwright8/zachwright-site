@@ -27,6 +27,8 @@ const requiredAppMarkers = [
   "unauthenticated API limit applies",
   'reducedMotion="user"',
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
@@ -50,6 +52,7 @@ const requiredAppMarkers = [
   "reviews exactly one public bounty or listing",
   "No guaranteed payout or professional advice",
   "GitHub sign-in is required to submit",
+  "Three business days after settled payment and complete public inputs",
 ];
 
 const requiredHtmlMarkers = [
@@ -62,6 +65,8 @@ const requiredHtmlMarkers = [
   '"price": "149"',
   '"name": "Founding Agent-Ready Instructions PR"',
   '"price": "249"',
+  '"name": "Human-reviewed Agent-Ready Repository Audit"',
+  '"price": "750"',
   '"name": "Bounty Red-Flag Card"',
   '"name": "Bounty GO/NO-GO Review"',
   '"price": "49"',
@@ -108,6 +113,10 @@ if (!css.includes("@media (prefers-reduced-motion: reduce)")) {
 
 if (!css.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
   failures.push("Two-color keyboard focus contract is missing.");
+}
+
+if (app.includes("mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit")) {
+  failures.push("The $750 audit must use the structured public scope form, not email.");
 }
 
 const auditCtaCount = (app.match(/href=\{AUDIT_REQUEST_URL\}/g) || []).length;

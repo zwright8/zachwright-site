@@ -17,6 +17,10 @@ const GITHUB_ORG_URL = "https://github.com/wrightops-ai";
 const AUDITOR_URL = "https://github.com/wrightops-ai/agent-ready-repo-auditor";
 const AUDIT_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml";
+const HUMAN_AUDIT_REQUEST_URL =
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml";
+const HUMAN_AUDIT_TERMS_URL =
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md";
 const AUDITOR_RELEASE_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/releases/tag/v1.1.0";
 const AUDITOR_CI_URL =
@@ -101,7 +105,7 @@ const engagementOptions = [
     eyebrow: "Deeper evidence",
     title: "Agent-Ready Repository Audit",
     price: "$750",
-    timing: "Three-business-day delivery",
+    timing: "Three business days after settled payment and complete public inputs",
     description:
       "A broader Markdown and JSON evidence package for teams that need a documented view of repository readiness before changing the repo.",
     bullets: [
@@ -111,9 +115,9 @@ const engagementOptions = [
       "Inspect-ready delivery package",
     ],
     primaryLabel: "Scope the audit",
-    primaryHref: `mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit`,
-    secondaryLabel: "Inspect the free auditor",
-    secondaryHref: AUDITOR_URL,
+    primaryHref: HUMAN_AUDIT_REQUEST_URL,
+    secondaryLabel: "Read complete terms",
+    secondaryHref: HUMAN_AUDIT_TERMS_URL,
     featured: false,
   },
 ];
@@ -1061,6 +1065,9 @@ function Footer() {
           <div>
             <strong>Start</strong>
             <ExternalLink href={AUDIT_REQUEST_URL}>Free audit request</ExternalLink>
+            <ExternalLink href={HUMAN_AUDIT_REQUEST_URL}>
+              Human-reviewed audit scope
+            </ExternalLink>
             <ExternalLink href={AUDITOR_URL}>Inspect the auditor</ExternalLink>
             <ExternalLink href={FIX_PLAN_REQUEST_URL}>Fix Plan request</ExternalLink>
             <ExternalLink href={INSTRUCTIONS_PR_REQUEST_URL}>
@@ -1077,6 +1084,9 @@ function Footer() {
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
             <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
               Instructions PR terms
+            </ExternalLink>
+            <ExternalLink href={HUMAN_AUDIT_TERMS_URL}>
+              Human-reviewed audit terms
             </ExternalLink>
             <ExternalLink href={INSTRUCTIONS_PR_SAMPLE_URL}>
               Instructions PR sample
