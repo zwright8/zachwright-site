@@ -24,6 +24,10 @@ const fixPlanPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-fix-plan", "index.html"),
   "utf8",
 );
+const bountyReviewPage = fs.readFileSync(
+  path.join(root, "public", "bounty-go-no-go-review", "index.html"),
+  "utf8",
+);
 const costPage = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "index.html"),
   "utf8",
@@ -86,6 +90,8 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
+  'const BOUNTY_REVIEW_LANDING_URL = "/bounty-go-no-go-review/"',
+  "See the $49 scope &amp; sample",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
   "Bounty GO/NO-GO Review",
@@ -228,6 +234,39 @@ const requiredFixPlanPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
 ];
 
+const requiredBountyReviewPageMarkers = [
+  "<title>Bounty GO/NO-GO Review | WrightOps</title>",
+  'href="https://zachwright.xyz/bounty-go-no-go-review/"',
+  '"@type": "Service"',
+  '"price": "49"',
+  "Know if one bounty is worth the",
+  "Exactly one public bounty or listing",
+  "One business day",
+  "provider-confirmed settled payment",
+  "Funding and payout evidence",
+  "Claim window, eligibility, and competition",
+  "Acceptance, access, and third-party dependencies",
+  "Rights, compliance, and required approvals",
+  "Bounded work estimate",
+  "GO, HOLD, or NO-GO",
+  "Synthetic example — not a customer result",
+  "$300.00 × (1 - 0.10) = $270.00",
+  "Missing evidence stays unknown",
+  "No claim, reservation, implementation, or maintainer contact",
+  "No repository clone or code execution",
+  "No legal, tax, financial, security, privacy, or compliance advice",
+  "No eligibility, acceptance, merge, payment, profit, or outcome guarantee",
+  "GitHub sign-in is required to submit",
+  "Never include personal, private, credential, customer, wallet, or payment data",
+  "does not create a contract or payment obligation",
+  "Scope before payment",
+  "full purchase price",
+  "WrightOps absorbs any retained processor fee",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
+  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
+];
+
 const requiredCostSampleMarkers = [
   "This complete sample uses seven synthetic, prompt-free attempts",
   "not a customer result, savings claim, revenue claim, or forecast",
@@ -262,6 +301,10 @@ const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
 const missingInstructionsPage = missing(instructionsPage, requiredInstructionsPageMarkers);
 const missingFixPlanPage = missing(fixPlanPage, requiredFixPlanPageMarkers);
+const missingBountyReviewPage = missing(
+  bountyReviewPage,
+  requiredBountyReviewPageMarkers,
+);
 const missingCostPage = missing(costPage, requiredCostPageMarkers);
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
@@ -285,6 +328,12 @@ if (missingFixPlanPage.length) {
   failures.push(`Fix Plan page is missing: ${missingFixPlanPage.join(", ")}`);
 }
 
+if (missingBountyReviewPage.length) {
+  failures.push(
+    `Bounty review page is missing: ${missingBountyReviewPage.join(", ")}`,
+  );
+}
+
 if (missingCostPage.length) {
   failures.push(`Cost page is missing: ${missingCostPage.join(", ")}`);
 }
@@ -301,6 +350,7 @@ for (const marker of forbiddenMarkers) {
     auditPage.includes(marker) ||
     instructionsPage.includes(marker) ||
     fixPlanPage.includes(marker) ||
+    bountyReviewPage.includes(marker) ||
     costPage.includes(marker) ||
     costSample.includes(marker)
   ) {
@@ -368,6 +418,15 @@ if (!llms.includes(costLandingUrl)) {
   failures.push("llms.txt is missing the cost and reliability landing page.");
 }
 
+const bountyReviewLandingUrl = "https://zachwright.xyz/bounty-go-no-go-review/";
+if (!sitemap.includes(bountyReviewLandingUrl)) {
+  failures.push("Sitemap is missing the bounty review landing page.");
+}
+
+if (!llms.includes(bountyReviewLandingUrl)) {
+  failures.push("llms.txt is missing the bounty review landing page.");
+}
+
 if (app.includes("mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit")) {
   failures.push("The $750 audit must use the structured public scope form, not email.");
 }
@@ -409,6 +468,7 @@ for (const file of [
   "agent-ready-repository-audit/styles.css",
   "agent-ready-instructions-pr/index.html",
   "agent-ready-fix-plan/index.html",
+  "bounty-go-no-go-review/index.html",
   "ai-agent-cost-reliability-snapshot/index.html",
   "ai-agent-cost-reliability-snapshot/styles.css",
   "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
@@ -446,12 +506,13 @@ console.log(
       auditPageMarkers: requiredAuditPageMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
       fixPlanPageMarkers: requiredFixPlanPageMarkers.length,
+      bountyReviewPageMarkers: requiredBountyReviewPageMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 11,
+      publicAssets: 12,
     },
     null,
     2,

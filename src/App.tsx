@@ -52,6 +52,7 @@ const BOUNTY_CARD_RELEASE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0";
 const BOUNTY_REVIEW_REQUEST_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml";
+const BOUNTY_REVIEW_LANDING_URL = "/bounty-go-no-go-review/";
 const BOUNTY_REVIEW_SAMPLE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md";
 const BOUNTY_REVIEW_TERMS_URL =
@@ -873,8 +874,8 @@ function BountyReview() {
               <li>No guaranteed payout or professional advice</li>
             </ul>
             <div className="bounty-actions">
-              <PrimaryAction href={BOUNTY_REVIEW_REQUEST_URL}>
-                Open public GitHub request
+              <PrimaryAction href={BOUNTY_REVIEW_LANDING_URL}>
+                See the $49 scope &amp; sample
               </PrimaryAction>
               <SecondaryAction href={BOUNTY_REVIEW_SAMPLE_URL}>
                 View sample report
