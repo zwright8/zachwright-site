@@ -304,6 +304,8 @@ const requiredBountyReviewPageMarkers = [
   "full purchase price",
   "WrightOps absorbs any retained processor fee",
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
+  "https://wrightops-ai.github.io/bounty-red-flag-card/",
+  "Run the free no-login check",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
 ];
@@ -520,6 +522,15 @@ if (fixPlanScopeCtaCount < 3) {
   );
 }
 
+const bountyFreeToolCtaCount = (
+  bountyReviewPage.match(/https:\/\/wrightops-ai\.github\.io\/bounty-red-flag-card\//g) || []
+).length;
+if (bountyFreeToolCtaCount < 2) {
+  failures.push(
+    `Expected the bounty review offer to expose at least two no-login proof-tool paths; found ${bountyFreeToolCtaCount}.`,
+  );
+}
+
 for (const file of [
   "robots.txt",
   "sitemap.xml",
@@ -575,6 +586,7 @@ console.log(
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
+      bountyFreeToolCtas: bountyFreeToolCtaCount,
       publicAssets: 13,
     },
     null,
