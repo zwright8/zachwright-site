@@ -220,6 +220,9 @@ const requiredFixPlanPageMarkers = [
   "scope before payment",
   "full purchase-price refund",
   "WrightOps absorbs that cost",
+  "Start the free audit",
+  "Already audited? Request $149 scope",
+  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
@@ -377,6 +380,24 @@ if (auditCtaCount < 3) {
 const preflightCtaCount = (app.match(/href="#preflight"/g) || []).length;
 if (preflightCtaCount < 3) {
   failures.push(`Expected at least three no-login preflight CTAs; found ${preflightCtaCount}.`);
+}
+
+const fixPlanAuditCtaCount = (
+  fixPlanPage.match(/issues\/new\?template=audit-request\.yml/g) || []
+).length;
+if (fixPlanAuditCtaCount < 4) {
+  failures.push(
+    `Expected the Fix Plan offer to expose at least four free-audit starts; found ${fixPlanAuditCtaCount}.`,
+  );
+}
+
+const fixPlanScopeCtaCount = (
+  fixPlanPage.match(/issues\/new\?template=fix-plan-request\.yml/g) || []
+).length;
+if (fixPlanScopeCtaCount < 3) {
+  failures.push(
+    `Expected the Fix Plan offer to preserve at least three audited-buyer scope paths; found ${fixPlanScopeCtaCount}.`,
+  );
 }
 
 for (const file of [
