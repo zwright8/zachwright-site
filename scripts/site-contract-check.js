@@ -194,10 +194,10 @@ const requiredInstructionsPageMarkers = [
   "No source, CI, test, dependency, or config changes",
   "No merge, adoption, savings, or outcome guarantee",
   "one revision round within seven days",
-  "<h3>Open a non-binding public request</h3>",
+  "<h3>Open a non-binding scope request</h3>",
   "<h3>Receive written scope</h3>",
   "After confirmation, email",
-  "GitHub sign-in is required to submit",
+  "Use the public GitHub form or business email.",
   "Never include contact or payment",
   "personal or customer data",
   "mailto:zach@zachwright.xyz?subject=Agent-Ready%20Instructions%20PR%20scope%20confirmed",
@@ -265,7 +265,7 @@ const requiredFixPlanPageMarkers = [
   "acceptance check",
   "No implementation or repository changes",
   "not a vulnerability, security, privacy, legal, or compliance",
-  "GitHub sign-in is required to submit",
+  "Use the public GitHub form or business email.",
   "Never include contact, private, payment, or transaction data",
   "does not create a contract or payment obligation",
   "scope before payment",
@@ -301,7 +301,7 @@ const requiredBountyReviewPageMarkers = [
   "No repository clone or code execution",
   "No legal, tax, financial, security, privacy, or compliance advice",
   "No eligibility, acceptance, merge, payment, profit, or outcome guarantee",
-  "GitHub sign-in is required to submit",
+  "Use the public GitHub form or business email.",
   "Never include personal, private, credential, customer, wallet, or payment data",
   "does not create a contract or payment obligation",
   "Scope before payment",
@@ -535,6 +535,42 @@ if (auditEmailScopeCtaCount < 2) {
   );
 }
 
+const fixPlanEmailScopeCtaCount = (
+  fixPlanPage.match(/mailto:zach@zachwright\.xyz\?subject=WrightOps%20%24149%20fix%20plan%20scope%20request/g) || []
+).length;
+if (fixPlanEmailScopeCtaCount < 2) {
+  failures.push(
+    `Expected the $149 Fix Plan to expose at least two no-GitHub business-email scope paths; found ${fixPlanEmailScopeCtaCount}.`,
+  );
+}
+
+const instructionsEmailScopeCtaCount = (
+  instructionsPage.match(/mailto:zach@zachwright\.xyz\?subject=WrightOps%20%24249%20instructions%20PR%20scope%20request/g) || []
+).length;
+if (instructionsEmailScopeCtaCount < 2) {
+  failures.push(
+    `Expected the $249 Instructions PR to expose at least two no-GitHub business-email scope paths; found ${instructionsEmailScopeCtaCount}.`,
+  );
+}
+
+const costEmailScopeCtaCount = (
+  costPage.match(/mailto:zach@zachwright\.xyz\?subject=WrightOps%20%24495%20cost%20reliability%20scope%20request/g) || []
+).length;
+if (costEmailScopeCtaCount < 2) {
+  failures.push(
+    `Expected the $495 Cost & Reliability Snapshot to expose at least two no-GitHub business-email scope paths; found ${costEmailScopeCtaCount}.`,
+  );
+}
+
+const bountyEmailScopeCtaCount = (
+  bountyReviewPage.match(/mailto:zach@zachwright\.xyz\?subject=WrightOps%20%2449%20bounty%20review%20scope%20request/g) || []
+).length;
+if (bountyEmailScopeCtaCount < 2) {
+  failures.push(
+    `Expected the $49 Bounty Review to expose at least two no-GitHub business-email scope paths; found ${bountyEmailScopeCtaCount}.`,
+  );
+}
+
 const bountyFreeToolCtaCount = (
   bountyReviewPage.match(/https:\/\/wrightops-ai\.github\.io\/bounty-red-flag-card\//g) || []
 ).length;
@@ -599,6 +635,10 @@ console.log(
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       auditEmailScopeCtas: auditEmailScopeCtaCount,
+      fixPlanEmailScopeCtas: fixPlanEmailScopeCtaCount,
+      instructionsEmailScopeCtas: instructionsEmailScopeCtaCount,
+      costEmailScopeCtas: costEmailScopeCtaCount,
+      bountyEmailScopeCtas: bountyEmailScopeCtaCount,
       preflightCtas: preflightCtaCount,
       bountyFreeToolCtas: bountyFreeToolCtaCount,
       publicAssets: 13,
