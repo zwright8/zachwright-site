@@ -1107,6 +1107,7 @@ function Footer() {
             <ExternalLink href={GITHUB_ORG_URL}>WrightOps on GitHub</ExternalLink>
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
+            <a href="/agents-md-vs-claude-md/">AGENTS.md file guide</a>
             <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
               Instructions PR terms
             </ExternalLink>

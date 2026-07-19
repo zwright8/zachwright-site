@@ -19,8 +19,15 @@ Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/m
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
 Agent-Ready Instructions PR request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml
 Agent-Ready Instructions PR service page: https://zachwright.xyz/agent-ready-instructions-pr/
+AGENTS.md vs CLAUDE.md vs Copilot instructions guide: https://zachwright.xyz/agents-md-vs-claude-md/
 Agent-Ready Instructions PR terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md
 Agent-Ready Instructions PR sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
+
+AGENTS.md vs CLAUDE.md vs Copilot instructions guide:
+- Free public field guide for choosing the correct repository-level coding-agent instruction file.
+- Shared repository truth belongs in root AGENTS.md; tool-specific companions should stay thin.
+- Covers root CLAUDE.md, .github/copilot-instructions.md, drift prevention, evidence checks, and sensitive-data boundaries.
+- Canonical guide: https://zachwright.xyz/agents-md-vs-claude-md/
 Free Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card
 Open Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md
 Bounty Red-Flag Card v1.0.0: https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0

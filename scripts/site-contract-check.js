@@ -20,6 +20,15 @@ const instructionsPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-instructions-pr", "index.html"),
   "utf8",
 );
+const instructionsGuidePath = path.join(
+  root,
+  "public",
+  "agents-md-vs-claude-md",
+  "index.html",
+);
+const instructionsGuidePage = fs.existsSync(instructionsGuidePath)
+  ? fs.readFileSync(instructionsGuidePath, "utf8")
+  : "";
 const fixPlanPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-fix-plan", "index.html"),
   "utf8",
@@ -83,6 +92,7 @@ const requiredAppMarkers = [
   "One workflow, up to 50 normalized attempts",
   "Three business days after settled payment and accepted prompt-free inputs",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
+  'href="/agents-md-vs-claude-md/"',
   "Agent-Ready Instructions PR",
   "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
   "delivering exactly two repository-specific instruction files",
@@ -207,8 +217,31 @@ const requiredInstructionsPageMarkers = [
   "30/100",
   "https://github.com/Zugruul/development-skills/issues/178#issuecomment-5013145223",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
+  'href="/agents-md-vs-claude-md/"',
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
+];
+
+const requiredInstructionsGuideMarkers = [
+  "<title>AGENTS.md vs CLAUDE.md vs Copilot Instructions | WrightOps</title>",
+  'href="https://zachwright.xyz/agents-md-vs-claude-md/"',
+  '"@type": "TechArticle"',
+  '"datePublished": "2026-07-19"',
+  "AGENTS.md vs CLAUDE.md vs Copilot instructions",
+  "Put each agent rule in the file that can actually <em>reach it.</em>",
+  "Shared repository truth belongs in AGENTS.md.",
+  "Companion files adapt. They do not fork.",
+  "Root AGENTS.md",
+  "Root CLAUDE.md",
+  ".github/copilot-instructions.md",
+  "Never put secrets, private infrastructure, or undocumented commands",
+  "WrightOps does not clone or execute the target repository",
+  "not a security, legal, privacy, or compliance assessment",
+  "Run the free repository preflight",
+  "See the $249 scope &amp; proof",
+  "AI-operated public-repository engineering with a human-accountable owner",
+  'href="/agent-ready-instructions-pr/"',
+  'href="/#preflight"',
 ];
 
 const requiredFixPlanPageMarkers = [
@@ -308,6 +341,10 @@ const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
 const missingInstructionsPage = missing(instructionsPage, requiredInstructionsPageMarkers);
+const missingInstructionsGuidePage = missing(
+  instructionsGuidePage,
+  requiredInstructionsGuideMarkers,
+);
 const missingFixPlanPage = missing(fixPlanPage, requiredFixPlanPageMarkers);
 const missingBountyReviewPage = missing(
   bountyReviewPage,
@@ -330,6 +367,12 @@ if (missingAuditPage.length) {
 
 if (missingInstructionsPage.length) {
   failures.push(`Instructions page is missing: ${missingInstructionsPage.join(", ")}`);
+}
+
+if (missingInstructionsGuidePage.length) {
+  failures.push(
+    `Instructions guide is missing: ${missingInstructionsGuidePage.join(", ")}`,
+  );
 }
 
 if (missingFixPlanPage.length) {
@@ -357,6 +400,7 @@ for (const marker of forbiddenMarkers) {
     main.includes(marker) ||
     auditPage.includes(marker) ||
     instructionsPage.includes(marker) ||
+    instructionsGuidePage.includes(marker) ||
     fixPlanPage.includes(marker) ||
     bountyReviewPage.includes(marker) ||
     costPage.includes(marker) ||
@@ -402,6 +446,15 @@ if (!sitemap.includes(instructionsLandingUrl)) {
 
 if (!llms.includes(instructionsLandingUrl)) {
   failures.push("llms.txt is missing the instructions PR landing page.");
+}
+
+const instructionsGuideUrl = "https://zachwright.xyz/agents-md-vs-claude-md/";
+if (!sitemap.includes(instructionsGuideUrl)) {
+  failures.push("Sitemap is missing the AGENTS.md comparison guide.");
+}
+
+if (!llms.includes(instructionsGuideUrl)) {
+  failures.push("llms.txt is missing the AGENTS.md comparison guide.");
 }
 
 if (!llms.includes(auditLandingUrl)) {
@@ -475,6 +528,7 @@ for (const file of [
   "agent-ready-repository-audit/index.html",
   "agent-ready-repository-audit/styles.css",
   "agent-ready-instructions-pr/index.html",
+  "agents-md-vs-claude-md/index.html",
   "agent-ready-fix-plan/index.html",
   "bounty-go-no-go-review/index.html",
   "ai-agent-cost-reliability-snapshot/index.html",
@@ -513,6 +567,7 @@ console.log(
       htmlMarkers: requiredHtmlMarkers.length,
       auditPageMarkers: requiredAuditPageMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
+      instructionsGuideMarkers: requiredInstructionsGuideMarkers.length,
       fixPlanPageMarkers: requiredFixPlanPageMarkers.length,
       bountyReviewPageMarkers: requiredBountyReviewPageMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
@@ -520,7 +575,7 @@ console.log(
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 12,
+      publicAssets: 13,
     },
     null,
     2,

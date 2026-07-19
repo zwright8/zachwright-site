@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta
+      name="description"
+      content="A practical guide to choosing AGENTS.md, CLAUDE.md, or .github/copilot-instructions.md without duplicating repository rules."
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1"
+    />
+    <link rel="canonical" href="https://zachwright.xyz/agents-md-vs-claude-md/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="WrightOps" />
+    <meta
+      property="og:title"
+      content="AGENTS.md vs CLAUDE.md vs Copilot Instructions"
+    />
+    <meta
+      property="og:description"
+      content="Choose the right repository instruction file, keep shared rules canonical, and prevent drift between coding agents."
+    />
+    <meta property="og:url" content="https://zachwright.xyz/agents-md-vs-claude-md/" />
+    <meta property="og:image" content="https://zachwright.xyz/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="WrightOps — evidence before automation" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="AGENTS.md vs CLAUDE.md vs Copilot Instructions"
+    />
+    <meta
+      name="twitter:description"
+      content="A practical file-selection guide for repository-level coding-agent instructions."
+    />
+    <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
+    <title>AGENTS.md vs CLAUDE.md vs Copilot Instructions | WrightOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/agent-ready-repository-audit/styles.css" />
+    <link
+      rel="icon"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%23b7f34a"/><text x="50%25" y="53%25" dominant-baseline="middle" text-anchor="middle" fill="%230b1220" font-family="Georgia,serif" font-style="italic" font-size="38">W</text></svg>'
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "AGENTS.md vs CLAUDE.md vs Copilot instructions",
+        "description": "A practical guide to choosing repository-level coding-agent instruction files without duplicating shared rules.",
+        "datePublished": "2026-07-19",
+        "dateModified": "2026-07-19",
+        "mainEntityOfPage": "https://zachwright.xyz/agents-md-vs-claude-md/",
+        "author": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        },
+        "about": [
+          "AGENTS.md",
+          "CLAUDE.md",
+          ".github/copilot-instructions.md",
+          "coding-agent repository instructions"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <nav aria-label="Primary navigation" class="nav-shell">
+        <a aria-label="WrightOps home" class="brand" href="/">
+          <span class="brand-mark">W</span>
+          <span>
+            <strong>WrightOps</strong>
+            <small>Evidence before automation</small>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="#choose">Choose a file</a>
+          <a href="#rule">One-source rule</a>
+          <a href="#checklist">Checklist</a>
+          <a href="#boundaries">Boundaries</a>
+        </div>
+        <a class="button button-small" href="/agent-ready-instructions-pr/">
+          See the $249 service <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <article>
+        <section class="audit-hero">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="hero-orbit" aria-hidden="true"></div>
+          <div class="page-shell hero-layout">
+            <div class="audit-hero-copy">
+              <a class="back-link" href="/">← WrightOps field guides</a>
+              <p class="eyebrow">Free field guide · public repositories</p>
+              <h1>Put each agent rule in the file that can actually <em>reach it.</em></h1>
+              <p class="hero-lede">
+                AGENTS.md vs CLAUDE.md vs Copilot instructions is not a contest.
+                Each file has a different audience. The durable pattern is one
+                shared source of repository truth with thin, tool-specific adapters.
+              </p>
+              <div class="hero-actions">
+                <a class="button" href="/#preflight">
+                  Run the free repository preflight <span aria-hidden="true">↗</span>
+                </a>
+                <a class="text-link" href="#choose">
+                  Choose the right file <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+              <p class="hero-terms">
+                Public evidence only · No login for the preflight · No repository code execution
+              </p>
+            </div>
+
+            <figure class="evidence-window">
+              <figcaption>
+                <span>Instruction routing / one repository</span>
+                <span class="window-status">canonical</span>
+              </figcaption>
+              <div class="window-score">
+                <span>Shared source</span>
+                <strong>1<span>/3</span></strong>
+              </div>
+              <dl class="window-checks">
+                <div>
+                  <dt>Cross-tool repository rules</dt>
+                  <dd><span class="status-dot"></span>AGENTS.md</dd>
+                </div>
+                <div>
+                  <dt>Claude-only behavior</dt>
+                  <dd><span class="status-dot"></span>CLAUDE.md</dd>
+                </div>
+                <div>
+                  <dt>Copilot-only behavior</dt>
+                  <dd><span class="status-dot"></span>copilot</dd>
+                </div>
+                <div>
+                  <dt>Duplicated shared policy</dt>
+                  <dd class="unknown"><span class="status-dot"></span>0</dd>
+                </div>
+              </dl>
+              <p class="window-revision">
+                rule <code>canonical shared facts → thin adapters</code>
+              </p>
+              <a class="window-link" href="#rule">
+                Inspect the one-source rule <span aria-hidden="true">↓</span>
+              </a>
+            </figure>
+          </div>
+        </section>
+
+        <section class="summary-strip" aria-label="Instruction-file summary">
+          <div class="page-shell summary-grid">
+            <div><span>Shared rules</span><strong>Root AGENTS.md</strong></div>
+            <div><span>Claude adapter</span><strong>Root CLAUDE.md</strong></div>
+            <div><span>Copilot adapter</span><strong>.github/copilot-instructions.md</strong></div>
+            <div><span>Drift target</span><strong>Zero duplicated policy</strong></div>
+          </div>
+        </section>
+
+        <section class="content-section" id="choose">
+          <div class="page-shell">
+            <div class="section-intro">
+              <p class="eyebrow">Choose by audience</p>
+              <h2>Three files. Three jobs.</h2>
+              <p>
+                Start with the rule’s intended reader. If every coding agent
+                needs it, the rule should not begin life in a vendor-specific file.
+              </p>
+            </div>
+
+            <div class="deliverable-lines">
+              <article>
+                <span>01</span>
+                <h3>Root <code>AGENTS.md</code></h3>
+                <p>
+                  Use it for repository-wide setup, architecture, workflow,
+                  verification, ownership, and risky-action gates that should
+                  reach multiple agent tools.
+                </p>
+              </article>
+              <article>
+                <span>02</span>
+                <h3>Root <code>CLAUDE.md</code></h3>
+                <p>
+                  Use it for Claude-specific imports, hooks, commands, or
+                  interaction guidance. Point to shared rules instead of
+                  copying them when the harness supports that pattern.
+                </p>
+              </article>
+              <article>
+                <span>03</span>
+                <h3><code>.github/copilot-instructions.md</code></h3>
+                <p>
+                  Use it for repository-wide GitHub Copilot behavior. Keep
+                  path-specific guidance in the supported path-scoped
+                  instruction surfaces rather than inflating the global file.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="evidence-section" id="rule">
+          <div class="page-shell evidence-layout">
+            <aside class="evidence-rail">
+              <p class="eyebrow">The durable rule</p>
+              <h2>Shared repository truth belongs in AGENTS.md.</h2>
+              <p>
+                Companion files adapt. They do not fork. A tool-specific file
+                may add harness behavior, but it should not quietly become a
+                second owner of setup commands, branch policy, or release gates.
+              </p>
+              <a class="text-link light" href="/agent-ready-instructions-pr/">
+                See the $249 scope &amp; proof <span aria-hidden="true">↗</span>
+              </a>
+            </aside>
+
+            <ol class="evidence-list">
+              <li>
+                <span>01</span>
+                <div>
+                  <h3>Name the canonical owner</h3>
+                  <p>For every repeated rule, choose one file or committed source as authoritative.</p>
+                </div>
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <h3>Make adapters visibly thin</h3>
+                  <p>Tool-specific files should point, import, or restate only the minimum needed for that harness.</p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <h3>Keep volatile facts out of copies</h3>
+                  <p>Commands, paths, versions, and release rules drift fastest; do not duplicate them casually.</p>
+                </div>
+              </li>
+              <li>
+                <span>04</span>
+                <div>
+                  <h3>Check the actual readers</h3>
+                  <p>A well-written file is useless when the intended agent never reads that path.</p>
+                </div>
+              </li>
+              <li>
+                <span>05</span>
+                <div>
+                  <h3>Fail honestly on missing evidence</h3>
+                  <p>Do not invent setup, test, deployment, or approval procedures merely to make guidance look complete.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="content-section" id="checklist">
+          <div class="page-shell">
+            <div class="section-intro compact">
+              <p class="eyebrow">Review before merge</p>
+              <h2>A five-minute drift check.</h2>
+            </div>
+            <ol class="process-list">
+              <li><span>01</span><h3>Paths resolve</h3><p>Every named file, directory, script, and documentation link exists at the reviewed revision.</p></li>
+              <li><span>02</span><h3>Commands are evidenced</h3><p>Setup and verification commands come from committed public sources, not convention or memory.</p></li>
+              <li><span>03</span><h3>Rules do not conflict</h3><p>Branch, commit, testing, release, and approval instructions agree across the files agents can read.</p></li>
+              <li><span>04</span><h3>One source owns change</h3><p>A future maintainer can tell where to edit each shared rule without updating three copies.</p></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="boundary-section" id="boundaries">
+          <div class="page-shell boundary-layout">
+            <div>
+              <p class="eyebrow">Keep sensitive facts outside the repository</p>
+              <h2>Instructions are not a secret store.</h2>
+              <p>
+                Never put secrets, private infrastructure, or undocumented commands
+                into public agent files. Describe the approval boundary, not the credential.
+              </p>
+              <a class="text-link light" href="/#preflight">
+                Run the free repository preflight <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <ul>
+              <li><span>✓</span> Public setup and verification evidence</li>
+              <li><span>✓</span> Repository ownership and review boundaries</li>
+              <li><span>✓</span> Explicit approval gates for risky actions</li>
+              <li><span>×</span> No credentials, tokens, private URLs, or customer data</li>
+              <li><span>×</span> No invented commands or implied production access</li>
+              <li><span>×</span> No security, legal, privacy, or compliance guarantees</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="content-section faq-section">
+          <div class="page-shell faq-layout">
+            <div class="section-intro compact">
+              <p class="eyebrow">Common decisions</p>
+              <h2>Direct answers.</h2>
+            </div>
+            <div class="faq-list">
+              <details>
+                <summary>Should CLAUDE.md duplicate AGENTS.md?</summary>
+                <p>Usually no. Keep shared repository facts canonical and add only Claude-specific behavior that another agent would not need.</p>
+              </details>
+              <details>
+                <summary>Can a repository use all three files?</summary>
+                <p>Yes, when each file has a distinct reader and responsibility. The problem is contradictory ownership, not the file count.</p>
+              </details>
+              <details>
+                <summary>Should undocumented commands be added as recommendations?</summary>
+                <p>No. Mark the evidence gap and ask a maintainer to establish the command in a canonical public source first.</p>
+              </details>
+              <details>
+                <summary>Does the free preflight execute repository code?</summary>
+                <p>No. WrightOps does not clone or execute the target repository. The browser reads public GitHub evidence only.</p>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="final-cta">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="page-shell">
+            <p class="eyebrow">One repository · one canonical rule set</p>
+            <h2>Check the evidence before adding another instruction file.</h2>
+            <p>
+              Start with the no-login public-repository preflight. If you want
+              a bounded two-file contribution, inspect the $249 service page,
+              sample, boundaries, and written-scope process before requesting work.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="/#preflight">
+                Run the free repository preflight <span aria-hidden="true">↗</span>
+              </a>
+              <a class="text-link light" href="/agent-ready-instructions-pr/">
+                See the $249 scope &amp; proof
+              </a>
+            </div>
+            <p class="hero-terms">
+              This guide is operational information, not a security, legal, privacy, or compliance assessment.
+            </p>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer>
+      <div class="page-shell footer-layout">
+        <a class="brand" href="/">
+          <span class="brand-mark">W</span>
+          <span><strong>WrightOps</strong><small>Evidence before automation</small></span>
+        </a>
+        <p>AI-operated public-repository engineering with a human-accountable owner.</p>
+        <div>
+          <a href="https://github.com/wrightops-ai">GitHub</a>
+          <a href="/agent-ready-instructions-pr/">$249 Instructions PR</a>
+          <a href="/#preflight">Free preflight</a>
+        </div>
+      </div>
+      <div class="page-shell footer-bottom">
+        <span>© 2026 WrightOps</span>
+        <span>Public repositories only · No secrets · No production access</span>
+      </div>
+    </footer>
+  </body>
+</html>
