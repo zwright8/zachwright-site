@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Platforms Need a Sunset Plan | zachwright.xyz</title>
+  <meta name="description" content="GitHub Models' shutdown clock, Astro DB's removal, Astro 7.1 controls, Projects retention, Kimi Code skills, and runtime defaults make platform lifecycle an operator-owned surface." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Platforms Need a Sunset Plan</h1>
+          <p>GitHub Models' shutdown clock, Astro DB's removal, Astro 7.1 controls, Projects retention, Kimi Code skills, and runtime defaults make platform lifecycle an operator-owned surface.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The operational unit is no longer only the launch; it is the supported-life window. Platform dependencies now arrive with brownouts, removal notices, replacement lanes, and migration boundaries that belong on the engineering calendar.</strong></p>
+          <p>GitHub Models is the sharpest current example: GitHub has scheduled full retirement for July 30, with a July 23 brownout and explicit directions toward Microsoft Foundry or Copilot. That is not a vague “please migrate someday” warning; it is a testable failure date.</p>
+          <p>Astro is making the same contract visible at the framework layer. The Astro DB integration was deprecated in 6.4 and removed in Astro 7, with the docs pointing users to third-party database libraries. The feature can be good, the migration path can be reasonable, and the dependency can still be a liability if nobody owns the exit.</p>
+          <ul>
+            <li><strong>GitHub Models retirement</strong> - schedule the July 23 brownout as a migration drill, then remove the dependency before July 30 rather than discovering it in production.
+            <a href="https://github.blog/changelog/2026-07-01-github-models-is-being-fully-retired-on-july-30-2026/">https://github.blog/changelog/2026-07-01-github-models-is-being-fully-retired-on-july-30-2026/</a></li>
+            <li><strong>Astro DB removal</strong> - the integration is gone from Astro 7; move to a third-party database library and pin the migration before a framework upgrade forces the issue.
+            <a href="https://docs.astro.build/en/guides/integrations-guide/db/">https://docs.astro.build/en/guides/integrations-guide/db/</a></li>
+            <li><strong>The operator move</strong> - every platform dependency needs an owner, an exit path, a last-known-good version, and a test date before it becomes a critical-path surprise.</li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Astro 7.1</strong> - add finer-grained CSP directives, format pagination URLs for the actual deploy target, run a deliberate second dev server with <code>--ignore-lock</code>, and lower content-collection memory with <code>deferRender</code>.
+            <a href="https://astro.build/blog/astro-710/">https://astro.build/blog/astro-710/</a></li>
+            <li><strong>GitHub Projects advanced search</strong> - combine <code>AND</code>, <code>OR</code>, and <code>reviews:</code> filters into one operational view, then export deployment evidence before the new 90-day retention window closes.
+            <a href="https://github.blog/changelog/2026-07-16-advanced-search-for-projects-is-generally-available/">https://github.blog/changelog/2026-07-16-advanced-search-for-projects-is-generally-available/</a></li>
+            <li><strong>Vercel Plugin in Kimi Code</strong> - install current Vercel, Next.js, and AI SDK skills on demand instead of baking platform assumptions into every agent session.
+            <a href="https://vercel.com/changelog/vercel-plugin-now-available-in-kimi-code-cli">https://vercel.com/changelog/vercel-plugin-now-available-in-kimi-code-cli</a></li>
+            <li><strong>Netlify Node.js 24 default</strong> - audit older sites explicitly: the new runtime default applies to new sites, while existing projects keep their pinned versions.
+            <a href="https://www.netlify.com/changelog/2026-07-07-nodejs-24-default-new-sites/">https://www.netlify.com/changelog/2026-07-07-nodejs-24-default-new-sites/</a></li>
+            <li><strong>Vercel Sandbox transfer boundary</strong> - package installs, Git clones, and dataset pulls are no longer charged as inbound Sandbox transfer; outbound traffic and compute still need a budget.
+            <a href="https://vercel.com/changelog/data-downloaded-by-vercel-sandbox-is-now-free">https://vercel.com/changelog/data-downloaded-by-vercel-sandbox-is-now-free</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Deprecation notices become a queue.</strong> Calendar the brownout, test the replacement, and put the cutover behind a flag before the vendor's final date.</li>
+            <li><strong>Defaults split the fleet.</strong> New projects can look healthy while older projects quietly carry unsupported runtimes or integrations, so inventory must be age-aware.</li>
+            <li><strong>Retention is part of observability.</strong> If a provider deletes deployment evidence after 90 days, audit history needs a customer-owned export before the clock starts.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Dependency</strong> - the dependency graph is funny until the platform removes the block everyone assumed would stay put.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/dependency.png">https://imgs.xkcd.com/comics/dependency.png</a><br>Post: <a href="https://xkcd.com/2347/">https://xkcd.com/2347/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

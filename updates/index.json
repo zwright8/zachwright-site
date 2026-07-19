@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-19",
+    "slug": "2026-07-19",
+    "title": "Swarm Daily: Platforms Need a Sunset Plan",
+    "url": "/updates/2026-07-19.html",
+    "preview": "GitHub Models' shutdown clock, Astro DB's removal, Astro 7.1 controls, Projects retention, Kimi Code skills, and runtime defaults make platform lifecycle an operator-owned surface."
+  },
+  {
     "date": "2026-07-18",
     "slug": "2026-07-18",
     "title": "Swarm Daily: Prompts Need a Build Pipeline",
