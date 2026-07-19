@@ -120,10 +120,10 @@ const engagementOptions = [
       "Human-reviewed findings",
       "Inspect-ready delivery package",
     ],
-    primaryLabel: "Scope the audit",
-    primaryHref: HUMAN_AUDIT_REQUEST_URL,
-    secondaryLabel: "See audit deliverables",
-    secondaryHref: HUMAN_AUDIT_LANDING_URL,
+    primaryLabel: "See the $750 scope & proof",
+    primaryHref: HUMAN_AUDIT_LANDING_URL,
+    secondaryLabel: "Review service terms",
+    secondaryHref: HUMAN_AUDIT_TERMS_URL,
     featured: false,
   },
   {
@@ -1059,8 +1059,8 @@ function FinalCta() {
           <PrimaryAction href="#preflight">
             Check a public repository
           </PrimaryAction>
-          <SecondaryAction href={INSTRUCTIONS_PR_REQUEST_URL}>
-            Request the $249 Instructions PR
+          <SecondaryAction href={INSTRUCTIONS_PR_LANDING_URL}>
+            See the $249 scope &amp; proof
           </SecondaryAction>
         </div>
       </Reveal>
