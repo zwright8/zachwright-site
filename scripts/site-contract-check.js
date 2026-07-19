@@ -151,6 +151,10 @@ const requiredAuditPageMarkers = [
   "not a vulnerability, security, privacy, legal, or",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-report-v1.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24750%20repository%20audit%20scope%20request",
+  "Email scope without GitHub",
+  "Do I need a GitHub account to request scope?",
+  "non-binding scope request",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
 ];
 
@@ -522,6 +526,15 @@ if (fixPlanScopeCtaCount < 3) {
   );
 }
 
+const auditEmailScopeCtaCount = (
+  auditPage.match(/mailto:zach@zachwright\.xyz\?subject=WrightOps%20%24750%20repository%20audit%20scope%20request/g) || []
+).length;
+if (auditEmailScopeCtaCount < 2) {
+  failures.push(
+    `Expected the $750 audit to expose at least two no-GitHub business-email scope paths; found ${auditEmailScopeCtaCount}.`,
+  );
+}
+
 const bountyFreeToolCtaCount = (
   bountyReviewPage.match(/https:\/\/wrightops-ai\.github\.io\/bounty-red-flag-card\//g) || []
 ).length;
@@ -585,6 +598,7 @@ console.log(
       costSampleMarkers: requiredCostSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
+      auditEmailScopeCtas: auditEmailScopeCtaCount,
       preflightCtas: preflightCtaCount,
       bountyFreeToolCtas: bountyFreeToolCtaCount,
       publicAssets: 13,
