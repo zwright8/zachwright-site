@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Quality Is Now a Budget Line | zachwright.xyz</title>
+  <meta name="description" content="GitHub Code Quality becomes a paid, metered product while repository-level Copilot metrics and AI security checks make code health measurable where agents work." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Quality Is Now a Budget Line</h1>
+          <p>GitHub Code Quality becomes a paid, metered product while repository-level Copilot metrics and AI security checks make code health measurable where agents work.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Code quality has crossed from an engineering aspiration into an operator-owned product surface: it has a price, a scope, a usage meter, and a repair loop.</strong></p>
+          <p>GitHub Code Quality moves from preview to general availability today at $10 per active committer per month on enabled repositories. That base license is only the first meter: AI-powered work adds usage-based charges, while deterministic CodeQL analysis consumes Actions minutes.</p>
+          <p>The practical move is to treat enablement like a portfolio decision. Define the repositories that deserve coverage, price the active-committer population, and capture a findings baseline before quality gates become a merge dependency. GitHub's new targeting controls let operators scope the rollout by custom properties, visibility, fork status, or manual selection, then enforce the choice.</p>
+          <ul>
+            <li><strong>Budget the surface</strong> - use the license estimate to see active committers before the bill arrives, then separate the subscription, AI-credit, and Actions-minute lines.
+            <a href="https://github.blog/changelog/2026-07-13-github-code-quality-license-estimate-in-public-preview/">https://github.blog/changelog/2026-07-13-github-code-quality-license-estimate-in-public-preview/</a></li>
+            <li><strong>Scope the fleet</strong> - target the production repositories first and keep experiments, forks, and dormant code from inflating the coverage bill.
+            <a href="https://github.blog/changelog/2026-07-09-organization-level-targeting-for-github-code-quality">https://github.blog/changelog/2026-07-09-organization-level-targeting-for-github-code-quality</a></li>
+            <li><strong>Measure the outcome</strong> - pair quality findings with repository-level Copilot PR activity so adoption is judged by shipped work and repair throughput, not prompt volume.
+            <a href="https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available">https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub Code Quality GA</strong> - enable the $10-per-active-committer baseline only where maintainability, reliability, coverage, and merge policy justify it; remember that AI work and Actions minutes are separate meters.
+            <a href="https://github.blog/changelog/2026-06-16-github-code-quality-generally-available-july-20-2026/">https://github.blog/changelog/2026-06-16-github-code-quality-generally-available-july-20-2026/</a></li>
+            <li><strong>Repository-level Copilot metrics</strong> - query daily enterprise or organization reports for Copilot coding-agent PRs and Copilot code-review activity by repository.
+            <a href="https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available">https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available</a></li>
+            <li><strong>Copilot app metrics</strong> - add app sessions, prompts, requests, and token usage to the same 1-day or 28-day API reports instead of tracking the desktop surface separately.
+            <a href="https://github.blog/changelog/2026-07-17-github-copilot-app-now-available-in-the-usage-metrics-api">https://github.blog/changelog/2026-07-17-github-copilot-app-now-available-in-the-usage-metrics-api</a></li>
+            <li><strong>AI security detections</strong> - surface broader vulnerability coverage directly in pull requests; AI findings are labeled, arrive before merge, and consume organization AI credits during preview.
+            <a href="https://github.blog/changelog/2026-07-14-code-scanning-shows-ai-security-detections-on-pull-requests/">https://github.blog/changelog/2026-07-14-code-scanning-shows-ai-security-detections-on-pull-requests/</a></li>
+            <li><strong>Copilot code review controls</strong> - test instructions from the head branch, define repo-specific setup in <code>copilot-code-review.yml</code>, and audit the default firewall; self-hosted runners remain outside that firewall boundary.
+            <a href="https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements">https://github.blog/changelog/2026-07-17-copilot-code-review-customization-and-configurability-improvements</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Quality is a portfolio decision.</strong> Repository selection and active-committer count are now direct budget levers, so “turn it on everywhere” is no longer a neutral default.</li>
+            <li><strong>Agent adoption needs a denominator.</strong> Repository-level PR activity makes it possible to compare AI usage with findings, merge outcomes, and time-to-repair instead of celebrating raw activity.</li>
+            <li><strong>Every check adds a meter.</strong> Teams need an owner and budget for AI credits, Actions minutes, and review capacity before a new signal is allowed to block shipping.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Code Quality</strong> - the metric is finally billable, but the codebase still has to explain itself.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/code_quality.png">https://imgs.xkcd.com/comics/code_quality.png</a><br>Post: <a href="https://xkcd.com/1513/">https://xkcd.com/1513/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
