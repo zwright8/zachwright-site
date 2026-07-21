@@ -37,6 +37,10 @@ const bountyReviewPage = fs.readFileSync(
   path.join(root, "public", "bounty-go-no-go-review", "index.html"),
   "utf8",
 );
+const bountyChecklistPage = fs.readFileSync(
+  path.join(root, "public", "coding-bounty-payout-checklist", "index.html"),
+  "utf8",
+);
 const costPage = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "index.html"),
   "utf8",
@@ -104,13 +108,15 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
   'const BOUNTY_REVIEW_LANDING_URL = "/bounty-go-no-go-review/"',
+  'const BOUNTY_CHECKLIST_URL = "/coding-bounty-payout-checklist/"',
   "See the $49 scope &amp; sample",
+  "Run the free payout checklist",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
   "Bounty GO/NO-GO Review",
   "reviews exactly one public bounty or listing",
   "No guaranteed payout or professional advice",
-  "GitHub sign-in is required to submit",
+  "No GitHub account is required on the full page",
   "Three business days after settled payment and complete public inputs",
 ];
 
@@ -152,6 +158,8 @@ const requiredAuditPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-report-v1.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24750%20repository%20audit%20scope%20request",
+  "Email scope without GitHub",
 ];
 
 const requiredCostPageMarkers = [
@@ -172,6 +180,8 @@ const requiredCostPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md",
   "Savings, reliability, revenue, or profit guarantees",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24495%20cost%20reliability%20scope%20request",
+  "Email scope without GitHub",
 ];
 
 const requiredInstructionsPageMarkers = [
@@ -190,10 +200,10 @@ const requiredInstructionsPageMarkers = [
   "No source, CI, test, dependency, or config changes",
   "No merge, adoption, savings, or outcome guarantee",
   "one revision round within seven days",
-  "<h3>Open a non-binding public request</h3>",
+  "<h3>Open a non-binding scope request</h3>",
   "<h3>Receive written scope</h3>",
   "After confirmation, email",
-  "GitHub sign-in is required to submit",
+  "Use the public GitHub form or business email",
   "Never include contact or payment",
   "personal or customer data",
   "mailto:zach@zachwright.xyz?subject=Agent-Ready%20Instructions%20PR%20scope%20confirmed",
@@ -220,6 +230,8 @@ const requiredInstructionsPageMarkers = [
   'href="/agents-md-vs-claude-md/"',
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24249%20instructions%20PR%20scope%20request",
+  "Email scope without GitHub",
 ];
 
 const requiredInstructionsGuideMarkers = [
@@ -261,7 +273,7 @@ const requiredFixPlanPageMarkers = [
   "acceptance check",
   "No implementation or repository changes",
   "not a vulnerability, security, privacy, legal, or compliance",
-  "GitHub sign-in is required to submit",
+  "Use the public GitHub form or business email",
   "Never include contact, private, payment, or transaction data",
   "does not create a contract or payment obligation",
   "scope before payment",
@@ -273,6 +285,8 @@ const requiredFixPlanPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24149%20fix%20plan%20scope%20request",
+  "Email audited scope without GitHub",
 ];
 
 const requiredBountyReviewPageMarkers = [
@@ -297,7 +311,7 @@ const requiredBountyReviewPageMarkers = [
   "No repository clone or code execution",
   "No legal, tax, financial, security, privacy, or compliance advice",
   "No eligibility, acceptance, merge, payment, profit, or outcome guarantee",
-  "GitHub sign-in is required to submit",
+  "Use the public GitHub form or business email",
   "Never include personal, private, credential, customer, wallet, or payment data",
   "does not create a contract or payment obligation",
   "Scope before payment",
@@ -306,6 +320,53 @@ const requiredBountyReviewPageMarkers = [
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20%2449%20bounty%20review%20scope%20request",
+  "Email scope without GitHub",
+  "Run the free no-login check",
+  'href="/coding-bounty-payout-checklist/"',
+];
+
+const requiredBountyChecklistMarkers = [
+  "<title>Coding Bounty Payout Checklist | WrightOps</title>",
+  'href="https://zachwright.xyz/coding-bounty-payout-checklist/"',
+  '"@type": "TechArticle"',
+  '"@type": "WebApplication"',
+  '"datePublished": "2026-07-21"',
+  'id="bounty-worksheet"',
+  'id="decision-output"',
+  'id="hours" min="0.25" step="0.25"',
+  "Check the payout evidence before you write the <em>code.</em>",
+  "No login · No tracking · No form submission",
+  "The tool stores and sends nothing",
+  "The reward is escrowed, prepaid, or independently verifiable",
+  "The person or system accepting delivery has evidenced payout authority",
+  "Objective acceptance criteria and a review or dispute path are public",
+  "The payout asset, fees, timing, and usable receipt rail are established",
+  "The worker must pay, deposit, bond, purchase, trade, or transfer funds",
+  "GO CANDIDATE",
+  "Paid-case net",
+  "payment-probability estimate",
+  "$399 advertised. $0.084841 available.",
+  "NO-GO. A proposal would not repair missing funds",
+  "Inputs remain in your browser",
+  "No GitHub account required",
+  "not provide vulnerability research, exploitation, security testing",
+  'href="/bounty-go-no-go-review/"',
+  "https://wrightops-ai.github.io/bounty-red-flag-card/",
+  "https://www.singularitymarketplace.com/docs/bounties/",
+  "https://support.upwork.com/hc/en-us/articles/35088484250003-Recognize-red-flags-and-avoid-scams",
+  "https://bounties.sh/faqs",
+  "0x38495C0a0F46DEFbc562cCd8CDd6a50adC100773",
+];
+
+const forbiddenBountyChecklistMarkers = [
+  "<form action=",
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
 ];
 
 const requiredCostSampleMarkers = [
@@ -350,6 +411,10 @@ const missingBountyReviewPage = missing(
   bountyReviewPage,
   requiredBountyReviewPageMarkers,
 );
+const missingBountyChecklistPage = missing(
+  bountyChecklistPage,
+  requiredBountyChecklistMarkers,
+);
 const missingCostPage = missing(costPage, requiredCostPageMarkers);
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
@@ -385,6 +450,18 @@ if (missingBountyReviewPage.length) {
   );
 }
 
+if (missingBountyChecklistPage.length) {
+  failures.push(
+    `Bounty checklist is missing: ${missingBountyChecklistPage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenBountyChecklistMarkers) {
+  if (bountyChecklistPage.includes(marker)) {
+    failures.push(`Bounty checklist must remain browser-local: ${marker}`);
+  }
+}
+
 if (missingCostPage.length) {
   failures.push(`Cost page is missing: ${missingCostPage.join(", ")}`);
 }
@@ -403,6 +480,7 @@ for (const marker of forbiddenMarkers) {
     instructionsGuidePage.includes(marker) ||
     fixPlanPage.includes(marker) ||
     bountyReviewPage.includes(marker) ||
+    bountyChecklistPage.includes(marker) ||
     costPage.includes(marker) ||
     costSample.includes(marker)
   ) {
@@ -488,6 +566,23 @@ if (!llms.includes(bountyReviewLandingUrl)) {
   failures.push("llms.txt is missing the bounty review landing page.");
 }
 
+const bountyChecklistUrl = "https://zachwright.xyz/coding-bounty-payout-checklist/";
+if (!sitemap.includes(bountyChecklistUrl)) {
+  failures.push("Sitemap is missing the coding bounty payout checklist.");
+}
+
+if (!llms.includes(bountyChecklistUrl)) {
+  failures.push("llms.txt is missing the coding bounty payout checklist.");
+}
+
+if (llms.includes("requires a GitHub sign-in") || llms.includes("requires GitHub sign-in")) {
+  failures.push("llms.txt must preserve the live no-GitHub business-email scope paths.");
+}
+
+if (!llms.includes("prefilled WrightOps business-email path")) {
+  failures.push("llms.txt is missing the business-email scope alternative.");
+}
+
 if (app.includes("mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit")) {
   failures.push("The $750 audit must use the structured public scope form, not email.");
 }
@@ -531,6 +626,7 @@ for (const file of [
   "agents-md-vs-claude-md/index.html",
   "agent-ready-fix-plan/index.html",
   "bounty-go-no-go-review/index.html",
+  "coding-bounty-payout-checklist/index.html",
   "ai-agent-cost-reliability-snapshot/index.html",
   "ai-agent-cost-reliability-snapshot/styles.css",
   "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
@@ -570,12 +666,14 @@ console.log(
       instructionsGuideMarkers: requiredInstructionsGuideMarkers.length,
       fixPlanPageMarkers: requiredFixPlanPageMarkers.length,
       bountyReviewPageMarkers: requiredBountyReviewPageMarkers.length,
+      bountyChecklistMarkers: requiredBountyChecklistMarkers.length,
+      bountyChecklistForbiddenMarkers: forbiddenBountyChecklistMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
-      publicAssets: 13,
+      publicAssets: 14,
     },
     null,
     2,

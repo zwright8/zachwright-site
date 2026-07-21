@@ -53,6 +53,7 @@ const BOUNTY_CARD_RELEASE_URL =
 const BOUNTY_REVIEW_REQUEST_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml";
 const BOUNTY_REVIEW_LANDING_URL = "/bounty-go-no-go-review/";
+const BOUNTY_CHECKLIST_URL = "/coding-bounty-payout-checklist/";
 const BOUNTY_REVIEW_SAMPLE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md";
 const BOUNTY_REVIEW_TERMS_URL =
@@ -877,12 +878,13 @@ function BountyReview() {
               <PrimaryAction href={BOUNTY_REVIEW_LANDING_URL}>
                 See the $49 scope &amp; sample
               </PrimaryAction>
-              <SecondaryAction href={BOUNTY_REVIEW_SAMPLE_URL}>
-                View sample report
+              <SecondaryAction href={BOUNTY_CHECKLIST_URL}>
+                Run the free payout checklist
               </SecondaryAction>
             </div>
             <p className="bounty-intake-note">
-              GitHub sign-in is required to submit. Review the{" "}
+              No GitHub account is required on the full page: choose the public
+              form or the WrightOps business-email path. Review the{" "}
               <ExternalLink href={BOUNTY_REVIEW_TERMS_URL}>
                 service and refund terms
               </ExternalLink>{" "}
@@ -1108,6 +1110,7 @@ function Footer() {
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
             <a href="/agents-md-vs-claude-md/">AGENTS.md file guide</a>
+            <a href={BOUNTY_CHECKLIST_URL}>Coding bounty payout checklist</a>
             <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
               Instructions PR terms
             </ExternalLink>

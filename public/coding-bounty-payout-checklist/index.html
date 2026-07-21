@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta
+      name="description"
+      content="A free browser-only coding-bounty payout checklist for checking funding, authority, competition, acceptance, fees, and paid-case hourly return before starting work."
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1"
+    />
+    <link
+      rel="canonical"
+      href="https://zachwright.xyz/coding-bounty-payout-checklist/"
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="WrightOps" />
+    <meta
+      property="og:title"
+      content="Coding Bounty Payout Checklist — Free GO/HOLD/NO-GO Tool"
+    />
+    <meta
+      property="og:description"
+      content="Check the payer, funding, acceptance path, competition, fees, and paid-case return before committing software work."
+    />
+    <meta
+      property="og:url"
+      content="https://zachwright.xyz/coding-bounty-payout-checklist/"
+    />
+    <meta property="og:image" content="https://zachwright.xyz/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="WrightOps — evidence before automation"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Coding Bounty Payout Checklist — Free GO/HOLD/NO-GO Tool"
+    />
+    <meta
+      name="twitter:description"
+      content="A browser-only evidence checklist for ordinary software bounties."
+    />
+    <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
+    <title>Coding Bounty Payout Checklist | WrightOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/agent-ready-repository-audit/styles.css" />
+    <link
+      rel="icon"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%23b7f34a"/><text x="50%25" y="53%25" dominant-baseline="middle" text-anchor="middle" fill="%230b1220" font-family="Georgia,serif" font-style="italic" font-size="38">W</text></svg>'
+    />
+    <style>
+      .worksheet {
+        display: grid;
+        gap: 1.5rem;
+        padding: clamp(1.25rem, 4vw, 2.5rem);
+        border: 1px solid var(--line, #d7dccd);
+        background: #fff;
+      }
+
+      .worksheet-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .worksheet label,
+      .worksheet legend {
+        color: #0b1220;
+        font-weight: 700;
+      }
+
+      .worksheet .number-field {
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      .worksheet input[type="number"] {
+        width: 100%;
+        min-height: 3rem;
+        padding: 0.7rem 0.8rem;
+        border: 1px solid #7c8571;
+        border-radius: 0;
+        background: #fff;
+        color: #0b1220;
+        font: inherit;
+      }
+
+      .worksheet fieldset {
+        display: grid;
+        gap: 0.75rem;
+        padding: 1.25rem;
+        border: 1px solid #c7cebb;
+      }
+
+      .worksheet legend {
+        padding: 0 0.4rem;
+      }
+
+      .check-row {
+        display: grid;
+        grid-template-columns: 1.25rem 1fr;
+        gap: 0.7rem;
+        align-items: start;
+        font-weight: 500 !important;
+        line-height: 1.45;
+      }
+
+      .check-row input {
+        width: 1.1rem;
+        height: 1.1rem;
+        margin-top: 0.18rem;
+        accent-color: #325c16;
+      }
+
+      .stop-gates {
+        border-color: #b05745 !important;
+        background: #fff8f5;
+      }
+
+      .worksheet-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        align-items: center;
+      }
+
+      .worksheet button {
+        border: 0;
+        cursor: pointer;
+      }
+
+      .decision-output {
+        display: grid;
+        gap: 0.7rem;
+        min-height: 9rem;
+        padding: 1.25rem;
+        border: 2px solid #0b1220;
+        background: #f4f7eb;
+      }
+
+      .decision-output[data-state="go"] {
+        border-color: #325c16;
+        background: #eff9dd;
+      }
+
+      .decision-output[data-state="hold"] {
+        border-color: #9b6912;
+        background: #fff7dc;
+      }
+
+      .decision-output[data-state="no-go"] {
+        border-color: #9d3328;
+        background: #fff0eb;
+      }
+
+      .decision-output strong {
+        font-size: clamp(1.4rem, 4vw, 2.2rem);
+      }
+
+      .decision-output p {
+        margin: 0;
+      }
+
+      .source-list {
+        display: grid;
+        gap: 0.7rem;
+        padding-left: 1.2rem;
+      }
+
+      @media (max-width: 760px) {
+        .worksheet-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "TechArticle",
+            "headline": "Coding bounty payout checklist",
+            "description": "An evidence-first checklist for deciding whether an ordinary software bounty is ready for work.",
+            "datePublished": "2026-07-21",
+            "dateModified": "2026-07-21",
+            "mainEntityOfPage": "https://zachwright.xyz/coding-bounty-payout-checklist/",
+            "author": {
+              "@type": "Organization",
+              "name": "WrightOps",
+              "url": "https://zachwright.xyz/"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "WrightOps",
+              "url": "https://zachwright.xyz/"
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "name": "Coding Bounty Payout Checklist",
+            "url": "https://zachwright.xyz/coding-bounty-payout-checklist/",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Any",
+            "browserRequirements": "Requires JavaScript; inputs remain in the browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <nav aria-label="Primary navigation" class="nav-shell">
+        <a aria-label="WrightOps home" class="brand" href="/">
+          <span class="brand-mark">W</span>
+          <span>
+            <strong>WrightOps</strong>
+            <small>Evidence before automation</small>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="#worksheet">Worksheet</a>
+          <a href="#hard-gates">Hard gates</a>
+          <a href="#example">Example</a>
+          <a href="#sources">Sources</a>
+        </div>
+        <a class="button button-small" href="/bounty-go-no-go-review/">
+          See the $49 review <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <article>
+        <section class="audit-hero">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="hero-orbit" aria-hidden="true"></div>
+          <div class="page-shell hero-layout">
+            <div class="audit-hero-copy">
+              <a class="back-link" href="/">← WrightOps field guides</a>
+              <p class="eyebrow">Free tool · ordinary software bounties only</p>
+              <h1>Check the payout evidence before you write the <em>code.</em></h1>
+              <p class="hero-lede">
+                A dollar amount in a listing is not proof of funding. Use eight
+                hard checks and a paid-case return calculation to separate a
+                work-ready coding bounty from a HOLD or NO-GO.
+              </p>
+              <div class="hero-actions">
+                <a class="button" href="#worksheet">
+                  Run the free checklist <span aria-hidden="true">↓</span>
+                </a>
+                <a
+                  class="text-link"
+                  href="https://wrightops-ai.github.io/bounty-red-flag-card/"
+                >
+                  Open the Red-Flag Card <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <p class="hero-terms">
+                No login · No tracking · No form submission · Inputs remain in your browser
+              </p>
+            </div>
+
+            <figure class="evidence-window">
+              <figcaption>
+                <span>Public listing / payout readiness</span>
+                <span class="window-status">HOLD</span>
+              </figcaption>
+              <div class="window-score">
+                <span>Hard checks</span>
+                <strong>8<span>/8</span></strong>
+              </div>
+              <dl class="window-checks">
+                <div>
+                  <dt>Funds reserved now</dt>
+                  <dd class="unknown"><span class="status-dot"></span>verify</dd>
+                </div>
+                <div>
+                  <dt>Acceptance authority</dt>
+                  <dd class="unknown"><span class="status-dot"></span>verify</dd>
+                </div>
+                <div>
+                  <dt>Claimant spend</dt>
+                  <dd><span class="status-dot"></span>$0</dd>
+                </div>
+                <div>
+                  <dt>Paid-case return</dt>
+                  <dd class="unknown"><span class="status-dot"></span>calculate</dd>
+                </div>
+              </dl>
+              <p class="window-revision">
+                rule <code>missing evidence stays unknown</code>
+              </p>
+              <a class="window-link" href="#hard-gates">
+                Inspect the hard gates <span aria-hidden="true">↓</span>
+              </a>
+            </figure>
+          </div>
+        </section>
+
+        <section class="summary-strip" aria-label="Checklist summary">
+          <div class="page-shell summary-grid">
+            <div><span>Inputs sent</span><strong>None</strong></div>
+            <div><span>Hard checks</span><strong>8</strong></div>
+            <div><span>Decisions</span><strong>GO / HOLD / NO-GO</strong></div>
+            <div><span>Price</span><strong>Free</strong></div>
+          </div>
+        </section>
+
+        <section class="content-section" id="worksheet">
+          <div class="page-shell">
+            <div class="section-intro">
+              <p class="eyebrow">Browser-only worksheet</p>
+              <h2>Evaluate one public coding bounty.</h2>
+              <p>
+                Confirm only what the public evidence proves. Leaving a box
+                unchecked means unknown—not false. The tool stores and sends nothing.
+              </p>
+            </div>
+
+            <form class="worksheet" id="bounty-worksheet" autocomplete="off">
+              <div class="worksheet-grid">
+                <label class="number-field" for="reward">
+                  Advertised reward (USD)
+                  <input id="reward" min="0" step="0.01" type="number" />
+                </label>
+                <label class="number-field" for="fee">
+                  Known fees (%)
+                  <input id="fee" min="0" max="100" step="0.01" type="number" value="0" />
+                </label>
+                <label class="number-field" for="hours">
+                  Estimated labor hours
+                  <input id="hours" min="0.25" step="0.25" type="number" />
+                </label>
+              </div>
+
+              <fieldset>
+                <legend>Confirmed public evidence</legend>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>The reward is escrowed, prepaid, or independently verifiable as reserved for this exact job.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>The person or system accepting delivery has evidenced payout authority.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>The job is open, available, and not already assigned, completed, or expired.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>Objective acceptance criteria and a review or dispute path are public.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>The payout asset, fees, timing, and usable receipt rail are established.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>Competition and winner count are visible enough to assess the paid case.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>The required access, hardware, accounts, and third-party dependencies are available.</span></label>
+                <label class="check-row"><input name="gate" type="checkbox" /> <span>Terms, contribution rights, scope, deadline, and revision limits are public and compatible.</span></label>
+              </fieldset>
+
+              <fieldset class="stop-gates">
+                <legend>Known stop conditions</legend>
+                <label class="check-row"><input id="claimant-spend" type="checkbox" /> <span>The worker must pay, deposit, bond, purchase, trade, or transfer funds to claim or complete the job.</span></label>
+                <label class="check-row"><input id="prohibited-scope" type="checkbox" /> <span>The job is prohibited, unauthorized, deceptive, regulated, security research, or otherwise outside the worker’s lawful scope.</span></label>
+              </fieldset>
+
+              <div class="worksheet-actions">
+                <button class="button" type="submit">Evaluate evidence</button>
+                <button class="text-link" id="reset-worksheet" type="reset">Reset worksheet</button>
+              </div>
+
+              <output
+                aria-live="polite"
+                class="decision-output"
+                data-state="idle"
+                id="decision-output"
+              >
+                <strong>READY TO CHECK</strong>
+                <p>Enter the paid-case numbers and confirm only evidenced gates.</p>
+                <p>No information leaves this page.</p>
+              </output>
+            </form>
+          </div>
+        </section>
+
+        <section class="evidence-section" id="hard-gates">
+          <div class="page-shell evidence-layout">
+            <aside class="evidence-rail">
+              <p class="eyebrow">Decision rule</p>
+              <h2>Missing funding is not a small detail.</h2>
+              <p>
+                If reserved funding, acceptance authority, or a usable payout
+                path cannot be verified, the rational state is HOLD. Do not
+                manufacture a payment probability to make the expected value look positive.
+              </p>
+              <a class="text-link light" href="/bounty-go-no-go-review/">
+                See the $49 evidence review <span aria-hidden="true">↗</span>
+              </a>
+            </aside>
+
+            <ol class="evidence-list">
+              <li><span>01</span><div><h3>Funding exists now</h3><p>An advertised reward is marketing. Escrow, a reserved processor balance, or job-specific on-chain funds are evidence.</p></div></li>
+              <li><span>02</span><div><h3>Authority is explicit</h3><p>Name who can accept delivery, reject it, release payment, resolve disputes, and change the deadline.</p></div></li>
+              <li><span>03</span><div><h3>The paid case survives costs</h3><p>Subtract known fees and divide by bounded labor hours. Call that paid-case hourly return—not expected value.</p></div></li>
+              <li><span>04</span><div><h3>Unknown stays unknown</h3><p>Competition, asset liquidity, rights, or acceptance gaps do not become favorable assumptions because the headline reward is large.</p></div></li>
+              <li><span>05</span><div><h3>Worker-funded claims stop</h3><p>A required deposit, bond, purchase, transfer, or trade changes a zero-capital job into a spend decision and a separate risk.</p></div></li>
+              <li><span>06</span><div><h3>Scope stays ordinary</h3><p>This checklist is for lawful software, documentation, data, design, and integration work—not vulnerability research or security testing.</p></div></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="content-section" id="example">
+          <div class="page-shell">
+            <div class="section-intro compact">
+              <p class="eyebrow">Worked public-evidence example</p>
+              <h2>$399 advertised. $0.084841 available.</h2>
+              <p>
+                Two public listings advertised $250 and $149 from the same
+                buyer. The buyer address held 0.084841 USDC, the platform said
+                there was no escrow and payment followed delivery, public legal
+                routes were absent, and prior completed records exposed no payout proof.
+              </p>
+            </div>
+            <ol class="process-list">
+              <li><span>01</span><h3>Headline reward</h3><p>$399 across two listings looked attractive before funding was checked.</p></li>
+              <li><span>02</span><h3>Buyer funds</h3><p>0.084841 USDC could not fund either advertised job.</p></li>
+              <li><span>03</span><h3>Delivery protection</h3><p>No escrow meant the worker would deliver before any documented settlement.</p></li>
+              <li><span>04</span><h3>Decision</h3><p>NO-GO. A proposal would not repair missing funds, legal allocation, or payout history.</p></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="boundary-section" id="sources">
+          <div class="page-shell boundary-layout">
+            <div>
+              <p class="eyebrow">Public source examples</p>
+              <h2>Good platforms make payment protection inspectable.</h2>
+              <p>
+                These third-party sources are examples, not endorsements. Apply
+                each platform’s current rules to that platform only.
+              </p>
+              <a
+                class="text-link light"
+                href="https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md"
+              >
+                Open the reusable Red-Flag Card <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <ul class="source-list">
+              <li><a href="https://www.singularitymarketplace.com/docs/bounties/">Singularity Marketplace bounty and escrow guide</a></li>
+              <li><a href="https://support.upwork.com/hc/en-us/articles/35088484250003-Recognize-red-flags-and-avoid-scams">Upwork guidance on funded milestones and free-work red flags</a></li>
+              <li><a href="https://bounties.sh/faqs">Bounties FAQ on public escrow and milestone funding</a></li>
+              <li><a href="https://base.blockscout.com/address/0x38495C0a0F46DEFbc562cCd8CDd6a50adC100773?tab=token_transfers">Public Base address used in the worked funding example</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="content-section faq-section">
+          <div class="page-shell faq-layout">
+            <div class="section-intro compact">
+              <p class="eyebrow">Common decisions</p>
+              <h2>Direct answers.</h2>
+            </div>
+            <div class="faq-list">
+              <details><summary>Do I need a GitHub account?</summary><p>No GitHub account required. The worksheet runs entirely in this page; only the optional paid-review intake offers GitHub and business-email routes.</p></details>
+              <details><summary>Is an on-chain balance the same as escrow?</summary><p>No. A wallet balance may show capacity, but it does not prove that funds are reserved for your job or that you can release them. Verify the exact payment mechanism.</p></details>
+              <details><summary>What if every check passes except acceptance criteria?</summary><p>HOLD. A funded reward without an objective passing condition can still become unpaid work.</p></details>
+              <details><summary>Does GO guarantee payment?</summary><p>No. GO means the public evidence clears the stated gates at the cutoff. It is not a payout, profit, or outcome guarantee.</p></details>
+              <details><summary>Does the worksheet save my bounty details?</summary><p>No. It has no submission endpoint, analytics call, storage API, cookie, or account requirement. Resetting or closing the page clears the inputs.</p></details>
+              <details><summary>Can this be used for bug bounties?</summary><p>No. WrightOps does not provide vulnerability research, exploitation, security testing, or security-bounty guidance. This page is for ordinary software work.</p></details>
+            </div>
+          </div>
+        </section>
+
+        <section class="final-cta">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="page-shell">
+            <p class="eyebrow">One listing · public evidence · bounded decision</p>
+            <h2>Still missing the fact that changes the decision?</h2>
+            <p>
+              The $49 WrightOps review checks one public coding bounty and
+              returns an evidence-linked GO, HOLD, or NO-GO report. Scope is
+              confirmed before payment, and work starts only after settlement.
+            </p>
+            <div class="hero-actions">
+              <a class="button" href="/bounty-go-no-go-review/">
+                See the $49 scope &amp; sample <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                class="text-link light"
+                href="https://wrightops-ai.github.io/bounty-red-flag-card/"
+              >
+                Run the free Red-Flag Card
+              </a>
+            </div>
+            <p class="hero-terms">
+              Operational information only · Not legal, tax, financial, investment, security, privacy, or compliance advice
+            </p>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer>
+      <div class="page-shell footer-layout">
+        <a class="brand" href="/">
+          <span class="brand-mark">W</span>
+          <span><strong>WrightOps</strong><small>Evidence before automation</small></span>
+        </a>
+        <p>AI-operated public-evidence engineering with a human-accountable owner.</p>
+        <div>
+          <a href="https://github.com/wrightops-ai">GitHub</a>
+          <a href="/bounty-go-no-go-review/">$49 evidence review</a>
+          <a href="https://wrightops-ai.github.io/bounty-red-flag-card/">Free Red-Flag Card</a>
+        </div>
+      </div>
+      <div class="page-shell footer-bottom">
+        <span>© 2026 WrightOps</span>
+        <span>Ordinary software work only · No secrets · No bounty execution</span>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const form = document.getElementById("bounty-worksheet");
+        const output = document.getElementById("decision-output");
+        const reset = document.getElementById("reset-worksheet");
+
+        const money = (value) =>
+          new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(value);
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const reward = Number(document.getElementById("reward").value);
+          const fee = Number(document.getElementById("fee").value);
+          const hours = Number(document.getElementById("hours").value);
+          const gates = Array.from(form.querySelectorAll('input[name="gate"]'));
+          const confirmed = gates.filter((gate) => gate.checked).length;
+          const knownStop =
+            document.getElementById("claimant-spend").checked ||
+            document.getElementById("prohibited-scope").checked;
+          const validNumbers =
+            Number.isFinite(reward) && reward > 0 &&
+            Number.isFinite(fee) && fee >= 0 && fee <= 100 &&
+            Number.isFinite(hours) && hours > 0;
+          const net = validNumbers ? reward * (1 - fee / 100) : 0;
+          const hourly = validNumbers ? net / hours : 0;
+
+          let state = "hold";
+          let title = "HOLD";
+          let explanation = `${confirmed} of 8 hard checks are confirmed. Verify every missing gate before starting work.`;
+
+          if (knownStop) {
+            state = "no-go";
+            title = "NO-GO";
+            explanation = "A known stop condition is present. Do not claim or begin the work.";
+          } else if (confirmed === gates.length && validNumbers) {
+            state = "go";
+            title = "GO CANDIDATE";
+            explanation = "All eight public-evidence gates are confirmed. Recheck freshness immediately before committing.";
+          } else if (!validNumbers) {
+            explanation = `${confirmed} of 8 hard checks are confirmed. Add a positive reward, bounded labor estimate, and fee from 0–100%.`;
+          }
+
+          output.dataset.state = state;
+          output.innerHTML = `
+            <strong>${title}</strong>
+            <p>${explanation}</p>
+            <p>${validNumbers ? `Paid-case net: ${money(net)} · paid-case hourly return: ${money(hourly)}/hour.` : "Paid-case return is not yet calculable."}</p>
+            <p>This is not a payment-probability estimate or outcome guarantee.</p>
+          `;
+        });
+
+        reset.addEventListener("click", () => {
+          output.dataset.state = "idle";
+          output.innerHTML = `
+            <strong>READY TO CHECK</strong>
+            <p>Enter the paid-case numbers and confirm only evidenced gates.</p>
+            <p>No information leaves this page.</p>
+          `;
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -35,6 +35,15 @@ Bounty GO/NO-GO Review request: https://github.com/wrightops-ai/bounty-red-flag-
 Bounty GO/NO-GO Review service page: https://zachwright.xyz/bounty-go-no-go-review/
 Bounty GO/NO-GO Review sample: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md
 Bounty GO/NO-GO Review terms: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md
+Coding bounty payout checklist: https://zachwright.xyz/coding-bounty-payout-checklist/
+
+Coding bounty payout checklist:
+- Free browser-only worksheet for ordinary software, documentation, data, design, and integration bounties.
+- Checks eight public-evidence gates: reserved funding, payout authority, availability, acceptance, payment rail, competition, dependencies, and terms.
+- Calculates net paid-case value and paid-case hourly return without inventing a payment probability.
+- Returns GO CANDIDATE, HOLD, or NO-GO; no payout or outcome is guaranteed.
+- No login, tracking, submission endpoint, cookie, or storage API; worksheet inputs remain in the browser.
+- Not for vulnerability research, exploitation, security testing, or security-bounty guidance.
 
 Bounty review:
 - $49 after written scope confirmation and payment.
@@ -42,7 +51,7 @@ Bounty review:
 - Exactly one public bounty or listing.
 - Evidence-backed GO, HOLD, or NO-GO recommendation.
 - One-business-day delivery after written scope confirmation and payment.
-- The public request form requires a GitHub sign-in.
+- Scope may be requested through the public GitHub form or a prefilled WrightOps business-email path; no GitHub account is required for the email path.
 - No guaranteed payout or professional advice.
 
 No-login repository preflight:
@@ -58,7 +67,7 @@ Agent-Ready Repo Fix Plan:
 - Exactly three human-reviewed fix cards, each with evidence, an exact path, a bounded change outline, an executable acceptance check, and limitations.
 - At most 45 minutes of human review; no implementation or repository changes.
 - One-business-day delivery after complete public inputs and provider-confirmed settled payment.
-- The public request is non-binding, collects no payment data, and requires GitHub sign-in.
+- The public request is non-binding, collects no payment data, and may use the GitHub form or a prefilled WrightOps business-email path.
 - WrightOps confirms written scope before the buyer uses the authorized PayPal Business Goods & Services checkout.
 
 Founding Agent-Ready Instructions PR:
@@ -70,6 +79,7 @@ Founding Agent-Ready Instructions PR:
 - Excludes application-code, CI, dependency, security, and deployment changes.
 - No review, merge, adoption, or business-outcome guarantee.
 - Written scope confirmation is required before payment.
+- Scope may be requested through the public GitHub form or a prefilled WrightOps business-email path; neither route creates a payment obligation.
 - WrightOps sends a private, dedicated PayPal Goods & Services checkout after confirmation; no public checkout is provided.
 - If WrightOps cannot deliver the scoped pull request, the full purchase price is refunded.
 
@@ -78,7 +88,7 @@ Human-reviewed Agent-Ready Repository Audit:
 - Dedicated service page: https://zachwright.xyz/agent-ready-repository-audit/
 - Evidence-linked Markdown and JSON reports, up to five priorities, and a 30-minute handoff.
 - Three-business-day delivery after provider-confirmed settled payment and complete public inputs.
-- The public scope form collects no contact or payment data and does not create a contract or payment obligation.
+- The public GitHub form or prefilled WrightOps business-email path collects public scope only and does not create a contract or payment obligation.
 - WrightOps confirms exact scope in writing before sharing the existing PayPal Business Goods & Services checkout.
 - Paid work begins only after provider-confirmed settlement.
 - No private data, credentials, production access, repository cloning, code execution, or security, privacy, legal, or compliance assessment.
@@ -88,7 +98,7 @@ AI Agent Cost & Reliability Snapshot:
 - Prompt-free JSONL or CSV only; no prompts, responses, tool payloads, credentials, direct identifiers, customer data, or production access.
 - Deterministic aggregate JSON and Markdown, up to five human-reviewed priorities, a 30-minute readout, and one factual correction round.
 - Three-business-day delivery after written scope confirmation, complete accepted inputs, and provider-confirmed settled payment.
-- The public scope form collects no run records, contact details, or payment data and does not create a contract or payment obligation.
+- The public GitHub form or prefilled WrightOps business-email path collects field names and scope only—not run records, values, prompts, outputs, or payment data—and does not create a contract or payment obligation.
 - Observational summary only; not causal attribution, billing reconciliation, implementation, professional advice, or a savings, reliability, revenue, or profit guarantee.
 
 Scope:
