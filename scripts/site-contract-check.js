@@ -386,6 +386,27 @@ const requiredBountyReviewPageMarkers = [
   "Email scope without GitHub",
   "Run the free no-login check",
   'href="/coding-bounty-payout-checklist/"',
+  'id="scope-builder"',
+  'id="bounty-scope-builder"',
+  'name="bounty-url"',
+  'name="payout"',
+  'name="deadline"',
+  'name="uncertainty"',
+  'name="authority"',
+  "Build a non-binding $49 scope request",
+  "Public HTTPS bounty or listing URL",
+  "Primary uncertainty to resolve",
+  "Open prefilled business email",
+  "Copy scope request",
+  "Nothing is uploaded or stored",
+  'role="group"',
+  "URL shape is checked locally",
+  "WrightOps verifies public access after receipt",
+  "ordinary-software review",
+  "no work before written scope and provider-confirmed settled payment",
+  "Prefer GitHub? Open the public request fallback",
+  "navigator.clipboard.writeText(scopeText)",
+  "window.location.href = buildMailto(scopeText)",
 ];
 
 const requiredBountyChecklistMarkers = [
@@ -700,6 +721,28 @@ for (const marker of [
 ]) {
   if (instructionsPage.includes(marker)) {
     failures.push(`The $249 scope builder must remain browser-local: ${marker}`);
+  }
+}
+
+const bountyScopeBuilderCtaCount = (
+  bountyReviewPage.match(/href="#scope-builder"/g) || []
+).length;
+if (bountyScopeBuilderCtaCount < 3) {
+  failures.push(
+    `Expected at least three $49 scope-builder CTAs; found ${bountyScopeBuilderCtaCount}.`,
+  );
+}
+
+for (const marker of [
+  "fetch(",
+  "localStorage",
+  "sessionStorage",
+  "<form",
+  'type="submit"',
+  'scopeBuilder.addEventListener("submit"',
+]) {
+  if (bountyReviewPage.includes(marker)) {
+    failures.push(`The $49 bounty scope builder must remain browser-local: ${marker}`);
   }
 }
 

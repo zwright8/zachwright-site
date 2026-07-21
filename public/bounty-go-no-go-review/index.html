@@ -88,9 +88,9 @@
         </div>
         <a
           class="button button-small"
-          href="https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml"
+          href="#scope-builder"
         >
-          Request scope <span aria-hidden="true">↗</span>
+          Build scope <span aria-hidden="true">↓</span>
         </a>
       </nav>
     </header>
@@ -112,9 +112,9 @@
             <div class="hero-actions">
               <a
                 class="button"
-                href="https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml"
+                href="#scope-builder"
               >
-                Request written scope <span aria-hidden="true">↗</span>
+                Build written scope <span aria-hidden="true">↓</span>
               </a>
               <a
                 class="text-link"
@@ -196,6 +196,111 @@
           <div>
             <span>Delivery</span>
             <strong>1 business day</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="scope-builder-section" id="scope-builder">
+        <div class="page-shell scope-builder-layout">
+          <div class="scope-builder-copy">
+            <p class="eyebrow">No account required</p>
+            <h2 id="scope-builder-heading">Build a non-binding $49 scope request.</h2>
+            <p>
+              Add one public HTTPS bounty or listing URL and public-only context.
+              URL shape is checked locally; WrightOps verifies public access after
+              receipt. The builder lets you copy the request or open it in your
+              email app addressed to the WrightOps business mailbox.
+            </p>
+            <ul>
+              <li><span>✓</span> Nothing is uploaded or stored</li>
+              <li><span>✓</span> No checkout or obligation</li>
+              <li><span>✓</span> GitHub request remains available as a fallback</li>
+            </ul>
+          </div>
+
+          <div
+            class="scope-builder-panel"
+            id="bounty-scope-builder"
+            role="group"
+            aria-labelledby="scope-builder-heading"
+          >
+            <label>
+              Public HTTPS bounty or listing URL
+              <input
+                name="bounty-url"
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                maxlength="2048"
+                placeholder="https://example.com/public-bounty"
+                required
+              />
+            </label>
+
+            <div class="scope-builder-fields">
+              <label>
+                Public payout amount and rail <span>(optional)</span>
+                <input
+                  name="payout"
+                  type="text"
+                  autocomplete="off"
+                  maxlength="120"
+                  placeholder="$300 via platform escrow"
+                />
+              </label>
+              <label>
+                Public deadline <span>(optional)</span>
+                <input
+                  name="deadline"
+                  type="text"
+                  autocomplete="off"
+                  maxlength="80"
+                  placeholder="2026-08-15 or none shown"
+                />
+              </label>
+            </div>
+
+            <label>
+              Primary uncertainty to resolve
+              <textarea
+                name="uncertainty"
+                rows="4"
+                maxlength="500"
+                placeholder="Example: the listing shows a payout, but I cannot tell whether funds are reserved or whether multiple winners are allowed."
+                required
+              ></textarea>
+            </label>
+
+            <label class="scope-builder-consent">
+              <input name="authority" type="checkbox" required />
+              <span>
+                I have authority to commission this ordinary-software review
+                and will provide public-only inputs.
+              </span>
+            </label>
+
+            <p class="scope-builder-privacy">
+              Never include credentials, payment details, private files,
+              personal data, customer data, wallet secrets, production access,
+              private bounty material, or regulated-work instructions. Nothing
+              is sent to WrightOps until you choose to send the generated email.
+            </p>
+
+            <div class="scope-builder-actions">
+              <button class="button" id="open-scope-email" type="button">
+                Open prefilled business email
+              </button>
+              <button class="scope-copy-button" id="copy-scope-request" type="button">
+                Copy scope request
+              </button>
+            </div>
+            <p class="scope-builder-status" id="scope-builder-status" role="status" aria-live="polite"></p>
+            <a
+              class="text-link"
+              href="https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml"
+            >
+              Prefer GitHub? Open the public request fallback <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
       </section>
@@ -433,9 +538,9 @@
           <div class="hero-actions">
             <a
               class="button"
-              href="https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml"
+              href="#scope-builder"
             >
-              Request $49 scope <span aria-hidden="true">↗</span>
+              Build the $49 scope <span aria-hidden="true">↑</span>
             </a>
             <a
               class="text-link light"
@@ -478,5 +583,98 @@
         <span>Public evidence only · No secrets · No bounty execution</span>
       </div>
     </footer>
+    <script>
+      (() => {
+        const scopeBuilder = document.querySelector("#bounty-scope-builder");
+        const getControl = (name) => scopeBuilder.querySelector(`[name="${name}"]`);
+        const getValue = (name) => String(getControl(name).value || "").trim();
+        const bountyUrlInput = getControl("bounty-url");
+        const uncertaintyInput = getControl("uncertainty");
+        const authorityInput = getControl("authority");
+        const openEmailButton = document.querySelector("#open-scope-email");
+        const copyButton = document.querySelector("#copy-scope-request");
+        const status = document.querySelector("#scope-builder-status");
+
+        const validateBountyUrl = () => {
+          bountyUrlInput.setCustomValidity("");
+          try {
+            const url = new URL(bountyUrlInput.value);
+            const isPublicHttpsShape =
+              url.protocol === "https:" &&
+              !url.username &&
+              !url.password &&
+              url.hostname.includes(".") &&
+              url.pathname !== "/";
+            if (!isPublicHttpsShape) {
+              throw new Error("not a public HTTPS bounty or listing URL shape");
+            }
+          } catch {
+            bountyUrlInput.setCustomValidity(
+              "Enter a public HTTPS bounty or listing URL. WrightOps verifies public access after receipt.",
+            );
+          }
+        };
+
+        const buildScopeText = () => {
+          const payout = getValue("payout") || "Not supplied";
+          const deadline = getValue("deadline") || "Not supplied";
+          return [
+            "WrightOps $49 bounty GO/NO-GO review scope request",
+            "",
+            `Public bounty or listing URL (public access to be verified): ${getValue("bounty-url")}`,
+            `Public payout amount and rail: ${payout}`,
+            `Public deadline: ${deadline}`,
+            `Primary uncertainty to resolve: ${getValue("uncertainty")}`,
+            "",
+            "I confirm I have authority to commission this ordinary-software review and will provide public-only inputs.",
+            "",
+            "I understand this is a non-binding scope request, not a payment or authorization to start work.",
+            "",
+            "I understand WrightOps will verify public access after receipt, send written scope before checkout, and begin no work before written scope and provider-confirmed settled payment.",
+            "",
+            "Do not include credentials, payment details, private files, personal data, customer data, wallet secrets, production access, private bounty material, security work, regulated work, or work that requires legal, tax, financial, privacy, or compliance advice.",
+          ].join("\n");
+        };
+
+        const buildMailto = (scopeText) => {
+          const subject = "WrightOps $49 bounty review scope request";
+          return `mailto:zach@zachwright.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(scopeText)}`;
+        };
+
+        const buildValidScope = () => {
+          validateBountyUrl();
+          for (const control of [bountyUrlInput, uncertaintyInput, authorityInput]) {
+            if (!control.checkValidity()) {
+              control.reportValidity();
+              status.textContent = "Complete the public HTTPS URL, uncertainty, and authority fields.";
+              return null;
+            }
+          }
+          status.textContent = "";
+          return buildScopeText();
+        };
+
+        openEmailButton.addEventListener("click", () => {
+          const scopeText = buildValidScope();
+          if (scopeText) {
+            status.textContent = "Opening your email app. Review the request before sending.";
+            window.location.href = buildMailto(scopeText);
+          }
+        });
+
+        copyButton.addEventListener("click", async () => {
+          const scopeText = buildValidScope();
+          if (!scopeText) return;
+          try {
+            await navigator.clipboard.writeText(scopeText);
+            status.textContent = "Scope request copied. Send it to zach@zachwright.xyz when ready.";
+          } catch {
+            status.textContent = "Clipboard access is unavailable. Use the prefilled business email button.";
+          }
+        });
+
+        bountyUrlInput.addEventListener("input", () => bountyUrlInput.setCustomValidity(""));
+      })();
+    </script>
   </body>
 </html>
