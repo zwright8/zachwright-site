@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-21",
+    "slug": "2026-07-21",
+    "title": "Swarm Daily: Feedback Needs a Runtime",
+    "url": "/updates/2026-07-21.html",
+    "preview": "Slack-native agent feedback, delivered-email previews, PR quality gates, and usage metrics move correction into the execution surface."
+  },
+  {
     "date": "2026-07-20",
     "slug": "2026-07-20",
     "title": "Swarm Daily: Quality Is Now a Budget Line",

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Feedback Needs a Runtime | zachwright.xyz</title>
+  <meta name="description" content="Slack-native agent feedback, delivered-email previews, PR quality gates, and usage metrics move correction into the execution surface." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Feedback Needs a Runtime</h1>
+          <p>Slack-native agent feedback, delivered-email previews, PR quality gates, and usage metrics move correction into the execution surface.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The useful shift is from shipping an AI output and inspecting it later to putting previews, reactions, quality gates, and usage signals inside the surface where the work runs.</strong></p>
+          <p>Vercel's Chat SDK now gives Slack agents streamed replies, task and plan cards, suggested prompts, and thumbs-up/down feedback in the conversation. Cloudflare's Email Service Activity log can show the exact delivered HTML, text, headers, attachments, and raw message. GitHub Code Quality puts AI-assisted findings, coverage, ruleset gates, and Autofix in the pull request. The common move is operational: make the correction cheap enough to happen before the next action, not after a separate archaeology pass.</p>
+          <ul>
+            <li>Chat SDK's Slack adapter supports native streaming, suggested prompts, task and plan cards, and feedback buttons.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-native-slack-agent-support">https://vercel.com/changelog/chat-sdk-adds-native-slack-agent-support</a></li>
+            <li>Cloudflare Email Service now previews the exact sent message from Activity logs, including rendered HTML, text, headers, attachments, and raw RFC 5322.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-17-email-message-preview/">https://developers.cloudflare.com/changelog/post/2026-07-17-email-message-preview/</a></li>
+            <li>GitHub Code Quality is generally available with PR findings, coverage metrics, quality gates, APIs, and Copilot Autofix.
+            <a href="https://github.blog/changelog/2026-07-20-github-code-quality-is-now-generally-available/">https://github.blog/changelog/2026-07-20-github-code-quality-is-now-generally-available/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Chat SDK Slack adapter</strong> - configure <code>createSlackAdapter</code> with <code>agentView</code>, suggested prompts, loading messages, and <code>feedbackButtons</code> so the channel can grade the agent without leaving the thread.
+            <a href="https://vercel.com/changelog/chat-sdk-adds-native-slack-agent-support">https://vercel.com/changelog/chat-sdk-adds-native-slack-agent-support</a></li>
+            <li><strong>Cloudflare Email preview</strong> - enable preview on the sending domain, then inspect the rendered artifact and raw message in Activity logs; previews are retained for about seven days.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-17-email-message-preview/">https://developers.cloudflare.com/changelog/post/2026-07-17-email-message-preview/</a></li>
+            <li><strong>GitHub Code Quality</strong> - combine PR findings, Cobertura coverage, ruleset gates, and Copilot Autofix; use evaluate mode before turning thresholds into merge blockers.
+            <a href="https://github.blog/changelog/2026-07-20-github-code-quality-is-now-generally-available/">https://github.blog/changelog/2026-07-20-github-code-quality-is-now-generally-available/</a></li>
+            <li><strong>Copilot usage metrics API</strong> - add <code>daily_active_copilot_app_users</code> and <code>totals_by_copilot_app</code>, then use repository-level reports to find where coding-agent and code-review work actually lands.
+            <a href="https://github.blog/changelog/2026-07-17-github-copilot-app-now-available-in-the-usage-metrics-api/">https://github.blog/changelog/2026-07-17-github-copilot-app-now-available-in-the-usage-metrics-api/</a>
+            <a href="https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available/">https://github.blog/changelog/2026-07-17-repository-level-github-copilot-usage-metrics-generally-available/</a></li>
+            <li><strong>Secret scanning webhook categories</strong> - route <code>secret_scanning_alert</code> events by <code>secret_category</code> instead of maintaining a local detector-type map.
+            <a href="https://github.blog/changelog/2026-07-15-improvements-to-secret-scanning-and-public-monitoring/">https://github.blog/changelog/2026-07-15-improvements-to-secret-scanning-and-public-monitoring/</a></li>
+            <li><strong>Vercel Sandbox downloads</strong> - package installs, repo clones, and dataset pulls no longer count as Sandbox data transfer; outbound traffic and exposed-port traffic remain billable.
+            <a href="https://vercel.com/changelog/data-downloaded-by-vercel-sandbox-is-now-free">https://vercel.com/changelog/data-downloaded-by-vercel-sandbox-is-now-free</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Feedback is part of the runtime contract.</strong> If a user must leave the work surface to grade the output, the loop is already too slow.</li>
+            <li><strong>Previews are debugging primitives.</strong> Seeing the exact rendered artifact closes the gap between “delivered” and “correct.”</li>
+            <li><strong>Quality gates need a calibration mode.</strong> Evaluate-first rollout lets teams learn the false-positive rate before feedback becomes a merge blocker.</li>
+            <li><strong>Usage data should follow the work unit.</strong> Org-wide adoption can look healthy while one repository or channel absorbs the cost and correction burden.</li>
+            <li><strong>Interfaces are becoming telemetry.</strong> Reactions, task cards, quality comments, and webhook categories turn human judgment into data that the next run can use.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Feedback</strong> - the product team adds one button for feedback, and suddenly the users have a new full-time job.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/feedback.png">https://imgs.xkcd.com/comics/feedback.png</a><br>Post: <a href="https://xkcd.com/1457/">https://xkcd.com/1457/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
