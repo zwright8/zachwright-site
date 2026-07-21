@@ -25,6 +25,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://zachwright.xyz/agents-md-starter-template/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://zachwright.xyz/agent-ready-fix-plan/</loc>
     <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>

@@ -1,0 +1,117 @@
+.starter-hero {
+  min-height: auto;
+}
+
+.starter-window {
+  align-self: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(7, 12, 21, 0.86);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.3);
+}
+
+.starter-window figcaption,
+.starter-window footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  color: #d9e0e9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.starter-window footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 0;
+}
+
+.starter-window pre {
+  max-height: 28rem;
+  margin: 0;
+  overflow: auto;
+  padding: 1.35rem;
+  color: #f4f6f8;
+  background: #070c15;
+  font: 0.76rem/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre;
+}
+
+.copy-button {
+  min-height: 2.5rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  color: #0b1220;
+  background: #b7f34a;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.copy-button:hover {
+  background: #c9ff68;
+}
+
+.copy-status {
+  min-height: 1.4em;
+  color: #b7f34a;
+}
+
+.starter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 2rem;
+  background: #dbe1e8;
+  border: 1px solid #dbe1e8;
+}
+
+.starter-grid article {
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  background: #fff;
+}
+
+.starter-grid span {
+  color: #4f7906;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.starter-grid h3 {
+  margin: 0.8rem 0 0.65rem;
+  font-size: 1.05rem;
+}
+
+.starter-grid p {
+  margin: 0;
+  color: #4d5b6c;
+  line-height: 1.75;
+}
+
+.template-notice {
+  margin: 2rem 0 0;
+  padding: 1rem 1.15rem;
+  border-left: 0.25rem solid #b7f34a;
+  color: #d9e0e9;
+  background: rgba(255, 255, 255, 0.06);
+  line-height: 1.7;
+}
+
+@media (max-width: 860px) {
+  .starter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

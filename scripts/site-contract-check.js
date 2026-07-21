@@ -29,6 +29,14 @@ const instructionsGuidePath = path.join(
 const instructionsGuidePage = fs.existsSync(instructionsGuidePath)
   ? fs.readFileSync(instructionsGuidePath, "utf8")
   : "";
+const instructionsStarterPage = fs.readFileSync(
+  path.join(root, "public", "agents-md-starter-template", "index.html"),
+  "utf8",
+);
+const instructionsStarterFile = fs.readFileSync(
+  path.join(root, "public", "agents-md-starter-template", "AGENTS.md"),
+  "utf8",
+);
 const fixPlanPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-fix-plan", "index.html"),
   "utf8",
@@ -97,6 +105,7 @@ const requiredAppMarkers = [
   "Three business days after settled payment and accepted prompt-free inputs",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
   'href="/agents-md-vs-claude-md/"',
+  'href="/agents-md-starter-template/"',
   "Agent-Ready Instructions PR",
   "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
   "delivering exactly two repository-specific instruction files",
@@ -254,6 +263,41 @@ const requiredInstructionsGuideMarkers = [
   "AI-operated public-repository engineering with a human-accountable owner",
   'href="/agent-ready-instructions-pr/"',
   'href="/#preflight"',
+  'href="/agents-md-starter-template/"',
+];
+
+const requiredInstructionsStarterMarkers = [
+  "<title>Free AGENTS.md Starter Template | WrightOps</title>",
+  'href="https://zachwright.xyz/agents-md-starter-template/"',
+  '"@type": "TechArticle"',
+  '"datePublished": "2026-07-21"',
+  "Start AGENTS.md with <em>evidence, not guesses.</em>",
+  "No login · No tracking · No form submission · No repository code execution",
+  "Generic starting point only.",
+  'id="copy-template"',
+  'id="template-source"',
+  'href="/agents-md-starter-template/AGENTS.md" download',
+  "Download AGENTS.md",
+  "No invented setup or verification commands",
+  "does not inspect a repository, execute code, validate commands",
+  "security, legal, privacy, or compliance assessment",
+  'href="/agent-ready-instructions-pr/"',
+  "$249 Agent-Ready Instructions PR",
+  "Scope before payment",
+];
+
+const requiredInstructionsStarterFileMarkers = [
+  "# Repository instructions",
+  "## Repository map",
+  "## Working agreements",
+  "## Setup",
+  "[verified setup command]",
+  "## Verification",
+  "[verified test, lint, typecheck, or build command]",
+  "## Change boundaries",
+  "Ask before destructive, irreversible, production, credentialed, or paid actions.",
+  "Report missing evidence instead of guessing",
+  "## Completion",
 ];
 
 const requiredFixPlanPageMarkers = [
@@ -406,6 +450,14 @@ const missingInstructionsGuidePage = missing(
   instructionsGuidePage,
   requiredInstructionsGuideMarkers,
 );
+const missingInstructionsStarterPage = missing(
+  instructionsStarterPage,
+  requiredInstructionsStarterMarkers,
+);
+const missingInstructionsStarterFile = missing(
+  instructionsStarterFile,
+  requiredInstructionsStarterFileMarkers,
+);
 const missingFixPlanPage = missing(fixPlanPage, requiredFixPlanPageMarkers);
 const missingBountyReviewPage = missing(
   bountyReviewPage,
@@ -437,6 +489,18 @@ if (missingInstructionsPage.length) {
 if (missingInstructionsGuidePage.length) {
   failures.push(
     `Instructions guide is missing: ${missingInstructionsGuidePage.join(", ")}`,
+  );
+}
+
+if (missingInstructionsStarterPage.length) {
+  failures.push(
+    `Instructions starter page is missing: ${missingInstructionsStarterPage.join(", ")}`,
+  );
+}
+
+if (missingInstructionsStarterFile.length) {
+  failures.push(
+    `Instructions starter file is missing: ${missingInstructionsStarterFile.join(", ")}`,
   );
 }
 
@@ -478,6 +542,8 @@ for (const marker of forbiddenMarkers) {
     auditPage.includes(marker) ||
     instructionsPage.includes(marker) ||
     instructionsGuidePage.includes(marker) ||
+    instructionsStarterPage.includes(marker) ||
+    instructionsStarterFile.includes(marker) ||
     fixPlanPage.includes(marker) ||
     bountyReviewPage.includes(marker) ||
     bountyChecklistPage.includes(marker) ||
@@ -533,6 +599,15 @@ if (!sitemap.includes(instructionsGuideUrl)) {
 
 if (!llms.includes(instructionsGuideUrl)) {
   failures.push("llms.txt is missing the AGENTS.md comparison guide.");
+}
+
+const instructionsStarterUrl = "https://zachwright.xyz/agents-md-starter-template/";
+if (!sitemap.includes(instructionsStarterUrl)) {
+  failures.push("Sitemap is missing the free AGENTS.md starter template.");
+}
+
+if (!llms.includes(instructionsStarterUrl)) {
+  failures.push("llms.txt is missing the free AGENTS.md starter template.");
 }
 
 if (!llms.includes(auditLandingUrl)) {

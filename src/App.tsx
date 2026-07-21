@@ -1110,6 +1110,7 @@ function Footer() {
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
             <a href="/agents-md-vs-claude-md/">AGENTS.md file guide</a>
+            <a href="/agents-md-starter-template/">AGENTS.md starter template</a>
             <a href={BOUNTY_CHECKLIST_URL}>Coding bounty payout checklist</a>
             <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
               Instructions PR terms
