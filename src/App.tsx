@@ -40,6 +40,7 @@ const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/";
 const INSTRUCTIONS_PR_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml";
 const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/";
+const AGENTS_STARTER_URL = "/agents-md-starter-template/";
 const INSTRUCTIONS_PR_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md";
 const INSTRUCTIONS_PR_SAMPLE_URL =
@@ -396,6 +397,13 @@ function Hero() {
               See the $249 Instructions PR <span aria-hidden="true">↓</span>
             </a>
           </div>
+
+          <p className="hero-starter-prompt">
+            Need a safe starting file?{" "}
+            <a className="hero-starter-link" href={AGENTS_STARTER_URL}>
+              Copy the free AGENTS.md starter <Arrow />
+            </a>
+          </p>
 
           <ul className="scope-pills" aria-label="Service boundaries" role="list">
             <li>Public repos only</li>
@@ -1110,7 +1118,7 @@ function Footer() {
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
             <a href="/agents-md-vs-claude-md/">AGENTS.md file guide</a>
-            <a href="/agents-md-starter-template/">AGENTS.md starter template</a>
+            <a href={AGENTS_STARTER_URL}>AGENTS.md starter template</a>
             <a href={BOUNTY_CHECKLIST_URL}>Coding bounty payout checklist</a>
             <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
               Instructions PR terms

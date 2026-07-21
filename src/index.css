@@ -377,6 +377,29 @@ section[id] {
   border-color: var(--signal);
 }
 
+.hero-starter-prompt {
+  margin: 1rem 0 0;
+  color: #9fabb9;
+  font-size: 0.84rem;
+}
+
+.hero-starter-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #e5eaf0;
+  border-bottom: 1px solid rgba(183, 243, 74, 0.5);
+  font-weight: 700;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.hero-starter-link:hover {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
 .scope-pills {
   display: flex;
   margin-top: 2.25rem;
