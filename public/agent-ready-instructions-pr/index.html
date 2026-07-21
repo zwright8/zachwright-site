@@ -88,7 +88,7 @@
         </div>
         <a
           class="button button-small"
-          href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml"
+          href="#scope-builder"
         >
           Request scope <span aria-hidden="true">↗</span>
         </a>
@@ -114,9 +114,9 @@
             <div class="hero-actions">
               <a
                 class="button"
-                href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml"
+                href="#scope-builder"
               >
-                Request written scope <span aria-hidden="true">↗</span>
+                Build written scope <span aria-hidden="true">↓</span>
               </a>
               <a
                 class="text-link"
@@ -195,6 +195,106 @@
           <div>
             <span>Delivery</span>
             <strong>1 business day</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="scope-builder-section" id="scope-builder">
+        <div class="page-shell scope-builder-layout">
+          <div class="scope-builder-copy">
+            <p class="eyebrow">No account required</p>
+            <h2 id="scope-builder-heading">Build a non-binding scope request.</h2>
+            <p>
+              Add a GitHub repository URL and public-only context. URL shape is checked locally;
+              WrightOps verifies public access after receipt. The builder then lets you copy the
+              request or open it in your email app addressed to the WrightOps business mailbox.
+            </p>
+            <ul>
+              <li><span>✓</span> Nothing is uploaded or stored</li>
+              <li><span>✓</span> No checkout or obligation</li>
+              <li><span>✓</span> GitHub remains available as a fallback</li>
+            </ul>
+          </div>
+
+          <div
+            class="scope-builder-panel"
+            id="instructions-scope-builder"
+            role="group"
+            aria-labelledby="scope-builder-heading"
+          >
+            <label>
+              Public GitHub repository URL
+              <input
+                name="repository"
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                placeholder="https://github.com/owner/repository"
+                required
+              />
+            </label>
+
+            <div class="scope-builder-fields">
+              <label>
+                Immutable revision <span>(optional)</span>
+                <input
+                  name="revision"
+                  type="text"
+                  autocomplete="off"
+                  maxlength="64"
+                  placeholder="Commit SHA or tag"
+                />
+              </label>
+              <label>
+                Companion file
+                <select name="companion" required>
+                  <option value="">Select one</option>
+                  <option value="root CLAUDE.md">Root CLAUDE.md</option>
+                  <option value=".github/copilot-instructions.md">.github/copilot-instructions.md</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              Public workflow or pain to address
+              <textarea
+                name="workflow"
+                rows="4"
+                maxlength="500"
+                placeholder="Example: agents repeatedly guess the wrong test command."
+                required
+              ></textarea>
+            </label>
+
+            <label class="scope-builder-consent">
+              <input name="authority" type="checkbox" required />
+              <span>
+                I have authority to commission this public-repository pull
+                request and will provide public-only inputs.
+              </span>
+            </label>
+
+            <p class="scope-builder-privacy">
+              Never include credentials, payment details, private files,
+              personal or customer data, or production access. Nothing is sent
+              to WrightOps until you choose to send the generated email.
+            </p>
+
+            <div class="scope-builder-actions">
+              <button class="button" id="open-scope-email" type="button">
+                Open prefilled business email
+              </button>
+              <button class="scope-copy-button" id="copy-scope-request" type="button">
+                Copy scope request
+              </button>
+            </div>
+            <p class="scope-builder-status" id="scope-builder-status" role="status" aria-live="polite"></p>
+            <a
+              class="text-link"
+              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml"
+            >
+              Prefer GitHub? Open the public request form <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
       </section>
@@ -484,9 +584,9 @@
           <div class="hero-actions">
             <a
               class="button"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml"
+              href="#scope-builder"
             >
-              Request the $249 scope <span aria-hidden="true">↗</span>
+              Build the $249 scope <span aria-hidden="true">↑</span>
             </a>
             <a
               class="text-link light"
@@ -521,5 +621,103 @@
         <span>Public repositories only · No secrets · No production access</span>
       </div>
     </footer>
+    <script>
+      (() => {
+        const scopeBuilder = document.querySelector("#instructions-scope-builder");
+        const getControl = (name) => scopeBuilder.querySelector(`[name="${name}"]`);
+        const getValue = (name) => String(getControl(name).value || "").trim();
+        const repositoryInput = getControl("repository");
+        const companionInput = getControl("companion");
+        const workflowInput = getControl("workflow");
+        const authorityInput = getControl("authority");
+        const openEmailButton = document.querySelector("#open-scope-email");
+        const copyButton = document.querySelector("#copy-scope-request");
+        const status = document.querySelector("#scope-builder-status");
+
+        const validateRepository = () => {
+          repositoryInput.setCustomValidity("");
+          try {
+            const url = new URL(repositoryInput.value);
+            const pathParts = url.pathname.split("/").filter(Boolean);
+            const isRepository =
+              url.protocol === "https:" &&
+              url.hostname === "github.com" &&
+              pathParts.length === 2 &&
+              !url.search &&
+              !url.hash;
+            if (!isRepository) {
+              throw new Error("not a public GitHub repository URL");
+            }
+          } catch {
+            repositoryInput.setCustomValidity(
+              "Enter a public repository URL in the form https://github.com/owner/repository.",
+            );
+          }
+        };
+
+        const buildScopeText = () => {
+          const revision = getValue("revision") || "Not supplied; revalidate the current default branch";
+          return [
+            "WrightOps $249 instructions PR scope request",
+            "",
+            `Repository URL (public access to be verified): ${getValue("repository")}`,
+            `Immutable revision: ${revision}`,
+            `Companion file: ${getValue("companion")}`,
+            `Public workflow or pain: ${getValue("workflow")}`,
+            "",
+            "I confirm I have authority to commission this pull request and will provide public-only inputs.",
+            "",
+            "I understand this is a non-binding scope request, not a payment or authorization to start work.",
+            "",
+            "Do not include credentials, payment details, private files, personal data, customer data, or production access.",
+          ].join("\n");
+        };
+
+        const buildMailto = (scopeText) => {
+          const subject = "WrightOps $249 instructions PR scope request";
+          return `mailto:zach@zachwright.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(scopeText)}`;
+        };
+
+        const buildValidScope = () => {
+          validateRepository();
+          const requiredControls = [
+            repositoryInput,
+            companionInput,
+            workflowInput,
+            authorityInput,
+          ];
+          for (const control of requiredControls) {
+            if (!control.checkValidity()) {
+              control.reportValidity();
+              status.textContent = "Complete the repository, companion, workflow, and authority fields.";
+              return null;
+            }
+          }
+          status.textContent = "";
+          return buildScopeText();
+        };
+
+        openEmailButton.addEventListener("click", () => {
+          const scopeText = buildValidScope();
+          if (scopeText) {
+            status.textContent = "Opening your email app. Review the request before sending.";
+            window.location.href = buildMailto(scopeText);
+          }
+        });
+
+        copyButton.addEventListener("click", async () => {
+          const scopeText = buildValidScope();
+          if (!scopeText) return;
+          try {
+            await navigator.clipboard.writeText(scopeText);
+            status.textContent = "Scope request copied. Send it to zach@zachwright.xyz when ready.";
+          } catch {
+            status.textContent = "Clipboard access is unavailable. Use the prefilled business email button.";
+          }
+        });
+
+        repositoryInput.addEventListener("input", () => repositoryInput.setCustomValidity(""));
+      })();
+    </script>
   </body>
 </html>

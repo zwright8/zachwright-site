@@ -242,6 +242,23 @@ const requiredInstructionsPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
   "mailto:zach@zachwright.xyz?subject=WrightOps%20%24249%20instructions%20PR%20scope%20request",
   "Email scope without GitHub",
+  'id="scope-builder"',
+  'id="instructions-scope-builder"',
+  'name="repository"',
+  'name="revision"',
+  'name="companion"',
+  'name="workflow"',
+  'name="authority"',
+  "Build a non-binding scope request",
+  "Open prefilled business email",
+  "Copy scope request",
+  "Nothing is uploaded or stored",
+  'role="group"',
+  'id="open-scope-email"',
+  "URL shape is checked locally",
+  "WrightOps verifies public access after receipt",
+  "navigator.clipboard.writeText(scopeText)",
+  "window.location.href = buildMailto(scopeText)",
 ];
 
 const requiredInstructionsGuideMarkers = [
@@ -662,6 +679,28 @@ if (!llms.includes("prefilled WrightOps business-email path")) {
 
 if (app.includes("mailto:${CONTACT_EMAIL}?subject=Agent-Ready%20Repository%20Audit")) {
   failures.push("The $750 audit must use the structured public scope form, not email.");
+}
+
+const instructionsScopeBuilderCtaCount = (
+  instructionsPage.match(/href="#scope-builder"/g) || []
+).length;
+if (instructionsScopeBuilderCtaCount < 3) {
+  failures.push(
+    `Expected at least three $249 scope-builder CTAs; found ${instructionsScopeBuilderCtaCount}.`,
+  );
+}
+
+for (const marker of [
+  "fetch(",
+  "localStorage",
+  "sessionStorage",
+  "<form",
+  'type="submit"',
+  'scopeForm.addEventListener("submit"',
+]) {
+  if (instructionsPage.includes(marker)) {
+    failures.push(`The $249 scope builder must remain browser-local: ${marker}`);
+  }
 }
 
 const auditCtaCount = (app.match(/href=\{AUDIT_REQUEST_URL\}/g) || []).length;

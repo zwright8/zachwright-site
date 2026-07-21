@@ -560,6 +560,209 @@ h1 em {
   line-height: 1.45;
 }
 
+.scope-builder-section {
+  padding: clamp(5rem, 9vw, 8rem) 0;
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+  background: var(--signal);
+}
+
+.scope-builder-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(28rem, 1fr);
+  align-items: start;
+  gap: clamp(3rem, 8vw, 8rem);
+}
+
+.scope-builder-copy {
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+}
+
+.scope-builder-copy .eyebrow {
+  color: #365605;
+}
+
+.scope-builder-copy h2 {
+  max-width: 38rem;
+  margin: 0;
+  font-size: clamp(2.8rem, 5.8vw, 5.8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.94;
+}
+
+.scope-builder-copy > p:not(.eyebrow) {
+  max-width: 36rem;
+  margin: 1.5rem 0 0;
+  color: #263416;
+  font-size: 0.94rem;
+  line-height: 1.75;
+}
+
+.scope-builder-copy ul {
+  display: grid;
+  margin: 2rem 0 0;
+  padding: 0;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.scope-builder-copy li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.scope-builder-copy li span {
+  display: grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--signal);
+  background: var(--midnight);
+  font-size: 0.7rem;
+}
+
+.scope-builder-panel {
+  display: grid;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  gap: 1.35rem;
+  border: 1px solid rgba(11, 18, 32, 0.16);
+  background: var(--paper);
+  box-shadow: 1.25rem 1.25rem 0 rgba(11, 18, 32, 0.12);
+}
+
+.scope-builder-panel label:not(.scope-builder-consent) {
+  display: grid;
+  gap: 0.55rem;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.scope-builder-panel label span {
+  color: var(--slate);
+  font-weight: 600;
+}
+
+.scope-builder-panel input,
+.scope-builder-panel select,
+.scope-builder-panel textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #b9c2cc;
+  border-radius: 0;
+  color: var(--ink);
+  background: #fbfcfd;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.scope-builder-panel input,
+.scope-builder-panel select {
+  min-height: 3.2rem;
+  padding: 0.8rem 0.9rem;
+}
+
+.scope-builder-panel textarea {
+  min-height: 7rem;
+  padding: 0.9rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.scope-builder-panel input::placeholder,
+.scope-builder-panel textarea::placeholder {
+  color: #7d8895;
+}
+
+.scope-builder-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+}
+
+.scope-builder-consent {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 1.25rem 1fr;
+  gap: 0.75rem;
+  color: #303d4d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.scope-builder-consent input {
+  width: 1.1rem;
+  min-height: 1.1rem;
+  margin: 0.12rem 0 0;
+  padding: 0;
+  accent-color: var(--midnight);
+}
+
+.scope-builder-privacy {
+  margin: 0;
+  padding: 1rem;
+  color: #4c5867;
+  border-left: 3px solid var(--signal);
+  background: #f1f5e9;
+  font-size: 0.73rem;
+  line-height: 1.6;
+}
+
+.scope-builder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.scope-builder-actions button {
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.scope-builder-actions .button {
+  color: #fff;
+  background: var(--midnight);
+}
+
+.scope-builder-actions .button:hover {
+  color: var(--midnight);
+  background: var(--signal);
+}
+
+.scope-builder-actions .scope-copy-button {
+  min-height: 3.25rem;
+  padding: 0.9rem 1.2rem;
+  color: var(--midnight);
+  border: 1px solid var(--midnight);
+  background: transparent;
+}
+
+.scope-builder-actions .scope-copy-button:hover {
+  color: #fff;
+  background: var(--midnight);
+}
+
+.scope-builder-status {
+  min-height: 1.25rem;
+  margin: -0.4rem 0 0;
+  color: #365605;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
 .content-section {
   padding: clamp(5.5rem, 9vw, 9rem) 0;
   background: var(--cloud);
@@ -1026,7 +1229,8 @@ footer {
 @media (max-width: 1050px) {
   .hero-layout,
   .evidence-layout,
-  .boundary-layout {
+  .boundary-layout,
+  .scope-builder-layout {
     grid-template-columns: 1fr;
   }
 
@@ -1039,6 +1243,10 @@ footer {
   }
 
   .evidence-rail {
+    position: static;
+  }
+
+  .scope-builder-copy {
     position: static;
   }
 
@@ -1156,6 +1364,19 @@ footer {
   .summary-grid,
   .deliverable-lines {
     grid-template-columns: 1fr;
+  }
+
+  .scope-builder-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .scope-builder-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scope-builder-actions button {
+    width: 100%;
   }
 
   .summary-grid > div,
