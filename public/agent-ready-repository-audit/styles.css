@@ -627,11 +627,16 @@ h1 em {
 
 .scope-builder-panel {
   display: grid;
+  min-width: 0;
   padding: clamp(1.5rem, 4vw, 3rem);
   gap: 1.35rem;
   border: 1px solid rgba(11, 18, 32, 0.16);
   background: var(--paper);
   box-shadow: 1.25rem 1.25rem 0 rgba(11, 18, 32, 0.12);
+}
+
+.scope-builder-panel > * {
+  min-width: 0;
 }
 
 .scope-builder-panel label:not(.scope-builder-consent) {
@@ -1060,6 +1065,7 @@ h1 em {
 
 .boundary-layout h2 {
   max-width: 34rem;
+  overflow-wrap: anywhere;
 }
 
 .boundary-layout > div > p:not(.eyebrow) {
@@ -1231,7 +1237,7 @@ footer {
   .evidence-layout,
   .boundary-layout,
   .scope-builder-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-layout {

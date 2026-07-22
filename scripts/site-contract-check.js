@@ -338,6 +338,37 @@ const requiredFixPlanPageMarkers = [
   "Use the public GitHub form or business email",
   "Never include contact, private, payment, or transaction data",
   "does not create a contract or payment obligation",
+  "Self-serve scope confirmation",
+  'id="scope-builder"',
+  'id="fix-plan-scope-builder"',
+  'name="repository"',
+  'name="audit-issue"',
+  'name="pain"',
+  'name="authority"',
+  'name="fixed-scope"',
+  'name="ordinary-software"',
+  'name="payment-terms"',
+  "No contract, checkout, payment, or work starts before successful automated confirmation",
+  "Confirm $149 fixed scope",
+  "Copy order-note reference",
+  "WrightOps fixed $149 scope is confirmed",
+  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
+  "https://api.github.com",
+  "/repos/${parsed.repository.owner}/${parsed.repository.repo}",
+  "/repos/${AUDIT_REPO_OWNER}/${AUDIT_REPO_NAME}/issues/${parsed.auditIssue.number}",
+  "comments?per_page=100",
+  "application/vnd.github+json",
+  "launch-verification",
+  "excluded from demand metrics",
+  "This report was automatically generated from one immutable public GitHub snapshot.",
+  "Evidence score",
+  "github-actions[bot]",
+  'comment.user.type === "Bot"',
+  'comment.performed_via_github_app.slug === "github-actions"',
+  'comment.performed_via_github_app.owner.login === "github"',
+  "navigator.clipboard.writeText(note)",
+  "checkoutLink.href = PAYPAL_CHECKOUT_URL",
+  "checkoutLink.removeAttribute(\"href\")",
   "scope before payment",
   "full purchase-price refund",
   "WrightOps absorbs that cost",
@@ -473,7 +504,6 @@ const forbiddenMarkers = [
   "AI Operator Kit",
   "Repository Remediation Sprint",
   "$1,500",
-  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
   "https://github.com/StoneCypher/fsl/issues/1491#issuecomment-5012788530",
 ];
 
@@ -772,6 +802,82 @@ if (fixPlanScopeCtaCount < 3) {
   failures.push(
     `Expected the Fix Plan offer to preserve at least three audited-buyer scope paths; found ${fixPlanScopeCtaCount}.`,
   );
+}
+
+const fixPlanScopeBuilderCtaCount = (
+  fixPlanPage.match(/href="#scope-builder"/g) || []
+).length;
+if (fixPlanScopeBuilderCtaCount < 2) {
+  failures.push(
+    `Expected the Fix Plan offer to expose at least two self-serve confirmation paths; found ${fixPlanScopeBuilderCtaCount}.`,
+  );
+}
+
+for (const marker of [
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "navigator.sendBeacon",
+  "XMLHttpRequest",
+  "<form",
+  'type="submit"',
+  "Authorization",
+  "Bearer ",
+  "checkoutLink.click",
+  "window.open(PAYPAL_CHECKOUT_URL",
+  "window.location.href = PAYPAL_CHECKOUT_URL",
+  "location.assign(PAYPAL_CHECKOUT_URL",
+  "location.replace(PAYPAL_CHECKOUT_URL",
+]) {
+  if (fixPlanPage.includes(marker)) {
+    failures.push(`The Fix Plan checkout gate must not use unsafe browser behavior: ${marker}`);
+  }
+}
+
+if (!fixPlanPage.includes('data-checkout-url="https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG"')) {
+  failures.push("The Fix Plan PayPal checkout must be present only as a gated data URL.");
+}
+
+if (
+  !fixPlanPage.includes('aria-disabled="true"') ||
+  !/id="paypal-checkout-panel"[\s\S]{0,80}hidden/.test(fixPlanPage)
+) {
+  failures.push("The Fix Plan PayPal checkout must start hidden and disabled.");
+}
+
+if (!fixPlanPage.includes("fetch(url, {")) {
+  failures.push("The Fix Plan gate must use the centralized unauthenticated fetch wrapper.");
+}
+
+for (const marker of [
+  '!url.port',
+  '!url.pathname.includes("%")',
+  'labels.includes("audit-request")',
+  'startsWith("[Audit request]")',
+  'issueBodySection(issueBody, "Public repository")',
+  "AUTOMATED_REPORT_SENTENCE",
+  '.slice(0, 140)',
+]) {
+  if (!fixPlanPage.includes(marker)) {
+    failures.push(`The Fix Plan evidence gate is missing a strict verifier: ${marker}`);
+  }
+}
+
+for (const looseMarker of [
+  'combinedTextLower.includes("audit-request")',
+  '"Agent-Ready Repository Audit",',
+  '.slice(0, 500)',
+]) {
+  if (fixPlanPage.includes(looseMarker)) {
+    failures.push(`The Fix Plan evidence gate still contains a loose verifier: ${looseMarker}`);
+  }
+}
+
+if (
+  !fixPlanPage.includes("cache: \"no-store\"") ||
+  !fixPlanPage.includes("Accept: \"application/vnd.github+json\"")
+) {
+  failures.push("The Fix Plan gate must keep GitHub checks unauthenticated and no-store.");
 }
 
 for (const file of [
