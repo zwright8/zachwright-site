@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agents Need an Execution Envelope | zachwright.xyz</title>
+  <meta name="description" content="Purchases, isolated sandboxes, scoped connectors, regional run state, and per-request model lanes turn agent autonomy into a bounded operating unit." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agents Need an Execution Envelope</h1>
+          <p>Purchases, isolated sandboxes, scoped connectors, regional run state, and per-request model lanes turn agent autonomy into a bounded operating unit.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Agents are moving from reading and drafting into running code, touching business systems, and completing purchases. The operator-grade unit is no longer a prompt or a tool call; it is an execution envelope.</strong></p>
+          <p>Vercel MCP can now quote a one-time or recurring price and complete a purchase only after confirmation. Cloudflare's Devin Outposts gives each session its own isolated sandbox backed by Cloudflare Containers. Vercel Connect supplies the missing middle: attached services with short-lived, scoped tokens. The pattern is clear: autonomy scales when the agent has a defined place to run, a bounded credential, durable state, and an explicit commit boundary.</p>
+          <ul>
+            <li>Vercel MCP can upgrade teams, add credits, buy the SIEM add-on, and register domains; it explains pricing and requires billing access plus confirmation before the charge.
+            <a href="https://vercel.com/changelog/vercel-mcp-now-supports-purchases">https://vercel.com/changelog/vercel-mcp-now-supports-purchases</a></li>
+            <li>Devin Outposts runs each Devin session in an isolated Cloudflare-backed sandbox so development tooling and code execution do not share an undifferentiated host.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-21-devin-outposts/">https://developers.cloudflare.com/changelog/post/2026-07-21-devin-outposts/</a></li>
+            <li>Vercel Connect now offers preset connectors for 90+ services and short-lived scoped tokens, including a Shopify example limited to <code>write_products</code>.
+            <a href="https://vercel.com/changelog/vercel-connect-preset-connectors">https://vercel.com/changelog/vercel-connect-preset-connectors</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Regional workflow state</strong> - update the Workflow SDK, then pass <code>{ region: 'sfo1' }</code> to <code>start()</code> so state, queue dispatch, and output streams stay in one home region for the run.
+            <a href="https://vercel.com/changelog/configure-where-run-state-lives-in-vercel-workflows">https://vercel.com/changelog/configure-where-run-state-lives-in-vercel-workflows</a></li>
+            <li><strong>Scoped business connectors</strong> - create a preset connector, attach it to the project and environment, then call <code>getToken</code> with the smallest useful scope; a preset configures setup but does not register the app with the provider.
+            <a href="https://vercel.com/changelog/vercel-connect-preset-connectors">https://vercel.com/changelog/vercel-connect-preset-connectors</a></li>
+            <li><strong>AI Gateway service tiers</strong> - use <code>priority</code> for interactive work, <code>flex</code> for latency-tolerant background jobs, and <code>default</code> for the standard lane; the tier changes billing as well as throughput.
+            <a href="https://vercel.com/changelog/service-tiers-now-available-on-ai-gateway">https://vercel.com/changelog/service-tiers-now-available-on-ai-gateway</a></li>
+            <li><strong>Model lanes</strong> - route longer-horizon coding to Gemini 3.6 Flash or Laguna S 2.1, and scoped subagent work to Gemini 3.5 Flash-Lite; all three are available through production-facing gateway surfaces.
+            <a href="https://github.blog/changelog/2026-07-21-gemini-3-6-flash-is-now-available-in-github-copilot/">https://github.blog/changelog/2026-07-21-gemini-3-6-flash-is-now-available-in-github-copilot/</a>
+            <a href="https://vercel.com/changelog/gemini-3-6-flash-3-5-flash-lite-on-ai-gateway">https://vercel.com/changelog/gemini-3-6-flash-3-5-flash-lite-on-ai-gateway</a>
+            <a href="https://vercel.com/changelog/laguna-s-2-1-is-now-available-on-ai-gateway">https://vercel.com/changelog/laguna-s-2-1-is-now-available-on-ai-gateway</a></li>
+            <li><strong>Runtime and identity maintenance</strong> - Vercel's Python bytecode bundling cuts median cold starts from 2.8s to 1.3s, while Cloudflare's Permission Groups migration requires remapping persisted legacy role IDs.
+            <a href="https://vercel.com/changelog/python-function-bundles-now-include-precompiled-bytecode">https://vercel.com/changelog/python-function-bundles-now-include-precompiled-bytecode</a>
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-21-account-role-api-deprecated/">https://developers.cloudflare.com/changelog/post/2026-07-21-account-role-api-deprecated/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Permission without placement is incomplete.</strong> An agent needs an execution location, tenancy boundary, token scope, and expiration path—not just an allow/deny bit.</li>
+            <li><strong>Human approval is becoming a protocol event.</strong> Price, recurrence, billing authority, and confirmation belong in the action contract, with a receipt after the commit.</li>
+            <li><strong>Latency and locality are policy knobs.</strong> A home region and a service tier turn geography, queue time, and model spend into per-step configuration instead of after-the-fact tuning.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Authorization</strong> - every connected account is convenient until the agent discovers the one admin lock that still matters.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/authorization.png">https://imgs.xkcd.com/comics/authorization.png</a><br>Post: <a href="https://xkcd.com/1200/">https://xkcd.com/1200/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-22",
+    "slug": "2026-07-22",
+    "title": "Swarm Daily: Agents Need an Execution Envelope",
+    "url": "/updates/2026-07-22.html",
+    "preview": "Purchases, isolated sandboxes, scoped connectors, regional run state, and per-request model lanes turn agent autonomy into a bounded operating unit."
+  },
+  {
     "date": "2026-07-21",
     "slug": "2026-07-21",
     "title": "Swarm Daily: Feedback Needs a Runtime",
