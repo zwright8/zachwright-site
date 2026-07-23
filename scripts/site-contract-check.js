@@ -874,6 +874,12 @@ for (const looseMarker of [
 }
 
 if (
+  !/\.scope-builder-status\s*\{[^}]*overflow-wrap:\s*anywhere;/s.test(auditCss)
+) {
+  failures.push("The Fix Plan status must wrap immutable evidence on narrow screens.");
+}
+
+if (
   !fixPlanPage.includes("cache: \"no-store\"") ||
   !fixPlanPage.includes("Accept: \"application/vnd.github+json\"")
 ) {
