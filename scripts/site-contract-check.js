@@ -75,6 +75,9 @@ const requiredAppMarkers = [
   'id="repository-url"',
   "runRepositoryPreflight(repository)",
   "No-login quick preflight",
+  "window.location.hash.slice(1)",
+  "window.requestAnimationFrame",
+  'target.scrollIntoView({ block: "start" })',
   "no account, clone, code execution, or WrightOps data storage",
   "Qualified implementation gap",
   "Request $249 scope",
@@ -184,6 +187,9 @@ const requiredAuditPageMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
   "mailto:zach@zachwright.xyz?subject=WrightOps%20%24750%20repository%20audit%20scope%20request",
   "Email scope without GitHub",
+  'href="/#preflight"',
+  "Run preflight to scope",
+  "Request scope on GitHub",
 ];
 
 const requiredCostPageMarkers = [
@@ -821,6 +827,37 @@ const auditTermsCtaCount = (
 if (auditTermsCtaCount < 2) {
   failures.push(
     `Expected at least two $750 terms paths; found ${auditTermsCtaCount}.`,
+  );
+}
+
+const auditPagePreflightCtaCount = (
+  auditPage.match(/href="\/#preflight"/g) || []
+).length;
+if (auditPagePreflightCtaCount < 3) {
+  failures.push(
+    `Expected at least three dedicated $750 page routes to the no-login preflight; found ${auditPagePreflightCtaCount}.`,
+  );
+}
+
+const auditPageGitHubScopeCtaCount = (
+  auditPage.match(
+    /href="https:\/\/github\.com\/wrightops-ai\/agent-ready-repo-auditor\/issues\/new\?template=human-audit-scope-request\.yml"/g,
+  ) || []
+).length;
+if (auditPageGitHubScopeCtaCount < 2) {
+  failures.push(
+    `Expected at least two dedicated $750 GitHub scope fallbacks; found ${auditPageGitHubScopeCtaCount}.`,
+  );
+}
+
+const auditPageEmailScopeCtaCount = (
+  auditPage.match(
+    /href="mailto:zach@zachwright\.xyz\?subject=WrightOps%20%24750%20repository%20audit%20scope%20request/g,
+  ) || []
+).length;
+if (auditPageEmailScopeCtaCount < 2) {
+  failures.push(
+    `Expected at least two dedicated $750 business-email scope fallbacks; found ${auditPageEmailScopeCtaCount}.`,
   );
 }
 

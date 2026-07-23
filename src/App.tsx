@@ -4,7 +4,7 @@ import {
   domAnimation,
   m,
 } from "framer-motion";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 
 import {
   RepositoryPreflightError,
@@ -1296,6 +1296,22 @@ function Footer() {
 }
 
 export default function App() {
+  useEffect(() => {
+    const targetId = window.location.hash.slice(1);
+    if (!targetId) {
+      return;
+    }
+
+    const target = document.getElementById(targetId);
+    if (!target) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ block: "start" });
+    });
+  }, []);
+
   return (
     <MotionConfig reducedMotion="user">
       <LazyMotion features={domAnimation}>
