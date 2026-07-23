@@ -796,10 +796,16 @@ section[id] {
   color: var(--signal);
 }
 
+.preflight-result-head > div {
+  min-width: 0;
+}
+
 .preflight-result-head a {
   display: inline-flex;
+  max-width: 100%;
   align-items: center;
   gap: 0.55rem;
+  overflow-wrap: anywhere;
   font-size: clamp(1.25rem, 2.6vw, 2.1rem);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -1019,6 +1025,161 @@ section[id] {
   text-align: center;
 }
 
+.audit-scope-builder {
+  display: grid;
+  padding: clamp(1.4rem, 3.5vw, 2.5rem);
+  border: 1px solid var(--line-light);
+  border-top: 0;
+  background: var(--cloud);
+  grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 0.6fr);
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.audit-scope-builder h3,
+.audit-scope-builder p {
+  margin: 0;
+}
+
+.audit-scope-builder .eyebrow {
+  margin-bottom: 0.65rem;
+  color: #4e740b;
+}
+
+.audit-scope-builder h3 {
+  max-width: 36rem;
+  color: var(--midnight);
+  font-size: clamp(1.35rem, 2.7vw, 2.2rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.audit-scope-builder > div > p:last-child {
+  max-width: 39rem;
+  margin-top: 0.8rem;
+  color: var(--slate);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.audit-scope-form {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+}
+
+.audit-scope-form label {
+  margin-top: 0.25rem;
+  color: var(--midnight);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.audit-scope-form textarea,
+.audit-scope-form select {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  color: var(--midnight);
+  border: 1px solid #aeb8c3;
+  border-radius: 0;
+  background: var(--paper);
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.audit-scope-form textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.audit-scope-form textarea:focus,
+.audit-scope-form select:focus {
+  border-color: var(--midnight);
+}
+
+.audit-authority {
+  display: grid;
+  margin-top: 0.35rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.55rem;
+}
+
+.audit-authority input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--signal);
+}
+
+.audit-authority label {
+  margin: 0;
+  color: var(--slate);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.audit-scope-form > p {
+  color: var(--slate);
+  font-size: 0.68rem;
+  line-height: 1.55;
+}
+
+.audit-scope-actions {
+  display: grid;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.audit-scope-actions button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1rem;
+  color: var(--midnight);
+  border: 1px solid var(--signal);
+  background: var(--signal);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.audit-scope-actions button:hover:not(:disabled) {
+  background: var(--signal-bright);
+  transform: translateY(-2px);
+}
+
+.audit-scope-actions button:disabled {
+  color: #667283;
+  border-color: var(--line-light);
+  background: #e8ecf0;
+  cursor: not-allowed;
+}
+
+.audit-scope-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #4e740b;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.18em;
+}
+
 .preflight-limit {
   margin: 0;
   padding: 1rem 1.25rem 0;
@@ -1199,6 +1360,17 @@ section[id] {
 
 .offer-card.featured li span {
   color: var(--signal);
+}
+
+.offer-intake-note {
+  margin: 1.25rem 0 0;
+  color: var(--slate);
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.offer-card.featured .offer-intake-note {
+  color: #c7d0da;
 }
 
 .offer-actions {
@@ -1738,6 +1910,10 @@ footer {
   }
 
   .preflight-conversion {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-scope-builder {
     grid-template-columns: 1fr;
   }
 

@@ -84,10 +84,21 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
   'const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/"',
-  "primaryHref: HUMAN_AUDIT_LANDING_URL",
+  'primaryHref: "#preflight"',
+  "Run preflight to scope",
   "See the $750 scope & proof",
-  "Review service terms",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
+  "function auditScopeEvidence(",
+  "WrightOps $750 Agent-Ready Repository Audit — non-binding scope request",
+  "Requester authority: I confirm that I am authorized to request this public-evidence review.",
+  "No submission, storage, checkout, or payment occurred.",
+  'id="audit-workflow"',
+  "maxLength={500}",
+  'id="audit-authority"',
+  "disabled={!auditWorkflow.trim() || !auditAuthority}",
+  "Copy $750 scope brief",
+  "Open public request form",
+  "Read complete terms",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
@@ -786,6 +797,47 @@ if (preflightCtaCount < 3) {
   failures.push(`Expected at least three no-login preflight CTAs; found ${preflightCtaCount}.`);
 }
 
+if (
+  !/\.preflight-result-head\s*>\s*div\s*\{[^}]*min-width:\s*0;/s.test(css) ||
+  !/\.preflight-result-head\s+a\s*\{[^}]*max-width:\s*100%;[^}]*overflow-wrap:\s*anywhere;/s.test(
+    css,
+  )
+) {
+  failures.push("The homepage preflight result must wrap public repository evidence on narrow screens.");
+}
+
+const auditScopeRequestCtaCount = (
+  app.match(/href=\{HUMAN_AUDIT_REQUEST_URL\}/g) || []
+).length;
+if (auditScopeRequestCtaCount < 2) {
+  failures.push(
+    `Expected at least two $750 public scope-request paths; found ${auditScopeRequestCtaCount}.`,
+  );
+}
+
+const auditTermsCtaCount = (
+  app.match(/href=\{HUMAN_AUDIT_TERMS_URL\}/g) || []
+).length;
+if (auditTermsCtaCount < 2) {
+  failures.push(
+    `Expected at least two $750 terms paths; found ${auditTermsCtaCount}.`,
+  );
+}
+
+for (const marker of [
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "navigator.sendBeacon",
+  "XMLHttpRequest",
+  'action="',
+  "action={",
+]) {
+  if (app.includes(marker)) {
+    failures.push(`The homepage scope builders must remain browser-local: ${marker}`);
+  }
+}
+
 const fixPlanAuditCtaCount = (
   fixPlanPage.match(/issues\/new\?template=audit-request\.yml/g) || []
 ).length;
@@ -944,6 +996,8 @@ console.log(
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
+      auditScopeRequestCtas: auditScopeRequestCtaCount,
+      auditTermsCtas: auditTermsCtaCount,
       publicAssets: 14,
     },
     null,

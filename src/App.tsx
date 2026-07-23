@@ -117,15 +117,17 @@ const engagementOptions = [
     description:
       "A broader Markdown and JSON evidence package for teams that need a documented view of repository readiness before changing the repo.",
     bullets: [
-      "One public GitHub repository",
-      "Deterministic artifact checks",
-      "Human-reviewed findings",
-      "Inspect-ready delivery package",
+      "One public repository at one immutable default-branch revision",
+      "One evidence-linked JSON audit and matching Markdown audit",
+      "Up to five prioritized findings with acceptance evidence",
+      "One 30-minute recorded or live handoff",
     ],
-    primaryLabel: "See the $750 scope & proof",
-    primaryHref: HUMAN_AUDIT_LANDING_URL,
-    secondaryLabel: "Review service terms",
-    secondaryHref: HUMAN_AUDIT_TERMS_URL,
+    intakeNote:
+      "Run the no-login preflight first. It turns the public snapshot into a complete, copy-ready scope brief without submitting or storing anything.",
+    primaryLabel: "Run preflight to scope",
+    primaryHref: "#preflight",
+    secondaryLabel: "See the $750 scope & proof",
+    secondaryHref: HUMAN_AUDIT_LANDING_URL,
     featured: false,
   },
   {
@@ -511,6 +513,26 @@ function preflightEvidence(result: PreflightResult) {
   ].join("\n");
 }
 
+function auditScopeEvidence(
+  result: PreflightResult,
+  workflowPain: string,
+  handoffPreference: string,
+) {
+  return [
+    "WrightOps $750 Agent-Ready Repository Audit — non-binding scope request",
+    `Public repository: ${result.repository.webUrl}`,
+    `Immutable revision: ${result.repository.revisionSha}`,
+    `Preflight evidence score: ${result.score.earned}/${result.score.maximum} (${result.score.percentage}%)`,
+    `Workflow to prioritize: ${workflowPain.trim()}`,
+    `Handoff preference: ${handoffPreference}`,
+    "Requester authority: I confirm that I am authorized to request this public-evidence review.",
+    "Requested deliverables: evidence-linked Markdown and JSON audits, up to five prioritized findings, and one 30-minute handoff.",
+    "Boundary: public evidence only; no security, privacy, legal, compliance, implementation, deployment, credentials, private data, or production access.",
+    "Payment boundary: written scope confirmation first; provider-confirmed PayPal Business settlement before work begins.",
+    "This copied text is a non-binding request. No submission, storage, checkout, or payment occurred.",
+  ].join("\n");
+}
+
 function RepositoryPreflight() {
   const [repository, setRepository] = useState("");
   const [result, setResult] = useState<PreflightResult | null>(null);
@@ -519,12 +541,19 @@ function RepositoryPreflight() {
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">(
     "idle",
   );
+  const [auditWorkflow, setAuditWorkflow] = useState("");
+  const [auditHandoff, setAuditHandoff] = useState("written summary only");
+  const [auditAuthority, setAuditAuthority] = useState(false);
+  const [auditCopyState, setAuditCopyState] = useState<
+    "idle" | "copied" | "failed"
+  >("idle");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setResult(null);
     setCopyState("idle");
+    setAuditCopyState("idle");
     setIsLoading(true);
     try {
       setResult(await runRepositoryPreflight(repository));
@@ -548,6 +577,20 @@ function RepositoryPreflight() {
       setCopyState("copied");
     } catch {
       setCopyState("failed");
+    }
+  }
+
+  async function copyAuditScope() {
+    if (!result || !auditWorkflow.trim() || !auditAuthority) {
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(
+        auditScopeEvidence(result, auditWorkflow, auditHandoff),
+      );
+      setAuditCopyState("copied");
+    } catch {
+      setAuditCopyState("failed");
     }
   }
 
@@ -741,6 +784,99 @@ function RepositoryPreflight() {
                 </div>
               </div>
 
+              {!result.repository.archived && (
+                <div className="audit-scope-builder">
+                  <div>
+                    <p className="eyebrow">Scope-ready audit request</p>
+                    <h3>Turn this immutable snapshot into a complete $750 brief.</h3>
+                    <p>
+                      Add the workflow pain and handoff preference. Your browser
+                      will prepare exact request text for the public form; it does
+                      not submit, store, track, or send payment information.
+                    </p>
+                  </div>
+
+                  <form
+                    className="audit-scope-form"
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      void copyAuditScope();
+                    }}
+                  >
+                    <label htmlFor="audit-workflow">
+                      Coding-agent workflow to improve
+                    </label>
+                    <textarea
+                      aria-describedby="audit-scope-help"
+                      id="audit-workflow"
+                      maxLength={500}
+                      onChange={(event) => {
+                        setAuditWorkflow(event.target.value);
+                        setAuditCopyState("idle");
+                      }}
+                      placeholder="Example: keep a coding agent from guessing the test command and risky deployment boundary."
+                      value={auditWorkflow}
+                    />
+                    <label htmlFor="audit-handoff">Handoff preference</label>
+                    <select
+                      id="audit-handoff"
+                      onChange={(event) => {
+                        setAuditHandoff(event.target.value);
+                        setAuditCopyState("idle");
+                      }}
+                      value={auditHandoff}
+                    >
+                      <option value="written summary only">Written summary only</option>
+                      <option value="30-minute recorded handoff">
+                        30-minute recorded handoff
+                      </option>
+                      <option value="30-minute live handoff">
+                        30-minute live handoff
+                      </option>
+                    </select>
+                    <div className="audit-authority">
+                      <input
+                        checked={auditAuthority}
+                        id="audit-authority"
+                        onChange={(event) => {
+                          setAuditAuthority(event.target.checked);
+                          setAuditCopyState("idle");
+                        }}
+                        type="checkbox"
+                      />
+                      <label htmlFor="audit-authority">
+                        I am authorized to request a public-evidence review of this
+                        repository.
+                      </label>
+                    </div>
+                    <p id="audit-scope-help">
+                      Public repository and immutable revision are already included.
+                      Confirm authority before copying; never include credentials,
+                      private code, customer data, or production details.
+                    </p>
+                    <div className="audit-scope-actions">
+                      <button
+                        disabled={!auditWorkflow.trim() || !auditAuthority}
+                        type="submit"
+                      >
+                        {auditCopyState === "copied"
+                          ? "Scope brief copied"
+                          : auditCopyState === "failed"
+                            ? "Copy failed — try again"
+                            : "Copy $750 scope brief"}
+                        {auditCopyState === "idle" && <Arrow />}
+                      </button>
+                      <ExternalLink href={HUMAN_AUDIT_REQUEST_URL}>
+                        Open public request form <Arrow />
+                      </ExternalLink>
+                      <ExternalLink href={HUMAN_AUDIT_TERMS_URL}>
+                        Read complete terms <Arrow />
+                      </ExternalLink>
+                    </div>
+                  </form>
+                </div>
+              )}
+
               <p className="preflight-limit">
                 {result.limitations.join(" ")}
               </p>
@@ -791,6 +927,9 @@ function Offers() {
                   </li>
                 ))}
               </ul>
+              {offer.intakeNote && (
+                <p className="offer-intake-note">{offer.intakeNote}</p>
+              )}
               <div className="offer-actions">
                 <PrimaryAction href={offer.primaryHref}>
                   {offer.primaryLabel}
