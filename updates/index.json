@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-23",
+    "slug": "2026-07-23",
+    "title": "Swarm Daily: Live Agents Need a Canonical Transcript",
+    "url": "/updates/2026-07-23.html",
+    "preview": "Streaming transcription, server-owned history, replay, interrupted-tool repair, and audit export turn the agent transcript into an operating record."
+  },
+  {
     "date": "2026-07-22",
     "slug": "2026-07-22",
     "title": "Swarm Daily: Agents Need an Execution Envelope",

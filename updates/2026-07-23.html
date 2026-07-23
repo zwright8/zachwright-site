@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Live Agents Need a Canonical Transcript | zachwright.xyz</title>
+  <meta name="description" content="Streaming transcription, server-owned history, replay, interrupted-tool repair, and audit export turn the agent transcript into an operating record." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Live Agents Need a Canonical Transcript</h1>
+          <p>Streaming transcription, server-owned history, replay, interrupted-tool repair, and audit export turn the agent transcript into an operating record.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Live agent output is becoming a protocol, not a UI effect. Once audio and tool calls arrive in pieces, the transcript has to survive reconnects, distinguish provisional from final content, and remain useful to the next system in the chain.</strong></p>
+          <p>Vercel's AI Gateway now accepts audio as it is captured and emits partial and final transcript deltas. Cloudflare's current Agents SDK makes message storage server-authoritative, repairs interrupted tool calls, and watches for stalled streams. Together, they point to a new operating primitive: a canonical transcript shared by the client, the runtime, and the audit plane.</p>
+          <ul>
+            <li>Vercel's <code>streamTranscribe</code> returns transcript deltas while audio is still arriving, then exposes final transcript parts for commit points.
+            <a href="https://vercel.com/changelog/ai-gateway-now-supports-streaming-transcription">https://vercel.com/changelog/ai-gateway-now-supports-streaming-transcription</a></li>
+            <li>Cloudflare's Agents SDK adds server-authoritative transcript synchronization, a stream-stall watchdog, and repair for a dead server-tool call before a recovered turn resumes.
+            <a href="https://developers.cloudflare.com/changelog/product/agents/">https://developers.cloudflare.com/changelog/product/agents/</a></li>
+            <li>GitHub Copilot session streaming sends prompts, responses, and tool calls to a collector or SIEM, turning the same event stream into an enterprise control surface.
+            <a href="https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/">https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Stream speech into text</strong> - send PCM chunks to <code>streamTranscribe</code>, consume <code>transcript-delta</code> events, and treat partial text as provisional until a final part closes the segment.
+            <a href="https://vercel.com/changelog/ai-gateway-now-supports-streaming-transcription">https://vercel.com/changelog/ai-gateway-now-supports-streaming-transcription</a></li>
+            <li><strong>Keep the server authoritative</strong> - use Cloudflare's <code>syncMessagesToServer</code> path, stream-stall watchdog, and interrupted-tool repair so reconnects do not fork the conversation or replay a side effect.
+            <a href="https://developers.cloudflare.com/changelog/product/agents/">https://developers.cloudflare.com/changelog/product/agents/</a></li>
+            <li><strong>Export agent sessions</strong> - enable GitHub Copilot usage-record streaming for a collector or SIEM; use the REST endpoint when an operator needs the last 48 hours on demand.
+            <a href="https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/">https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/</a></li>
+            <li><strong>Replay before wiring the UI</strong> - Genkit's Agent Runner shows streamed output and state updates, drives tool interrupts, and exposes snapshots so a turn can be reproduced before a frontend hides the protocol.
+            <a href="https://developers.googleblog.com/build-agentic-full-stack-apps-with-genkit/">https://developers.googleblog.com/build-agentic-full-stack-apps-with-genkit/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>A transcript is a data model.</strong> Give events IDs, sequence numbers, types, and merge rules for partial-to-final updates; do not persist only the latest rendered string.</li>
+            <li><strong>Disconnects are normal.</strong> Resume from a server cursor or session/snapshot ID instead of regenerating a turn and duplicating tool effects.</li>
+            <li><strong>Audit fan-out needs a policy.</strong> Redact prompts and tool payloads before streaming them to a SIEM, and set retention independently for operators and end users.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Workflow</strong> - the “simple chat UI” after it acquires partial deltas, replay cursors, tool recovery, and an audit export.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/workflow.png">https://imgs.xkcd.com/comics/workflow.png</a><br>Post: <a href="https://xkcd.com/1172/">https://xkcd.com/1172/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
