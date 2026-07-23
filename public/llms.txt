@@ -20,7 +20,7 @@ Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/a
 Agent-Ready Instructions PR request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml
 Agent-Ready Instructions PR service page: https://zachwright.xyz/agent-ready-instructions-pr/
 AGENTS.md vs CLAUDE.md vs Copilot instructions guide: https://zachwright.xyz/agents-md-vs-claude-md/
-Free AGENTS.md starter template: https://zachwright.xyz/agents-md-starter-template/
+Free browser-local AGENTS.md builder and starter template: https://zachwright.xyz/agents-md-starter-template/
 Agent-Ready Instructions PR terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md
 Agent-Ready Instructions PR sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
 
@@ -30,12 +30,14 @@ AGENTS.md vs CLAUDE.md vs Copilot instructions guide:
 - Covers root CLAUDE.md, .github/copilot-instructions.md, drift prevention, evidence checks, and sensitive-data boundaries.
 - Canonical guide: https://zachwright.xyz/agents-md-vs-claude-md/
 
-Free AGENTS.md starter template:
-- Copy or download a generic root AGENTS.md starting point with repository-map, evidence, approval-gate, and completion sections.
-- No login, tracking, form submission, repository access, or code execution.
-- Placeholders must be replaced with verified repository facts; missing commands should be deleted rather than invented.
+Free browser-local AGENTS.md builder and starter template:
+- Build, copy, or download a root AGENTS.md from repository facts and commands supplied by the visitor.
+- Five local evidence gates cover purpose, repository map, setup, verification, and project-specific boundaries.
+- Blank optional fields stay out of the generated file; no path, command, or repository fact is inferred.
+- No login, analytics, input upload, form submission, repository access, storage, or code execution.
+- The generic starter remains available as a direct download.
 - Generic operational information only, not a repository-specific security, legal, privacy, or compliance assessment.
-- Canonical template: https://zachwright.xyz/agents-md-starter-template/
+- Canonical builder: https://zachwright.xyz/agents-md-starter-template/
 Free Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card
 Open Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md
 Bounty Red-Flag Card v1.0.0: https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0

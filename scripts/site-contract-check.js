@@ -37,6 +37,14 @@ const instructionsStarterFile = fs.readFileSync(
   path.join(root, "public", "agents-md-starter-template", "AGENTS.md"),
   "utf8",
 );
+const instructionsStarterCss = fs.readFileSync(
+  path.join(root, "public", "agents-md-starter-template", "styles.css"),
+  "utf8",
+);
+const instructionsBuilderScript = fs.readFileSync(
+  path.join(root, "public", "agents-md-starter-template", "builder.js"),
+  "utf8",
+);
 const fixPlanPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-fix-plan", "index.html"),
   "utf8",
@@ -302,13 +310,28 @@ const requiredInstructionsGuideMarkers = [
 ];
 
 const requiredInstructionsStarterMarkers = [
-  "<title>Free AGENTS.md Starter Template | WrightOps</title>",
+  "<title>Free AGENTS.md Builder & Starter Template | WrightOps</title>",
   'href="https://zachwright.xyz/agents-md-starter-template/"',
   '"@type": "TechArticle"',
+  '"@type": "WebApplication"',
+  "WrightOps AGENTS.md Builder",
   '"datePublished": "2026-07-21"',
-  "Start AGENTS.md with <em>evidence, not guesses.</em>",
-  "No login · No tracking · No form submission · No repository code execution",
-  "Generic starting point only.",
+  '"dateModified": "2026-07-23"',
+  "Build AGENTS.md with <em>evidence, not guesses.</em>",
+  "No login · No analytics · No input upload · No repository code execution",
+  "The builder does not inspect your repository or validate a command.",
+  'id="agents-builder"',
+  'id="builder-score"',
+  'id="builder-meter"',
+  'id="generated-agents"',
+  'id="copy-generated"',
+  'id="download-generated"',
+  'id="builder-status"',
+  "Nothing is submitted, stored, or sent to WrightOps.",
+  "Missing evidence stays out of the generated file",
+  'src="/agents-md-starter-template/builder.js"',
+  "https://agents.md/",
+  "https://code.visualstudio.com/docs/agent-customization/custom-instructions",
   'id="copy-template"',
   'id="template-source"',
   'href="/agents-md-starter-template/AGENTS.md" download',
@@ -319,6 +342,48 @@ const requiredInstructionsStarterMarkers = [
   'href="/agent-ready-instructions-pr/"',
   "$249 Agent-Ready Instructions PR",
   "Scope before payment",
+];
+
+const requiredInstructionsBuilderScriptMarkers = [
+  "function buildAgentsFile(input)",
+  "function evidenceScore(input)",
+  "elements.output.textContent = output",
+  'anchor.download = "AGENTS.md"',
+  'new Blob([output], { type: "text/markdown;charset=utf-8" })',
+  "Missing evidence stays omitted.",
+  "Generated AGENTS.md copied to the clipboard.",
+  "Generated AGENTS.md downloaded locally.",
+];
+
+const forbiddenInstructionsBuilderScriptMarkers = [
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+];
+
+const forbiddenInstructionsStarterPageMarkers = [
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
+  '<script src="http',
+  '<link rel="stylesheet" href="http',
+];
+
+const requiredInstructionsStarterCssMarkers = [
+  ".builder-layout",
+  "grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr)",
+  ".builder-form input:focus-visible",
+  ".builder-output",
+  "position: sticky",
+  "@media (max-width: 860px)",
+  "grid-template-columns: 1fr",
+  "position: static",
+  "@media (max-width: 540px)",
+  ".builder-actions .reset-button",
+  "width: 100%",
+  "@media (prefers-reduced-motion: reduce)",
 ];
 
 const requiredInstructionsStarterFileMarkers = [
@@ -545,6 +610,14 @@ const missingInstructionsStarterFile = missing(
   instructionsStarterFile,
   requiredInstructionsStarterFileMarkers,
 );
+const missingInstructionsBuilderScript = missing(
+  instructionsBuilderScript,
+  requiredInstructionsBuilderScriptMarkers,
+);
+const missingInstructionsStarterCss = missing(
+  instructionsStarterCss,
+  requiredInstructionsStarterCssMarkers,
+);
 const missingFixPlanPage = missing(fixPlanPage, requiredFixPlanPageMarkers);
 const missingBountyReviewPage = missing(
   bountyReviewPage,
@@ -588,6 +661,30 @@ if (missingInstructionsStarterPage.length) {
 if (missingInstructionsStarterFile.length) {
   failures.push(
     `Instructions starter file is missing: ${missingInstructionsStarterFile.join(", ")}`,
+  );
+}
+
+if (missingInstructionsBuilderScript.length) {
+  failures.push(
+    `Instructions builder script is missing: ${missingInstructionsBuilderScript.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenInstructionsBuilderScriptMarkers) {
+  if (instructionsBuilderScript.includes(marker)) {
+    failures.push(`Instructions builder must remain browser-local: ${marker}`);
+  }
+}
+
+for (const marker of forbiddenInstructionsStarterPageMarkers) {
+  if (instructionsStarterPage.includes(marker)) {
+    failures.push(`Instructions builder page must not load third-party assets: ${marker}`);
+  }
+}
+
+if (missingInstructionsStarterCss.length) {
+  failures.push(
+    `Instructions builder CSS is missing: ${missingInstructionsStarterCss.join(", ")}`,
   );
 }
 
@@ -984,6 +1081,10 @@ for (const file of [
   "agent-ready-repository-audit/styles.css",
   "agent-ready-instructions-pr/index.html",
   "agents-md-vs-claude-md/index.html",
+  "agents-md-starter-template/index.html",
+  "agents-md-starter-template/styles.css",
+  "agents-md-starter-template/AGENTS.md",
+  "agents-md-starter-template/builder.js",
   "agent-ready-fix-plan/index.html",
   "bounty-go-no-go-review/index.html",
   "coding-bounty-payout-checklist/index.html",
@@ -1024,6 +1125,11 @@ console.log(
       auditPageMarkers: requiredAuditPageMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
       instructionsGuideMarkers: requiredInstructionsGuideMarkers.length,
+      instructionsStarterMarkers: requiredInstructionsStarterMarkers.length,
+      instructionsBuilderScriptMarkers: requiredInstructionsBuilderScriptMarkers.length,
+      instructionsBuilderForbiddenMarkers: forbiddenInstructionsBuilderScriptMarkers.length,
+      instructionsBuilderPageForbiddenMarkers: forbiddenInstructionsStarterPageMarkers.length,
+      instructionsBuilderCssMarkers: requiredInstructionsStarterCssMarkers.length,
       fixPlanPageMarkers: requiredFixPlanPageMarkers.length,
       bountyReviewPageMarkers: requiredBountyReviewPageMarkers.length,
       bountyChecklistMarkers: requiredBountyChecklistMarkers.length,
@@ -1035,7 +1141,7 @@ console.log(
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 14,
+      publicAssets: 18,
     },
     null,
     2,
