@@ -730,6 +730,7 @@
 
         const githubNamePattern = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
         const repoNamePattern = /^[A-Za-z0-9._-]+$/;
+        let scopeRevision = 0;
 
         const hideCheckout = () => {
           checkoutPanel.hidden = true;
@@ -753,6 +754,7 @@
         };
 
         const revokeConfirmedScope = () => {
+          scopeRevision += 1;
           hideCheckout();
           status.textContent =
             "Scope changed. Confirm the current repository, priority, handoff, and acknowledgements again before checkout can appear.";
@@ -857,6 +859,7 @@
         const confirmScope = async () => {
           const parsed = validateInputs();
           if (!parsed) return;
+          const confirmationRevision = scopeRevision;
           confirmButton.disabled = true;
           status.textContent =
             "Checking public GitHub evidence. Checkout remains unavailable unless every gate passes.";
@@ -887,6 +890,7 @@
                 "GitHub did not return an immutable default-branch head SHA.",
               );
             }
+            if (confirmationRevision !== scopeRevision) return;
             const note = buildOrderNote({
               repository: parsed.repository,
               headSha,
@@ -901,6 +905,7 @@
             status.textContent =
               `WrightOps fixed $750 scope is confirmed for ${parsed.repository.canonicalUrl} at ${headSha}. Email or copy the order reference to enable checkout.`;
           } catch (error) {
+            if (confirmationRevision !== scopeRevision) return;
             hideCheckout();
             status.textContent = `${error.message} Use the public request or business-email fallback; checkout remains unavailable.`;
           } finally {
@@ -912,10 +917,19 @@
         confirmedScopeEmail.addEventListener("click", enableCheckout);
         copyButton.addEventListener("click", async () => {
           if (!orderNote.value) return;
+          const copyRevision = scopeRevision;
+          const copiedNote = orderNote.value;
           try {
-            await navigator.clipboard.writeText(orderNote.value);
+            await navigator.clipboard.writeText(copiedNote);
+            if (
+              copyRevision !== scopeRevision ||
+              copiedNote !== orderNote.value
+            ) {
+              return;
+            }
             enableCheckout();
           } catch {
+            if (copyRevision !== scopeRevision) return;
             status.textContent =
               "Clipboard access is unavailable. Use Email confirmed scope to prepare the reference and enable checkout.";
           }
