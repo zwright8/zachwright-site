@@ -37,12 +37,8 @@ const FIX_PLAN_SAMPLE_URL =
 const FIX_PLAN_TERMS_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md";
 const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/";
-const INSTRUCTIONS_PR_REQUEST_URL =
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml";
 const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/";
 const AGENTS_STARTER_URL = "/agents-md-starter-template/";
-const INSTRUCTIONS_PR_TERMS_URL =
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md";
 const INSTRUCTIONS_PR_SAMPLE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1";
 const BOUNTY_CARD_URL =
@@ -51,14 +47,7 @@ const BOUNTY_CARD_OPEN_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md";
 const BOUNTY_CARD_RELEASE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0";
-const BOUNTY_REVIEW_REQUEST_URL =
-  "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml";
-const BOUNTY_REVIEW_LANDING_URL = "/bounty-go-no-go-review/";
 const BOUNTY_CHECKLIST_URL = "/coding-bounty-payout-checklist/";
-const BOUNTY_REVIEW_SAMPLE_URL =
-  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md";
-const BOUNTY_REVIEW_TERMS_URL =
-  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md";
 
 const preflightCheckLabels = [
   "README and setup guidance",
@@ -91,23 +80,42 @@ const engagementOptions = [
     featured: false,
   },
   {
-    eyebrow: "Founding implementation offer",
-    title: "Agent-Ready Instructions PR",
+    eyebrow: "Demand-backed correction offer",
+    title: "Single-File Agent Instructions Correction",
+    price: "$149",
+    timing: "Private PayPal G&S checkout after written scope confirmation",
+    description:
+      "A review-ready correction pack for one existing instruction file in one public repository, without requiring a WrightOps GitHub identity.",
+    bullets: [
+      "One existing root AGENTS.md, root CLAUDE.md, or Copilot instructions file",
+      "Replacement Markdown, unified diff, evidence notes, and acceptance checks",
+      "Maximum 250 source lines and 75 minutes of total WrightOps labor",
+      "No application-code, CI, dependency, security, or deployment changes",
+    ],
+    primaryLabel: "See the $149 correction scope",
+    primaryHref: INSTRUCTIONS_PR_LANDING_URL,
+    secondaryLabel: "Inspect the patch-shaped sample",
+    secondaryHref: INSTRUCTIONS_PR_SAMPLE_URL,
+    featured: true,
+  },
+  {
+    eyebrow: "Two-file foundation",
+    title: "Agent Instructions Foundation",
     price: "$249",
     timing: "Private PayPal G&S checkout after written scope confirmation",
     description:
-      "One focused pull request for one public repository, delivering exactly two repository-specific instruction files from public evidence.",
+      "A two-file correction pack for root AGENTS.md plus one companion, grounded in public evidence at one immutable revision.",
     bullets: [
-      "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
-      "One public PR at a pinned revision with evidence, limits, and checks",
-      "No application-code, CI, dependency, security, or deployment changes",
-      "No review, merge, adoption, or outcome guarantee",
+      "Root AGENTS.md plus root CLAUDE.md or Copilot instructions",
+      "Replacement Markdown, unified diff, evidence notes, and acceptance checks",
+      "One factual correction round requested within seven days",
+      "No branch, pull request, merge, adoption, or outcome guarantee",
     ],
-    primaryLabel: "See the $249 scope & proof",
+    primaryLabel: "See the $249 foundation scope",
     primaryHref: INSTRUCTIONS_PR_LANDING_URL,
-    secondaryLabel: "Inspect the merged sample PR",
+    secondaryLabel: "Inspect the merged owned-repo sample",
     secondaryHref: INSTRUCTIONS_PR_SAMPLE_URL,
-    featured: true,
+    featured: false,
   },
   {
     eyebrow: "Deeper evidence",
@@ -227,12 +235,12 @@ const faqs = [
   {
     question: "Do I pay before scope is confirmed?",
     answer:
-      "No. Submit the public scope request first. For the $249 Instructions PR, WrightOps sends a private, dedicated PayPal Goods & Services checkout only after confirming the repository, deliverable, exclusions, and timing in writing.",
+      "No. Submit the non-binding scope request first. For either Instructions Correction tier, WrightOps sends a private, buyer-specific PayPal Goods & Services checkout only after confirming the repository, exact paths, deliverable, exclusions, and timing in writing.",
   },
   {
     question: "What happens if the agreed work cannot be delivered?",
     answer:
-      "WrightOps does not retain payment for work it cannot fulfill under the agreed scope. If the scoped Agent-Ready Instructions PR cannot be delivered, the full purchase price is refunded.",
+      "WrightOps does not retain payment for work it cannot fulfill under the agreed scope. If the scoped Agent Instructions Correction cannot be delivered, the full purchase price is refunded.",
   },
   {
     question: "Who is accountable for the work?",
@@ -240,9 +248,9 @@ const faqs = [
       "WrightOps is AI-operated on behalf of Zachary Wright. Zachary remains the accountable human owner for scope, payment, delivery, and refund decisions.",
   },
   {
-    question: "What is the $49 Bounty GO/NO-GO Review?",
+    question: "Is the paid Bounty GO/NO-GO Review still available?",
     answer:
-      "It is an evidence-backed review of exactly one public bounty or listing. After written scope confirmation and payment, WrightOps delivers a GO, HOLD, or NO-GO recommendation within one business day. It does not guarantee a payout or replace professional advice.",
+      "No. WrightOps retired the paid review after it produced no qualified requests or settlements. The free Bounty Red-Flag Card and browser-only payout checklist remain available.",
   },
 ];
 
@@ -387,8 +395,8 @@ function Hero() {
           </h1>
           <p className="hero-lede">
             WrightOps turns public-repository friction into inspectable work:
-            a free audit, fixed-price plans, and a scoped instructions PR with
-            acceptance criteria.
+            a free audit, fixed-price plans, and a scoped instructions patch
+            pack with acceptance criteria.
           </p>
 
           <div className="hero-actions">
@@ -396,7 +404,8 @@ function Hero() {
               Run the no-login preflight
             </PrimaryAction>
             <a className="text-action" href="#offers">
-              See the $249 Instructions PR <span aria-hidden="true">↓</span>
+              See the $149 / $249 correction scope{" "}
+              <span aria-hidden="true">↓</span>
             </a>
           </div>
 
@@ -493,13 +502,10 @@ function preflightStatusLabel(status: PreflightCheck["status"]) {
   }[status];
 }
 
-function instructionsRequestUrl(result: PreflightResult) {
-  const url = new URL(INSTRUCTIONS_PR_REQUEST_URL);
-  url.searchParams.set(
-    "title",
-    `[Instructions PR request] ${result.repository.fullName}`,
-  );
-  return url.toString();
+function instructionsScopeUrl(result: PreflightResult) {
+  return `${INSTRUCTIONS_PR_LANDING_URL}?repository=${encodeURIComponent(
+    result.repository.webUrl,
+  )}#scope-builder`;
 }
 
 function preflightEvidence(result: PreflightResult) {
@@ -752,14 +758,14 @@ function RepositoryPreflight() {
                   </h3>
                   <p>
                     {instructionsPrFit
-                      ? "Public setup and verification evidence exists, so this repository may fit the fixed $249 two-file Instructions PR after written scope confirmation."
+                      ? "Public setup and verification evidence exists, so this repository may fit the $249 two-file Instructions Foundation after written scope confirmation."
                       : "The browser result is a quick preflight. The GitHub Action produces the durable Markdown and JSON evidence required for deeper paid work."}
                   </p>
                 </div>
                 <div className="preflight-actions">
                   {instructionsPrFit ? (
-                    <PrimaryAction href={instructionsRequestUrl(result)}>
-                      Request $249 scope
+                    <PrimaryAction href={instructionsScopeUrl(result)}>
+                      Build $249 scope
                     </PrimaryAction>
                   ) : (
                     <PrimaryAction href={AUDIT_REQUEST_URL}>
@@ -774,12 +780,12 @@ function RepositoryPreflight() {
                         : "Copy preflight evidence"}
                   </button>
                   {instructionsPrFit && (
-                    <ExternalLink
+                    <a
                       className="preflight-terms-link"
-                      href={INSTRUCTIONS_PR_TERMS_URL}
+                      href={`${INSTRUCTIONS_PR_LANDING_URL}#boundaries`}
                     >
                       Review exact scope and refund terms <Arrow />
-                    </ExternalLink>
+                    </a>
                   )}
                 </div>
               </div>
@@ -943,10 +949,11 @@ function Offers() {
         </div>
 
         <p className="payment-note">
-          The $249 Instructions PR uses a private, dedicated PayPal Goods
-          &amp; Services checkout sent only after written scope confirmation.
-          If WrightOps cannot deliver the scoped PR, the full purchase price is
-          refunded. Never use Friends and Family for WrightOps work.
+          The $149 one-file and $249 two-file Instructions Correction tiers use
+          a private, buyer-specific PayPal Goods &amp; Services checkout sent
+          only after written scope confirmation. If WrightOps cannot deliver
+          the scoped correction pack, the full purchase price is refunded.
+          Never use Friends and Family for WrightOps work.
         </p>
       </div>
     </section>
@@ -964,7 +971,7 @@ function BountyReview() {
               Decide before you spend the <span>time.</span>
             </>
           }
-          text="Screen the public evidence first. Start with the free Bounty Red-Flag Card, then request a bounded review when the payout decision needs a second set of eyes."
+          text="Screen the public evidence first. Use the free Bounty Red-Flag Card and browser-only payout checklist; the paid review is retired."
         />
 
         <div className="bounty-funnel">
@@ -1006,45 +1013,41 @@ function BountyReview() {
 
           <Reveal className="bounty-paid-card" delay={0.06}>
             <div className="bounty-price-row">
-              <p className="eyebrow">Bounded paid review</p>
-              <strong>$49</strong>
+              <p className="eyebrow">Paid review retired</p>
+              <strong>Free</strong>
             </div>
-            <h3>Bounty GO/NO-GO Review</h3>
+            <h3>Coding Bounty Payout Checklist</h3>
             <p>
-              WrightOps reviews exactly one public bounty or listing and
-              returns an evidence-backed GO, HOLD, or NO-GO recommendation
-              within one business day after written scope confirmation and
-              payment.
+              The former $49 review produced no qualified requests or settled
+              sales, so WrightOps retired it instead of preserving a
+              zero-signal paid offer. Use the browser-only checklist for a
+              structured self-review.
             </p>
             <ul>
               <li>Public evidence only</li>
-              <li>No secrets, private code, or private data</li>
-              <li>No guaranteed payout or professional advice</li>
+              <li>No login, tracking, storage, or input transmission</li>
+              <li>No purchase path or payment obligation</li>
             </ul>
             <div className="bounty-actions">
-              <PrimaryAction href={BOUNTY_REVIEW_LANDING_URL}>
-                See the $49 scope &amp; sample
-              </PrimaryAction>
-              <SecondaryAction href={BOUNTY_CHECKLIST_URL}>
+              <PrimaryAction href={BOUNTY_CHECKLIST_URL}>
                 Run the free payout checklist
+              </PrimaryAction>
+              <SecondaryAction href={BOUNTY_CARD_OPEN_URL}>
+                Open the free Red-Flag Card
               </SecondaryAction>
             </div>
             <p className="bounty-intake-note">
-              No GitHub account is required on the full page: choose the public
-              form or the WrightOps business-email path. Review the{" "}
-              <ExternalLink href={BOUNTY_REVIEW_TERMS_URL}>
-                service and refund terms
-              </ExternalLink>{" "}
-              before requesting scope.
+              The retired page remains available as an honest historical
+              notice. WrightOps will not accept new paid bounty-review scope.
             </p>
           </Reveal>
         </div>
 
         <p className="bounty-disclaimer">
-          The free card and paid review are decision aids based on public
-          evidence. They are not legal, tax, financial, investment, security,
-          or other professional advice, and no payout or business outcome is
-          guaranteed.
+          The free card and browser-only checklist are decision aids based on
+          public evidence. They are not legal, tax, financial, investment,
+          security, or other professional advice, and no payout or business
+          outcome is guaranteed.
         </p>
       </div>
     </section>
@@ -1209,7 +1212,7 @@ function FinalCta() {
             Check a public repository
           </PrimaryAction>
           <SecondaryAction href={INSTRUCTIONS_PR_LANDING_URL}>
-            See the $249 scope &amp; proof
+            See the $149 / $249 correction scope
           </SecondaryAction>
         </div>
       </Reveal>
@@ -1244,12 +1247,6 @@ function Footer() {
             </ExternalLink>
             <ExternalLink href={AUDITOR_URL}>Inspect the auditor</ExternalLink>
             <ExternalLink href={FIX_PLAN_REQUEST_URL}>Fix Plan request</ExternalLink>
-            <ExternalLink href={INSTRUCTIONS_PR_REQUEST_URL}>
-              Instructions PR request
-            </ExternalLink>
-            <ExternalLink href={BOUNTY_REVIEW_REQUEST_URL}>
-              Bounty review request
-            </ExternalLink>
           </div>
           <div>
             <strong>Verify</strong>
@@ -1259,9 +1256,9 @@ function Footer() {
             <a href="/agents-md-vs-claude-md/">AGENTS.md file guide</a>
             <a href={AGENTS_STARTER_URL}>AGENTS.md starter template</a>
             <a href={BOUNTY_CHECKLIST_URL}>Coding bounty payout checklist</a>
-            <ExternalLink href={INSTRUCTIONS_PR_TERMS_URL}>
-              Instructions PR terms
-            </ExternalLink>
+            <a href={`${INSTRUCTIONS_PR_LANDING_URL}#boundaries`}>
+              Instructions correction terms
+            </a>
             <ExternalLink href={HUMAN_AUDIT_TERMS_URL}>
               Human-reviewed audit terms
             </ExternalLink>
@@ -1275,12 +1272,6 @@ function Footer() {
             <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             <ExternalLink href={FIX_PLAN_SAMPLE_URL}>Sample Fix Plan</ExternalLink>
             <ExternalLink href={FIX_PLAN_TERMS_URL}>Fix Plan terms</ExternalLink>
-            <ExternalLink href={BOUNTY_REVIEW_SAMPLE_URL}>
-              Sample bounty review
-            </ExternalLink>
-            <ExternalLink href={BOUNTY_REVIEW_TERMS_URL}>
-              Bounty review terms
-            </ExternalLink>
             <a href="#offers">Offers</a>
             <a href="#faq">FAQ</a>
           </div>

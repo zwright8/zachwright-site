@@ -92,7 +92,7 @@ const requiredAppMarkers = [
   'target.scrollIntoView({ block: "start" })',
   "no account, clone, code execution, or WrightOps data storage",
   "Qualified implementation gap",
-  "Request $249 scope",
+  "Build $249 scope",
   "Copy preflight evidence",
   "unauthenticated API limit applies",
   'reducedMotion="user"',
@@ -119,14 +119,13 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
   'const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/"',
   "See the $149 scope & sample",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
   'const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/"',
   'const AGENTS_STARTER_URL = "/agents-md-starter-template/"',
   '<a className="hero-starter-link" href={AGENTS_STARTER_URL}>',
   "Copy the free AGENTS.md starter",
   "<SecondaryAction href={INSTRUCTIONS_PR_LANDING_URL}>",
-  "See the $249 scope & proof",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
+  "See the $149 correction scope",
+  "See the $249 foundation scope",
   "AI Agent Cost & Reliability Snapshot",
   'const COST_SNAPSHOT_LANDING_URL =\n  "/ai-agent-cost-reliability-snapshot/"',
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
@@ -134,26 +133,20 @@ const requiredAppMarkers = [
   "Three business days after settled payment and accepted prompt-free inputs",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
   'href="/agents-md-vs-claude-md/"',
-  "Agent-Ready Instructions PR",
-  "Root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md",
-  "delivering exactly two repository-specific instruction files",
+  "Single-File Agent Instructions Correction",
+  "Agent Instructions Foundation",
+  "Replacement Markdown, unified diff, evidence notes, and acceptance checks",
   "No application-code, CI, dependency, security, or deployment changes",
-  "private, dedicated PayPal Goods",
+  "private, buyer-specific PayPal Goods",
   "the full purchase price is refunded",
   "https://github.com/wrightops-ai/bounty-red-flag-card",
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
-  "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
-  'const BOUNTY_REVIEW_LANDING_URL = "/bounty-go-no-go-review/"',
   'const BOUNTY_CHECKLIST_URL = "/coding-bounty-payout-checklist/"',
-  "See the $49 scope &amp; sample",
   "Run the free payout checklist",
-  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
-  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
-  "Bounty GO/NO-GO Review",
-  "reviews exactly one public bounty or listing",
-  "No guaranteed payout or professional advice",
-  "No GitHub account is required on the full page",
+  "Paid review retired",
+  "The former $49 review produced no qualified requests or settled",
+  "No purchase path or payment obligation",
   "Three business days after settled payment and complete public inputs",
 ];
 
@@ -166,7 +159,9 @@ const requiredHtmlMarkers = [
   '"url": "https://zachwright.xyz/#preflight"',
   '"price": "149"',
   '"url": "https://zachwright.xyz/agent-ready-fix-plan/"',
-  '"name": "Founding Agent-Ready Instructions PR"',
+  '"name": "Single-File Agent Instructions Correction"',
+  '"price": "149"',
+  '"name": "Two-file Agent Instructions Foundation"',
   '"price": "249"',
   '"url": "https://zachwright.xyz/agent-ready-instructions-pr/"',
   '"name": "Free AGENTS.md starter template"',
@@ -178,9 +173,6 @@ const requiredHtmlMarkers = [
   '"price": "495"',
   '"url": "https://zachwright.xyz/ai-agent-cost-reliability-snapshot/"',
   '"name": "Bounty Red-Flag Card"',
-  '"name": "Bounty GO/NO-GO Review"',
-  '"price": "49"',
-  '"url": "https://zachwright.xyz/bounty-go-no-go-review/"',
 ];
 
 const requiredAuditPageMarkers = [
@@ -229,35 +221,40 @@ const requiredCostPageMarkers = [
 ];
 
 const requiredInstructionsPageMarkers = [
-  "<title>Agent-Ready Instructions PR | WrightOps</title>",
+  "<title>Agent Instructions Correction | WrightOps</title>",
   'href="https://zachwright.xyz/agent-ready-instructions-pr/"',
   '"@type": "Service"',
+  '"name": "Single-File Agent Instructions Correction"',
+  '"price": "149"',
+  '"name": "Two-File Agent Instructions Foundation"',
   '"price": "249"',
   "Give coding agents consistent repository",
-  "Exactly two repository-specific",
-  "One business day",
-  "provider-confirmed settled payment",
-  "Files changed",
-  "2<span>/2</span>",
+  "$149 one file · $249 two files",
+  "1 business day",
+  "provider-confirmed settlement",
+  "Available tiers",
+  "1<span>/2 files</span>",
+  "replacement Markdown and a unified diff",
   "No invented commands. No implied access.",
   "does not clone, install, build, test, or execute",
   "No source, CI, test, dependency, or config changes",
-  "No merge, adoption, savings, or outcome guarantee",
-  "one revision round within seven days",
+  "No branch, pull request, merge, adoption, or outcome guarantee",
+  "factual correction round requested within",
+  "maximum 250 source lines",
+  "75 total labor minutes",
   "<h3>Open a non-binding scope request</h3>",
   "<h3>Receive written scope</h3>",
-  "After confirmation, email",
-  "Use the public GitHub form or business email",
-  "Never include contact or payment",
-  "personal or customer data",
-  "mailto:zach@zachwright.xyz?subject=Agent-Ready%20Instructions%20PR%20scope%20confirmed",
   "private, buyer-specific PayPal Goods &amp; Services checkout",
+  "Use the browser-local builder",
+  "Never include payment details",
+  "personal or customer data",
   "If WrightOps cannot deliver the confirmed scope",
-  "full refund of every dollar paid through the original payment rail",
+  "every dollar paid is refunded through the",
+  "any retained seller fee is WrightOps'",
   "Public demand, not testimonials",
-  "Three repositories asked for better agent instructions.",
+  "Four repositories exposed instruction-file drift.",
   "not customers, paid engagements,",
-  "testimonials, or endorsements",
+  "testimonials, endorsements, or evidence of willingness to pay",
   "p2well/dotfiles",
   "20/100",
   "https://github.com/p2well/dotfiles/issues/12#issuecomment-5012991019",
@@ -267,17 +264,17 @@ const requiredInstructionsPageMarkers = [
   "Zugruul/development-skills",
   "30/100",
   "https://github.com/Zugruul/development-skills/issues/178#issuecomment-5013145223",
+  "DYB-Development/event_engine",
+  "https://github.com/DYB-Development/event_engine/issues/235",
+  "1 file",
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1",
   'href="/agents-md-vs-claude-md/"',
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md",
-  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24249%20instructions%20PR%20scope%20request",
-  "Email scope without GitHub",
   'id="scope-builder"',
   'id="instructions-scope-builder"',
   'name="repository"',
   'name="revision"',
-  'name="companion"',
+  'name="tier"',
+  'name="target-file"',
   'name="workflow"',
   'name="authority"',
   "Build a non-binding scope request",
@@ -288,6 +285,7 @@ const requiredInstructionsPageMarkers = [
   'id="open-scope-email"',
   "URL shape is checked locally",
   "WrightOps verifies public access after receipt",
+  "new URLSearchParams(window.location.search)",
   "navigator.clipboard.writeText(scopeText)",
   "window.location.href = buildMailto(scopeText)",
 ];
@@ -308,7 +306,8 @@ const requiredInstructionsGuideMarkers = [
   "WrightOps does not clone or execute the target repository",
   "not a security, legal, privacy, or compliance assessment",
   "Run the free repository preflight",
-  "See the $249 scope &amp; proof",
+  "See the $149 / $249 correction scope",
+  "Instructions correction scope",
   "AI-operated public-repository engineering with a human-accountable owner",
   'href="/agent-ready-instructions-pr/"',
   'href="/#preflight"',
@@ -398,7 +397,10 @@ const requiredInstructionsStarterMarkers = [
   "does not inspect a repository, execute code, validate commands",
   "security, legal, privacy, or compliance assessment",
   'href="/agent-ready-instructions-pr/"',
-  "$249 Agent-Ready Instructions PR",
+  "See the $149 / $249 correction scope",
+  "Instructions correction scope",
+  "$249 Agent Instructions Foundation",
+  "It does not include a branch or pull request",
   "Scope before payment",
 ];
 
@@ -523,61 +525,19 @@ const requiredFixPlanPageMarkers = [
 ];
 
 const requiredBountyReviewPageMarkers = [
-  "<title>Bounty GO/NO-GO Review | WrightOps</title>",
+  "<title>Bounty GO/NO-GO Review Retired | WrightOps</title>",
   'href="https://zachwright.xyz/bounty-go-no-go-review/"',
-  '"@type": "Service"',
-  '"price": "49"',
-  "Know if one bounty is worth the",
-  "Exactly one public bounty or listing",
-  "One business day",
-  "provider-confirmed settled payment",
-  "Funding and payout evidence",
-  "Claim window, eligibility, and competition",
-  "Acceptance, access, and third-party dependencies",
-  "Rights, compliance, and required approvals",
-  "Bounded work estimate",
-  "GO, HOLD, or NO-GO",
-  "Synthetic example — not a customer result",
-  "$300.00 × (1 - 0.10) = $270.00",
-  "Missing evidence stays unknown",
-  "No claim, reservation, implementation, or maintainer contact",
-  "No repository clone or code execution",
-  "No legal, tax, financial, security, privacy, or compliance advice",
-  "No eligibility, acceptance, merge, payment, profit, or outcome guarantee",
-  "Use the public GitHub form or business email",
-  "Never include personal, private, credential, customer, wallet, or payment data",
-  "does not create a contract or payment obligation",
-  "Scope before payment",
-  "full purchase price",
-  "WrightOps absorbs any retained processor fee",
-  "https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml",
-  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md",
-  "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md",
-  "mailto:zach@zachwright.xyz?subject=WrightOps%20%2449%20bounty%20review%20scope%20request",
-  "Email scope without GitHub",
-  "Run the free no-login check",
+  '"@type": "WebPage"',
+  "Historical notice for a retired WrightOps paid offer",
+  "Paid offer retired · July 24, 2026",
+  "The paid bounty review is <em>closed.</em>",
+  "qualified requests or settled sales",
+  "No purchase path · No scope request · No payment obligation",
+  "Run the free payout checklist",
   'href="/coding-bounty-payout-checklist/"',
-  'id="scope-builder"',
-  'id="bounty-scope-builder"',
-  'name="bounty-url"',
-  'name="payout"',
-  'name="deadline"',
-  'name="uncertainty"',
-  'name="authority"',
-  "Build a non-binding $49 scope request",
-  "Public HTTPS bounty or listing URL",
-  "Primary uncertainty to resolve",
-  "Open prefilled business email",
-  "Copy scope request",
-  "Nothing is uploaded or stored",
-  'role="group"',
-  "URL shape is checked locally",
-  "WrightOps verifies public access after receipt",
-  "ordinary-software review",
-  "no work before written scope and provider-confirmed settled payment",
-  "Prefer GitHub? Open the public request fallback",
-  "navigator.clipboard.writeText(scopeText)",
-  "window.location.href = buildMailto(scopeText)",
+  "https://wrightops-ai.github.io/bounty-red-flag-card/bounty-red-flag-card/",
+  "zero-signal purchase path",
+  "Historical notice · No paid review available",
 ];
 
 const requiredBountyChecklistMarkers = [
@@ -652,6 +612,18 @@ function missing(source, markers) {
 }
 
 const failures = [];
+for (const marker of [
+  "See the $249 service",
+  "See the $249 scope &amp; proof",
+  "$249 Instructions PR",
+]) {
+  if (
+    instructionsStarterPage.includes(marker) ||
+    instructionsGuidePage.includes(marker)
+  ) {
+    failures.push(`The instruction guides must not use the retired PR-shaped cross-sell: ${marker}`);
+  }
+}
 const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
@@ -944,7 +916,7 @@ if (!sitemap.includes(bountyReviewLandingUrl)) {
 }
 
 if (!llms.includes(bountyReviewLandingUrl)) {
-  failures.push("llms.txt is missing the bounty review landing page.");
+  failures.push("llms.txt is missing the bounty review retirement notice.");
 }
 
 const bountyChecklistUrl = "https://zachwright.xyz/coding-bounty-payout-checklist/";
@@ -973,7 +945,7 @@ const instructionsScopeBuilderCtaCount = (
 ).length;
 if (instructionsScopeBuilderCtaCount < 3) {
   failures.push(
-    `Expected at least three $249 scope-builder CTAs; found ${instructionsScopeBuilderCtaCount}.`,
+    `Expected at least three instructions-correction scope-builder CTAs; found ${instructionsScopeBuilderCtaCount}.`,
   );
 }
 
@@ -986,29 +958,25 @@ for (const marker of [
   'scopeForm.addEventListener("submit"',
 ]) {
   if (instructionsPage.includes(marker)) {
-    failures.push(`The $249 scope builder must remain browser-local: ${marker}`);
+    failures.push(`The instructions correction scope builder must remain browser-local: ${marker}`);
   }
 }
 
-const bountyScopeBuilderCtaCount = (
-  bountyReviewPage.match(/href="#scope-builder"/g) || []
-).length;
-if (bountyScopeBuilderCtaCount < 3) {
-  failures.push(
-    `Expected at least three $49 scope-builder CTAs; found ${bountyScopeBuilderCtaCount}.`,
-  );
-}
-
 for (const marker of [
+  '"price": "49"',
+  "paypal.com",
+  "mailto:",
+  "issues/new?template=bounty-review.yml",
+  'id="scope-builder"',
   "fetch(",
   "localStorage",
   "sessionStorage",
   "<form",
-  'type="submit"',
-  'scopeBuilder.addEventListener("submit"',
+  "$49",
+  "checkout",
 ]) {
   if (bountyReviewPage.includes(marker)) {
-    failures.push(`The $49 bounty scope builder must remain browser-local: ${marker}`);
+    failures.push(`The retired bounty review page must not expose paid intake or browser state: ${marker}`);
   }
 }
 

@@ -1,6 +1,6 @@
 # WrightOps
 
-WrightOps provides public-repository evidence audits, fixed-price Fix Plans, scoped instructions pull requests, and bounty decision aids.
+WrightOps provides public-repository evidence audits, fixed-price Fix Plans, scoped agent-instructions correction packs, and free bounty decision aids.
 
 Canonical website: https://zachwright.xyz/
 No-login repository preflight: https://zachwright.xyz/#preflight
@@ -17,13 +17,11 @@ Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issue
 Fix Plan service page: https://zachwright.xyz/agent-ready-fix-plan/
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
-Agent-Ready Instructions PR request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml
-Agent-Ready Instructions PR service page: https://zachwright.xyz/agent-ready-instructions-pr/
+Agent Instructions Correction scope builder and service page: https://zachwright.xyz/agent-ready-instructions-pr/
 AGENTS.md vs CLAUDE.md vs Copilot instructions guide: https://zachwright.xyz/agents-md-vs-claude-md/
 Free browser-local AGENTS.md builder and starter template: https://zachwright.xyz/agents-md-starter-template/
 Agent-Ready Storefront Repository Checklist: https://zachwright.xyz/agent-ready-storefront-checklist/
-Agent-Ready Instructions PR terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md
-Agent-Ready Instructions PR sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
+Agent Instructions Correction owned-repository sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
 
 AGENTS.md vs CLAUDE.md vs Copilot instructions guide:
 - Free public field guide for choosing the correct repository-level coding-agent instruction file.
@@ -51,10 +49,7 @@ Agent-Ready Storefront Repository Checklist:
 Free Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card
 Open Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md
 Bounty Red-Flag Card v1.0.0: https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0
-Bounty GO/NO-GO Review request: https://github.com/wrightops-ai/bounty-red-flag-card/issues/new?template=bounty-review.yml
-Bounty GO/NO-GO Review service page: https://zachwright.xyz/bounty-go-no-go-review/
-Bounty GO/NO-GO Review sample: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/sample-bounty-go-no-go-review.md
-Bounty GO/NO-GO Review terms: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/docs/bounty-go-no-go-review.md
+Bounty GO/NO-GO Review retirement notice: https://zachwright.xyz/bounty-go-no-go-review/
 Coding bounty payout checklist: https://zachwright.xyz/coding-bounty-payout-checklist/
 
 Coding bounty payout checklist:
@@ -65,14 +60,11 @@ Coding bounty payout checklist:
 - No login, tracking, submission endpoint, cookie, or storage API; worksheet inputs remain in the browser.
 - Not for vulnerability research, exploitation, security testing, or security-bounty guidance.
 
-Bounty review:
-- $49 after written scope confirmation and payment.
-- Dedicated service page: https://zachwright.xyz/bounty-go-no-go-review/
-- Exactly one public bounty or listing.
-- Evidence-backed GO, HOLD, or NO-GO recommendation.
-- One-business-day delivery after written scope confirmation and payment.
-- Scope may be requested through the public GitHub form or a prefilled WrightOps business-email path; no GitHub account is required for the email path.
-- No guaranteed payout or professional advice.
+Retired Bounty GO/NO-GO Review:
+- No new paid bounty reviews are accepted.
+- The retirement notice records that the $49 offer produced no qualified requests or settled sales.
+- The free Bounty Red-Flag Card and browser-only Coding Bounty Payout Checklist remain available.
+- No checkout, paid scope request, or payment obligation is available.
 
 No-login repository preflight:
 - Free browser-only check for one public GitHub repository.
@@ -90,18 +82,21 @@ Agent-Ready Repo Fix Plan:
 - The public request is non-binding, collects no payment data, and may use the GitHub form or a prefilled WrightOps business-email path.
 - WrightOps confirms written scope before the buyer uses the authorized PayPal Business Goods & Services checkout.
 
-Founding Agent-Ready Instructions PR:
-- $249 for one public GitHub repository.
+Agent Instructions Correction:
+- $149 for one existing root AGENTS.md, root CLAUDE.md, or .github/copilot-instructions.md in one public repository.
+- $249 for root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md.
 - Dedicated service page: https://zachwright.xyz/agent-ready-instructions-pr/
-- Exactly two files: repository-root AGENTS.md plus one companion selected during written scope confirmation—repository-root CLAUDE.md or .github/copilot-instructions.md.
-- One public pull request at a pinned revision with evidence, limitations, and acceptance checks.
-- A real merged sample of the Copilot companion variant is public at https://github.com/wrightops-ai/bounty-red-flag-card/pull/1.
+- Delivery includes complete replacement Markdown, a ready-to-apply unified diff, claim-to-source evidence notes, and acceptance checks.
+- The $149 tier is capped at one existing file, 250 source lines, and 75 total WrightOps labor minutes, including one factual correction round requested within seven days.
+- The $249 tier is capped at exactly two files: root AGENTS.md plus one selected companion.
+- WrightOps does not create a branch, pull request, comment, merge, or buyer-repository mutation without a separately authorized business write path.
+- A real merged owned-repository sample of the two-file patch shape is public at https://github.com/wrightops-ai/bounty-red-flag-card/pull/1.
 - Excludes application-code, CI, dependency, security, and deployment changes.
-- No review, merge, adoption, or business-outcome guarantee.
+- No review, application, merge, adoption, or business-outcome guarantee.
 - Written scope confirmation is required before payment.
-- Scope may be requested through the public GitHub form or a prefilled WrightOps business-email path; neither route creates a payment obligation.
-- WrightOps sends a private, dedicated PayPal Goods & Services checkout after confirmation; no public checkout is provided.
-- If WrightOps cannot deliver the scoped pull request, the full purchase price is refunded.
+- The browser-local builder prepares a prefilled WrightOps business-email request; it uploads and stores nothing and creates no payment obligation.
+- WrightOps sends a private, buyer-specific PayPal Goods & Services checkout after confirmation; no public checkout is provided.
+- If WrightOps cannot deliver the scoped correction pack, the full purchase price is refunded through the original payment rail; any retained seller fee is WrightOps' cost.
 
 Human-reviewed Agent-Ready Repository Audit:
 - $750 for one public GitHub repository at one immutable default-branch revision.
@@ -124,7 +119,7 @@ AI Agent Cost & Reliability Snapshot:
 Scope:
 - Public GitHub repositories only.
 - Never submit credentials, secrets, private code, customer data, or personal data.
-- Bounty reviews use public evidence only.
+- Bounty tools use public evidence only; the paid bounty review is retired.
 - No production or deployment access.
 - No vulnerability research or security, privacy, legal, or compliance assessment.
 - Paid work begins only after written scope confirmation and provider-confirmed settlement.

@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A $249 fixed-scope pull request for one public GitHub repository: root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md."
+      content="A $149 one-file or $249 two-file agent-instructions correction pack for one public GitHub repository, delivered as replacement Markdown, a unified diff, evidence notes, and acceptance checks."
     />
     <meta
       name="robots"
@@ -15,10 +15,10 @@
     <link rel="canonical" href="https://zachwright.xyz/agent-ready-instructions-pr/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="WrightOps" />
-    <meta property="og:title" content="Agent-Ready Instructions PR | WrightOps" />
+    <meta property="og:title" content="Agent Instructions Correction | WrightOps" />
     <meta
       property="og:description"
-      content="Two repository-specific instruction files. One public pull request. Public evidence only."
+      content="One existing instruction file for $149, or root AGENTS.md plus one companion for $249. Public evidence only."
     />
     <meta property="og:url" content="https://zachwright.xyz/agent-ready-instructions-pr/" />
     <meta property="og:image" content="https://zachwright.xyz/og.png" />
@@ -26,13 +26,13 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="WrightOps — evidence before automation" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Agent-Ready Instructions PR | WrightOps" />
+    <meta name="twitter:title" content="Agent Instructions Correction | WrightOps" />
     <meta
       name="twitter:description"
-      content="A fixed $249, two-file coding-agent instructions pull request for one public repository."
+      content="A fixed-scope $149 one-file or $249 two-file correction pack for one public repository."
     />
     <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
-    <title>Agent-Ready Instructions PR | WrightOps</title>
+    <title>Agent Instructions Correction | WrightOps</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -48,9 +48,9 @@
       {
         "@context": "https://schema.org",
         "@type": "Service",
-        "name": "Founding Agent-Ready Instructions PR",
+        "name": "Agent Instructions Correction",
         "url": "https://zachwright.xyz/agent-ready-instructions-pr/",
-        "description": "A fixed-scope public pull request adding or updating exactly two coding-agent instruction files for one public GitHub repository at one revalidated revision.",
+        "description": "A fixed-scope correction pack for one or two coding-agent instruction files in one public GitHub repository at one revalidated revision.",
         "provider": {
           "@type": "ProfessionalService",
           "name": "WrightOps",
@@ -58,13 +58,24 @@
           "sameAs": "https://github.com/wrightops-ai"
         },
         "areaServed": "Worldwide",
-        "offers": {
-          "@type": "Offer",
-          "price": "249",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Single-File Agent Instructions Correction",
+            "price": "149",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://zachwright.xyz/agent-ready-instructions-pr/#scope-builder"
+          },
+          {
+            "@type": "Offer",
+            "name": "Two-File Agent Instructions Foundation",
+            "price": "249",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://zachwright.xyz/agent-ready-instructions-pr/#scope-builder"
+          }
+        ]
       }
     </script>
   </head>
@@ -102,14 +113,15 @@
         <div class="page-shell hero-layout">
           <div class="audit-hero-copy">
             <a class="back-link" href="/">← WrightOps services</a>
-            <p class="eyebrow">Founding offer · one public repository</p>
+            <p class="eyebrow">Demand-backed offer · one public repository</p>
             <h1>
               Give coding agents consistent repository <em>rules.</em>
             </h1>
             <p class="hero-lede">
-              One focused pull request. Exactly two repository-specific
-              instruction files, grounded in committed public evidence at one
-              revalidated revision.
+              One existing instruction file for $149, or root
+              <code>AGENTS.md</code> plus one companion for $249. Both tiers
+              deliver review-ready files and a unified patch grounded in
+              committed public evidence at one revalidated revision.
             </p>
             <div class="hero-actions">
               <a
@@ -120,9 +132,9 @@
               </a>
               <a
                 class="text-link"
-                href="mailto:zach@zachwright.xyz?subject=WrightOps%20%24249%20instructions%20PR%20scope%20request&amp;body=Public%20repository%20URL%3A%0AImmutable%20revision%20(if%20known)%3A%0ACompanion%20file%20(root%20CLAUDE.md%20or%20.github%2Fcopilot-instructions.md)%3A%0ACoding-agent%20workflow%20or%20pain%20to%20address%3A%0A%0AI%20confirm%20I%20have%20authority%20to%20commission%20this%20pull%20request%20and%20will%20provide%20public-only%20inputs.%0A%0AI%20understand%20this%20is%20a%20non-binding%20scope%20request%2C%20not%20a%20payment%20or%20authorization%20to%20start%20work.%0A%0ADo%20not%20include%20credentials%2C%20payment%20details%2C%20private%20files%2C%20personal%20data%2C%20customer%20data%2C%20or%20production%20access."
+                href="#scope-builder"
               >
-                Email scope without GitHub <span aria-hidden="true">→</span>
+                Choose a correction tier <span aria-hidden="true">→</span>
               </a>
               <a
                 class="text-link"
@@ -132,9 +144,11 @@
               </a>
             </div>
             <p class="hero-terms">
-              <strong>$249 USD</strong> · One business day after complete
-              public inputs and provider-confirmed settled payment.<br />
-              Use the public GitHub form or business email. Never send private or payment data.
+              <strong>$149 one file · $249 two files</strong> · One business
+              day after complete public inputs and provider-confirmed settled
+              payment.<br />
+              WrightOps delivers replacement Markdown and a unified diff—not
+              a branch, pull request, or repository mutation.
             </p>
           </div>
 
@@ -144,8 +158,8 @@
               <span class="window-status">merged</span>
             </figcaption>
             <div class="window-score">
-              <span>Files changed</span>
-              <strong>2<span>/2</span></strong>
+              <span>Available tiers</span>
+              <strong>1<span>/2 files</span></strong>
             </div>
             <dl class="window-checks">
               <div>
@@ -153,8 +167,8 @@
                 <dd><span class="status-dot"></span>AGENTS.md</dd>
               </div>
               <div>
-                <dt>Selected companion</dt>
-                <dd><span class="status-dot"></span>copilot</dd>
+                <dt>Delivery format</dt>
+                <dd><span class="status-dot"></span>patch pack</dd>
               </div>
               <div>
                 <dt>Application-code changes</dt>
@@ -172,21 +186,21 @@
               class="window-link"
               href="https://github.com/wrightops-ai/bounty-red-flag-card/pull/1/files"
             >
-              Inspect the exact two-file diff <span aria-hidden="true">↗</span>
+              Inspect the owned-repo sample diff <span aria-hidden="true">↗</span>
             </a>
           </figure>
         </div>
       </section>
 
-      <section class="summary-strip" aria-label="Instructions PR summary">
+      <section class="summary-strip" aria-label="Instructions correction summary">
         <div class="page-shell summary-grid">
           <div>
             <span>Scope</span>
             <strong>1 public GitHub repository</strong>
           </div>
           <div>
-            <span>Diff</span>
-            <strong>Exactly 2 Markdown files</strong>
+            <span>Tiers</span>
+            <strong>Exactly 1 or 2 Markdown files</strong>
           </div>
           <div>
             <span>Revision</span>
@@ -212,7 +226,7 @@
             <ul>
               <li><span>✓</span> Nothing is uploaded or stored</li>
               <li><span>✓</span> No checkout or obligation</li>
-              <li><span>✓</span> GitHub remains available as a fallback</li>
+            <li><span>✓</span> Copyable request remains available as a fallback</li>
             </ul>
           </div>
 
@@ -246,14 +260,29 @@
                 />
               </label>
               <label>
-                Companion file
-                <select name="companion" required>
+                Scope tier
+                <select name="tier" required>
                   <option value="">Select one</option>
-                  <option value="root CLAUDE.md">Root CLAUDE.md</option>
-                  <option value=".github/copilot-instructions.md">.github/copilot-instructions.md</option>
+                  <option value="$149 single-file correction">$149 · one existing file</option>
+                  <option value="$249 two-file foundation">$249 · root AGENTS.md + companion</option>
                 </select>
               </label>
             </div>
+
+            <label>
+              Target or companion file
+              <select name="target-file" required>
+                <option value="">Select one</option>
+                <option value="root AGENTS.md">Root AGENTS.md</option>
+                  <option value="root CLAUDE.md">Root CLAUDE.md</option>
+                  <option value=".github/copilot-instructions.md">.github/copilot-instructions.md</option>
+              </select>
+              <small>
+                For $149, choose the one existing file to correct. For $249,
+                root AGENTS.md is included; choose CLAUDE.md or Copilot as the
+                companion.
+              </small>
+            </label>
 
             <label>
               Public workflow or pain to address
@@ -269,8 +298,8 @@
             <label class="scope-builder-consent">
               <input name="authority" type="checkbox" required />
               <span>
-                I have authority to commission this public-repository pull
-                request and will provide public-only inputs.
+                I have authority to commission this public-repository
+                correction pack and will provide public-only inputs.
               </span>
             </label>
 
@@ -289,12 +318,11 @@
               </button>
             </div>
             <p class="scope-builder-status" id="scope-builder-status" role="status" aria-live="polite"></p>
-            <a
-              class="text-link"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=instructions-pr-request.yml"
-            >
-              Prefer GitHub? Open the public request form <span aria-hidden="true">↗</span>
-            </a>
+            <p class="scope-builder-privacy">
+              New scope starts here. The older GitHub issue form remains
+              historical evidence for the prior PR-shaped offer and is not a
+              current intake path.
+            </p>
           </div>
         </div>
       </section>
@@ -317,27 +345,30 @@
           <div class="deliverable-lines">
             <article>
               <span>01</span>
-              <h3>Root <code>AGENTS.md</code></h3>
+              <h3>Exact instruction paths</h3>
               <p>
-                Canonical setup, architecture, workflow, verification, and
-                approval boundaries written for repository-wide agent use.
+                The $149 tier corrects one existing root
+                <code>AGENTS.md</code>, root <code>CLAUDE.md</code>, or
+                <code>.github/copilot-instructions.md</code>. The $249 tier
+                covers root <code>AGENTS.md</code> plus one companion.
               </p>
             </article>
             <article>
               <span>02</span>
-              <h3>One selected companion</h3>
+              <h3>Review-ready correction pack</h3>
               <p>
-                Choose root <code>CLAUDE.md</code> or
-                <code>.github/copilot-instructions.md</code> during written
-                scope confirmation—not both.
+                Receive complete replacement Markdown, a ready-to-apply unified
+                diff, and a claim-to-source evidence checklist. The buyer
+                applies the patch or supplies a later authorized write path.
               </p>
             </article>
             <article>
               <span>03</span>
-              <h3>One reviewable public PR</h3>
+              <h3>Bounded review</h3>
               <p>
-                A pinned two-file diff with its evidence, limitations,
-                acceptance checks, and one revision round within seven days.
+                The pack includes limitations, acceptance checks, and one
+                factual correction round requested within seven days. The $149
+                tier is capped at 250 source lines and 75 total labor minutes.
               </p>
             </article>
           </div>
@@ -354,11 +385,8 @@
               revision. It does not clone, install, build, test, or execute the
               target repository for this service.
             </p>
-            <a
-              class="text-link light"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md"
-            >
-              Read complete service terms <span aria-hidden="true">↗</span>
+            <a class="text-link light" href="#boundaries">
+              Read complete scope and refund terms <span aria-hidden="true">↓</span>
             </a>
           </aside>
 
@@ -406,12 +434,12 @@
         <div class="page-shell">
           <div class="section-intro">
             <p class="eyebrow">Public demand, not testimonials</p>
-            <h2 id="public-examples-title">Three repositories asked for better agent instructions.</h2>
+            <h2 id="public-examples-title">Four repositories exposed instruction-file drift.</h2>
             <p>
-              WrightOps answered each owner-authored public issue once with a
-              public-read-only preflight pinned to one immutable revision.
-              Scores measure evidenced repository readiness at that snapshot,
-              not code quality or a promised outcome.
+              Three historical rows link WrightOps public-read-only replies.
+              The fourth is a current collaborator-authored one-file request
+              that shaped the $149 tier. These are demand signals—not
+              customers, budgets, or promised outcomes.
             </p>
           </div>
 
@@ -449,13 +477,25 @@
                 <span class="proof-link">Inspect evidence reply <span aria-hidden="true">↗</span></span>
               </a>
             </li>
+            <li>
+              <a href="https://github.com/DYB-Development/event_engine/issues/235">
+                <span class="proof-number">04</span>
+                <span class="proof-repository">
+                  <strong>DYB-Development/event_engine</strong>
+                  <small>Open collaborator request · size S</small>
+                </span>
+                <strong class="proof-score">1 file</strong>
+                <span class="proof-link">Inspect current demand <span aria-hidden="true">↗</span></span>
+              </a>
+            </li>
           </ol>
 
           <p class="proof-disclosure">
             These repositories are not customers, paid engagements,
-            testimonials, or endorsements. The linked comments are WrightOps'
-            own public evidence and opt-in scope offers; none created a sale,
-            contract, payment obligation, or guaranteed contribution.
+            testimonials, endorsements, or evidence of willingness to pay.
+            The linked records are public demand or WrightOps' historical
+            public evidence; none created a sale, contract, payment obligation,
+            or guaranteed contribution.
           </p>
         </div>
       </section>
@@ -480,30 +520,32 @@
               <span>02</span>
               <h3>Open a non-binding scope request</h3>
               <p>
-                Name the repository, full revision, selected companion path,
-                public source links, and your authority to receive the proposed contribution.
-                Use the public GitHub form or business email. Never include contact or payment
-                details, credentials, personal or customer data, checkout
-                links, or transaction IDs in either request.
+                Name the repository, full revision, selected tier and paths,
+                public workflow, and your authority to receive the correction
+                pack. Use the browser-local builder and review the generated
+                business email before sending. Never include payment details,
+                credentials, private files, personal or customer data,
+                checkout links, or transaction IDs.
               </p>
             </li>
             <li>
               <span>03</span>
               <h3>Receive written scope</h3>
               <p>
-                WrightOps revalidates the repository and confirms the two
-                paths, price, delivery clock, exclusions, and acceptance shape
-                in writing. After confirmation, email
-                <a href="mailto:zach@zachwright.xyz?subject=Agent-Ready%20Instructions%20PR%20scope%20confirmed">zach@zachwright.xyz</a>
-                to receive a private, buyer-specific PayPal Goods &amp; Services checkout.
+                WrightOps revalidates the repository and confirms the exact
+                tier, paths, price, delivery clock, labor cap, exclusions, and
+                acceptance shape in writing. Only then does WrightOps provide
+                a private, buyer-specific PayPal Goods &amp; Services checkout.
               </p>
             </li>
             <li>
               <span>04</span>
-              <h3>Review the public pull request</h3>
+              <h3>Review the correction pack</h3>
               <p>
-                Work begins only after provider-confirmed settlement. Delivery
-                is due within one business day after settlement and complete accepted inputs.
+                Work begins only after provider-confirmed settlement. WrightOps
+                delivers replacement Markdown, a unified diff, evidence notes,
+                and acceptance checks within one business day after settlement
+                and complete accepted inputs.
               </p>
             </li>
           </ol>
@@ -514,26 +556,33 @@
         <div class="page-shell boundary-layout">
           <div>
             <p class="eyebrow">The boundary is part of the product</p>
-            <h2>Two files means two files.</h2>
+            <h2>One file means one file.</h2>
             <p>
-              “Ready to merge” means a reviewable, bounded proposal. It does
-              not mean owner approval, passing checks, adoption, or a guaranteed merge.
+              “Ready to apply” means a reviewable, bounded correction pack. It
+              does not mean WrightOps will create a branch or pull request, or
+              that the buyer will approve, apply, merge, or adopt it.
             </p>
-            <a
-              class="text-link light"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md"
-            >
-              Read scope, credit, revision, and refund terms <span aria-hidden="true">↗</span>
-            </a>
+            <p>
+              The $149 tier covers one existing instruction file with no more
+              than 250 source lines and no more than 75 total WrightOps labor
+              minutes, including one factual correction round requested within
+              seven days. Larger scope is declined or quoted under the $249
+              two-file or $750 audit tier. If WrightOps cannot deliver the
+              confirmed scope, every dollar paid is refunded through the
+              original payment rail; any retained seller fee is WrightOps'
+              cost.
+            </p>
           </div>
           <ul>
             <li><span>✓</span> One public repository and revalidated revision</li>
-            <li><span>✓</span> Root AGENTS.md plus one selected companion</li>
+            <li><span>✓</span> $149: one existing instruction file, maximum 250 source lines</li>
+            <li><span>✓</span> $249: root AGENTS.md plus one selected companion</li>
+            <li><span>✓</span> Replacement Markdown, unified diff, evidence, and checks</li>
             <li><span>✓</span> One revision round in the same scope</li>
             <li><span>×</span> No source, CI, test, dependency, or config changes</li>
             <li><span>×</span> No private code, credentials, or production access</li>
             <li><span>×</span> No repository code execution or security work</li>
-            <li><span>×</span> No merge, adoption, savings, or outcome guarantee</li>
+            <li><span>×</span> No branch, pull request, merge, adoption, or outcome guarantee</li>
           </ul>
         </div>
       </section>
@@ -550,16 +599,16 @@
               <p>No. WrightOps must confirm the exact written scope before privately sharing checkout.</p>
             </details>
             <details>
-              <summary>Can I receive both companion files?</summary>
-              <p>No. The fixed offer includes root AGENTS.md and one selected companion: root CLAUDE.md or .github/copilot-instructions.md.</p>
+              <summary>Which tier should I choose?</summary>
+              <p>Choose $149 when one existing instruction file needs correction. Choose $249 when the repository needs root AGENTS.md plus either root CLAUDE.md or .github/copilot-instructions.md.</p>
             </details>
             <details>
               <summary>Does WrightOps run the repository's checks?</summary>
               <p>No. The service reads public evidence and may document supported commands, but it does not clone or execute target code.</p>
             </details>
             <details>
-              <summary>Can a prior $149 Fix Plan reduce the price?</summary>
-              <p>A settled Fix Plan for the exact same repository and revision may receive a $149 credit after eligibility review, leaving $100 due.</p>
+              <summary>Does WrightOps create a branch or pull request?</summary>
+              <p>No. WrightOps currently has no authorized GitHub write surface for buyer repositories. Delivery is replacement Markdown plus a ready-to-apply unified diff. The buyer applies it or explicitly supplies a later authorized business write path.</p>
             </details>
             <details>
               <summary>What happens if WrightOps cannot deliver?</summary>
@@ -572,27 +621,28 @@
       <section class="final-cta">
         <div class="hero-grid" aria-hidden="true"></div>
         <div class="page-shell">
-          <p class="eyebrow">One repository · two files · one public pull request</p>
+          <p class="eyebrow">One repository · one or two files · one correction pack</p>
           <h2>Make the repository explain itself before the next agent session.</h2>
           <p>
-            Use the public scope form or business email. No checkout is shared and no work begins
-            until WrightOps confirms the exact repository, revision, companion,
-            exclusions, and delivery terms in writing. Use GitHub or business
-            email; never send contact or payment details, credentials,
-            personal or customer data, checkout links, or transaction IDs.
+            Use the browser-local builder to prepare a business-email request.
+            No checkout is shared and no work begins until WrightOps confirms
+            the exact repository, revision, tier, paths, exclusions, and
+            delivery terms in writing. Never send payment details,
+            credentials, private files, personal or customer data, checkout
+            links, or transaction IDs.
           </p>
           <div class="hero-actions">
             <a
               class="button"
               href="#scope-builder"
             >
-              Build the $249 scope <span aria-hidden="true">↑</span>
+              Build the $149 / $249 scope <span aria-hidden="true">↑</span>
             </a>
             <a
               class="text-link light"
-              href="mailto:zach@zachwright.xyz?subject=WrightOps%20%24249%20instructions%20PR%20scope%20request&amp;body=Public%20repository%20URL%3A%0AImmutable%20revision%20(if%20known)%3A%0ACompanion%20file%20(root%20CLAUDE.md%20or%20.github%2Fcopilot-instructions.md)%3A%0ACoding-agent%20workflow%20or%20pain%20to%20address%3A%0A%0AI%20confirm%20I%20have%20authority%20to%20commission%20this%20pull%20request%20and%20will%20provide%20public-only%20inputs.%0A%0AI%20understand%20this%20is%20a%20non-binding%20scope%20request%2C%20not%20a%20payment%20or%20authorization%20to%20start%20work.%0A%0ADo%20not%20include%20credentials%2C%20payment%20details%2C%20private%20files%2C%20personal%20data%2C%20customer%20data%2C%20or%20production%20access."
+              href="#scope-builder"
             >
-              Email scope without GitHub <span aria-hidden="true">→</span>
+              Choose the tier and path <span aria-hidden="true">→</span>
             </a>
             <a class="text-link light" href="/#preflight">Run the free preflight first</a>
           </div>
@@ -612,8 +662,8 @@
         <p>AI-operated public-repository engineering with a human-accountable owner.</p>
         <div>
           <a href="https://github.com/wrightops-ai">GitHub</a>
-          <a href="https://github.com/wrightops-ai/bounty-red-flag-card/pull/1">Merged sample</a>
-          <a href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md">Terms</a>
+          <a href="https://github.com/wrightops-ai/bounty-red-flag-card/pull/1">Owned-repo sample</a>
+          <a href="#boundaries">Current terms</a>
         </div>
       </div>
       <div class="page-shell footer-bottom">
@@ -627,12 +677,17 @@
         const getControl = (name) => scopeBuilder.querySelector(`[name="${name}"]`);
         const getValue = (name) => String(getControl(name).value || "").trim();
         const repositoryInput = getControl("repository");
-        const companionInput = getControl("companion");
+        const tierInput = getControl("tier");
+        const targetFileInput = getControl("target-file");
         const workflowInput = getControl("workflow");
         const authorityInput = getControl("authority");
         const openEmailButton = document.querySelector("#open-scope-email");
         const copyButton = document.querySelector("#copy-scope-request");
         const status = document.querySelector("#scope-builder-status");
+        const prefilledRepository = new URLSearchParams(window.location.search).get("repository");
+        if (prefilledRepository) {
+          repositoryInput.value = prefilledRepository;
+        }
 
         const validateRepository = () => {
           repositoryInput.setCustomValidity("");
@@ -657,39 +712,58 @@
 
         const buildScopeText = () => {
           const revision = getValue("revision") || "Not supplied; revalidate the current default branch";
+          const tier = getValue("tier");
+          const selectedFile = getValue("target-file");
+          const deliveredPaths =
+            tier === "$249 two-file foundation"
+              ? `root AGENTS.md plus ${selectedFile}`
+              : selectedFile;
           return [
-            "WrightOps $249 instructions PR scope request",
+            "WrightOps Agent Instructions Correction scope request",
             "",
             `Repository URL (public access to be verified): ${getValue("repository")}`,
             `Immutable revision: ${revision}`,
-            `Companion file: ${getValue("companion")}`,
+            `Tier: ${tier}`,
+            `Delivered paths: ${deliveredPaths}`,
             `Public workflow or pain: ${getValue("workflow")}`,
             "",
-            "I confirm I have authority to commission this pull request and will provide public-only inputs.",
+            "I confirm I have authority to commission this correction pack and will provide public-only inputs.",
             "",
             "I understand this is a non-binding scope request, not a payment or authorization to start work.",
+            "",
+            "I understand WrightOps delivers replacement Markdown and a unified diff, not a branch, pull request, or repository mutation.",
             "",
             "Do not include credentials, payment details, private files, personal data, customer data, or production access.",
           ].join("\n");
         };
 
         const buildMailto = (scopeText) => {
-          const subject = "WrightOps $249 instructions PR scope request";
+          const subject = "WrightOps Agent Instructions Correction scope request";
           return `mailto:zach@zachwright.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(scopeText)}`;
         };
 
         const buildValidScope = () => {
           validateRepository();
+          targetFileInput.setCustomValidity("");
+          if (
+            getValue("tier") === "$249 two-file foundation" &&
+            getValue("target-file") === "root AGENTS.md"
+          ) {
+            targetFileInput.setCustomValidity(
+              "For the $249 two-file tier, choose root CLAUDE.md or .github/copilot-instructions.md as the companion.",
+            );
+          }
           const requiredControls = [
             repositoryInput,
-            companionInput,
+            tierInput,
+            targetFileInput,
             workflowInput,
             authorityInput,
           ];
           for (const control of requiredControls) {
             if (!control.checkValidity()) {
               control.reportValidity();
-              status.textContent = "Complete the repository, companion, workflow, and authority fields.";
+              status.textContent = "Complete the repository, tier, path, workflow, and authority fields.";
               return null;
             }
           }
@@ -717,6 +791,8 @@
         });
 
         repositoryInput.addEventListener("input", () => repositoryInput.setCustomValidity(""));
+        tierInput.addEventListener("change", () => targetFileInput.setCustomValidity(""));
+        targetFileInput.addEventListener("change", () => targetFileInput.setCustomValidity(""));
       })();
     </script>
   </body>
