@@ -21,6 +21,7 @@ Agent-Ready Instructions PR request: https://github.com/wrightops-ai/agent-ready
 Agent-Ready Instructions PR service page: https://zachwright.xyz/agent-ready-instructions-pr/
 AGENTS.md vs CLAUDE.md vs Copilot instructions guide: https://zachwright.xyz/agents-md-vs-claude-md/
 Free browser-local AGENTS.md builder and starter template: https://zachwright.xyz/agents-md-starter-template/
+Agent-Ready Storefront Repository Checklist: https://zachwright.xyz/agent-ready-storefront-checklist/
 Agent-Ready Instructions PR terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-instructions-pr.md
 Agent-Ready Instructions PR sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
 
@@ -38,6 +39,15 @@ Free browser-local AGENTS.md builder and starter template:
 - The generic starter remains available as a direct download.
 - Generic operational information only, not a repository-specific security, legal, privacy, or compliance assessment.
 - Canonical builder: https://zachwright.xyz/agents-md-starter-template/
+
+Agent-Ready Storefront Repository Checklist:
+- Free public-repository guide for mapping agent-readable commerce claims to inspectable source, projection, and regression evidence.
+- Covers llms.txt and sitemap ownership, deterministic machine-readable content, Product and Offer structured data, optional-field truthfulness, cross-projection parity, localization, and fixture-backed CI.
+- Missing catalog facts stay missing; the guide does not support fabricated reviews, ratings, policies, identifiers, or dates.
+- No login, form submission, live-site crawl, private code, credentials, customer data, or production access.
+- Not a vulnerability, security, privacy, legal, regulatory, or compliance assessment.
+- Does not guarantee indexing, ranking, agent ingestion, traffic, sales, revenue, or any other business outcome.
+- Canonical guide: https://zachwright.xyz/agent-ready-storefront-checklist/
 Free Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card
 Open Bounty Red-Flag Card: https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md
 Bounty Red-Flag Card v1.0.0: https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0

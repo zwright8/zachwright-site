@@ -29,6 +29,10 @@ const instructionsGuidePath = path.join(
 const instructionsGuidePage = fs.existsSync(instructionsGuidePath)
   ? fs.readFileSync(instructionsGuidePath, "utf8")
   : "";
+const storefrontGuidePage = fs.readFileSync(
+  path.join(root, "public", "agent-ready-storefront-checklist", "index.html"),
+  "utf8",
+);
 const instructionsStarterPage = fs.readFileSync(
   path.join(root, "public", "agents-md-starter-template", "index.html"),
   "utf8",
@@ -198,6 +202,8 @@ const requiredAuditPageMarkers = [
   'href="/#preflight"',
   "Run preflight to scope",
   "Request scope on GitHub",
+  'href="/agent-ready-storefront-checklist/"',
+  "Use the storefront evidence checklist",
 ];
 
 const requiredCostPageMarkers = [
@@ -307,6 +313,37 @@ const requiredInstructionsGuideMarkers = [
   'href="/agent-ready-instructions-pr/"',
   'href="/#preflight"',
   'href="/agents-md-starter-template/"',
+];
+
+const requiredStorefrontGuideMarkers = [
+  "<title>Agent-Ready Storefront Repository Checklist | WrightOps</title>",
+  'href="https://zachwright.xyz/agent-ready-storefront-checklist/"',
+  '"@type": "TechArticle"',
+  '"datePublished": "2026-07-23"',
+  "Prove your storefront is <em>agent-ready.</em>",
+  "llms.txt + sitemap",
+  "Product JSON-LD",
+  "Page + feed + machine view",
+  "Fixture-backed CI",
+  "Illustrative evidence map / checklist model",
+  "not an audit result",
+  "Missing evidence should stay missing",
+  "No login · No form submission · No live-site crawl",
+  "No fabricated reviews, policies, or catalog facts",
+  "No ranking, adoption, traffic, or revenue guarantee",
+  "not assess vulnerabilities, security,",
+  'href="/agent-ready-repository-audit/"',
+  'href="/#preflight"',
+];
+
+const forbiddenStorefrontGuideMarkers = [
+  "<form",
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
 ];
 
 const requiredInstructionsStarterMarkers = [
@@ -602,6 +639,10 @@ const missingInstructionsGuidePage = missing(
   instructionsGuidePage,
   requiredInstructionsGuideMarkers,
 );
+const missingStorefrontGuidePage = missing(
+  storefrontGuidePage,
+  requiredStorefrontGuideMarkers,
+);
 const missingInstructionsStarterPage = missing(
   instructionsStarterPage,
   requiredInstructionsStarterMarkers,
@@ -650,6 +691,38 @@ if (missingInstructionsGuidePage.length) {
   failures.push(
     `Instructions guide is missing: ${missingInstructionsGuidePage.join(", ")}`,
   );
+}
+
+if (missingStorefrontGuidePage.length) {
+  failures.push(
+    `Storefront guide is missing: ${missingStorefrontGuidePage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenStorefrontGuideMarkers) {
+  if (storefrontGuidePage.includes(marker)) {
+    failures.push(`Storefront guide must remain read-only: ${marker}`);
+  }
+}
+
+const storefrontStructuredDataMatch = storefrontGuidePage.match(
+  /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+);
+if (!storefrontStructuredDataMatch) {
+  failures.push("Storefront guide is missing parseable JSON-LD.");
+} else {
+  try {
+    const structuredData = JSON.parse(storefrontStructuredDataMatch[1]);
+    if (
+      structuredData["@type"] !== "TechArticle" ||
+      structuredData.mainEntityOfPage !==
+        "https://zachwright.xyz/agent-ready-storefront-checklist/"
+    ) {
+      failures.push("Storefront guide JSON-LD does not match the canonical article.");
+    }
+  } catch {
+    failures.push("Storefront guide JSON-LD is invalid JSON.");
+  }
 }
 
 if (missingInstructionsStarterPage.length) {
@@ -726,6 +799,7 @@ for (const marker of forbiddenMarkers) {
     auditPage.includes(marker) ||
     instructionsPage.includes(marker) ||
     instructionsGuidePage.includes(marker) ||
+    storefrontGuidePage.includes(marker) ||
     instructionsStarterPage.includes(marker) ||
     instructionsStarterFile.includes(marker) ||
     fixPlanPage.includes(marker) ||
@@ -792,6 +866,15 @@ if (!sitemap.includes(instructionsStarterUrl)) {
 
 if (!llms.includes(instructionsStarterUrl)) {
   failures.push("llms.txt is missing the free AGENTS.md starter template.");
+}
+
+const storefrontGuideUrl = "https://zachwright.xyz/agent-ready-storefront-checklist/";
+if (!sitemap.includes(storefrontGuideUrl)) {
+  failures.push("Sitemap is missing the agent-ready storefront checklist.");
+}
+
+if (!llms.includes(storefrontGuideUrl)) {
+  failures.push("llms.txt is missing the agent-ready storefront checklist.");
 }
 
 if (!llms.includes(auditLandingUrl)) {
@@ -1082,6 +1165,7 @@ for (const file of [
   "agent-ready-instructions-pr/index.html",
   "agents-md-vs-claude-md/index.html",
   "agents-md-starter-template/index.html",
+  "agent-ready-storefront-checklist/index.html",
   "agents-md-starter-template/styles.css",
   "agents-md-starter-template/AGENTS.md",
   "agents-md-starter-template/builder.js",
@@ -1125,6 +1209,8 @@ console.log(
       auditPageMarkers: requiredAuditPageMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
       instructionsGuideMarkers: requiredInstructionsGuideMarkers.length,
+      storefrontGuideMarkers: requiredStorefrontGuideMarkers.length,
+      storefrontGuideForbiddenMarkers: forbiddenStorefrontGuideMarkers.length,
       instructionsStarterMarkers: requiredInstructionsStarterMarkers.length,
       instructionsBuilderScriptMarkers: requiredInstructionsBuilderScriptMarkers.length,
       instructionsBuilderForbiddenMarkers: forbiddenInstructionsBuilderScriptMarkers.length,
@@ -1141,7 +1227,7 @@ console.log(
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 18,
+      publicAssets: 19,
     },
     null,
     2,
