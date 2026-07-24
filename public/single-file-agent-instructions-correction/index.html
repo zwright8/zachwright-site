@@ -236,7 +236,7 @@
               <li><span>✓</span> Nothing is uploaded or stored</li>
               <li><span>✓</span> No checkout or payment obligation</li>
               <li><span>✓</span> No repository mutation or code execution</li>
-              <li><span>✓</span> Copy remains available if email does not open</li>
+              <li><span>✓</span> Public request, email, and copy paths available</li>
             </ul>
           </div>
 
@@ -304,10 +304,21 @@
             <p class="scope-builder-privacy">
               Never include credentials, payment details, private files,
               personal or customer data, production access, security work, or
-              regulated work. This builder creates only a non-binding request.
+              regulated work. A GitHub request is public. GitHub account
+              required. This builder creates only a non-binding request.
             </p>
 
             <div class="scope-builder-actions">
+              <a
+                class="button"
+                href="#scope-builder"
+                id="open-single-file-scope-github"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled="true"
+              >
+                Open public GitHub request
+              </a>
               <button class="button" id="open-single-file-scope-email" type="button">
                 Open prefilled business email
               </button>
@@ -548,6 +559,9 @@
         const targetFileInput = getControl("target-file");
         const workflowInput = getControl("workflow");
         const authorityInput = getControl("authority");
+        const openGitHubLink = document.querySelector(
+          "#open-single-file-scope-github",
+        );
         const openEmailButton = document.querySelector(
           "#open-single-file-scope-email",
         );
@@ -611,6 +625,11 @@
           return `mailto:zach@zachwright.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(scopeText)}`;
         };
 
+        const buildGitHubIssueUrl = (scopeText) => {
+          const title = "[Scope request] $149 Single-File Correction";
+          return `https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(scopeText)}`;
+        };
+
         const buildValidScope = () => {
           validateRepository();
           const requiredControls = [
@@ -630,6 +649,34 @@
           status.textContent = "";
           return buildScopeText();
         };
+
+        const refreshGitHubIssueLink = () => {
+          validateRepository();
+          const isReady =
+            repositoryInput.validity.valid &&
+            targetFileInput.validity.valid &&
+            workflowInput.validity.valid &&
+            authorityInput.validity.valid;
+          if (isReady) {
+            openGitHubLink.href = buildGitHubIssueUrl(buildScopeText());
+            openGitHubLink.setAttribute("aria-disabled", "false");
+          } else {
+            openGitHubLink.href = "#scope-builder";
+            openGitHubLink.setAttribute("aria-disabled", "true");
+          }
+        };
+
+        openGitHubLink.addEventListener("click", (event) => {
+          const scopeText = buildValidScope();
+          if (!scopeText) {
+            event.preventDefault();
+            return;
+          }
+          openGitHubLink.href = buildGitHubIssueUrl(scopeText);
+          openGitHubLink.setAttribute("aria-disabled", "false");
+          status.textContent =
+            "Opening a public GitHub draft. Review it before submitting.";
+        });
 
         openEmailButton.addEventListener("click", () => {
           const scopeText = buildValidScope();
@@ -653,13 +700,20 @@
           }
         });
 
-        repositoryInput.addEventListener("input", () =>
-          repositoryInput.setCustomValidity(""),
-        );
+        for (const control of [
+          repositoryInput,
+          targetFileInput,
+          workflowInput,
+          authorityInput,
+        ]) {
+          control.addEventListener("input", refreshGitHubIssueLink);
+          control.addEventListener("change", refreshGitHubIssueLink);
+        }
         revisionInput.addEventListener("input", () => {
           if (revisionInput.value.length > 64) {
             revisionInput.value = revisionInput.value.slice(0, 64);
           }
+          refreshGitHubIssueLink();
         });
       })();
     </script>
