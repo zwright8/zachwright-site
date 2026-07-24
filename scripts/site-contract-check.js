@@ -2,6 +2,9 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
+const vercelConfig = JSON.parse(
+  fs.readFileSync(path.join(root, "vercel.json"), "utf8"),
+);
 const app = fs.readFileSync(path.join(root, "src", "App.tsx"), "utf8");
 const css = fs.readFileSync(path.join(root, "src", "index.css"), "utf8");
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
@@ -1417,6 +1420,14 @@ if (fs.existsSync(socialImagePath)) {
       `Social image must be a 1200x630 PNG; found ${width}x${height} ${signature}.`,
     );
   }
+}
+
+const faviconRewrite = vercelConfig.rewrites?.find(
+  (rewrite) =>
+    rewrite?.source === "/favicon.ico" && rewrite?.destination === "/og.png",
+);
+if (!faviconRewrite) {
+  failures.push("vercel.json must rewrite /favicon.ico to public/og.png.");
 }
 
 if (failures.length) {

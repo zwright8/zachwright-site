@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/og.png"
+    }
+  ],
   "crons": [
     {
       "path": "/api/newsletter/send-daily",
