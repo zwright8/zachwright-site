@@ -133,6 +133,7 @@ AI Agent Cost Attribution Checklist:
 - Free field guide for capturing workflow, run, task, agent, attempt, fan-out, token, cost, outcome, and latency evidence before enforcing budgets.
 - Uses prompt-free, pseudonymous field names and keeps prompts, responses, tool payloads, direct identifiers, credentials, and customer data outside the normalized row.
 - Treats missing evidence as unknown rather than zero and keeps provider-reported cost separate from token usage and labeled estimates.
+- Separates metered API usage, subscription-covered usage, credits, and documented internal allocations so flat-plan usage is not silently represented as per-run cash spend.
 - Covers eight evidence gates, a minimum normalized ledger, current public third-party demand examples, and explicit causal and billing limitations.
 - The cited public issues are examples only, not WrightOps customers, endorsements, or claimed results.
 - Canonical guide: https://zachwright.xyz/ai-agent-cost-attribution-checklist/

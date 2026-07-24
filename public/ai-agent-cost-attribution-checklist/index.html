@@ -408,7 +408,7 @@
               <article><span>01</span><div><h3>Bound one workflow</h3><p>Name the process, its start and end, and the decision the measurement must support.</p></div></article>
               <article><span>02</span><div><h3>Assign stable identities</h3><p>Use pseudonymous workflow, run, task, agent, and attempt keys that survive log joins.</p></div></article>
               <article><span>03</span><div><h3>Record every attempt</h3><p>Preserve first passes, retries, repairs, and refusals instead of collapsing them into one task row.</p></div></article>
-              <article><span>04</span><div><h3>Separate usage from money</h3><p>Store tokens and provider-reported cost independently; never derive one silently from the other.</p></div></article>
+              <article><span>04</span><div><h3>Separate usage, billing, and money</h3><p>Store tokens, billing basis, and observed cost independently; never treat subscription-covered usage as metered spend—or missing spend as zero.</p></div></article>
               <article><span>05</span><div><h3>Expose fan-out</h3><p>Capture parent attempt, recursion depth, and concurrent spawn count before enforcing a fan-out bound.</p></div></article>
               <article><span>06</span><div><h3>Use closed outcomes</h3><p>Define completed, failed, refused, cancelled, and unknown so dashboards do not invent success.</p></div></article>
               <article><span>07</span><div><h3>Publish evidence coverage</h3><p>Report the share of attempts with known usage, cost, outcome, and latency beside every aggregate.</p></div></article>
@@ -440,8 +440,9 @@
                   <tr><td><code>task_key</code>, <code>agent_key</code></td><td>Attribute work to one task and one agent or role.</td><td>No display name required.</td></tr>
                   <tr><td><code>attempt_no</code>, <code>parent_attempt_key</code></td><td>Separate retries and reconstruct fan-out.</td><td>Never overwrite an earlier attempt.</td></tr>
                   <tr><td><code>provider</code>, <code>model</code></td><td>Identify the pricing and runtime context.</td><td>Pin the version when known.</td></tr>
+                  <tr><td><code>billing_basis</code>, <code>billing_period_key</code></td><td>Distinguish metered API usage, subscription-covered usage, credits, and other declared bases.</td><td>Do not convert a flat plan into per-run cash spend without an explicit allocation rule.</td></tr>
                   <tr><td><code>input_tokens</code>, <code>output_tokens</code></td><td>Preserve supplied usage evidence.</td><td>Missing is null, not zero.</td></tr>
-                  <tr><td><code>observed_cost</code>, <code>currency</code></td><td>Store provider-reported money separately from usage.</td><td>Label estimates as estimates.</td></tr>
+                  <tr><td><code>observed_cost</code>, <code>allocated_cost</code>, <code>currency</code></td><td>Keep provider-reported money separate from any documented internal allocation.</td><td>Label estimates and allocations; neither substitutes for an invoice.</td></tr>
                   <tr><td><code>outcome</code>, <code>latency_ms</code></td><td>Compare spend with completion and speed.</td><td>Use a closed outcome vocabulary.</td></tr>
                   <tr><td><code>started_at</code>, <code>completed_at</code></td><td>Support bounded windows and concurrency checks.</td><td>Use one documented timezone.</td></tr>
                 </tbody>
@@ -472,6 +473,10 @@
               </a>
               <a href="https://github.com/lightdash/lightdash/issues/26121" rel="noopener noreferrer">
                 <span><strong>Per-agent warehouse attribution</strong>Lightdash issue #26121 describes query tags that identify AI traffic but not the agent responsible for the spend.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a href="https://github.com/paperclipai/paperclip/issues/498" rel="noopener noreferrer">
+                <span><strong>Subscription versus metered billing</strong>Paperclip issue #498 describes mixed agent fleets where flat-plan runs should not be reported as per-token cash spend.</span>
                 <b aria-hidden="true">↗</b>
               </a>
               <a href="https://github.com/sipyourdrink-ltd/bernstein/issues/2918" rel="noopener noreferrer">
