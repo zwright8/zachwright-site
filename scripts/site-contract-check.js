@@ -29,6 +29,15 @@ const singleFileCorrectionPage = fs.readFileSync(
   ),
   "utf8",
 );
+const singleFileCorrectionSample = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "single-file-agent-instructions-correction",
+    "sample.md",
+  ),
+  "utf8",
+);
 const instructionsGuidePath = path.join(
   root,
   "public",
@@ -357,9 +366,32 @@ const requiredSingleFileCorrectionPageMarkers = [
   'aria-disabled="true"',
   "window.location.href = buildMailto(scopeText)",
   "WrightOps $149 Single-File Agent Instructions Correction scope request",
+  'href="/single-file-agent-instructions-correction/sample.md"',
+  "Inspect the complete one-file sample",
   'href="#scope-builder"',
   'href="/agents-md-vs-claude-md/"',
   'href="/#preflight"',
+];
+
+const requiredSingleFileCorrectionSampleMarkers = [
+  "# Complete Single-File Correction Pack",
+  "historical WrightOps-owned public-repository example",
+  "example, not customer",
+  "work, a testimonial, or a claimed buyer outcome",
+  "a5c77f4106e47240dcea302da2bbf4d05f1a2eb0",
+  "7a507bc0cb42f8c04fb18e53a46371b37b5bd56f",
+  "Existing file: root `AGENTS.md`",
+  "Source size: 7 lines",
+  "## Complete replacement Markdown",
+  "161bbeff67ca2a5f0cb92cdd0fb0e5831ee17acb2e582072bee790f57c18f576",
+  "## Ready-to-apply unified diff",
+  "## Claim-to-source evidence",
+  "2331273ab3f2b67abd96a4291f9c9046905ca3448382f99314065cab88de8d05",
+  "## Acceptance checks",
+  "Exactly one existing eligible instructions file is in scope",
+  "## Limitations",
+  "provider-confirmed settled payment before",
+  "Build a non-binding $149 scope request",
 ];
 
 const forbiddenSingleFileCorrectionPageMarkers = [
@@ -714,6 +746,10 @@ const missingSingleFileCorrectionPage = missing(
   singleFileCorrectionPage,
   requiredSingleFileCorrectionPageMarkers,
 );
+const missingSingleFileCorrectionSample = missing(
+  singleFileCorrectionSample,
+  requiredSingleFileCorrectionSampleMarkers,
+);
 const missingInstructionsGuidePage = missing(
   instructionsGuidePage,
   requiredInstructionsGuideMarkers,
@@ -769,6 +805,12 @@ if (missingInstructionsPage.length) {
 if (missingSingleFileCorrectionPage.length) {
   failures.push(
     `Single-file correction page is missing: ${missingSingleFileCorrectionPage.join(", ")}`,
+  );
+}
+
+if (missingSingleFileCorrectionSample.length) {
+  failures.push(
+    `Single-file correction sample is missing: ${missingSingleFileCorrectionSample.join(", ")}`,
   );
 }
 
@@ -1343,6 +1385,8 @@ for (const file of [
   "agent-ready-repository-audit/index.html",
   "agent-ready-repository-audit/styles.css",
   "agent-ready-instructions-pr/index.html",
+  "single-file-agent-instructions-correction/index.html",
+  "single-file-agent-instructions-correction/sample.md",
   "agents-md-vs-claude-md/index.html",
   "agents-md-starter-template/index.html",
   "agent-ready-storefront-checklist/index.html",
@@ -1402,12 +1446,14 @@ console.log(
       bountyChecklistForbiddenMarkers: forbiddenBountyChecklistMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
+      singleFileCorrectionSampleMarkers:
+        requiredSingleFileCorrectionSampleMarkers.length,
       forbiddenMarkers: forbiddenMarkers.length,
       auditCtas: auditCtaCount,
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 19,
+      publicAssets: 21,
     },
     null,
     2,
