@@ -55,6 +55,220 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700;800&display=swap"
     />
     <link rel="stylesheet" href="/agent-ready-repository-audit/styles.css" />
+    <style>
+      .storefront-check-section {
+        padding: clamp(5rem, 8vw, 8rem) 0;
+        scroll-margin-top: calc(var(--header-height) + 1rem);
+        background: var(--signal);
+      }
+
+      .storefront-check-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.7fr) minmax(28rem, 1fr);
+        align-items: start;
+        gap: clamp(3rem, 8vw, 8rem);
+      }
+
+      .storefront-check-copy {
+        position: sticky;
+        top: calc(var(--header-height) + 2rem);
+      }
+
+      .storefront-check-copy .eyebrow {
+        color: #365605;
+      }
+
+      .storefront-check-copy h2 {
+        max-width: 38rem;
+        margin: 0;
+        font-size: clamp(2.8rem, 5.8vw, 5.8rem);
+        letter-spacing: -0.065em;
+        line-height: 0.94;
+      }
+
+      .storefront-check-copy > p:not(.eyebrow) {
+        max-width: 36rem;
+        margin: 1.5rem 0 0;
+        color: #263416;
+        font-size: 0.94rem;
+        line-height: 1.75;
+      }
+
+      .storefront-check-panel {
+        display: grid;
+        min-width: 0;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        gap: 1.5rem;
+        border: 1px solid rgba(11, 18, 32, 0.16);
+        background: var(--paper);
+        box-shadow: 1.25rem 1.25rem 0 rgba(11, 18, 32, 0.12);
+      }
+
+      .storefront-check-panel fieldset {
+        display: grid;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        gap: 0.7rem;
+        border: 0;
+      }
+
+      .storefront-check-panel legend {
+        margin-bottom: 1rem;
+        color: var(--ink);
+        font-size: 0.82rem;
+        font-weight: 800;
+        line-height: 1.5;
+      }
+
+      .storefront-check-item {
+        display: grid;
+        min-width: 0;
+        padding: 0.95rem 1rem;
+        align-items: start;
+        grid-template-columns: 1.25rem 1fr;
+        gap: 0.8rem;
+        border: 1px solid var(--line-light);
+        background: #fbfcfd;
+        color: #303d4d;
+        cursor: pointer;
+        font-size: 0.78rem;
+        font-weight: 700;
+        line-height: 1.55;
+      }
+
+      .storefront-check-item:hover {
+        border-color: #7f8d9d;
+      }
+
+      .storefront-check-item input {
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: 0.12rem 0 0;
+        accent-color: var(--midnight);
+      }
+
+      .storefront-check-result {
+        display: grid;
+        padding: 1.25rem;
+        gap: 0.7rem;
+        color: #fff;
+        background: var(--midnight);
+      }
+
+      .storefront-check-scoreline {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .storefront-check-scoreline span:first-child {
+        color: var(--slate-light);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      #storefront-check-score {
+        color: var(--signal);
+        font-size: 1.25rem;
+        font-weight: 800;
+      }
+
+      #storefront-check-meter {
+        width: 100%;
+        height: 0.7rem;
+        border: 0;
+        background: #29354a;
+      }
+
+      #storefront-check-meter::-webkit-meter-bar {
+        border: 0;
+        background: #29354a;
+      }
+
+      #storefront-check-meter::-webkit-meter-optimum-value {
+        background: var(--signal);
+      }
+
+      #storefront-check-meter::-moz-meter-bar {
+        background: var(--signal);
+      }
+
+      #storefront-check-title {
+        margin: 0.35rem 0 0;
+        font-size: 1.25rem;
+        line-height: 1.25;
+      }
+
+      #storefront-check-status {
+        min-height: 3.25rem;
+        margin: 0;
+        color: #d9e0e9;
+        font-size: 0.78rem;
+        line-height: 1.6;
+      }
+
+      .storefront-check-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .storefront-check-actions .button {
+        min-width: min(100%, 14rem);
+      }
+
+      .storefront-check-reset {
+        min-height: 3.25rem;
+        padding: 0.9rem 1.2rem;
+        border: 1px solid #fff;
+        border-radius: 0;
+        color: #fff;
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .storefront-check-reset:hover {
+        color: var(--midnight);
+        background: #fff;
+      }
+
+      .storefront-check-privacy {
+        margin: 0;
+        color: #4c5867;
+        font-size: 0.73rem;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 1050px) {
+        .storefront-check-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .storefront-check-copy {
+          position: static;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .storefront-check-panel {
+          padding: 1.1rem;
+          box-shadow: 0.75rem 0.75rem 0 rgba(11, 18, 32, 0.12);
+        }
+
+        .storefront-check-actions,
+        .storefront-check-actions .button,
+        .storefront-check-reset {
+          width: 100%;
+        }
+      }
+    </style>
     <link
       rel="icon"
       href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%23b7f34a"/><text x="50%25" y="53%25" dominant-baseline="middle" text-anchor="middle" fill="%230b1220" font-family="Georgia,serif" font-style="italic" font-size="38">W</text></svg>'
@@ -101,9 +315,9 @@
           </span>
         </a>
         <div class="nav-links">
+          <a href="#quick-check">Quick check</a>
           <a href="#checklist">Seven checks</a>
           <a href="#evidence">Evidence map</a>
-          <a href="#boundaries">Boundaries</a>
         </div>
         <a class="button button-small" href="/agent-ready-repository-audit/">
           See the $750 audit <span aria-hidden="true">↗</span>
@@ -130,8 +344,8 @@
                 truth, and a regression check before calling the work done.
               </p>
               <div class="hero-actions">
-                <a class="button" href="#checklist">
-                  Run the seven checks <span aria-hidden="true">↓</span>
+                <a class="button" href="#quick-check">
+                  Score your evidence <span aria-hidden="true">↓</span>
                 </a>
                 <a class="text-link" href="/#preflight">
                   Run the repository preflight <span aria-hidden="true">↗</span>
@@ -186,6 +400,96 @@
             <div><span>Catalog</span><strong>Product JSON-LD</strong></div>
             <div><span>Parity</span><strong>Page + feed + machine view</strong></div>
             <div><span>Protection</span><strong>Fixture-backed CI</strong></div>
+          </div>
+        </section>
+
+        <section class="storefront-check-section" id="quick-check">
+          <div class="page-shell storefront-check-layout">
+            <div class="storefront-check-copy">
+              <p class="eyebrow">Two-minute browser-local check</p>
+              <h2>Count the evidence you can point to today.</h2>
+              <p>
+                Check only what a reviewer could verify in one public
+                repository at one immutable revision. This self-check does not
+                inspect your repository and is not an audit result or checkout
+                eligibility decision.
+              </p>
+            </div>
+
+            <div class="storefront-check-panel">
+              <fieldset>
+                <legend>
+                  I can point to public repository evidence for each checked
+                  statement:
+                </legend>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>The code or template that emits discovery files such as <code>llms.txt</code> and the sitemap.</span>
+                </label>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>A deterministic machine-readable product or category projection with documented routes and fallback behavior.</span>
+                </label>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>Product and Offer fields mapped to real catalog sources rather than placeholder or inferred facts.</span>
+                </label>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>Conditional logic that omits unsupported reviews, ratings, policies, shipping details, and dates.</span>
+                </label>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>A fixture proving visible HTML, JSON-LD, machine content, and feeds agree on core commerce facts.</span>
+                </label>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>Explicit locale, currency, store-view, canonical URL, and alternate-link behavior across projections.</span>
+                </label>
+                <label class="storefront-check-item">
+                  <input type="checkbox" data-evidence-check />
+                  <span>Executable regression assertions pinned to representative catalog fixtures and an immutable revision.</span>
+                </label>
+              </fieldset>
+
+              <div class="storefront-check-result">
+                <div class="storefront-check-scoreline">
+                  <span>Self-check score</span>
+                  <span id="storefront-check-score">0 / 7</span>
+                </div>
+                <meter id="storefront-check-meter" min="0" max="7" value="0">
+                  0 out of 7
+                </meter>
+                <h3 id="storefront-check-title">Discovery baseline missing</h3>
+                <p id="storefront-check-status" role="status" aria-live="polite">
+                  Start with the free repository preflight and the seven
+                  evidence checks below. Missing evidence is useful scope—not a
+                  failed grade.
+                </p>
+                <div class="storefront-check-actions">
+                  <a
+                    class="button"
+                    id="storefront-check-action"
+                    href="/#preflight"
+                  >
+                    Run the free preflight <span aria-hidden="true">→</span>
+                  </a>
+                  <button
+                    class="storefront-check-reset"
+                    id="storefront-check-reset"
+                    type="button"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+
+              <p class="storefront-check-privacy">
+                Nothing is uploaded, stored, or sent to WrightOps. Your
+                selections stay only in this open browser tab and disappear
+                when you reset or leave the page.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -464,5 +768,75 @@
         <span>Public repositories only · No secrets · No production access</span>
       </div>
     </footer>
+    <script>
+      (() => {
+        const checks = Array.from(
+          document.querySelectorAll("[data-evidence-check]"),
+        );
+        const score = document.querySelector("#storefront-check-score");
+        const meter = document.querySelector("#storefront-check-meter");
+        const title = document.querySelector("#storefront-check-title");
+        const status = document.querySelector("#storefront-check-status");
+        const action = document.querySelector("#storefront-check-action");
+        const reset = document.querySelector("#storefront-check-reset");
+
+        function storefrontResult(count) {
+          if (count <= 2) {
+            return {
+              title: "Discovery baseline missing",
+              status:
+                "Start with the free repository preflight and the seven evidence checks below. Missing evidence is useful scope—not a failed grade.",
+              label: "Run the free preflight",
+              href: "/#preflight",
+            };
+          }
+
+          if (count <= 5) {
+            return {
+              title: "Evidence map incomplete",
+              status:
+                "Name the unsupported claims and connect each one to its source, generated projection, and acceptance check before paying for a Fix Plan.",
+              label: "Map the missing evidence",
+              href: "#evidence",
+            };
+          }
+
+          return {
+            title: "Ready for the required WrightOps audit",
+            status:
+              "You have enough self-reported evidence to review the $149 Fix Plan path. The completed WrightOps audit and its public evidence are still required before checkout can be revealed.",
+            label: "Continue to the $149 Fix Plan",
+            href: "/agent-ready-fix-plan/",
+          };
+        }
+
+        function updateStorefrontResult() {
+          const count = checks.filter((check) => check.checked).length;
+          const result = storefrontResult(count);
+
+          score.textContent = `${count} / 7`;
+          meter.value = count;
+          meter.textContent = `${count} out of 7`;
+          title.textContent = result.title;
+          status.textContent = result.status;
+          action.childNodes[0].textContent = `${result.label} `;
+          action.href = result.href;
+        }
+
+        checks.forEach((check) => {
+          check.addEventListener("change", updateStorefrontResult);
+        });
+
+        reset.addEventListener("click", () => {
+          checks.forEach((check) => {
+            check.checked = false;
+          });
+          updateStorefrontResult();
+          checks[0].focus();
+        });
+
+        updateStorefrontResult();
+      })();
+    </script>
   </body>
 </html>

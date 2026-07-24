@@ -328,6 +328,22 @@ const requiredStorefrontGuideMarkers = [
   "Fixture-backed CI",
   "Illustrative evidence map / checklist model",
   "not an audit result",
+  'id="quick-check"',
+  'id="storefront-check-score"',
+  'id="storefront-check-meter"',
+  'id="storefront-check-status"',
+  'id="storefront-check-action"',
+  'id="storefront-check-reset"',
+  "data-evidence-check",
+  "Two-minute browser-local check",
+  "Discovery baseline missing",
+  "Evidence map incomplete",
+  "Ready for the required WrightOps audit",
+  "Continue to the $149 Fix Plan",
+  "The completed WrightOps audit and its public evidence are still required",
+  "Nothing is uploaded, stored, or sent to WrightOps.",
+  "function storefrontResult(count)",
+  "function updateStorefrontResult()",
   "Missing evidence should stay missing",
   "No login · No form submission · No live-site crawl",
   "No fabricated reviews, policies, or catalog facts",
@@ -708,6 +724,24 @@ for (const marker of forbiddenStorefrontGuideMarkers) {
   if (storefrontGuidePage.includes(marker)) {
     failures.push(`Storefront guide must remain read-only: ${marker}`);
   }
+}
+
+const storefrontGuideCheckCount = (
+  storefrontGuidePage.match(/type="checkbox" data-evidence-check/g) || []
+).length;
+if (storefrontGuideCheckCount !== 7) {
+  failures.push(
+    `Expected exactly seven browser-local storefront evidence checks; found ${storefrontGuideCheckCount}.`,
+  );
+}
+
+if (
+  !storefrontGuidePage.includes('href="/#preflight"') ||
+  !storefrontGuidePage.includes('href="/agent-ready-fix-plan/"')
+) {
+  failures.push(
+    "Storefront quick-check results must preserve the free preflight and $149 Fix Plan paths.",
+  );
 }
 
 const storefrontStructuredDataMatch = storefrontGuidePage.match(
