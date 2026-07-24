@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free AGENTS.md Size Budget Checker | WrightOps</title>
+    <meta
+      name="description"
+      content="Count UTF-8 bytes, characters, and lines in an AGENTS.md file against an editable planning budget. Browser-only, no login, upload, storage, or tracking."
+    />
+    <link
+      rel="canonical"
+      href="https://zachwright.xyz/agents-md-size-budget-checker/"
+    />
+    <link rel="icon" href="/og.png" />
+    <meta name="theme-color" content="#080b0a" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Free AGENTS.md Size Budget Checker | WrightOps"
+    />
+    <meta
+      property="og:description"
+      content="Measure an instruction file against an editable UTF-8 byte budget without sending its contents anywhere."
+    />
+    <meta
+      property="og:url"
+      content="https://zachwright.xyz/agents-md-size-budget-checker/"
+    />
+    <meta property="og:image" content="https://zachwright.xyz/og.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AGENTS.md Size Budget Checker",
+        "url": "https://zachwright.xyz/agents-md-size-budget-checker/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any modern browser",
+        "isAccessibleForFree": true,
+        "description": "A browser-only UTF-8 byte, character, and line counter with an editable instruction-file planning budget.",
+        "provider": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        }
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #080b0a;
+        --panel: #101512;
+        --panel-soft: #151c18;
+        --line: #27322c;
+        --text: #f2f5f3;
+        --muted: #a7b2ac;
+        --lime: #b8ff3d;
+        --lime-dark: #18220e;
+        --amber: #ffcc66;
+        --red: #ff746c;
+        --max: 1120px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(circle at 75% 0%, rgba(184, 255, 61, 0.11), transparent 34rem),
+          var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid var(--lime);
+        outline-offset: 3px;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 10;
+        padding: 0.7rem 0.9rem;
+        background: var(--lime);
+        color: #090b09;
+        transform: translateY(-180%);
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      header,
+      main,
+      footer {
+        width: min(calc(100% - 2rem), var(--max));
+        margin-inline: auto;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 76px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        text-decoration: none;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 2rem;
+        height: 2rem;
+        place-items: center;
+        border-radius: 0.35rem;
+        background: var(--lime);
+        color: #090b09;
+        font-size: 0.86rem;
+      }
+
+      header nav {
+        display: flex;
+        gap: 1rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      header nav a:hover {
+        color: var(--text);
+      }
+
+      .hero {
+        display: grid;
+        gap: 1.25rem;
+        max-width: 860px;
+        padding: 6rem 0 3rem;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--lime);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 0;
+        font-size: clamp(2.7rem, 8vw, 5.7rem);
+        line-height: 0.96;
+        letter-spacing: -0.065em;
+        text-wrap: balance;
+      }
+
+      h1 em {
+        color: var(--lime);
+        font-style: normal;
+      }
+
+      .lede {
+        max-width: 730px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+      }
+
+      .privacy-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .privacy-row li {
+        padding: 0.45rem 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .checker {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(270px, 0.55fr);
+        gap: 1rem;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        background: rgba(16, 21, 18, 0.94);
+        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+      }
+
+      .input-panel,
+      .result-panel {
+        min-width: 0;
+      }
+
+      label,
+      .label {
+        display: block;
+        margin-bottom: 0.55rem;
+        font-size: 0.88rem;
+        font-weight: 750;
+      }
+
+      textarea,
+      input {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 0.7rem;
+        background: #0a0e0c;
+        color: var(--text);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 430px;
+        padding: 1rem;
+        resize: vertical;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      input {
+        padding: 0.75rem 0.8rem;
+      }
+
+      .field-note,
+      .fine-print {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .field-note {
+        margin: 0.55rem 0 0;
+      }
+
+      .result-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.1rem;
+        border: 1px solid var(--line);
+        border-radius: 0.8rem;
+        background: var(--panel-soft);
+      }
+
+      .status {
+        padding: 0.85rem;
+        border: 1px solid var(--line);
+        border-radius: 0.65rem;
+        background: var(--lime-dark);
+      }
+
+      .status strong {
+        display: block;
+        color: var(--lime);
+        font-size: 1.2rem;
+      }
+
+      .status[data-state="over"] {
+        background: rgba(255, 116, 108, 0.08);
+      }
+
+      .status[data-state="over"] strong {
+        color: var(--red);
+      }
+
+      .status[data-state="empty"] strong {
+        color: var(--amber);
+      }
+
+      progress {
+        width: 100%;
+        height: 0.6rem;
+        border: 0;
+        border-radius: 999px;
+        overflow: hidden;
+        background: #050706;
+      }
+
+      progress::-webkit-progress-bar {
+        background: #050706;
+      }
+
+      progress::-webkit-progress-value {
+        background: var(--lime);
+      }
+
+      progress::-moz-progress-bar {
+        background: var(--lime);
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin: 0;
+      }
+
+      .metrics div {
+        min-width: 0;
+        padding: 0.75rem;
+        border: 1px solid var(--line);
+        border-radius: 0.65rem;
+        background: #0c100e;
+      }
+
+      .metrics dt {
+        color: var(--muted);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .metrics dd {
+        margin: 0.2rem 0 0;
+        overflow-wrap: anywhere;
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.65rem;
+      }
+
+      button,
+      .cta {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.65rem;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      button {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--text);
+      }
+
+      button:hover {
+        border-color: var(--lime);
+      }
+
+      .next-step {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 1.25rem;
+        align-items: center;
+        margin: 4rem 0;
+        padding: clamp(1.3rem, 4vw, 2.2rem);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--panel);
+      }
+
+      .next-step h2 {
+        margin-bottom: 0.35rem;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        letter-spacing: -0.04em;
+      }
+
+      .next-step p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .cta {
+        padding: 0.85rem 1.05rem;
+        background: var(--lime);
+        color: #090b09;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .guidance {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin-bottom: 4rem;
+      }
+
+      .guidance article {
+        padding: 1.1rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .guidance h2 {
+        margin-bottom: 0.35rem;
+        font-size: 1rem;
+      }
+
+      .guidance p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      footer p {
+        margin-bottom: 0;
+      }
+
+      footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+
+      @media (max-width: 780px) {
+        .hero {
+          padding-top: 4rem;
+        }
+
+        .checker,
+        .next-step,
+        .guidance {
+          grid-template-columns: 1fr;
+        }
+
+        textarea {
+          min-height: 320px;
+        }
+
+        .next-step {
+          align-items: start;
+        }
+
+        .cta {
+          width: 100%;
+          white-space: normal;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 520px) {
+        header nav a:first-child {
+          display: none;
+        }
+
+        .metrics,
+        .actions {
+          grid-template-columns: 1fr;
+        }
+
+        footer {
+          flex-direction: column;
+        }
+
+        footer nav {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#checker">Skip to checker</a>
+    <header>
+      <a class="brand" href="/">
+        <span class="brand-mark">W</span>
+        <span>WrightOps</span>
+      </a>
+      <nav aria-label="Primary">
+        <a href="/agents-md-vs-claude-md/">File guide</a>
+        <a href="/agents-md-starter-template/">Starter</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Free / browser-only / editable budget</p>
+        <h1 id="page-title">
+          Know when your <em>AGENTS.md</em> is getting too large.
+        </h1>
+        <p class="lede">
+          Paste an instruction file, set the byte budget that applies to your
+          environment, and see the exact UTF-8 size, line count, and remaining
+          headroom. The 32,768-byte starting value is editable planning input,
+          not a universal platform limit.
+        </p>
+        <ul class="privacy-row" aria-label="Tool boundaries">
+          <li>No login</li>
+          <li>No upload</li>
+          <li>No storage</li>
+          <li>No tracking</li>
+          <li>No repository access</li>
+        </ul>
+      </section>
+
+      <section class="checker" id="checker" aria-label="AGENTS.md size checker">
+        <div class="input-panel">
+          <label for="instruction-text">Instruction file contents</label>
+          <textarea
+            id="instruction-text"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="# AGENTS.md&#10;&#10;Paste the instruction file you want to measure…"
+          ></textarea>
+          <p class="field-note">
+            Your text remains in this browser tab. The page has no submission
+            endpoint, analytics, storage call, or external script.
+          </p>
+        </div>
+
+        <aside class="result-panel" aria-label="Measurement results">
+          <div>
+            <label for="byte-budget">Editable byte budget</label>
+            <input
+              id="byte-budget"
+              type="number"
+              min="1"
+              max="10000000"
+              step="1"
+              value="32768"
+              inputmode="numeric"
+            />
+            <p class="field-note">
+              Verify the applicable limit in the tool or agent configuration
+              you actually use.
+            </p>
+          </div>
+
+          <div
+            class="status"
+            id="budget-status"
+            data-state="empty"
+            aria-live="polite"
+          >
+            <strong id="status-label">Waiting for text</strong>
+            <span id="status-detail">Paste a file to calculate its budget.</span>
+          </div>
+
+          <progress
+            id="budget-progress"
+            max="32768"
+            value="0"
+            aria-label="Instruction file byte budget used"
+          ></progress>
+
+          <dl class="metrics">
+            <div>
+              <dt>UTF-8 bytes</dt>
+              <dd id="byte-count">0</dd>
+            </div>
+            <div>
+              <dt>Characters</dt>
+              <dd id="character-count">0</dd>
+            </div>
+            <div>
+              <dt>Lines</dt>
+              <dd id="line-count">0</dd>
+            </div>
+            <div>
+              <dt>Budget used</dt>
+              <dd id="budget-percent">0%</dd>
+            </div>
+          </dl>
+
+          <div class="actions">
+            <button id="copy-summary" type="button">Copy summary</button>
+            <button id="clear-text" type="button">Clear</button>
+          </div>
+
+          <p class="fine-print" id="copy-status" aria-live="polite">
+            Measurement only. This checker does not judge instruction quality,
+            precedence, or tool compatibility.
+          </p>
+        </aside>
+      </section>
+
+      <section class="next-step" aria-labelledby="next-step-title">
+        <div>
+          <p class="eyebrow">One-file paid next step</p>
+          <h2 id="next-step-title">Over budget and unsure what to remove?</h2>
+          <p>
+            The fixed $149 Single-File Agent Instructions Correction returns a
+            review-ready replacement, unified diff, evidence notes, and
+            acceptance checks for one existing public-repository instruction
+            file. Written scope and settled PayPal Business payment are
+            required before work.
+          </p>
+        </div>
+        <a class="cta" href="/single-file-agent-instructions-correction/">
+          See the $149 scope &amp; sample
+        </a>
+      </section>
+
+      <section class="guidance" aria-label="Usage guidance">
+        <article>
+          <h2>Measure the exact bytes</h2>
+          <p>
+            UTF-8 byte count is not the same as JavaScript character count.
+            This checker reports both and does not estimate tokens.
+          </p>
+        </article>
+        <article>
+          <h2>Use the right budget</h2>
+          <p>
+            Limits can differ by agent, wrapper, configuration, and combined
+            instruction chain. Replace the planning value with your verified
+            limit.
+          </p>
+        </article>
+        <article>
+          <h2>Preserve repository truth</h2>
+          <p>
+            Shrinking a file should not invent commands, paths, guarantees, or
+            safety claims. Keep shared facts evidenced and tool companions thin.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <p>WrightOps · Evidence before automation</p>
+      <nav aria-label="Footer">
+        <a href="/agents-md-vs-claude-md/">Instruction-file guide</a>
+        <a href="/agents-md-starter-template/">Free starter</a>
+        <a href="/">All WrightOps offers</a>
+      </nav>
+    </footer>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const instructionText = document.querySelector("#instruction-text");
+        const byteBudget = document.querySelector("#byte-budget");
+        const budgetStatus = document.querySelector("#budget-status");
+        const statusLabel = document.querySelector("#status-label");
+        const statusDetail = document.querySelector("#status-detail");
+        const budgetProgress = document.querySelector("#budget-progress");
+        const byteCount = document.querySelector("#byte-count");
+        const characterCount = document.querySelector("#character-count");
+        const lineCount = document.querySelector("#line-count");
+        const budgetPercent = document.querySelector("#budget-percent");
+        const copySummary = document.querySelector("#copy-summary");
+        const clearText = document.querySelector("#clear-text");
+        const copyStatus = document.querySelector("#copy-status");
+        const encoder = new TextEncoder();
+
+        let currentSummary = "";
+
+        function formatNumber(value) {
+          return new Intl.NumberFormat("en-US").format(value);
+        }
+
+        function readBudget() {
+          const parsed = Number.parseInt(byteBudget.value, 10);
+          return Number.isFinite(parsed) && parsed > 0 ? parsed : 32768;
+        }
+
+        function measure() {
+          const text = instructionText.value;
+          const bytes = encoder.encode(text).length;
+          const characters = Array.from(text).length;
+          const lines = text.length ? text.split(/\r\n|\r|\n/).length : 0;
+          const budget = readBudget();
+          const remaining = budget - bytes;
+          const percent = budget > 0 ? (bytes / budget) * 100 : 0;
+
+          byteCount.textContent = formatNumber(bytes);
+          characterCount.textContent = formatNumber(characters);
+          lineCount.textContent = formatNumber(lines);
+          budgetPercent.textContent = `${percent.toFixed(percent >= 10 ? 1 : 2)}%`;
+          budgetProgress.max = budget;
+          budgetProgress.value = Math.min(bytes, budget);
+
+          if (!text.length) {
+            budgetStatus.dataset.state = "empty";
+            statusLabel.textContent = "Waiting for text";
+            statusDetail.textContent = "Paste a file to calculate its budget.";
+          } else if (remaining < 0) {
+            budgetStatus.dataset.state = "over";
+            statusLabel.textContent = "Over the selected budget";
+            const overage = Math.abs(remaining);
+            statusDetail.textContent = `${formatNumber(overage)} ${overage === 1 ? "byte" : "bytes"} over ${formatNumber(budget)}.`;
+          } else if (remaining === 0) {
+            budgetStatus.dataset.state = "at";
+            statusLabel.textContent = "Exactly at the selected budget";
+            statusDetail.textContent = `${formatNumber(budget)} of ${formatNumber(budget)} bytes used.`;
+          } else {
+            budgetStatus.dataset.state = "under";
+            statusLabel.textContent = "Within the selected budget";
+            statusDetail.textContent = `${formatNumber(remaining)} ${remaining === 1 ? "byte remains" : "bytes remain"} before ${formatNumber(budget)}.`;
+          }
+
+          currentSummary = [
+            "AGENTS.md size budget summary",
+            `UTF-8 bytes: ${bytes}`,
+            `Characters: ${characters}`,
+            `Lines: ${lines}`,
+            `Selected budget: ${budget}`,
+            `Budget delta: ${remaining}`,
+          ].join("\n");
+        }
+
+        async function copyMeasurement() {
+          try {
+            await navigator.clipboard.writeText(currentSummary);
+            copyStatus.textContent = "Measurement summary copied.";
+          } catch {
+            copyStatus.textContent =
+              "Clipboard access was unavailable. The measurement remains visible above.";
+          }
+        }
+
+        instructionText.addEventListener("input", measure);
+        byteBudget.addEventListener("input", measure);
+        copySummary.addEventListener("click", copyMeasurement);
+        clearText.addEventListener("click", () => {
+          instructionText.value = "";
+          copyStatus.textContent =
+            "Measurement only. This checker does not judge instruction quality, precedence, or tool compatibility.";
+          measure();
+          instructionText.focus();
+        });
+
+        measure();
+      })();
+    </script>
+  </body>
+</html>

@@ -21,6 +21,7 @@ Terms: https://zachwright.xyz/agent-ready-fix-plan/#terms
 Agent Instructions Correction scope builder and service page: https://zachwright.xyz/agent-ready-instructions-pr/
 AGENTS.md vs CLAUDE.md vs Copilot instructions guide: https://zachwright.xyz/agents-md-vs-claude-md/
 Free browser-local AGENTS.md builder and starter template: https://zachwright.xyz/agents-md-starter-template/
+Free browser-local AGENTS.md size budget checker: https://zachwright.xyz/agents-md-size-budget-checker/
 Agent-Ready Storefront Repository Checklist: https://zachwright.xyz/agent-ready-storefront-checklist/
 Agent Instructions Correction owned-repository sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
 
@@ -38,6 +39,15 @@ Free browser-local AGENTS.md builder and starter template:
 - The generic starter remains available as a direct download.
 - Generic operational information only, not a repository-specific security, legal, privacy, or compliance assessment.
 - Canonical builder: https://zachwright.xyz/agents-md-starter-template/
+
+Free browser-local AGENTS.md size budget checker:
+- Counts exact UTF-8 bytes, Unicode characters, and lines for visitor-pasted instruction text.
+- Compares the result with an editable planning budget; the 32,768-byte starting value is not claimed as a universal platform limit.
+- Reports the selected-budget delta and percentage without estimating tokens or judging instruction quality.
+- No login, upload, form submission, repository access, external script, analytics, cookie, or browser storage.
+- Routes an over-budget one-file case to the existing fixed $149 Single-File Agent Instructions Correction scope.
+- Generic operational measurement only, not a security, privacy, legal, compliance, or tool-compatibility assessment.
+- Canonical checker: https://zachwright.xyz/agents-md-size-budget-checker/
 
 Agent-Ready Storefront Repository Checklist:
 - Free public-repository guide for mapping agent-readable commerce claims to inspectable source, projection, and regression evidence.

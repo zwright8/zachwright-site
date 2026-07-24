@@ -38,6 +38,7 @@ const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/";
 const SINGLE_FILE_CORRECTION_LANDING_URL =
   "/single-file-agent-instructions-correction/";
 const AGENTS_STARTER_URL = "/agents-md-starter-template/";
+const AGENTS_SIZE_CHECKER_URL = "/agents-md-size-budget-checker/";
 const INSTRUCTIONS_PR_SAMPLE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1";
 const BOUNTY_CARD_URL =
@@ -421,6 +422,13 @@ function Hero() {
             Need a safe starting file?{" "}
             <a className="hero-starter-link" href={AGENTS_STARTER_URL}>
               Copy the free AGENTS.md starter <Arrow />
+            </a>
+          </p>
+
+          <p className="hero-starter-prompt">
+            Already have a large instruction file?{" "}
+            <a className="hero-starter-link" href={AGENTS_SIZE_CHECKER_URL}>
+              Check its browser-local size budget <Arrow />
             </a>
           </p>
 
@@ -1263,6 +1271,7 @@ function Footer() {
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>
             <a href="/agents-md-vs-claude-md/">AGENTS.md file guide</a>
             <a href={AGENTS_STARTER_URL}>AGENTS.md starter template</a>
+            <a href={AGENTS_SIZE_CHECKER_URL}>AGENTS.md size checker</a>
             <a href={BOUNTY_CHECKLIST_URL}>Coding bounty payout checklist</a>
             <a href={`${INSTRUCTIONS_PR_LANDING_URL}#boundaries`}>
               Instructions correction terms

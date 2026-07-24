@@ -70,6 +70,10 @@ const instructionsBuilderScript = fs.readFileSync(
   path.join(root, "public", "agents-md-starter-template", "builder.js"),
   "utf8",
 );
+const agentsSizeBudgetPage = fs.readFileSync(
+  path.join(root, "public", "agents-md-size-budget-checker", "index.html"),
+  "utf8",
+);
 const fixPlanPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-fix-plan", "index.html"),
   "utf8",
@@ -147,6 +151,9 @@ const requiredAppMarkers = [
   'const AGENTS_STARTER_URL = "/agents-md-starter-template/"',
   '<a className="hero-starter-link" href={AGENTS_STARTER_URL}>',
   "Copy the free AGENTS.md starter",
+  'const AGENTS_SIZE_CHECKER_URL = "/agents-md-size-budget-checker/"',
+  '<a className="hero-starter-link" href={AGENTS_SIZE_CHECKER_URL}>',
+  "Check its browser-local size budget",
   '<a className="text-action" href={FIX_PLAN_LANDING_URL}>',
   "Start the self-serve $149 Fix Plan",
   "<SecondaryAction href={FIX_PLAN_LANDING_URL}>",
@@ -761,6 +768,57 @@ const forbiddenMarkers = [
   "https://github.com/StoneCypher/fsl/issues/1491#issuecomment-5012788530",
 ];
 
+const requiredAgentsSizeBudgetPageMarkers = [
+  "<title>Free AGENTS.md Size Budget Checker | WrightOps</title>",
+  'href="https://zachwright.xyz/agents-md-size-budget-checker/"',
+  '"@type": "WebApplication"',
+  '"isAccessibleForFree": true',
+  "Know when your <em>AGENTS.md</em> is getting too large.",
+  "32,768-byte starting value is editable planning input",
+  "not a universal platform limit",
+  "No login",
+  "No upload",
+  "No storage",
+  "No tracking",
+  'id="instruction-text"',
+  'id="byte-budget"',
+  'value="32768"',
+  'id="budget-status"',
+  'id="budget-progress"',
+  'id="byte-count"',
+  'id="character-count"',
+  'id="line-count"',
+  'id="budget-percent"',
+  'id="copy-summary"',
+  'id="clear-text"',
+  "const encoder = new TextEncoder()",
+  "encoder.encode(text).length",
+  "Array.from(text).length",
+  "navigator.clipboard.writeText(currentSummary)",
+  "does not judge instruction quality",
+  'href="/single-file-agent-instructions-correction/"',
+  "See the $149 scope &amp; sample",
+  "settled PayPal Business payment are",
+  "required before work.",
+  "does not estimate tokens",
+  "@media (prefers-reduced-motion: reduce)",
+];
+
+const forbiddenAgentsSizeBudgetPageMarkers = [
+  "<form",
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
+  '<script src="http',
+  '<link rel="stylesheet" href="http',
+  "buy.stripe.com",
+];
+
 function missing(source, markers) {
   return markers.filter((marker) => !source.includes(marker));
 }
@@ -813,6 +871,10 @@ const missingInstructionsBuilderScript = missing(
 const missingInstructionsStarterCss = missing(
   instructionsStarterCss,
   requiredInstructionsStarterCssMarkers,
+);
+const missingAgentsSizeBudgetPage = missing(
+  agentsSizeBudgetPage,
+  requiredAgentsSizeBudgetPageMarkers,
 );
 const missingFixPlanPage = missing(fixPlanPage, requiredFixPlanPageMarkers);
 const missingBountyReviewPage = missing(
@@ -956,6 +1018,18 @@ if (missingInstructionsStarterCss.length) {
   );
 }
 
+if (missingAgentsSizeBudgetPage.length) {
+  failures.push(
+    `AGENTS.md size budget checker is missing: ${missingAgentsSizeBudgetPage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenAgentsSizeBudgetPageMarkers) {
+  if (agentsSizeBudgetPage.includes(marker)) {
+    failures.push(`AGENTS.md size budget checker must remain browser-local: ${marker}`);
+  }
+}
+
 if (missingFixPlanPage.length) {
   failures.push(`Fix Plan page is missing: ${missingFixPlanPage.join(", ")}`);
 }
@@ -1009,6 +1083,7 @@ for (const marker of forbiddenMarkers) {
     storefrontGuidePage.includes(marker) ||
     instructionsStarterPage.includes(marker) ||
     instructionsStarterFile.includes(marker) ||
+    agentsSizeBudgetPage.includes(marker) ||
     fixPlanPage.includes(marker) ||
     bountyReviewPage.includes(marker) ||
     bountyChecklistPage.includes(marker) ||
@@ -1074,6 +1149,16 @@ if (!sitemap.includes(instructionsStarterUrl)) {
 
 if (!llms.includes(instructionsStarterUrl)) {
   failures.push("llms.txt is missing the free AGENTS.md starter template.");
+}
+
+const agentsSizeBudgetUrl =
+  "https://zachwright.xyz/agents-md-size-budget-checker/";
+if (!sitemap.includes(agentsSizeBudgetUrl)) {
+  failures.push("Sitemap is missing the AGENTS.md size budget checker.");
+}
+
+if (!llms.includes(agentsSizeBudgetUrl)) {
+  failures.push("llms.txt is missing the AGENTS.md size budget checker.");
 }
 
 const storefrontGuideUrl = "https://zachwright.xyz/agent-ready-storefront-checklist/";
@@ -1456,6 +1541,7 @@ for (const file of [
   "single-file-agent-instructions-correction/sample.md",
   "agents-md-vs-claude-md/index.html",
   "agents-md-starter-template/index.html",
+  "agents-md-size-budget-checker/index.html",
   "agent-ready-storefront-checklist/index.html",
   "agents-md-starter-template/styles.css",
   "agents-md-starter-template/AGENTS.md",
@@ -1515,6 +1601,9 @@ console.log(
       instructionsBuilderForbiddenMarkers: forbiddenInstructionsBuilderScriptMarkers.length,
       instructionsBuilderPageForbiddenMarkers: forbiddenInstructionsStarterPageMarkers.length,
       instructionsBuilderCssMarkers: requiredInstructionsStarterCssMarkers.length,
+      agentsSizeBudgetPageMarkers: requiredAgentsSizeBudgetPageMarkers.length,
+      agentsSizeBudgetPageForbiddenMarkers:
+        forbiddenAgentsSizeBudgetPageMarkers.length,
       fixPlanPageMarkers: requiredFixPlanPageMarkers.length,
       bountyReviewPageMarkers: requiredBountyReviewPageMarkers.length,
       bountyChecklistMarkers: requiredBountyChecklistMarkers.length,
