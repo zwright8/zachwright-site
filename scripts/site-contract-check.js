@@ -320,6 +320,7 @@ const requiredStorefrontGuideMarkers = [
   'href="https://zachwright.xyz/agent-ready-storefront-checklist/"',
   '"@type": "TechArticle"',
   '"datePublished": "2026-07-23"',
+  '"dateModified": "2026-07-24"',
   "Prove your storefront is <em>agent-ready.</em>",
   "llms.txt + sitemap",
   "Product JSON-LD",
@@ -332,6 +333,10 @@ const requiredStorefrontGuideMarkers = [
   "No fabricated reviews, policies, or catalog facts",
   "No ranking, adoption, traffic, or revenue guarantee",
   "not assess vulnerabilities, security,",
+  "the $149 Fix Plan checks matching public evidence",
+  "No mailbox is required for that gated",
+  'href="/agent-ready-fix-plan/"',
+  "Use the $149 Fix Plan",
   'href="/agent-ready-repository-audit/"',
   'href="/#preflight"',
 ];
