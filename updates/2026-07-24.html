@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Rollouts Need a Forensic Trail | zachwright.xyz</title>
+  <meta name="description" content="Feature-flag evaluations, semantic diffs, confidence scores, rationale, and review queues make autonomous changes reconstructable." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Rollouts Need a Forensic Trail</h1>
+          <p>Feature-flag evaluations, semantic diffs, confidence scores, rationale, and review queues make autonomous changes reconstructable.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The new control surface for AI-enabled systems is not just whether an automation ran. It is which version ran, what it evaluated, why it changed state, and what an operator can replay or approve.</strong></p>
+          <p>Vercel now exposes both sides of a rollout: live evaluations show what variants, environments, SDK keys, clients, and projects actually received, while the CLI shows semantic diffs for targeting rules and rollout percentages. GitHub Issues applies the same idea to agent mutations with confidence levels, rationale, and a review queue. The result is a forensic trail for changes that used to disappear into a dashboard or an agent transcript.</p>
+          <ul>
+            <li>Vercel Flags evaluation metrics tie evaluation shifts to configuration versions and let operators separate targeted matches from default fallbacks.
+            <a href="https://vercel.com/changelog/evaluation-metrics-for-vercel-flags">https://vercel.com/changelog/evaluation-metrics-for-vercel-flags</a></li>
+            <li><code>vercel flags versions</code> prints authors, messages, timestamps, environments, and semantic field-level diffs for targeting and rollout changes.
+            <a href="https://vercel.com/changelog/inspect-feature-flag-history-with-vercel-cli">https://vercel.com/changelog/inspect-feature-flag-history-with-vercel-cli</a></li>
+            <li>GitHub Issue automations can apply high-confidence changes, hold lower-confidence suggestions for review, and record the rationale either way.
+            <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Diff the rollout before blaming the model</strong> - run <code>vercel flags versions &lt;flag&gt;</code>, then <code>vercel flags versions diff &lt;flag&gt; --revision &lt;n&gt;</code> to find the exact targeting or percentage change.
+            <a href="https://vercel.com/changelog/inspect-feature-flag-history-with-vercel-cli">https://vercel.com/changelog/inspect-feature-flag-history-with-vercel-cli</a></li>
+            <li><strong>Measure served behavior</strong> - upgrade <code>@vercel/flags-core</code> to 1.6.0+ and group evaluation metrics by environment, variant, reason, SDK key, client, and reporting project.
+            <a href="https://vercel.com/changelog/evaluation-metrics-for-vercel-flags">https://vercel.com/changelog/evaluation-metrics-for-vercel-flags</a></li>
+            <li><strong>Surface pending mutations</strong> - use GitHub Issue automation confidence and rationale, then search <code>has:suggestions</code> for changes waiting on a human decision.
+            <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
+            <li><strong>Inspect the runtime at the point of failure</strong> - connect to a running Vercel Sandbox, browse its filesystem, inspect ports, and take a snapshot before changing the environment.
+            <a href="https://vercel.com/changelog/connect-to-and-manage-sandboxes-from-the-dashboard">https://vercel.com/changelog/connect-to-and-manage-sandboxes-from-the-dashboard</a></li>
+            <li><strong>Ship policy with the tool</strong> - package GitHub tools as an eve extension with scoped presets and input-dependent approval predicates for writes.
+            <a href="https://vercel.com/changelog/github-tools-eve-extension">https://vercel.com/changelog/github-tools-eve-extension</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>A rollout percentage is not evidence.</strong> Store the served variant, reason, environment, client, config revision, and population so a bad outcome can be reconstructed.</li>
+            <li><strong>Confidence is triage, not authorization.</strong> GitHub's approval queue helps prioritize review, but permissions and server-side policy still have to enforce the boundary.</li>
+            <li><strong>Every autonomous change needs one ledger.</strong> Join flag revisions, issue mutations, deployments, and tool calls by stable IDs before incident response has to infer causality.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Automation</strong> - when the “small rollout” finally gets a version history, confidence threshold, semantic diff, and review queue.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/automation.png">https://imgs.xkcd.com/comics/automation.png</a><br>Post: <a href="https://xkcd.com/1313/">https://xkcd.com/1313/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
