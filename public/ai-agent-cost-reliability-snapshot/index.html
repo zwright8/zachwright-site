@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A $495 prompt-free snapshot of one AI-agent workflow: aggregate cost, completion, first-pass reliability, retries, latency, and evidence gaps."
+      content="A $495 prompt-free snapshot for long-running AI-agent workflows with hard timeouts, dropped replies, retry uncertainty, or missing progress and cost evidence."
     />
     <meta
       name="robots"
@@ -24,7 +24,7 @@
     />
     <meta
       property="og:description"
-      content="Know what one agent workflow costs and where it fails—without sending prompts, responses, or direct identifiers."
+      content="Measure timeout, completion, retry, latency, and cost evidence for one long-running agent workflow—without sending prompts, responses, or direct identifiers."
     />
     <meta
       property="og:url"
@@ -63,7 +63,7 @@
         "@type": "Service",
         "name": "AI Agent Cost & Reliability Snapshot",
         "url": "https://zachwright.xyz/ai-agent-cost-reliability-snapshot/",
-        "description": "A fixed-scope, prompt-free aggregate cost and reliability snapshot for one AI-agent workflow.",
+        "description": "A fixed-scope, prompt-free aggregate cost and reliability snapshot for one long-running AI-agent workflow with timeout, dropped-reply, retry, latency, or evidence uncertainty.",
         "provider": {
           "@type": "ProfessionalService",
           "name": "WrightOps",
@@ -119,10 +119,15 @@
               Know what your agents cost—and where they <em>break.</em>
             </h1>
             <p class="hero-lede">
-              A fixed-scope aggregate snapshot of completion, first-pass
-              reliability, retries, latency, and cost evidence—without prompts,
-              responses, tool payloads, or direct identifiers.
+              A fixed-scope aggregate snapshot for long-running agent workflows
+              with timeout, completion, retry, latency, or cost uncertainty—without
+              prompts, responses, tool payloads, or direct identifiers.
             </p>
+            <div class="hero-fit" aria-label="Common workflow symptoms">
+              <span>Hard timeouts &amp; dropped replies</span>
+              <span>Retry &amp; first-pass uncertainty</span>
+              <span>Missing progress &amp; cost evidence</span>
+            </div>
             <div class="hero-actions">
               <a
                 class="button"
