@@ -86,6 +86,10 @@ const costPage = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "index.html"),
   "utf8",
 );
+const costAttributionPage = fs.readFileSync(
+  path.join(root, "public", "ai-agent-cost-attribution-checklist", "index.html"),
+  "utf8",
+);
 const costCss = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "styles.css"),
   "utf8",
@@ -249,6 +253,39 @@ const requiredCostPageMarkers = [
   "Savings, reliability, revenue, or profit guarantees",
   "mailto:zach@zachwright.xyz?subject=WrightOps%20%24495%20cost%20reliability%20scope%20request",
   "Email scope without GitHub",
+];
+
+const requiredCostAttributionPageMarkers = [
+  "<title>AI Agent Cost Attribution Checklist | WrightOps</title>",
+  'href="https://zachwright.xyz/ai-agent-cost-attribution-checklist/"',
+  '"@type": "TechArticle"',
+  '"datePublished": "2026-07-24"',
+  "Attribute agent cost before you try to <em>cap it.</em>",
+  "Every cost needs an owner and an outcome.",
+  "Minimum normalized ledger",
+  "workflow_key",
+  "parent_attempt_key",
+  "Missing is null, not zero.",
+  "Teams are asking for attribution before enforcement.",
+  "not WrightOps",
+  "https://github.com/dimagi/open-chat-studio/issues/3906",
+  "https://github.com/lightdash/lightdash/issues/26121",
+  "https://github.com/sipyourdrink-ltd/bernstein/issues/2918",
+  "A cost ledger supports decisions. It does not prove causality.",
+  "provider-confirmed settled payment",
+  'href="/ai-agent-cost-reliability-snapshot/"',
+];
+
+const forbiddenCostAttributionPageMarkers = [
+  "<form",
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "paypal.com",
+  "mailto:",
 ];
 
 const requiredInstructionsPageMarkers = [
@@ -787,6 +824,10 @@ const missingBountyChecklistPage = missing(
   requiredBountyChecklistMarkers,
 );
 const missingCostPage = missing(costPage, requiredCostPageMarkers);
+const missingCostAttributionPage = missing(
+  costAttributionPage,
+  requiredCostAttributionPageMarkers,
+);
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
 if (missingApp.length) {
@@ -941,6 +982,18 @@ if (missingCostPage.length) {
   failures.push(`Cost page is missing: ${missingCostPage.join(", ")}`);
 }
 
+if (missingCostAttributionPage.length) {
+  failures.push(
+    `Cost-attribution guide is missing: ${missingCostAttributionPage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenCostAttributionPageMarkers) {
+  if (costAttributionPage.includes(marker)) {
+    failures.push(`Cost-attribution guide must remain read-only: ${marker}`);
+  }
+}
+
 if (missingCostSample.length) {
   failures.push(`Cost sample is missing: ${missingCostSample.join(", ")}`);
 }
@@ -960,6 +1013,7 @@ for (const marker of forbiddenMarkers) {
     bountyReviewPage.includes(marker) ||
     bountyChecklistPage.includes(marker) ||
     costPage.includes(marker) ||
+    costAttributionPage.includes(marker) ||
     costSample.includes(marker)
   ) {
     failures.push(`Forbidden legacy marker remains: ${marker}`);
@@ -1051,6 +1105,16 @@ if (!sitemap.includes(costLandingUrl)) {
 
 if (!llms.includes(costLandingUrl)) {
   failures.push("llms.txt is missing the cost and reliability landing page.");
+}
+
+const costAttributionUrl =
+  "https://zachwright.xyz/ai-agent-cost-attribution-checklist/";
+if (!sitemap.includes(costAttributionUrl)) {
+  failures.push("Sitemap is missing the AI-agent cost-attribution checklist.");
+}
+
+if (!llms.includes(costAttributionUrl)) {
+  failures.push("llms.txt is missing the AI-agent cost-attribution checklist.");
 }
 
 const bountyReviewLandingUrl = "https://zachwright.xyz/bounty-go-no-go-review/";
@@ -1456,6 +1520,9 @@ console.log(
       bountyChecklistMarkers: requiredBountyChecklistMarkers.length,
       bountyChecklistForbiddenMarkers: forbiddenBountyChecklistMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
+      costAttributionPageMarkers: requiredCostAttributionPageMarkers.length,
+      costAttributionPageForbiddenMarkers:
+        forbiddenCostAttributionPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       singleFileCorrectionSampleMarkers:
         requiredSingleFileCorrectionSampleMarkers.length,
@@ -1464,7 +1531,7 @@ console.log(
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 21,
+      publicAssets: 22,
     },
     null,
     2,

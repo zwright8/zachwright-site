@@ -13,6 +13,7 @@ AI Agent Cost & Reliability Snapshot service page: https://zachwright.xyz/ai-age
 AI Agent Cost & Reliability Snapshot scope: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml
 AI Agent Cost & Reliability Snapshot terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md
 AI Agent Cost & Reliability normalized run contract: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md
+AI Agent Cost Attribution Checklist: https://zachwright.xyz/ai-agent-cost-attribution-checklist/
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
 Fix Plan service page: https://zachwright.xyz/agent-ready-fix-plan/
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
@@ -117,6 +118,14 @@ AI Agent Cost & Reliability Snapshot:
 - Three-business-day delivery after written scope confirmation, complete accepted inputs, and provider-confirmed settled payment.
 - The public GitHub form or prefilled WrightOps business-email path collects field names and scope only—not run records, values, prompts, outputs, or payment data—and does not create a contract or payment obligation.
 - Observational summary only; not causal attribution, billing reconciliation, implementation, professional advice, or a savings, reliability, revenue, or profit guarantee.
+
+AI Agent Cost Attribution Checklist:
+- Free field guide for capturing workflow, run, task, agent, attempt, fan-out, token, cost, outcome, and latency evidence before enforcing budgets.
+- Uses prompt-free, pseudonymous field names and keeps prompts, responses, tool payloads, direct identifiers, credentials, and customer data outside the normalized row.
+- Treats missing evidence as unknown rather than zero and keeps provider-reported cost separate from token usage and labeled estimates.
+- Covers eight evidence gates, a minimum normalized ledger, current public third-party demand examples, and explicit causal and billing limitations.
+- The cited public issues are examples only, not WrightOps customers, endorsements, or claimed results.
+- Canonical guide: https://zachwright.xyz/ai-agent-cost-attribution-checklist/
 
 Scope:
 - Public GitHub repositories only.

@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta
+      name="description"
+      content="A practical AI-agent cost-attribution checklist: the run, agent, attempt, fan-out, outcome, token, and cost evidence to capture before enforcing budgets."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href="https://zachwright.xyz/ai-agent-cost-attribution-checklist/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="WrightOps" />
+    <meta property="og:title" content="AI Agent Cost Attribution Checklist" />
+    <meta
+      property="og:description"
+      content="Capture the evidence that makes per-agent cost, retries, fan-out, and reliability measurable before adding budget caps."
+    />
+    <meta property="og:url" content="https://zachwright.xyz/ai-agent-cost-attribution-checklist/" />
+    <meta property="og:image" content="https://zachwright.xyz/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="WrightOps — evidence before automation" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI Agent Cost Attribution Checklist" />
+    <meta
+      name="twitter:description"
+      content="Eight evidence gates for measurable AI-agent cost, fan-out, retries, and reliability."
+    />
+    <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
+    <title>AI Agent Cost Attribution Checklist | WrightOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/agent-ready-repository-audit/styles.css" />
+    <style>
+      .cost-guide-hero {
+        background:
+          radial-gradient(circle at 77% 27%, rgba(183, 243, 74, 0.13), transparent 24%),
+          linear-gradient(135deg, var(--midnight) 0%, #060a11 100%);
+      }
+
+      .schema-window { min-width: 0; }
+
+      .schema-lines {
+        display: grid;
+        margin: 0;
+        padding: 1.2rem 1.5rem 1.45rem;
+        gap: 0.7rem;
+        border-top: 1px solid var(--line-dark);
+        border-bottom: 1px solid var(--line-dark);
+        background: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 100% 2.35rem;
+      }
+
+      .schema-lines div {
+        display: grid;
+        min-width: 0;
+        grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1fr);
+        gap: 1rem;
+      }
+
+      .schema-lines dt,
+      .schema-lines dd {
+        margin: 0;
+        font: 0.72rem/1.55 Inter, sans-serif;
+      }
+
+      .schema-lines dt { color: var(--signal); font-weight: 800; }
+      .schema-lines dd { color: #dce3eb; }
+
+      .attribution-grid {
+        display: grid;
+        margin-top: clamp(3rem, 6vw, 5rem);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-top: 1px solid var(--line-light);
+        border-left: 1px solid var(--line-light);
+      }
+
+      .attribution-grid article {
+        display: grid;
+        min-width: 0;
+        padding: clamp(1.4rem, 3vw, 2.25rem);
+        grid-template-columns: 2.4rem minmax(0, 1fr);
+        gap: 1rem;
+        border-right: 1px solid var(--line-light);
+        border-bottom: 1px solid var(--line-light);
+        background: var(--paper);
+      }
+
+      .attribution-grid article > span {
+        color: #6c7888;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+
+      .attribution-grid h3 {
+        margin: 0 0 0.7rem;
+        font-size: clamp(1.05rem, 2vw, 1.45rem);
+      }
+
+      .attribution-grid p {
+        margin: 0;
+        color: #536173;
+        font-size: 0.83rem;
+        line-height: 1.7;
+      }
+
+      .ledger-section { background: var(--signal); }
+
+      .ledger-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.72fr) minmax(28rem, 1fr);
+        align-items: start;
+        gap: clamp(3rem, 8vw, 7rem);
+      }
+
+      .ledger-copy {
+        position: sticky;
+        top: calc(var(--header-height) + 2rem);
+      }
+
+      .ledger-copy .eyebrow { color: #365605; }
+
+      .ledger-copy h2 {
+        margin: 0;
+        font-size: clamp(2.8rem, 5.7vw, 5.7rem);
+        letter-spacing: -0.065em;
+        line-height: 0.94;
+      }
+
+      .ledger-copy > p:not(.eyebrow) {
+        max-width: 35rem;
+        margin: 1.4rem 0 0;
+        color: #263416;
+        line-height: 1.75;
+      }
+
+      .ledger-table-wrap {
+        min-width: 0;
+        overflow-x: auto;
+        border: 1px solid rgba(11, 18, 32, 0.17);
+        background: var(--paper);
+        box-shadow: 1.2rem 1.2rem 0 rgba(11, 18, 32, 0.12);
+      }
+
+      .ledger-table {
+        width: 100%;
+        min-width: 42rem;
+        border-collapse: collapse;
+      }
+
+      .ledger-table th,
+      .ledger-table td {
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line-light);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .ledger-table tr:last-child td { border-bottom: 0; }
+
+      .ledger-table th {
+        color: #677487;
+        background: #f3f6f8;
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .ledger-table td {
+        color: #3e4b5c;
+        font-size: 0.76rem;
+        line-height: 1.55;
+      }
+
+      .ledger-table code { color: var(--midnight); font-weight: 800; }
+
+      .public-signals {
+        display: grid;
+        margin-top: clamp(2.5rem, 5vw, 4rem);
+        gap: 1rem;
+      }
+
+      .public-signals a {
+        display: grid;
+        padding: 1.25rem 1.35rem;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid var(--line-dark);
+        color: #fff;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.035);
+      }
+
+      .public-signals a:hover { border-color: var(--signal); }
+      .public-signals strong { display: block; margin-bottom: 0.35rem; font-size: 0.9rem; }
+
+      .public-signals span {
+        color: #aeb8c6;
+        font-size: 0.73rem;
+        line-height: 1.5;
+      }
+
+      .public-signals b { color: var(--signal); }
+
+      .boundary-columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        border: 1px solid var(--line-dark);
+        background: var(--line-dark);
+      }
+
+      .boundary-columns > div {
+        min-width: 0;
+        padding: clamp(1.5rem, 3vw, 2.5rem);
+        background: var(--midnight);
+      }
+
+      .boundary-columns h3 {
+        margin: 0 0 1.1rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .boundary-columns ul {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        gap: 0;
+        border-top: 1px solid var(--line-dark);
+        list-style: none;
+      }
+
+      .boundary-columns li {
+        display: block;
+        min-height: 0;
+        padding: 0.9rem 0 0.9rem 1.15rem;
+        color: #dfe5ec;
+        font-size: 0.8rem;
+        line-height: 1.55;
+        position: relative;
+      }
+
+      .boundary-columns li::before {
+        position: absolute;
+        top: 1.35rem;
+        left: 0;
+        width: 0.38rem;
+        height: 0.38rem;
+        background: var(--signal);
+        content: "";
+      }
+
+      .boundary-columns > div:last-child li::before {
+        background: #7f8b99;
+      }
+
+      @media (max-width: 900px) {
+        .ledger-layout { grid-template-columns: 1fr; }
+        .ledger-copy { position: static; }
+      }
+
+      @media (max-width: 700px) {
+        .attribution-grid { grid-template-columns: 1fr; }
+        .schema-lines div { grid-template-columns: 1fr; gap: 0.15rem; }
+        .boundary-columns { grid-template-columns: 1fr; }
+      }
+    </style>
+    <link
+      rel="icon"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%23b7f34a"/><text x="50%25" y="53%25" dominant-baseline="middle" text-anchor="middle" fill="%230b1220" font-family="Georgia,serif" font-style="italic" font-size="38">W</text></svg>'
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "AI Agent Cost Attribution Checklist",
+        "description": "A practical checklist for the run, agent, attempt, fan-out, outcome, token, and cost evidence needed before enforcing AI-agent budgets.",
+        "datePublished": "2026-07-24",
+        "dateModified": "2026-07-24",
+        "mainEntityOfPage": "https://zachwright.xyz/ai-agent-cost-attribution-checklist/",
+        "author": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        },
+        "about": [
+          "AI agent cost attribution",
+          "LLM token cost",
+          "AI agent reliability",
+          "multi-agent fan-out",
+          "AI budget controls"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <nav aria-label="Primary navigation" class="nav-shell">
+        <a aria-label="WrightOps home" class="brand" href="/">
+          <span class="brand-mark">W</span>
+          <span>
+            <strong>WrightOps</strong>
+            <small>Evidence before automation</small>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a href="#gates">Eight gates</a>
+          <a href="#ledger">Minimum ledger</a>
+          <a href="#signals">Public signals</a>
+        </div>
+        <a class="button button-small" href="/ai-agent-cost-reliability-snapshot/">
+          See the $495 snapshot <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <article>
+        <section class="audit-hero cost-guide-hero">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="page-shell hero-layout">
+            <div class="audit-hero-copy">
+              <a class="back-link" href="/">← WrightOps field guides</a>
+              <p class="eyebrow">Free field guide · prompt-free evidence</p>
+              <h1>Attribute agent cost before you try to <em>cap it.</em></h1>
+              <p class="hero-lede">
+                A budget limit cannot repair a ledger that cannot identify the
+                run, agent, attempt, retry, or fan-out path that spent the money.
+                Capture these eight evidence gates first.
+              </p>
+              <div class="hero-actions">
+                <a class="button" href="#gates">
+                  Inspect the eight gates <span aria-hidden="true">↓</span>
+                </a>
+                <a class="text-link light" href="/ai-agent-cost-reliability-snapshot/">
+                  See the fixed $495 snapshot <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <p class="hero-terms">
+                Operational information only · No prompts or production access
+                required · Missing evidence stays unknown
+              </p>
+            </div>
+
+            <figure class="evidence-window schema-window">
+              <figcaption>
+                <span>Minimum attribution key</span>
+                <span class="window-status">prompt_free</span>
+              </figcaption>
+              <div class="window-score">
+                <span>Evidence layers</span>
+                <strong>4<span>/4</span></strong>
+              </div>
+              <dl class="schema-lines">
+                <div><dt>workflow_key</dt><dd>the bounded process being measured</dd></div>
+                <div><dt>run_key</dt><dd>one invocation of that workflow</dd></div>
+                <div><dt>agent_key</dt><dd>the stable agent or role that acted</dd></div>
+                <div><dt>attempt_no</dt><dd>the first pass, retry, or repair attempt</dd></div>
+              </dl>
+              <p class="window-revision">
+                rule <code>identity → outcome → usage → cost</code>
+              </p>
+              <a class="window-link" href="#ledger">
+                See the minimum ledger <span aria-hidden="true">↓</span>
+              </a>
+            </figure>
+          </div>
+        </section>
+
+        <section class="summary-strip" aria-label="Cost-attribution summary">
+          <div class="page-shell summary-grid">
+            <div><span>Identity</span><strong>Workflow → attempt</strong></div>
+            <div><span>Usage</span><strong>Provider + model</strong></div>
+            <div><span>Control</span><strong>Retry + fan-out</strong></div>
+            <div><span>Truth rule</span><strong>Unknown ≠ zero</strong></div>
+          </div>
+        </section>
+
+        <section class="content-section" id="gates">
+          <div class="page-shell">
+            <div class="section-intro">
+              <p class="eyebrow">Eight evidence gates</p>
+              <h2>Every cost needs an owner and an outcome.</h2>
+              <p>
+                Passing all eight gates does not prove efficiency. It creates
+                the evidence needed to compare cost and reliability without
+                guessing which agent, retry, or missing field produced the result.
+              </p>
+            </div>
+
+            <div class="attribution-grid">
+              <article><span>01</span><div><h3>Bound one workflow</h3><p>Name the process, its start and end, and the decision the measurement must support.</p></div></article>
+              <article><span>02</span><div><h3>Assign stable identities</h3><p>Use pseudonymous workflow, run, task, agent, and attempt keys that survive log joins.</p></div></article>
+              <article><span>03</span><div><h3>Record every attempt</h3><p>Preserve first passes, retries, repairs, and refusals instead of collapsing them into one task row.</p></div></article>
+              <article><span>04</span><div><h3>Separate usage from money</h3><p>Store tokens and provider-reported cost independently; never derive one silently from the other.</p></div></article>
+              <article><span>05</span><div><h3>Expose fan-out</h3><p>Capture parent attempt, recursion depth, and concurrent spawn count before enforcing a fan-out bound.</p></div></article>
+              <article><span>06</span><div><h3>Use closed outcomes</h3><p>Define completed, failed, refused, cancelled, and unknown so dashboards do not invent success.</p></div></article>
+              <article><span>07</span><div><h3>Publish evidence coverage</h3><p>Report the share of attempts with known usage, cost, outcome, and latency beside every aggregate.</p></div></article>
+              <article><span>08</span><div><h3>Compare cost with reliability</h3><p>Read cost per completed task beside first-pass completion, retries, failures, and latency.</p></div></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section ledger-section" id="ledger">
+          <div class="page-shell ledger-layout">
+            <div class="ledger-copy">
+              <p class="eyebrow">Minimum normalized ledger</p>
+              <h2>Keep the raw row narrow and explicit.</h2>
+              <p>
+                This is a field map, not a universal schema. Values may be
+                pseudonymous. Prompts, responses, tool payloads, direct
+                identifiers, credentials, and customer data do not belong in the
+                cost-attribution row.
+              </p>
+            </div>
+
+            <div class="ledger-table-wrap" role="region" aria-label="Minimum cost-attribution ledger" tabindex="0">
+              <table class="ledger-table">
+                <thead>
+                  <tr><th>Field</th><th>Purpose</th><th>Truth rule</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>workflow_key</code>, <code>run_key</code></td><td>Bound the measured process and invocation.</td><td>Stable and pseudonymous.</td></tr>
+                  <tr><td><code>task_key</code>, <code>agent_key</code></td><td>Attribute work to one task and one agent or role.</td><td>No display name required.</td></tr>
+                  <tr><td><code>attempt_no</code>, <code>parent_attempt_key</code></td><td>Separate retries and reconstruct fan-out.</td><td>Never overwrite an earlier attempt.</td></tr>
+                  <tr><td><code>provider</code>, <code>model</code></td><td>Identify the pricing and runtime context.</td><td>Pin the version when known.</td></tr>
+                  <tr><td><code>input_tokens</code>, <code>output_tokens</code></td><td>Preserve supplied usage evidence.</td><td>Missing is null, not zero.</td></tr>
+                  <tr><td><code>observed_cost</code>, <code>currency</code></td><td>Store provider-reported money separately from usage.</td><td>Label estimates as estimates.</td></tr>
+                  <tr><td><code>outcome</code>, <code>latency_ms</code></td><td>Compare spend with completion and speed.</td><td>Use a closed outcome vocabulary.</td></tr>
+                  <tr><td><code>started_at</code>, <code>completed_at</code></td><td>Support bounded windows and concurrency checks.</td><td>Use one documented timezone.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="evidence-section" id="signals">
+          <div class="page-shell evidence-layout">
+            <aside class="evidence-rail">
+              <p class="eyebrow">Current public demand signals</p>
+              <h2>Teams are asking for attribution before enforcement.</h2>
+              <p>
+                These are public third-party issue examples—not WrightOps
+                customers, endorsements, or claimed results. Each illustrates a
+                different missing evidence layer.
+              </p>
+              <a class="text-link light" href="/ai-agent-cost-reliability-snapshot/">
+                See the $495 fixed-scope snapshot <span aria-hidden="true">↗</span>
+              </a>
+            </aside>
+
+            <div class="public-signals">
+              <a href="https://github.com/dimagi/open-chat-studio/issues/3906" rel="noopener noreferrer">
+                <span><strong>Evaluation-run cost visibility</strong>Open Chat Studio issue #3906 asks how much one evaluation run cost and which evaluator was most expensive.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a href="https://github.com/lightdash/lightdash/issues/26121" rel="noopener noreferrer">
+                <span><strong>Per-agent warehouse attribution</strong>Lightdash issue #26121 describes query tags that identify AI traffic but not the agent responsible for the spend.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a href="https://github.com/sipyourdrink-ltd/bernstein/issues/2918" rel="noopener noreferrer">
+                <span><strong>Fan-out limits with refusal evidence</strong>Bernstein issue #2918 proposes bounded spend and spawn decisions that remain reconstructable under concurrency.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="boundary-section" id="boundaries">
+          <div class="page-shell boundary-layout">
+            <div>
+              <p class="eyebrow">Evidence boundaries</p>
+              <h2>A cost ledger supports decisions. It does not prove causality.</h2>
+            </div>
+            <div class="boundary-columns">
+              <div>
+                <h3>It can support</h3>
+                <ul>
+                  <li>Observed cost by workflow, run, task, agent, and attempt</li>
+                  <li>Known retry and fan-out cost</li>
+                  <li>Cost per supplied completion outcome</li>
+                  <li>Coverage gaps and lower-bound reporting</li>
+                  <li>Priorities for the next instrumentation change</li>
+                </ul>
+              </div>
+              <div>
+                <h3>It cannot prove</h3>
+                <ul>
+                  <li>That one agent caused a business outcome</li>
+                  <li>That an estimate matches a provider invoice</li>
+                  <li>That missing usage or cost was zero</li>
+                  <li>That a budget cap is race-safe under concurrency</li>
+                  <li>Any guaranteed savings or reliability improvement</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="final-cta">
+          <div class="page-shell final-layout">
+            <div>
+              <p class="eyebrow">One workflow, one decision</p>
+              <h2>Need a measured baseline before the implementation work?</h2>
+              <p>
+                The WrightOps AI Agent Cost &amp; Reliability Snapshot turns up
+                to 50 prompt-free normalized attempts into deterministic
+                aggregate JSON and Markdown, evidence gaps, and up to five
+                human-reviewed priorities.
+              </p>
+            </div>
+            <div class="final-actions">
+              <a class="button" href="/ai-agent-cost-reliability-snapshot/">
+                Inspect the $495 scope <span aria-hidden="true">↗</span>
+              </a>
+              <p>
+                Three business days after accepted inputs and
+                provider-confirmed settled payment. No implementation,
+                production access, or outcome guarantee.
+              </p>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell footer-layout">
+        <div class="brand footer-brand">
+          <span class="brand-mark">W</span>
+          <span><strong>WrightOps</strong><small>Evidence before automation</small></span>
+        </div>
+        <p>AI-operated on behalf of Zachary Wright, the accountable human owner.</p>
+        <a href="/ai-agent-cost-reliability-snapshot/">
+          Inspect the $495 snapshot <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
