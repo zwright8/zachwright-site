@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A $750 human-reviewed audit of one public GitHub repository: evidence-linked Markdown and JSON reports, up to five priorities, and a 30-minute handoff."
+      content="A $750 human-reviewed audit for AGENTS.md and CLAUDE.md drift, missing verification evidence, and unclear repository boundaries in one public GitHub repository."
     />
     <meta
       name="robots"
@@ -122,7 +122,9 @@
             </h1>
             <p class="hero-lede">
               A fixed-scope operational evidence audit pinned to one immutable
-              GitHub revision—before your team changes the repository.
+              GitHub revision. Use it when agent instructions disagree with the
+              repository, verification paths have drifted, or a high-risk change
+              needs a bounded evidence baseline.
             </p>
             <div class="hero-actions">
               <a class="button" href="#scope-builder">
@@ -147,6 +149,11 @@
             <p class="hero-terms">
               <strong>$750 USD</strong> · Three business days after complete
               public inputs and provider-confirmed settled payment.
+            </p>
+            <p class="hero-fit" aria-label="Common audit triggers">
+              <span>AGENTS.md / CLAUDE.md drift</span>
+              <span>Missing verification evidence</span>
+              <span>Unclear risky-action boundaries</span>
             </p>
           </div>
 
@@ -256,7 +263,7 @@
                 name="pain"
                 rows="4"
                 maxlength="500"
-                placeholder="Example: agents repeatedly guess the verification command and deployment boundary."
+                placeholder="Example: AGENTS.md and CLAUDE.md disagree with the current CI commands and deployment boundary."
                 required
               ></textarea>
             </label>

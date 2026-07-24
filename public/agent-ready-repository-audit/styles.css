@@ -358,6 +358,23 @@ h1 em {
   color: #d9e1e9;
 }
 
+.hero-fit {
+  display: flex;
+  margin: 1rem 0 0;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.hero-fit span {
+  padding: 0.4rem 0.65rem;
+  color: #d9e1e9;
+  border: 1px solid rgba(183, 243, 74, 0.22);
+  background: rgba(183, 243, 74, 0.06);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .evidence-window {
   position: relative;
   margin: 0;
