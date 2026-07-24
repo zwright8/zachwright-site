@@ -415,6 +415,17 @@
         white-space: nowrap;
       }
 
+      .next-step-actions {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .cta-secondary {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--text);
+      }
+
       .guidance {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -638,9 +649,14 @@
             required before work.
           </p>
         </div>
-        <a class="cta" href="/single-file-agent-instructions-correction/">
-          See the $149 scope &amp; sample
-        </a>
+        <div class="next-step-actions">
+          <a class="cta" href="/single-file-agent-instructions-correction/">
+            See the $149 scope &amp; sample
+          </a>
+          <a class="cta cta-secondary" href="/agent-ready-repository-audit/#scope-builder">
+            Open the active $750 self-serve audit
+          </a>
+        </div>
       </section>
 
       <section class="guidance" aria-label="Usage guidance">

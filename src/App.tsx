@@ -61,10 +61,10 @@ const preflightCheckLabels = [
 
 const engagementOptions = [
   {
-    eyebrow: "Self-serve paid step",
+    eyebrow: "New orders paused",
     title: "Agent-Ready Repo Fix Plan",
     price: "$149",
-    timing: "One business day after settlement and complete public inputs",
+    timing: "Checkout and intake terms are being realigned",
     description:
       "Three prioritized fix cards for one public repository, each pinned to evidence and written so a maintainer or coding agent can execute it.",
     bullets: [
@@ -74,12 +74,12 @@ const engagementOptions = [
       "Executable acceptance check",
     ],
     intakeNote:
-      "Confirm one active public repository in the browser, email or copy the generated order reference, then use the gated PayPal Business checkout. No prior WrightOps audit is required.",
-    primaryLabel: "See the $149 scope & sample",
+      "No automated checkout is available. The existing PayPal item requires a completed WrightOps free audit and written confirmation, so WrightOps has paused new Fix Plan orders until the public intake and payment terms match.",
+    primaryLabel: "Read the paused-offer notice",
     primaryHref: FIX_PLAN_LANDING_URL,
     secondaryLabel: "Inspect the complete sample",
     secondaryHref: FIX_PLAN_SAMPLE_URL,
-    featured: true,
+    featured: false,
   },
   {
     eyebrow: "Demand-backed correction offer",
@@ -138,7 +138,7 @@ const engagementOptions = [
     primaryHref: HUMAN_AUDIT_LANDING_URL,
     secondaryLabel: "Read the fixed audit terms",
     secondaryHref: HUMAN_AUDIT_TERMS_URL,
-    featured: false,
+    featured: true,
   },
   {
     eyebrow: "Agent operations evidence",
@@ -176,8 +176,8 @@ const proofItems = [
     value: "CI passed",
     title: "Fail-closed qualification",
     description:
-      "The public Fix Plan gate verifies one active repository and immutable default-branch revision before revealing its unchanged checkout.",
-    link: FIX_PLAN_LANDING_URL,
+      "The public $750 audit gate verifies one active repository and immutable default-branch revision before revealing its matched approved checkout.",
+    link: HUMAN_AUDIT_LANDING_URL,
     linkLabel: "Open live gate",
   },
   {
@@ -199,13 +199,13 @@ const processSteps = [
   },
   {
     number: "02",
-    title: "Confirm one scoped repository",
-    text: "Verify the active public repository in the browser, then email or copy its revision-pinned order reference. Never send credentials or private code.",
+    title: "Confirm the $750 audit scope",
+    text: "Verify one active public repository and its revision-pinned audit boundary in the browser. Never send credentials or private code.",
   },
   {
     number: "03",
     title: "Prepare scope before payment",
-    text: "The browser gate confirms fit, exclusions, delivery timing, and acceptance shape before the PayPal Business checkout becomes usable.",
+    text: "The $750 browser gate confirms fit, exclusions, delivery timing, and acceptance shape before its matching PayPal Business checkout becomes usable.",
   },
   {
     number: "04",
@@ -232,7 +232,7 @@ const faqs = [
   {
     question: "When should I use the $149 Fix Plan?",
     answer:
-      "Use it when the automated audit found gaps but you need a human-reviewed order of operations. You receive exactly three cards, not implementation.",
+      "New Fix Plan orders are paused while WrightOps realigns the public intake with the PayPal item terms. The complete sample remains available, and the $750 repository audit is the active self-serve paid path.",
   },
   {
     question: "Do I pay before scope is confirmed?",
@@ -405,16 +405,16 @@ function Hero() {
             <PrimaryAction href="#preflight">
               Run the no-login preflight
             </PrimaryAction>
-            <a className="text-action" href={FIX_PLAN_LANDING_URL}>
-              Start the self-serve $149 Fix Plan{" "}
+            <a className="text-action" href={HUMAN_AUDIT_LANDING_URL}>
+              Open the approved $750 self-serve audit{" "}
               <span aria-hidden="true">↓</span>
             </a>
           </div>
 
           <p className="hero-starter-prompt">
-            Need a complete repository review?{" "}
-            <a className="hero-starter-link" href={HUMAN_AUDIT_LANDING_URL}>
-              Confirm the self-serve $750 audit <Arrow />
+            Need the three-card Fix Plan?{" "}
+            <a className="hero-starter-link" href={FIX_PLAN_LANDING_URL}>
+              Read the new-order pause notice <Arrow />
             </a>
           </p>
 
@@ -921,7 +921,7 @@ function Offers() {
               Buy the smallest useful <span>next step.</span>
             </>
           }
-          text="Every paid engagement begins with confirmed scope and public evidence. The $149 Fix Plan now turns one eligible public repository directly into three executable decisions."
+          text="Every paid engagement begins with confirmed scope and public evidence. The $750 repository audit is the active self-serve paid path; new $149 Fix Plan orders are paused while its intake and payment terms are realigned."
         />
 
         <div className="offer-grid">
@@ -1227,8 +1227,8 @@ function FinalCta() {
           <PrimaryAction href="#preflight">
             Check a public repository
           </PrimaryAction>
-          <SecondaryAction href={FIX_PLAN_LANDING_URL}>
-            Open the self-serve $149 Fix Plan
+          <SecondaryAction href={HUMAN_AUDIT_LANDING_URL}>
+            Confirm the $750 self-serve audit
           </SecondaryAction>
         </div>
       </Reveal>

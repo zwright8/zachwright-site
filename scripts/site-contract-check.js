@@ -130,7 +130,7 @@ const requiredAppMarkers = [
   'const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/"',
   "Confirm the $750 self-serve scope",
   "Read the fixed audit terms",
-  "Confirm the self-serve $750 audit",
+  "Confirm the $750 self-serve audit",
   'const HUMAN_AUDIT_TERMS_URL = "/agent-ready-repository-audit/#terms"',
   "function auditScopeEvidence(",
   "WrightOps $750 Agent-Ready Repository Audit — non-binding scope request",
@@ -146,7 +146,7 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
   'const FIX_PLAN_TERMS_URL =\n  "/agent-ready-fix-plan/#terms"',
   'const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/"',
-  "See the $149 scope & sample",
+  "Read the paused-offer notice",
   'const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/"',
   'const AGENTS_STARTER_URL = "/agents-md-starter-template/"',
   '<a className="hero-starter-link" href={AGENTS_STARTER_URL}>',
@@ -154,10 +154,10 @@ const requiredAppMarkers = [
   'const AGENTS_SIZE_CHECKER_URL = "/agents-md-size-budget-checker/"',
   '<a className="hero-starter-link" href={AGENTS_SIZE_CHECKER_URL}>',
   "Check its browser-local size budget",
-  '<a className="text-action" href={FIX_PLAN_LANDING_URL}>',
-  "Start the self-serve $149 Fix Plan",
-  "<SecondaryAction href={FIX_PLAN_LANDING_URL}>",
-  "Open the self-serve $149 Fix Plan",
+  '<a className="text-action" href={HUMAN_AUDIT_LANDING_URL}>',
+  "Open the approved $750 self-serve audit",
+  "Read the new-order pause notice",
+  "<SecondaryAction href={HUMAN_AUDIT_LANDING_URL}>",
   "See the $149 correction scope",
   "See the $249 foundation scope",
   "AI Agent Cost & Reliability Snapshot",
@@ -632,10 +632,9 @@ const requiredFixPlanPageMarkers = [
   'href="https://zachwright.xyz/agent-ready-fix-plan/"',
   '"@type": "Service"',
   '"price": "149"',
+  '"availability": "https://schema.org/OutOfStock"',
   "Turn one public repository into three executable",
   "Exactly three human-reviewed fix cards",
-  "One business day",
-  "provider-confirmed settled payment",
   "at most 45 minutes of human review",
   "Demonstration only — not paid, commissioned, or endorsed",
   "evidenced gap",
@@ -644,45 +643,27 @@ const requiredFixPlanPageMarkers = [
   "acceptance check",
   "No implementation or repository changes",
   "not a vulnerability, security, privacy, legal, or compliance",
-  "order reference by business email",
-  "never credentials or payment details",
-  "No purchase obligation exists before successful browser-local confirmation",
-  "Self-serve scope confirmation",
-  'id="scope-builder"',
-  'id="fix-plan-scope-builder"',
-  'name="repository"',
-  'name="pain"',
-  'name="authority"',
-  'name="fixed-scope"',
-  'name="ordinary-software"',
-  'name="payment-terms"',
-  "No purchase obligation, checkout, payment, or work starts before successful automated confirmation",
-  "Confirm $149 fixed scope",
-  "Copy order-note reference",
-  "WrightOps fixed $149 scope is confirmed",
-  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
-  "https://api.github.com",
-  "/repos/${parsed.repository.owner}/${parsed.repository.repo}",
-  "application/vnd.github+json",
-  "repository.archived",
-  "repository.disabled",
-  "scope_version=fix-plan-v2",
-  "buildScopeMailto",
-  'id="confirmed-scope-email"',
-  "Email confirmed scope",
-  "navigator.clipboard.writeText(orderNote.value)",
-  "const enableCheckout",
-  "checkoutLink.href = PAYPAL_CHECKOUT_URL",
-  "checkoutLink.removeAttribute(\"href\")",
-  "Automated scope confirmation before payment",
+  'id="order-status"',
+  "New $149 Fix Plan orders are paused",
+  "public intake flow and the existing",
+  "No automated checkout is available",
+  "No payment link or purchase obligation is offered here",
+  "The approved $750 repository audit remains active",
+  "Human-reviewed Agent-Ready Repository Audit · $750",
+  "The audit page and PayPal item describe the same fixed scope",
+  'href="/agent-ready-repository-audit/#scope-builder"',
+  "Confirm the $750 audit scope",
+  "Sample retained. New ordering paused.",
+  "Do not use the old Fix Plan checkout",
+  "New orders remain paused until the intake and payment terms match",
+  "three business days",
+  'type="application/json" id="fix-plan-order-status"',
+  '{"status":"paused","newOrders":false,"activeAlternative":"/agent-ready-repository-audit/#scope-builder"}',
   "full purchase-price refund",
   "WrightOps absorbs that cost",
   "Optional: run the free audit",
-  "Confirm scope and checkout",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
-  "mailto:zach@zachwright.xyz?subject=WrightOps%20Fix%20Plan%20scope%20help",
-  "Need scope help? Email WrightOps",
 ];
 
 const requiredBountyReviewPageMarkers = [
@@ -798,6 +779,8 @@ const requiredAgentsSizeBudgetPageMarkers = [
   "does not judge instruction quality",
   'href="/single-file-agent-instructions-correction/"',
   "See the $149 scope &amp; sample",
+  'href="/agent-ready-repository-audit/#scope-builder"',
+  "Open the active $750 self-serve audit",
   "settled PayPal Business payment are",
   "required before work.",
   "does not estimate tokens",
@@ -1442,12 +1425,12 @@ if (fixPlanScopeCtaCount !== 0) {
   );
 }
 
-const fixPlanScopeBuilderCtaCount = (
-  fixPlanPage.match(/href="#scope-builder"/g) || []
+const fixPlanActiveAuditCtaCount = (
+  fixPlanPage.match(/href="\/agent-ready-repository-audit\/#scope-builder"/g) || []
 ).length;
-if (fixPlanScopeBuilderCtaCount < 2) {
+if (fixPlanActiveAuditCtaCount < 4) {
   failures.push(
-    `Expected the Fix Plan offer to expose at least two self-serve confirmation paths; found ${fixPlanScopeBuilderCtaCount}.`,
+    `Expected the paused Fix Plan page to route to the active $750 audit at least four times; found ${fixPlanActiveAuditCtaCount}.`,
   );
 }
 
@@ -1472,33 +1455,20 @@ for (const marker of [
   }
 }
 
-if (!fixPlanPage.includes('data-checkout-url="https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG"')) {
-  failures.push("The Fix Plan PayPal checkout must be present only as a gated data URL.");
-}
-
-if (
-  !fixPlanPage.includes('aria-disabled="true"') ||
-  !/id="paypal-checkout-panel"[\s\S]{0,80}hidden/.test(fixPlanPage)
-) {
-  failures.push("The Fix Plan PayPal checkout must start hidden and disabled.");
-}
-
-if (!fixPlanPage.includes("fetch(url, {")) {
-  failures.push("The Fix Plan gate must use the centralized unauthenticated fetch wrapper.");
-}
-
 for (const marker of [
-  '!url.port',
-  '!url.pathname.includes("%")',
-  "repository.archived",
-  "repository.disabled",
-  "repository.default_branch",
-  '.slice(0, 160)',
-  "buildScopeMailto(note)",
-  "confirmedScopeEmail.addEventListener(\"click\", enableCheckout)",
+  "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
+  'data-checkout-url=',
+  'id="paypal-checkout-panel"',
+  'id="paypal-checkout-link"',
+  'id="confirmed-scope-email"',
+  'id="confirm-fix-plan-scope"',
+  'href="#scope-builder"',
+  "PAYPAL_CHECKOUT_URL",
+  "fetchGitHubJson",
+  "navigator.clipboard",
 ]) {
-  if (!fixPlanPage.includes(marker)) {
-    failures.push(`The Fix Plan evidence gate is missing a strict verifier: ${marker}`);
+  if (fixPlanPage.includes(marker)) {
+    failures.push(`The paused Fix Plan page must not expose a purchase or automated-intake path: ${marker}`);
   }
 }
 
@@ -1517,16 +1487,10 @@ for (const looseMarker of [
 }
 
 if (
-  !/\.scope-builder-status\s*\{[^}]*overflow-wrap:\s*anywhere;/s.test(auditCss)
+  !fixPlanPage.includes('type="application/json" id="fix-plan-order-status"') ||
+  !fixPlanPage.includes('"status":"paused","newOrders":false')
 ) {
-  failures.push("The Fix Plan status must wrap immutable evidence on narrow screens.");
-}
-
-if (
-  !fixPlanPage.includes("cache: \"no-store\"") ||
-  !fixPlanPage.includes("Accept: \"application/vnd.github+json\"")
-) {
-  failures.push("The Fix Plan gate must keep GitHub checks unauthenticated and no-store.");
+  failures.push("The retired Fix Plan order status must remain inert and machine-readable.");
 }
 
 for (const file of [
