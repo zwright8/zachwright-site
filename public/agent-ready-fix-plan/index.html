@@ -50,7 +50,7 @@
         "@type": "Service",
         "name": "Agent-Ready Repo Fix Plan",
         "url": "https://zachwright.xyz/agent-ready-fix-plan/",
-        "description": "Exactly three evidence-linked, human-reviewed fix cards for one public GitHub repository at one immutable revision.",
+        "description": "Exactly three evidence-linked, human-reviewed fix cards for one eligible public GitHub repository at one browser-verified immutable revision.",
         "provider": {
           "@type": "ProfessionalService",
           "name": "WrightOps",
@@ -63,7 +63,7 @@
           "price": "149",
           "priceCurrency": "USD",
           "availability": "https://schema.org/InStock",
-          "url": "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml"
+          "url": "https://zachwright.xyz/agent-ready-fix-plan/#scope-builder"
         }
       }
     </script>
@@ -84,7 +84,7 @@
           <a href="#deliverable">Deliverable</a>
           <a href="#sample">Sample</a>
           <a href="#process">Process</a>
-          <a href="#boundaries">Boundaries</a>
+          <a href="#terms">Boundaries</a>
         </div>
         <a
           class="button button-small"
@@ -103,42 +103,34 @@
           <div class="audit-hero-copy">
             <a class="back-link" href="/">← WrightOps services</a>
             <p class="eyebrow">Fixed scope · one public repository</p>
-            <h1>Turn one audit into three executable <em>fixes.</em></h1>
+            <h1>Turn one public repository into three executable <em>fixes.</em></h1>
             <p class="hero-lede">
               Exactly three human-reviewed fix cards, pinned to one immutable
               public revision and written so a maintainer or coding agent can
               act without guessing.
             </p>
             <div class="hero-actions">
-              <a
-                class="button"
-                href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml"
-              >
-                Start the free audit <span aria-hidden="true">↗</span>
-              </a>
-              <a
-                class="text-link"
-                href="#scope-builder"
-              >
-                Already audited? Confirm $149 checkout scope <span aria-hidden="true">→</span>
-              </a>
-              <a
-                class="text-link"
-                href="mailto:zach@zachwright.xyz?subject=WrightOps%20%24149%20fix%20plan%20scope%20request&amp;body=Public%20repository%20URL%3A%0ACompleted%20WrightOps%20free-audit%20issue%20URL%3A%0AImmutable%20revision%20(if%20known)%3A%0AThree-card%20priority%20or%20pain%20to%20address%3A%0A%0AI%20confirm%20I%20have%20authority%20to%20commission%20this%20plan%20and%20will%20provide%20public-only%20inputs.%0A%0AI%20understand%20this%20is%20a%20non-binding%20scope%20request%2C%20not%20a%20payment%20or%20authorization%20to%20start%20work.%0A%0ADo%20not%20include%20credentials%2C%20payment%20details%2C%20private%20files%2C%20personal%20data%2C%20customer%20data%2C%20or%20production%20access."
-              >
-                Email audited scope without GitHub <span aria-hidden="true">→</span>
+              <a class="button" href="#scope-builder">
+                Confirm scope and checkout <span aria-hidden="true">→</span>
               </a>
               <a
                 class="text-link"
                 href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md"
               >
-                Inspect the complete sample <span aria-hidden="true">→</span>
+                Inspect the complete sample <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                class="text-link"
+                href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml"
+              >
+                Optional: run the free audit <span aria-hidden="true">↗</span>
               </a>
             </div>
             <p class="hero-terms">
               <strong>$149 USD</strong> · One business day after complete public
               inputs and provider-confirmed settled payment.<br />
-              Scope before payment. Use the public GitHub form or business email.
+              Automated scope confirmation before payment. Send the generated
+              order reference by business email, then use the unchanged checkout.
             </p>
           </div>
 
@@ -174,7 +166,7 @@
             </p>
             <a
               class="window-link"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md"
+              href="#terms"
             >
               Read the complete service terms <span aria-hidden="true">↗</span>
             </a>
@@ -207,18 +199,18 @@
         <div class="page-shell scope-builder-layout">
           <div class="scope-builder-copy">
             <p class="eyebrow">Self-serve scope confirmation</p>
-            <h2 id="scope-builder-heading">Verify the audit before checkout appears.</h2>
+            <h2 id="scope-builder-heading">Verify the public repository before checkout appears.</h2>
             <p>
-              Add the canonical public repository URL, completed audit issue URL,
-              and the highest-priority pain to address. This browser-local check
-              uses unauthenticated GitHub API reads only against the exact public
-              repository and WrightOps audit issue paths built from those URLs.
+              Add the canonical public repository URL and the highest-priority
+              pain to address. This browser-local check uses unauthenticated
+              GitHub API reads only to confirm the exact public repository and
+              pin its current default-branch revision.
             </p>
             <ul>
               <li><span>✓</span> Nothing is uploaded, stored, tracked, or authenticated</li>
               <li><span>✓</span> No customer code is cloned, installed, executed, or sent</li>
-              <li><span>✓</span> Checkout stays hidden unless public evidence matches</li>
-              <li><span>✓</span> Public GitHub and business-email fallbacks remain available</li>
+              <li><span>✓</span> Checkout stays hidden unless the public scope and attestations match</li>
+              <li><span>✓</span> Any input change immediately revokes the checkout</li>
             </ul>
           </div>
 
@@ -242,25 +234,12 @@
             </label>
 
             <label>
-              Canonical completed WrightOps audit issue URL
-              <input
-                name="audit-issue"
-                type="url"
-                inputmode="url"
-                autocomplete="url"
-                maxlength="2048"
-                placeholder="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/123"
-                required
-              />
-            </label>
-
-            <label>
               Highest-priority pain to address
               <textarea
                 name="pain"
                 rows="4"
                 maxlength="500"
-                placeholder="Example: agents repeatedly choose the wrong verification command after the audit found missing instructions."
+                placeholder="Example: agents repeatedly choose the wrong verification command because the repository instructions are incomplete."
                 required
               ></textarea>
             </label>
@@ -294,9 +273,9 @@
             <label class="scope-builder-consent">
               <input name="payment-terms" type="checkbox" required />
               <span>
-                I understand there is no contract or payment before successful
-                automated confirmation; checkout payment creates a purchase
-                obligation under the published terms; work begins only after
+                I understand there is no purchase obligation before successful
+                automated confirmation; checkout payment accepts the fixed
+                scope and published terms; work begins only after
                 provider-confirmed settled payment; the full purchase price is
                 refunded before review begins, for ineligible intake found before
                 review, or if WrightOps cannot deliver the accepted scope. A
@@ -306,11 +285,10 @@
 
             <p class="scope-builder-privacy">
               Do not include credentials, payment details, private files,
-              personal data, customer data, production access, private audit
-              material, security work, regulated work, or professional-advice
-              requests. Rate limits, network failures, invalid evidence,
-              launch-verification issues, or missing automated report evidence
-              fail closed and do not reveal checkout.
+              personal data, customer data, production access, security work,
+              regulated work, or professional-advice requests. Archived,
+              disabled, private, or branchless repositories, rate limits, and
+              network failures fail closed and do not reveal checkout.
             </p>
 
             <div class="scope-builder-actions">
@@ -328,7 +306,7 @@
             </div>
 
             <p class="scope-builder-status" id="scope-builder-status" role="status" aria-live="polite">
-              No contract, checkout, payment, or work starts before successful automated confirmation.
+              No purchase obligation, checkout, payment, or work starts before successful automated confirmation.
             </p>
 
             <textarea
@@ -342,6 +320,14 @@
             <div class="scope-builder-actions" id="paypal-checkout-panel" hidden>
               <a
                 class="button"
+                id="confirmed-scope-email"
+                aria-disabled="true"
+                tabindex="-1"
+              >
+                Email confirmed scope
+              </a>
+              <a
+                class="button"
                 id="paypal-checkout-link"
                 data-checkout-url="https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG"
                 aria-disabled="true"
@@ -353,21 +339,15 @@
 
             <a
               class="text-link"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml"
-            >
-              Prefer GitHub? Open the public request fallback <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              class="text-link"
               href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml"
             >
-              Need the audit first? Start the public audit fallback <span aria-hidden="true">↗</span>
+              Want more evidence first? Run the optional free audit <span aria-hidden="true">↗</span>
             </a>
             <a
               class="text-link"
-              href="mailto:zach@zachwright.xyz?subject=WrightOps%20%24149%20fix%20plan%20scope%20request&amp;body=Public%20repository%20URL%3A%0ACompleted%20WrightOps%20free-audit%20issue%20URL%3A%0AImmutable%20revision%20(if%20known)%3A%0AThree-card%20priority%20or%20pain%20to%20address%3A%0A%0AI%20confirm%20I%20have%20authority%20to%20commission%20this%20plan%20and%20will%20provide%20public-only%20inputs.%0A%0AI%20understand%20this%20is%20a%20non-binding%20scope%20request%2C%20not%20a%20payment%20or%20authorization%20to%20start%20work.%0A%0ADo%20not%20include%20credentials%2C%20payment%20details%2C%20private%20files%2C%20personal%20data%2C%20customer%20data%2C%20or%20production%20access."
+              href="mailto:zach@zachwright.xyz?subject=WrightOps%20Fix%20Plan%20scope%20help&amp;body=Public%20repository%20URL%3A%0AQuestion%3A%0A%0ADo%20not%20include%20credentials%2C%20payment%20details%2C%20private%20files%2C%20personal%20data%2C%20customer%20data%2C%20or%20production%20access."
             >
-              Use authorized business email instead <span aria-hidden="true">→</span>
+              Need scope help? Email WrightOps <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
@@ -462,50 +442,49 @@
         <div class="page-shell">
           <div class="section-intro compact">
             <p class="eyebrow">The process</p>
-            <h2>Audit first. Scope second. Payment third.</h2>
+            <h2>Verify. Send scope. Pay. Receive.</h2>
           </div>
           <ol class="process-list">
             <li>
               <span>01</span>
-              <h3>Complete the free public audit</h3>
+              <h3>Verify one public repository</h3>
               <p>
-                Begin with a completed <a href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml">public audit</a>
-                so the request has a repository, immutable revision, and shared evidence baseline.
+                The browser-local gate confirms the canonical public repository
+                and pins its immutable default-branch revision without cloning,
+                authenticating, or storing the URL with WrightOps.
               </p>
             </li>
             <li>
               <span>02</span>
-              <h3>Open a non-binding scope request</h3>
+              <h3>Send the confirmed scope reference</h3>
               <p>
-                Use the public GitHub form or business email to provide the audit
-                issue, repository URL, and one operational pain to prioritize.
-                Never include contact, private, payment, or transaction data.
+                Copy or email the generated public-only order reference. It
+                contains the repository, pinned revision, priority, and fixed
+                product boundary—never credentials or payment details.
               </p>
             </li>
             <li>
               <span>03</span>
-              <h3>Receive written scope</h3>
+              <h3>Use the authorized checkout</h3>
               <p>
-                WrightOps confirms eligibility, fixed price, delivery clock,
-                exclusions, and acceptance shape. Opening the request or running
-                the browser-local confirmation does not create a contract or
-                payment obligation.
+                The unchanged PayPal Business Goods &amp; Services checkout
+                appears only after verification and all four attestations.
+                Checkout payment accepts the fixed product scope.
               </p>
             </li>
             <li>
               <span>04</span>
-              <h3>Pay, then receive three public cards</h3>
+              <h3>Receive three evidence-linked cards</h3>
               <p>
-                Use the authorized PayPal Business Goods &amp; Services checkout
-                only after confirmation. Work begins after provider-confirmed
-                settled payment and complete accepted public inputs.
+                Work begins only after provider-confirmed settlement and complete
+                accepted public inputs. Delivery is due within one business day.
               </p>
             </li>
           </ol>
         </div>
       </section>
 
-      <section class="boundary-section" id="boundaries">
+      <section class="boundary-section" id="terms">
         <div class="page-shell boundary-layout">
           <div>
             <p class="eyebrow">The boundary is part of the product</p>
@@ -517,9 +496,9 @@
             </p>
             <a
               class="text-link light"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md"
+              href="#scope-builder"
             >
-              Read correction and refund terms <span aria-hidden="true">↗</span>
+              Confirm this fixed scope <span aria-hidden="true">↑</span>
             </a>
           </div>
           <ul>
@@ -543,7 +522,7 @@
           <div class="faq-list">
             <details>
               <summary>Is a scope request a contract or payment obligation?</summary>
-              <p>No. WrightOps confirms the exact written scope before payment, and paid work begins only after provider-confirmed settlement.</p>
+              <p>No purchase obligation exists before successful browser-local confirmation. Checkout payment then accepts the displayed fixed scope and terms; paid work begins only after provider-confirmed settlement and complete public inputs.</p>
             </details>
             <details>
               <summary>Does the $149 include implementation?</summary>
@@ -571,30 +550,29 @@
           <p class="eyebrow">One repository · three cards · one business day</p>
           <h2>Give the next contributor an evidenced order of operations.</h2>
           <p>
-            Use the public scope form or business email after completing the
-            free audit. The request is non-binding, checkout stays hidden unless
-            public automated confirmation succeeds, and no work
-            begins until the exact repository, revision, exclusions, and
-            delivery terms are confirmed in writing.
+            Confirm the public repository and fixed boundaries in your browser,
+            email the generated order reference, and then use the unchanged
+            PayPal Business checkout. No work begins until payment settles and
+            the complete accepted public inputs are available.
           </p>
           <div class="hero-actions">
             <a
               class="button"
+              href="#scope-builder"
+            >
+              Confirm scope and checkout <span aria-hidden="true">→</span>
+            </a>
+            <a
+              class="text-link light"
+              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md"
+            >
+              Inspect the complete sample <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              class="text-link light"
               href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml"
             >
-              Start the free audit <span aria-hidden="true">↗</span>
-            </a>
-            <a
-              class="text-link light"
-              href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml"
-            >
-              Already audited? Request $149 scope <span aria-hidden="true">→</span>
-            </a>
-            <a
-              class="text-link light"
-              href="mailto:zach@zachwright.xyz?subject=WrightOps%20%24149%20fix%20plan%20scope%20request&amp;body=Public%20repository%20URL%3A%0ACompleted%20WrightOps%20free-audit%20issue%20URL%3A%0AImmutable%20revision%20(if%20known)%3A%0AThree-card%20priority%20or%20pain%20to%20address%3A%0A%0AI%20confirm%20I%20have%20authority%20to%20commission%20this%20plan%20and%20will%20provide%20public-only%20inputs.%0A%0AI%20understand%20this%20is%20a%20non-binding%20scope%20request%2C%20not%20a%20payment%20or%20authorization%20to%20start%20work.%0A%0ADo%20not%20include%20credentials%2C%20payment%20details%2C%20private%20files%2C%20personal%20data%2C%20customer%20data%2C%20or%20production%20access."
-            >
-              Email audited scope without GitHub <span aria-hidden="true">→</span>
+              Optional: run the free audit <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>
@@ -614,7 +592,7 @@
         <div>
           <a href="https://github.com/wrightops-ai">GitHub</a>
           <a href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md">Sample</a>
-          <a href="https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md">Terms</a>
+          <a href="#terms">Terms</a>
         </div>
       </div>
       <div class="page-shell footer-bottom">
@@ -629,14 +607,10 @@
 
         const API_BASE = "https://api.github.com";
         const PAYPAL_CHECKOUT_URL = "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG";
-        const AUDIT_REPO_OWNER = "wrightops-ai";
-        const AUDIT_REPO_NAME = "agent-ready-repo-auditor";
-        const AUTOMATED_REPORT_SENTENCE =
-          "This report was automatically generated from one immutable public GitHub snapshot.";
+        const BUSINESS_EMAIL = "zach@zachwright.xyz";
         const getControl = (name) => scopeBuilder.querySelector(`[name="${name}"]`);
         const getValue = (name) => String(getControl(name).value || "").trim();
         const repositoryInput = getControl("repository");
-        const auditIssueInput = getControl("audit-issue");
         const painInput = getControl("pain");
         const acknowledgementInputs = [
           getControl("authority"),
@@ -649,6 +623,7 @@
         const status = document.querySelector("#scope-builder-status");
         const orderNote = document.querySelector("#order-note-reference");
         const checkoutPanel = document.querySelector("#paypal-checkout-panel");
+        const confirmedScopeEmail = document.querySelector("#confirmed-scope-email");
         const checkoutLink = document.querySelector("#paypal-checkout-link");
 
         const githubNamePattern = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
@@ -659,9 +634,26 @@
           checkoutLink.removeAttribute("href");
           checkoutLink.setAttribute("aria-disabled", "true");
           checkoutLink.setAttribute("tabindex", "-1");
+          confirmedScopeEmail.removeAttribute("href");
+          confirmedScopeEmail.setAttribute("aria-disabled", "true");
+          confirmedScopeEmail.setAttribute("tabindex", "-1");
           copyButton.disabled = true;
           orderNote.hidden = true;
           orderNote.value = "";
+        };
+
+        const enableCheckout = () => {
+          checkoutLink.href = PAYPAL_CHECKOUT_URL;
+          checkoutLink.removeAttribute("aria-disabled");
+          checkoutLink.removeAttribute("tabindex");
+          status.textContent =
+            "Scope reference prepared. Send it to zach@zachwright.xyz from the PayPal buyer email, then continue to checkout; work starts only after provider-confirmed settlement.";
+        };
+
+        const revokeConfirmedScope = () => {
+          hideCheckout();
+          status.textContent =
+            "Scope changed. Confirm the current public repository, priority, and acknowledgements again before checkout can appear.";
         };
 
         const parseCanonicalRepositoryUrl = (value) => {
@@ -690,32 +682,6 @@
           };
         };
 
-        const parseCanonicalAuditIssueUrl = (value) => {
-          const url = new URL(value);
-          const pathParts = url.pathname.split("/").filter(Boolean);
-          const isCanonical =
-            url.protocol === "https:" &&
-            url.hostname === "github.com" &&
-            pathParts.length === 4 &&
-            pathParts[0] === AUDIT_REPO_OWNER &&
-            pathParts[1] === AUDIT_REPO_NAME &&
-            pathParts[2] === "issues" &&
-            /^[1-9][0-9]*$/.test(pathParts[3]) &&
-            !url.port &&
-            !url.pathname.includes("%") &&
-            !url.search &&
-            !url.hash &&
-            !url.username &&
-            !url.password;
-          if (!isCanonical) {
-            throw new Error("Audit issue must be https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/{number} with no query or hash.");
-          }
-          return {
-            number: Number(pathParts[3]),
-            canonicalUrl: `https://github.com/${AUDIT_REPO_OWNER}/${AUDIT_REPO_NAME}/issues/${pathParts[3]}`,
-          };
-        };
-
         const apiUrl = (path) => `${API_BASE}${path}`;
 
         const fetchGitHubJson = async (url) => {
@@ -726,7 +692,7 @@
             cache: "no-store",
           });
           if (response.status === 403 || response.status === 429) {
-            throw new Error("GitHub rate limit or abuse protection blocked this browser check. Use the GitHub or business-email fallback; checkout remains unavailable here.");
+            throw new Error("GitHub rate limit or abuse protection blocked this browser check. Email WrightOps for scope help; checkout remains unavailable here.");
           }
           if (!response.ok) {
             throw new Error(`GitHub evidence request failed with HTTP ${response.status}.`);
@@ -737,22 +703,14 @@
         const validateInputs = () => {
           hideCheckout();
           repositoryInput.setCustomValidity("");
-          auditIssueInput.setCustomValidity("");
           let repository;
-          let auditIssue;
           try {
             repository = parseCanonicalRepositoryUrl(repositoryInput.value);
           } catch (error) {
             repositoryInput.setCustomValidity(error.message);
           }
-          try {
-            auditIssue = parseCanonicalAuditIssueUrl(auditIssueInput.value);
-          } catch (error) {
-            auditIssueInput.setCustomValidity(error.message);
-          }
           const requiredControls = [
             repositoryInput,
-            auditIssueInput,
             painInput,
             ...acknowledgementInputs,
           ];
@@ -760,89 +718,33 @@
             if (!control.checkValidity()) {
               control.reportValidity();
               status.textContent =
-                "Complete the canonical URLs, bounded pain, authority, fixed-scope, ordinary-software, and payment acknowledgements.";
+                "Complete the canonical repository URL, bounded pain, authority, fixed-scope, ordinary-software, and payment acknowledgements.";
               return null;
             }
           }
-          return { repository, auditIssue };
+          return { repository };
         };
 
-        const issueBodySection = (body, heading) => {
-          const lines = String(body || "").split(/\r?\n/);
-          const headingIndex = lines.findIndex(
-            (line) => line.trim().toLowerCase() === `### ${heading}`.toLowerCase(),
-          );
-          if (headingIndex === -1) return "";
-          for (const line of lines.slice(headingIndex + 1)) {
-            const value = line.trim();
-            if (value.startsWith("### ")) return "";
-            if (value) return value;
-          }
-          return "";
-        };
-
-        const verifyIssueForRepository = (issue, repository) => {
-          const labels = (issue.labels || []).map((label) => String(label.name || "").toLowerCase());
-          const issueBody = String(issue.body || "");
-          const referencedRepositoryUrl = issueBodySection(issueBody, "Public repository");
-          if (issue.pull_request) {
-            throw new Error("That URL points to a pull request, not a completed audit issue.");
-          }
-          if (issue.state !== "open" && issue.state !== "closed") {
-            throw new Error("Audit issue state could not be verified.");
-          }
-          if (labels.includes("launch-verification")) {
-            throw new Error("Launch-verification issues are internal verification only and cannot unlock checkout.");
-          }
-          if (issueBody.toLowerCase().includes("excluded from demand metrics")) {
-            throw new Error("Issues excluded from demand metrics cannot be used as buyer audit evidence.");
-          }
-          if (!labels.includes("audit-request")) {
-            throw new Error("The issue is not marked as an audit-request.");
-          }
-          if (!String(issue.title || "").startsWith("[Audit request]")) {
-            throw new Error("The issue title is not a WrightOps audit request.");
-          }
-          let referencedRepository;
-          try {
-            referencedRepository = parseCanonicalRepositoryUrl(referencedRepositoryUrl);
-          } catch {
-            throw new Error("The audit issue does not contain a canonical Public repository field.");
-          }
-          if (
-            referencedRepository.owner.toLowerCase() !== repository.owner.toLowerCase() ||
-            referencedRepository.repo.toLowerCase() !== repository.repo.toLowerCase()
-          ) {
-            throw new Error("The audit issue does not reference the same repository URL.");
-          }
-        };
-
-        const findAutomatedReportComment = (comments) =>
-          comments.find((comment) => {
-            const body = String(comment.body || "");
-            return (
-              String(comment.user && comment.user.login || "").toLowerCase() ===
-                "github-actions[bot]" &&
-              comment.user &&
-              comment.user.type === "Bot" &&
-              comment.performed_via_github_app &&
-              comment.performed_via_github_app.slug === "github-actions" &&
-              comment.performed_via_github_app.owner &&
-              comment.performed_via_github_app.owner.login === "github" &&
-              body.includes(AUTOMATED_REPORT_SENTENCE) &&
-              /Evidence score\s*:\s*(?:\*\*)?\d+\s*\/\s*\d+/i.test(body)
-            );
-          });
-
-        const buildOrderNote = ({ repository, auditIssue, headSha }) =>
+        const buildOrderNote = ({ repository, headSha }) =>
           [
             "WrightOps $149 Fix Plan",
+            "scope_version=fix-plan-v2",
             `repo=${repository.owner}/${repository.repo}`,
-            `audit=#${auditIssue.number}`,
             `sha=${headSha}`,
-            `priority=${getValue("pain").replace(/\s+/g, " ").slice(0, 140)}`,
+            `priority=${getValue("pain").replace(/\s+/g, " ").slice(0, 160)}`,
             "scope=3 fix cards; no implementation; public-only inputs; terms acknowledged",
           ].join("\n");
+
+        const buildScopeMailto = (note) => {
+          const subject = "WrightOps $149 Fix Plan — confirmed public scope";
+          const body = [
+            note,
+            "",
+            "I will use the same buyer email at PayPal Business checkout.",
+            "Do not include credentials, payment details, private files, personal data, customer data, or production access.",
+          ].join("\n");
+          return `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        };
 
         const confirmScope = async () => {
           const parsed = validateInputs();
@@ -855,10 +757,12 @@
             const repository = await fetchGitHubJson(apiUrl(repoPath));
             if (
               repository.private ||
+              repository.archived ||
+              repository.disabled ||
               String(repository.full_name || "").toLowerCase() !==
                 `${parsed.repository.owner}/${parsed.repository.repo}`.toLowerCase()
             ) {
-              throw new Error("Repository must be public and match the canonical URL exactly.");
+              throw new Error("Repository must be public, active, and match the canonical URL exactly.");
             }
             const branchName = String(repository.default_branch || "");
             if (!branchName) {
@@ -871,55 +775,41 @@
             if (!/^[0-9a-f]{40}$/i.test(String(headSha || ""))) {
               throw new Error("GitHub did not return an immutable default-branch head SHA.");
             }
-            const issuePath = `/repos/${AUDIT_REPO_OWNER}/${AUDIT_REPO_NAME}/issues/${parsed.auditIssue.number}`;
-            const issue = await fetchGitHubJson(apiUrl(issuePath));
-            verifyIssueForRepository(issue, parsed.repository);
-            const comments = await fetchGitHubJson(apiUrl(`${issuePath}/comments?per_page=100`));
-            if (!Array.isArray(comments) || !findAutomatedReportComment(comments)) {
-              throw new Error("No trusted GitHub Actions audit report with the required marker and Evidence score was found.");
-            }
-
             const note = buildOrderNote({
               repository: parsed.repository,
-              auditIssue: parsed.auditIssue,
               headSha,
             });
             orderNote.value = note;
             orderNote.hidden = false;
             copyButton.disabled = false;
-            checkoutLink.href = PAYPAL_CHECKOUT_URL;
-            checkoutLink.removeAttribute("aria-disabled");
-            checkoutLink.removeAttribute("tabindex");
+            confirmedScopeEmail.href = buildScopeMailto(note);
+            confirmedScopeEmail.removeAttribute("aria-disabled");
+            confirmedScopeEmail.removeAttribute("tabindex");
             checkoutPanel.hidden = false;
             status.textContent =
-              `WrightOps fixed $149 scope is confirmed for ${parsed.repository.canonicalUrl} at ${headSha}. Copy the order-note reference before checkout.`;
-            try {
-              await navigator.clipboard.writeText(note);
-              status.textContent += " Order-note reference copied.";
-            } catch {
-              status.textContent += " Clipboard access is unavailable; copy the visible order-note reference manually.";
-            }
+              `WrightOps fixed $149 scope is confirmed for ${parsed.repository.canonicalUrl} at ${headSha}. Email or copy the order reference to enable checkout.`;
           } catch (error) {
             hideCheckout();
-            status.textContent = `${error.message} Use the public GitHub or authorized business-email fallback; checkout remains unavailable.`;
+            status.textContent = `${error.message} Email WrightOps for scope help; checkout remains unavailable.`;
           } finally {
             confirmButton.disabled = false;
           }
         };
 
         confirmButton.addEventListener("click", confirmScope);
+        confirmedScopeEmail.addEventListener("click", enableCheckout);
         copyButton.addEventListener("click", async () => {
           if (!orderNote.value) return;
           try {
             await navigator.clipboard.writeText(orderNote.value);
-            status.textContent = "Order-note reference copied.";
+            enableCheckout();
           } catch {
-            status.textContent = "Clipboard access is unavailable. Select and copy the visible order-note reference.";
+            status.textContent = "Clipboard access is unavailable. Use Email confirmed scope to prepare the reference and enable checkout.";
           }
         });
-        for (const control of [repositoryInput, auditIssueInput, painInput, ...acknowledgementInputs]) {
-          control.addEventListener("input", hideCheckout);
-          control.addEventListener("change", hideCheckout);
+        for (const control of [repositoryInput, painInput, ...acknowledgementInputs]) {
+          control.addEventListener("input", revokeConfirmedScope);
+          control.addEventListener("change", revokeConfirmedScope);
         }
       })();
     </script>

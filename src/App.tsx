@@ -20,8 +20,7 @@ const AUDIT_REQUEST_URL =
 const HUMAN_AUDIT_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml";
 const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/";
-const HUMAN_AUDIT_TERMS_URL =
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md";
+const HUMAN_AUDIT_TERMS_URL = "/agent-ready-repository-audit/#terms";
 const COST_SNAPSHOT_REQUEST_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml";
 const COST_SNAPSHOT_LANDING_URL =
@@ -30,14 +29,14 @@ const AUDITOR_RELEASE_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/releases/tag/v1.1.0";
 const AUDITOR_CI_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/actions/runs/29484452275";
-const FIX_PLAN_REQUEST_URL =
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml";
 const FIX_PLAN_SAMPLE_URL =
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md";
 const FIX_PLAN_TERMS_URL =
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md";
+  "/agent-ready-fix-plan/#terms";
 const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/";
 const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/";
+const SINGLE_FILE_CORRECTION_LANDING_URL =
+  "/single-file-agent-instructions-correction/";
 const AGENTS_STARTER_URL = "/agents-md-starter-template/";
 const INSTRUCTIONS_PR_SAMPLE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/pull/1";
@@ -61,10 +60,10 @@ const preflightCheckLabels = [
 
 const engagementOptions = [
   {
-    eyebrow: "Fastest paid step",
+    eyebrow: "Self-serve paid step",
     title: "Agent-Ready Repo Fix Plan",
     price: "$149",
-    timing: "One business day after scope confirmation",
+    timing: "One business day after settlement and complete public inputs",
     description:
       "Three prioritized fix cards for one public repository, each pinned to evidence and written so a maintainer or coding agent can execute it.",
     bullets: [
@@ -73,11 +72,13 @@ const engagementOptions = [
       "Smallest recommended change",
       "Executable acceptance check",
     ],
+    intakeNote:
+      "Confirm one active public repository in the browser, email or copy the generated order reference, then use the gated PayPal Business checkout. No prior WrightOps audit is required.",
     primaryLabel: "See the $149 scope & sample",
     primaryHref: FIX_PLAN_LANDING_URL,
     secondaryLabel: "Inspect the complete sample",
     secondaryHref: FIX_PLAN_SAMPLE_URL,
-    featured: false,
+    featured: true,
   },
   {
     eyebrow: "Demand-backed correction offer",
@@ -93,10 +94,10 @@ const engagementOptions = [
       "No application-code, CI, dependency, security, or deployment changes",
     ],
     primaryLabel: "See the $149 correction scope",
-    primaryHref: INSTRUCTIONS_PR_LANDING_URL,
+    primaryHref: SINGLE_FILE_CORRECTION_LANDING_URL,
     secondaryLabel: "Inspect the patch-shaped sample",
     secondaryHref: INSTRUCTIONS_PR_SAMPLE_URL,
-    featured: true,
+    featured: false,
   },
   {
     eyebrow: "Two-file foundation",
@@ -131,11 +132,11 @@ const engagementOptions = [
       "One 30-minute recorded or live handoff",
     ],
     intakeNote:
-      "Run the no-login preflight first. It turns the public snapshot into a complete, copy-ready scope brief without submitting or storing anything.",
-    primaryLabel: "Run preflight to scope",
-    primaryHref: "#preflight",
-    secondaryLabel: "See the $750 scope & proof",
-    secondaryHref: HUMAN_AUDIT_LANDING_URL,
+      "Confirm one active public repository in the browser. The fail-closed gate pins its current default-branch revision, requires every fixed-scope acknowledgement, and then enables the existing PayPal Business checkout.",
+    primaryLabel: "Confirm the $750 self-serve scope",
+    primaryHref: HUMAN_AUDIT_LANDING_URL,
+    secondaryLabel: "Read the fixed audit terms",
+    secondaryHref: HUMAN_AUDIT_TERMS_URL,
     featured: false,
   },
   {
@@ -174,9 +175,9 @@ const proofItems = [
     value: "CI passed",
     title: "Fail-closed qualification",
     description:
-      "The hosted workflow verifies completed audits before acknowledging a Fix Plan request and routing it to human scope review.",
-    link: AUDITOR_CI_URL,
-    linkLabel: "Inspect run",
+      "The public Fix Plan gate verifies one active repository and immutable default-branch revision before revealing its unchanged checkout.",
+    link: FIX_PLAN_LANDING_URL,
+    linkLabel: "Open live gate",
   },
   {
     label: "Complete sample",
@@ -197,13 +198,13 @@ const processSteps = [
   },
   {
     number: "02",
-    title: "Submit one scoped repository",
-    text: "Share the public repository URL, completed audit evidence, and the outcome you want. Never send credentials or private code.",
+    title: "Confirm one scoped repository",
+    text: "Verify the active public repository in the browser, then email or copy its revision-pinned order reference. Never send credentials or private code.",
   },
   {
     number: "03",
-    title: "Confirm scope before payment",
-    text: "WrightOps confirms fit, exclusions, delivery timing, and acceptance criteria in writing before inviting payment.",
+    title: "Prepare scope before payment",
+    text: "The browser gate confirms fit, exclusions, delivery timing, and acceptance shape before the PayPal Business checkout becomes usable.",
   },
   {
     number: "04",
@@ -403,11 +404,18 @@ function Hero() {
             <PrimaryAction href="#preflight">
               Run the no-login preflight
             </PrimaryAction>
-            <a className="text-action" href="#offers">
-              See the $149 / $249 correction scope{" "}
+            <a className="text-action" href={FIX_PLAN_LANDING_URL}>
+              Start the self-serve $149 Fix Plan{" "}
               <span aria-hidden="true">↓</span>
             </a>
           </div>
+
+          <p className="hero-starter-prompt">
+            Need a complete repository review?{" "}
+            <a className="hero-starter-link" href={HUMAN_AUDIT_LANDING_URL}>
+              Confirm the self-serve $750 audit <Arrow />
+            </a>
+          </p>
 
           <p className="hero-starter-prompt">
             Need a safe starting file?{" "}
@@ -905,7 +913,7 @@ function Offers() {
               Buy the smallest useful <span>next step.</span>
             </>
           }
-          text="Every paid engagement begins with written scope and public evidence. The $149 Fix Plan is the fastest way to turn an audit into executable decisions."
+          text="Every paid engagement begins with confirmed scope and public evidence. The $149 Fix Plan now turns one eligible public repository directly into three executable decisions."
         />
 
         <div className="offer-grid">
@@ -1211,8 +1219,8 @@ function FinalCta() {
           <PrimaryAction href="#preflight">
             Check a public repository
           </PrimaryAction>
-          <SecondaryAction href={INSTRUCTIONS_PR_LANDING_URL}>
-            See the $149 / $249 correction scope
+          <SecondaryAction href={FIX_PLAN_LANDING_URL}>
+            Open the self-serve $149 Fix Plan
           </SecondaryAction>
         </div>
       </Reveal>
@@ -1246,7 +1254,7 @@ function Footer() {
               Human-reviewed audit scope
             </ExternalLink>
             <ExternalLink href={AUDITOR_URL}>Inspect the auditor</ExternalLink>
-            <ExternalLink href={FIX_PLAN_REQUEST_URL}>Fix Plan request</ExternalLink>
+            <a href={FIX_PLAN_LANDING_URL}>Fix Plan scope</a>
           </div>
           <div>
             <strong>Verify</strong>

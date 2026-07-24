@@ -684,9 +684,13 @@
         const openEmailButton = document.querySelector("#open-scope-email");
         const copyButton = document.querySelector("#copy-scope-request");
         const status = document.querySelector("#scope-builder-status");
-        const prefilledRepository = new URLSearchParams(window.location.search).get("repository");
+        const query = new URLSearchParams(window.location.search);
+        const prefilledRepository = query.get("repository");
         if (prefilledRepository) {
           repositoryInput.value = prefilledRepository;
+        }
+        if (query.get("tier") === "single-file") {
+          tierInput.value = "$149 single-file correction";
         }
 
         const validateRepository = () => {

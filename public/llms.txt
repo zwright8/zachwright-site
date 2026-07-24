@@ -16,7 +16,7 @@ AI Agent Cost & Reliability normalized run contract: https://github.com/wrightop
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
 Fix Plan service page: https://zachwright.xyz/agent-ready-fix-plan/
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
-Terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md
+Terms: https://zachwright.xyz/agent-ready-fix-plan/#terms
 Agent Instructions Correction scope builder and service page: https://zachwright.xyz/agent-ready-instructions-pr/
 AGENTS.md vs CLAUDE.md vs Copilot instructions guide: https://zachwright.xyz/agents-md-vs-claude-md/
 Free browser-local AGENTS.md builder and starter template: https://zachwright.xyz/agents-md-starter-template/
@@ -85,7 +85,8 @@ Agent-Ready Repo Fix Plan:
 Agent Instructions Correction:
 - $149 for one existing root AGENTS.md, root CLAUDE.md, or .github/copilot-instructions.md in one public repository.
 - $249 for root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md.
-- Dedicated service page: https://zachwright.xyz/agent-ready-instructions-pr/
+- Dedicated $149 single-file page: https://zachwright.xyz/single-file-agent-instructions-correction/
+- Combined $149 / $249 scope builder: https://zachwright.xyz/agent-ready-instructions-pr/
 - Delivery includes complete replacement Markdown, a ready-to-apply unified diff, claim-to-source evidence notes, and acceptance checks.
 - The $149 tier is capped at one existing file, 250 source lines, and 75 total WrightOps labor minutes, including one factual correction round requested within seven days.
 - The $249 tier is capped at exactly two files: root AGENTS.md plus one selected companion.

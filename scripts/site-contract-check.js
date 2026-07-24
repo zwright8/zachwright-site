@@ -20,6 +20,15 @@ const instructionsPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-instructions-pr", "index.html"),
   "utf8",
 );
+const singleFileCorrectionPage = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "single-file-agent-instructions-correction",
+    "index.html",
+  ),
+  "utf8",
+);
 const instructionsGuidePath = path.join(
   root,
   "public",
@@ -99,10 +108,10 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
   'const HUMAN_AUDIT_LANDING_URL = "/agent-ready-repository-audit/"',
-  'primaryHref: "#preflight"',
-  "Run preflight to scope",
-  "See the $750 scope & proof",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
+  "Confirm the $750 self-serve scope",
+  "Read the fixed audit terms",
+  "Confirm the self-serve $750 audit",
+  'const HUMAN_AUDIT_TERMS_URL = "/agent-ready-repository-audit/#terms"',
   "function auditScopeEvidence(",
   "WrightOps $750 Agent-Ready Repository Audit — non-binding scope request",
   "Requester authority: I confirm that I am authorized to request this public-evidence review.",
@@ -114,16 +123,18 @@ const requiredAppMarkers = [
   "Copy $750 scope brief",
   "Open public request form",
   "Read complete terms",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
+  'const FIX_PLAN_TERMS_URL =\n  "/agent-ready-fix-plan/#terms"',
   'const FIX_PLAN_LANDING_URL = "/agent-ready-fix-plan/"',
   "See the $149 scope & sample",
   'const INSTRUCTIONS_PR_LANDING_URL = "/agent-ready-instructions-pr/"',
   'const AGENTS_STARTER_URL = "/agents-md-starter-template/"',
   '<a className="hero-starter-link" href={AGENTS_STARTER_URL}>',
   "Copy the free AGENTS.md starter",
-  "<SecondaryAction href={INSTRUCTIONS_PR_LANDING_URL}>",
+  '<a className="text-action" href={FIX_PLAN_LANDING_URL}>',
+  "Start the self-serve $149 Fix Plan",
+  "<SecondaryAction href={FIX_PLAN_LANDING_URL}>",
+  "Open the self-serve $149 Fix Plan",
   "See the $149 correction scope",
   "See the $249 foundation scope",
   "AI Agent Cost & Reliability Snapshot",
@@ -188,11 +199,19 @@ const requiredAuditPageMarkers = [
   "not a vulnerability, security, privacy, legal, or",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-report-v1.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md",
+  'id="terms"',
+  "Fixed self-serve terms",
+  "A GitHub or business-email request remains non-binding",
   "mailto:zach@zachwright.xyz?subject=WrightOps%20%24750%20repository%20audit%20scope%20request",
   "Email scope without GitHub",
   'href="/#preflight"',
-  "Run preflight to scope",
+  "Run the free preflight first",
+  "Self-serve written scope",
+  'id="scope-builder"',
+  'id="repository-audit-scope-builder"',
+  "Confirm $750 fixed scope",
+  "scope_version=repository-audit-v2",
+  'data-checkout-url="https://www.paypal.com/ncp/payment/5WFCZBVANJLGA"',
   "Request scope on GitHub",
   'href="/agent-ready-storefront-checklist/"',
   "Use the storefront evidence checklist",
@@ -288,6 +307,65 @@ const requiredInstructionsPageMarkers = [
   "new URLSearchParams(window.location.search)",
   "navigator.clipboard.writeText(scopeText)",
   "window.location.href = buildMailto(scopeText)",
+  'query.get("tier") === "single-file"',
+  'tierInput.value = "$149 single-file correction"',
+];
+
+const requiredSingleFileCorrectionPageMarkers = [
+  "<title>Single-File Agent Instructions Correction | WrightOps</title>",
+  'href="https://zachwright.xyz/single-file-agent-instructions-correction/"',
+  '"@type": "Service"',
+  '"name": "Single-File Agent Instructions Correction"',
+  '"price": "149"',
+  "Correct one agent-instructions file",
+  "$149 fixed scope",
+  "1 existing instruction file",
+  "1 business day",
+  "Complete replacement Markdown",
+  "Ready-to-apply unified diff",
+  "Evidence and acceptance checks",
+  "maximum <code>250 source lines</code>",
+  "75 total WrightOps labor minutes",
+  "provider-confirmed settled payment",
+  "private, buyer-specific PayPal Goods &amp; Services checkout",
+  "No public checkout or payment",
+  "No branch, pull request, comment",
+  "No repository code execution or security work",
+  "every dollar paid is refunded through the original payment rail",
+  'id="single-file-scope-builder"',
+  'id="single-file-scope-builder-heading"',
+  'name="repository"',
+  'name="revision"',
+  'name="target-file"',
+  'name="workflow"',
+  'name="authority"',
+  "Build the exact $149 request here",
+  "Open prefilled business email",
+  "Copy scope request",
+  "Nothing is uploaded or stored",
+  "URL shape is checked locally",
+  "WrightOps verifies public access after receipt",
+  "navigator.clipboard.writeText(scopeText)",
+  "window.location.href = buildMailto(scopeText)",
+  "WrightOps $149 Single-File Agent Instructions Correction scope request",
+  'href="#scope-builder"',
+  'href="/agents-md-vs-claude-md/"',
+  'href="/#preflight"',
+];
+
+const forbiddenSingleFileCorrectionPageMarkers = [
+  "paypal.com",
+  "paypal.me",
+  "<form",
+  "<script src=",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "navigator.sendBeacon",
+  "XMLHttpRequest",
+  'type="submit"',
+  'action="',
+  "guaranteed outcome",
 ];
 
 const requiredInstructionsGuideMarkers = [
@@ -337,9 +415,9 @@ const requiredStorefrontGuideMarkers = [
   "Two-minute browser-local check",
   "Discovery baseline missing",
   "Evidence map incomplete",
-  "Ready for the required WrightOps audit",
+  "Ready to confirm the $149 fixed scope",
   "Continue to the $149 Fix Plan",
-  "The completed WrightOps audit and its public evidence are still required",
+  "browser-local gate still verifies the active public repository",
   "Nothing is uploaded, stored, or sent to WrightOps.",
   "function storefrontResult(count)",
   "function updateStorefrontResult()",
@@ -348,8 +426,8 @@ const requiredStorefrontGuideMarkers = [
   "No fabricated reviews, policies, or catalog facts",
   "No ranking, adoption, traffic, or revenue guarantee",
   "not assess vulnerabilities, security,",
-  "the $149 Fix Plan checks matching public evidence",
-  "No mailbox is required for that gated",
+  "The $149 Fix Plan checks one active",
+  "generated scope reference is",
   'href="/agent-ready-fix-plan/"',
   "Use the $149 Fix Plan",
   'href="/agent-ready-repository-audit/"',
@@ -465,7 +543,7 @@ const requiredFixPlanPageMarkers = [
   'href="https://zachwright.xyz/agent-ready-fix-plan/"',
   '"@type": "Service"',
   '"price": "149"',
-  "Turn one audit into three executable",
+  "Turn one public repository into three executable",
   "Exactly three human-reviewed fix cards",
   "One business day",
   "provider-confirmed settled payment",
@@ -477,51 +555,45 @@ const requiredFixPlanPageMarkers = [
   "acceptance check",
   "No implementation or repository changes",
   "not a vulnerability, security, privacy, legal, or compliance",
-  "Use the public GitHub form or business email",
-  "Never include contact, private, payment, or transaction data",
-  "does not create a contract or payment obligation",
+  "order reference by business email",
+  "never credentials or payment details",
+  "No purchase obligation exists before successful browser-local confirmation",
   "Self-serve scope confirmation",
   'id="scope-builder"',
   'id="fix-plan-scope-builder"',
   'name="repository"',
-  'name="audit-issue"',
   'name="pain"',
   'name="authority"',
   'name="fixed-scope"',
   'name="ordinary-software"',
   'name="payment-terms"',
-  "No contract, checkout, payment, or work starts before successful automated confirmation",
+  "No purchase obligation, checkout, payment, or work starts before successful automated confirmation",
   "Confirm $149 fixed scope",
   "Copy order-note reference",
   "WrightOps fixed $149 scope is confirmed",
   "https://www.paypal.com/ncp/payment/H9VVRGRGA3DCG",
   "https://api.github.com",
   "/repos/${parsed.repository.owner}/${parsed.repository.repo}",
-  "/repos/${AUDIT_REPO_OWNER}/${AUDIT_REPO_NAME}/issues/${parsed.auditIssue.number}",
-  "comments?per_page=100",
   "application/vnd.github+json",
-  "launch-verification",
-  "excluded from demand metrics",
-  "This report was automatically generated from one immutable public GitHub snapshot.",
-  "Evidence score",
-  "github-actions[bot]",
-  'comment.user.type === "Bot"',
-  'comment.performed_via_github_app.slug === "github-actions"',
-  'comment.performed_via_github_app.owner.login === "github"',
-  "navigator.clipboard.writeText(note)",
+  "repository.archived",
+  "repository.disabled",
+  "scope_version=fix-plan-v2",
+  "buildScopeMailto",
+  'id="confirmed-scope-email"',
+  "Email confirmed scope",
+  "navigator.clipboard.writeText(orderNote.value)",
+  "const enableCheckout",
   "checkoutLink.href = PAYPAL_CHECKOUT_URL",
   "checkoutLink.removeAttribute(\"href\")",
-  "scope before payment",
+  "Automated scope confirmation before payment",
   "full purchase-price refund",
   "WrightOps absorbs that cost",
-  "Start the free audit",
-  "Already audited? Request $149 scope",
+  "Optional: run the free audit",
+  "Confirm scope and checkout",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
-  "mailto:zach@zachwright.xyz?subject=WrightOps%20%24149%20fix%20plan%20scope%20request",
-  "Email audited scope without GitHub",
+  "mailto:zach@zachwright.xyz?subject=WrightOps%20Fix%20Plan%20scope%20help",
+  "Need scope help? Email WrightOps",
 ];
 
 const requiredBountyReviewPageMarkers = [
@@ -628,6 +700,10 @@ const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
 const missingInstructionsPage = missing(instructionsPage, requiredInstructionsPageMarkers);
+const missingSingleFileCorrectionPage = missing(
+  singleFileCorrectionPage,
+  requiredSingleFileCorrectionPageMarkers,
+);
 const missingInstructionsGuidePage = missing(
   instructionsGuidePage,
   requiredInstructionsGuideMarkers,
@@ -678,6 +754,18 @@ if (missingAuditPage.length) {
 
 if (missingInstructionsPage.length) {
   failures.push(`Instructions page is missing: ${missingInstructionsPage.join(", ")}`);
+}
+
+if (missingSingleFileCorrectionPage.length) {
+  failures.push(
+    `Single-file correction page is missing: ${missingSingleFileCorrectionPage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenSingleFileCorrectionPageMarkers) {
+  if (singleFileCorrectionPage.includes(marker)) {
+    failures.push(`Single-file correction page must remain scope-first: ${marker}`);
+  }
 }
 
 if (missingInstructionsGuidePage.length) {
@@ -1020,9 +1108,18 @@ if (auditTermsCtaCount < 2) {
 const auditPagePreflightCtaCount = (
   auditPage.match(/href="\/#preflight"/g) || []
 ).length;
-if (auditPagePreflightCtaCount < 3) {
+if (auditPagePreflightCtaCount < 2) {
   failures.push(
-    `Expected at least three dedicated $750 page routes to the no-login preflight; found ${auditPagePreflightCtaCount}.`,
+    `Expected at least two dedicated $750 page routes to the optional no-login preflight; found ${auditPagePreflightCtaCount}.`,
+  );
+}
+
+const auditPageScopeBuilderCtaCount = (
+  auditPage.match(/href="#scope-builder"/g) || []
+).length;
+if (auditPageScopeBuilderCtaCount < 3) {
+  failures.push(
+    `Expected at least three dedicated $750 self-serve confirmation paths; found ${auditPageScopeBuilderCtaCount}.`,
   );
 }
 
@@ -1054,6 +1151,67 @@ for (const marker of [
   "document.cookie",
   "navigator.sendBeacon",
   "XMLHttpRequest",
+  "<form",
+  'type="submit"',
+  "Authorization",
+  "Bearer ",
+  "checkoutLink.click",
+  "window.open(PAYPAL_CHECKOUT_URL",
+  "window.location.href = PAYPAL_CHECKOUT_URL",
+  "location.assign(PAYPAL_CHECKOUT_URL",
+  "location.replace(PAYPAL_CHECKOUT_URL",
+]) {
+  if (auditPage.includes(marker)) {
+    failures.push(`The $750 audit checkout gate must not use unsafe browser behavior: ${marker}`);
+  }
+}
+
+if (!auditPage.includes('data-checkout-url="https://www.paypal.com/ncp/payment/5WFCZBVANJLGA"')) {
+  failures.push("The $750 PayPal checkout must be present only as a gated data URL.");
+}
+
+if (
+  !auditPage.includes('aria-disabled="true"') ||
+  !/id="repository-audit-paypal-panel"[\s\S]{0,80}hidden/.test(auditPage)
+) {
+  failures.push("The $750 PayPal checkout must start hidden and disabled.");
+}
+
+if (
+  !/\.scope-builder-actions\[hidden\]\s*\{[^}]*display:\s*none;/s.test(auditCss)
+) {
+  failures.push("Shared checkout panels must remain visually hidden before scope confirmation.");
+}
+
+if (!auditPage.includes("fetch(url, {")) {
+  failures.push("The $750 audit gate must use the centralized unauthenticated fetch wrapper.");
+}
+
+for (const marker of [
+  '!url.port',
+  '!url.pathname.includes("%")',
+  "repository.archived",
+  "repository.disabled",
+  "repository.default_branch",
+  '.slice(0, 160)',
+  "scope_version=repository-audit-v2",
+  "4-hour review cap",
+  "buildScopeMailto(note)",
+  'confirmedScopeEmail.addEventListener("click", enableCheckout)',
+  'cache: "no-store"',
+  'Accept: "application/vnd.github+json"',
+]) {
+  if (!auditPage.includes(marker)) {
+    failures.push(`The $750 audit evidence gate is missing a strict verifier: ${marker}`);
+  }
+}
+
+for (const marker of [
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "navigator.sendBeacon",
+  "XMLHttpRequest",
   'action="',
   "action={",
 ]) {
@@ -1065,18 +1223,18 @@ for (const marker of [
 const fixPlanAuditCtaCount = (
   fixPlanPage.match(/issues\/new\?template=audit-request\.yml/g) || []
 ).length;
-if (fixPlanAuditCtaCount < 4) {
+if (fixPlanAuditCtaCount < 3) {
   failures.push(
-    `Expected the Fix Plan offer to expose at least four free-audit starts; found ${fixPlanAuditCtaCount}.`,
+    `Expected the Fix Plan offer to preserve at least three optional free-audit starts; found ${fixPlanAuditCtaCount}.`,
   );
 }
 
 const fixPlanScopeCtaCount = (
   fixPlanPage.match(/issues\/new\?template=fix-plan-request\.yml/g) || []
 ).length;
-if (fixPlanScopeCtaCount < 3) {
+if (fixPlanScopeCtaCount !== 0) {
   failures.push(
-    `Expected the Fix Plan offer to preserve at least three audited-buyer scope paths; found ${fixPlanScopeCtaCount}.`,
+    `Expected the self-serve Fix Plan page to remove the audit-gated request path; found ${fixPlanScopeCtaCount}.`,
   );
 }
 
@@ -1128,11 +1286,12 @@ if (!fixPlanPage.includes("fetch(url, {")) {
 for (const marker of [
   '!url.port',
   '!url.pathname.includes("%")',
-  'labels.includes("audit-request")',
-  'startsWith("[Audit request]")',
-  'issueBodySection(issueBody, "Public repository")',
-  "AUTOMATED_REPORT_SENTENCE",
-  '.slice(0, 140)',
+  "repository.archived",
+  "repository.disabled",
+  "repository.default_branch",
+  '.slice(0, 160)',
+  "buildScopeMailto(note)",
+  "confirmedScopeEmail.addEventListener(\"click\", enableCheckout)",
 ]) {
   if (!fixPlanPage.includes(marker)) {
     failures.push(`The Fix Plan evidence gate is missing a strict verifier: ${marker}`);
@@ -1143,6 +1302,10 @@ for (const looseMarker of [
   'combinedTextLower.includes("audit-request")',
   '"Agent-Ready Repository Audit",',
   '.slice(0, 500)',
+  'name="audit-issue"',
+  "AUDIT_REPO_OWNER",
+  "AUTOMATED_REPORT_SENTENCE",
+  "comments?per_page=100",
 ]) {
   if (fixPlanPage.includes(looseMarker)) {
     failures.push(`The Fix Plan evidence gate still contains a loose verifier: ${looseMarker}`);

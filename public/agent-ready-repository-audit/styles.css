@@ -727,6 +727,10 @@ h1 em {
   gap: 0.75rem;
 }
 
+.scope-builder-actions[hidden] {
+  display: none;
+}
+
 .scope-builder-actions button {
   border: 0;
   border-radius: 0;
