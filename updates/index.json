@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-25",
+    "slug": "2026-07-25",
+    "title": "Swarm Daily: Storage Needs an Edge Gate",
+    "url": "/updates/2026-07-25.html",
+    "preview": "Blob WAF rules, private storage, signed URLs, consistent reads, and managed edge detections make object delivery an operator-owned policy boundary."
+  },
+  {
     "date": "2026-07-24",
     "slug": "2026-07-24",
     "title": "Swarm Daily: Rollouts Need a Forensic Trail",

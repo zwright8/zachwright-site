@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Storage Needs an Edge Gate | zachwright.xyz</title>
+  <meta name="description" content="Blob WAF rules, private storage, signed URLs, consistent reads, and managed edge detections make object delivery an operator-owned policy boundary." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Storage Needs an Edge Gate</h1>
+          <p>Blob WAF rules, private storage, signed URLs, consistent reads, and managed edge detections make object delivery an operator-owned policy boundary.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Object storage is becoming a policy surface, not a passive bucket: access mode, identity, cache freshness, and edge enforcement now decide whether a byte should move at all.</strong></p>
+          <p>Vercel Blob can now inherit WAF behavior at the CDN edge, so deny, challenge, rate-limit, and log rules can stop traffic before data transfer without changing blob URLs or application code. Private Blob adds OIDC-authenticated project access and narrow signed URLs, while consistent reads let an operator bypass the CDN when an overwritten report or agent memory file must be current. Cloudflare's WAF updates make the boundary explicit: managed rules can block known exploit shapes, but middleware bypasses, cache confusion, and logic bugs still belong in the origin patch queue.</p>
+          <ul>
+            <li>Vercel WAF for Blob applies deny, challenge, rate-limit, and log rules to blob traffic at the edge, with no code or URL changes.
+            <a href="https://vercel.com/changelog/vercel-waf-for-blob-is-now-in-beta">https://vercel.com/changelog/vercel-waf-for-blob-is-now-in-beta</a></li>
+            <li>Vercel Private Blob is generally available with private stores, short-lived OIDC authentication, and signed URLs scoped to an operation, pathname, and expiry.
+            <a href="https://vercel.com/changelog/vercel-private-blob-is-now-generally-available">https://vercel.com/changelog/vercel-private-blob-is-now-generally-available</a></li>
+            <li>Cloudflare's July WAF release lists which Next.js issues have coverage and which still require application or dependency updates.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-21-waf-release/">https://developers.cloudflare.com/changelog/post/2026-07-21-waf-release/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel WAF for Blob</strong> - protect a store from its settings, use deny for unwanted traffic, rate limits for expensive assets, and browser-only challenges carefully because server-side SDK calls that hit a challenge are blocked.
+            <a href="https://vercel.com/changelog/vercel-waf-for-blob-is-now-in-beta">https://vercel.com/changelog/vercel-waf-for-blob-is-now-in-beta</a></li>
+            <li><strong>Vercel Private Blob</strong> - upload with <code>access: 'private'</code>, use project-scoped OIDC instead of a long-lived token, and mint signed URLs for one operation, pathname, and expiry.
+            <a href="https://vercel.com/changelog/vercel-private-blob-is-now-generally-available">https://vercel.com/changelog/vercel-private-blob-is-now-generally-available</a></li>
+            <li><strong>Consistent private reads</strong> - pass <code>useCache: false</code> to <code>get()</code> or <code>presignUrl()</code> when an overwritten object must reflect the latest write; expect slower reads and origin-transfer cost.
+            <a href="https://vercel.com/changelog/vercel-blob-now-supports-consistent-reads-on-private-storage">https://vercel.com/changelog/vercel-blob-now-supports-consistent-reads-on-private-storage</a></li>
+            <li><strong>Cloudflare WAF release</strong> - review new Next.js, WordPress, ColdFusion, SSRF, LFI, and XSS detections against the origin's current patch status; several Next.js issues cannot be covered at the edge.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-21-waf-release/">https://developers.cloudflare.com/changelog/post/2026-07-21-waf-release/</a></li>
+            <li><strong>Permission Groups migration</strong> - replace persisted Cloudflare role IDs with Permission Group IDs and map the new scopes before the legacy Account Roles response becomes a trap for integrations.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-21-account-role-api-deprecated/">https://developers.cloudflare.com/changelog/post/2026-07-21-account-role-api-deprecated/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Delivery policy is now cross-layer.</strong> ACLs, identity tokens, CDN rules, and cache behavior decide the outcome together; debugging only the application layer misses the real rejection point.</li>
+            <li><strong>“Private” is not one setting.</strong> Operators still choose between public access, signed grants, OIDC authentication, challenge protection, and cache bypass based on the object and the caller.</li>
+            <li><strong>Edge mitigation needs a gap register.</strong> A managed rule that blocks a known exploit does not repair origin logic, stale dependencies, or an unauthenticated path outside the signature engine.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Security</strong> - the firewall is doing its best; the human holding the credentials is still in the threat model.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/security.png">https://imgs.xkcd.com/comics/security.png</a><br>Post: <a href="https://xkcd.com/538/">https://xkcd.com/538/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
