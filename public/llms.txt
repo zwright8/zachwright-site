@@ -14,6 +14,7 @@ AI Agent Cost & Reliability Snapshot scope: https://github.com/wrightops-ai/agen
 AI Agent Cost & Reliability Snapshot terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md
 AI Agent Cost & Reliability normalized run contract: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md
 AI Agent Cost Attribution Checklist: https://zachwright.xyz/ai-agent-cost-attribution-checklist/
+AI Agent Structured-Output Reliability Checklist: https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/
 Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
 Fix Plan service page: https://zachwright.xyz/agent-ready-fix-plan/
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
@@ -83,6 +84,14 @@ No-login repository preflight:
 - Evaluates seven coding-agent readiness evidence categories at one immutable revision.
 - Does not clone or execute repository code and does not send the repository URL to WrightOps.
 - It is a quick operational preflight, not a security, legal, privacy, or compliance assessment.
+
+AI Agent Structured-Output Reliability Checklist:
+- Free public field guide for valid JSON envelopes, closed outcomes, machine-readable termination, schema validation, retry attribution, and evidence coverage.
+- Covers completed, failed, refused, cancelled, timed_out, max_turns, invalid_output, and unknown outcomes.
+- Keeps prompt-free measurement rows separate from prompts, responses, tool payloads, credentials, direct identifiers, and customer data.
+- Links current public demand examples from LangChain deepagents and Extra Chill Homeboy; they are not customers, endorsements, testimonials, or claimed results.
+- A valid structured envelope supports measurement but does not prove factual correctness, causality, savings, or reliability improvement.
+- Canonical guide: https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/
 
 Agent-Ready Repo Fix Plan:
 - New $149 orders are paused while the public intake and PayPal item terms are realigned.

@@ -94,6 +94,15 @@ const costAttributionPage = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-attribution-checklist", "index.html"),
   "utf8",
 );
+const structuredOutputReliabilityPage = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "ai-agent-structured-output-reliability-checklist",
+    "index.html",
+  ),
+  "utf8",
+);
 const costCss = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "styles.css"),
   "utf8",
@@ -298,6 +307,42 @@ const requiredCostAttributionPageMarkers = [
 ];
 
 const forbiddenCostAttributionPageMarkers = [
+  "<form",
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+  "paypal.com",
+  "mailto:",
+];
+
+const requiredStructuredOutputReliabilityPageMarkers = [
+  "<title>AI Agent Structured-Output Reliability Checklist | WrightOps</title>",
+  'href="https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/"',
+  '"@type": "TechArticle"',
+  '"datePublished": "2026-07-24"',
+  "Make the agent outcome machine-readable—or mark it <em>unknown.</em>",
+  "Reliability begins at the output boundary.",
+  "Minimum result contract",
+  "schema_version",
+  "termination_reason",
+  "validation_state",
+  "completed, failed, refused, cancelled, timed_out, max_turns, invalid_output, and unknown",
+  "Keep JSON stdout clean",
+  "Unknown is not completed.",
+  "Missing is null, not zero.",
+  "Teams are asking for machine-readable outcomes.",
+  "not WrightOps",
+  "https://github.com/langchain-ai/deepagents/issues/4612",
+  "https://github.com/Extra-Chill/homeboy/issues/9653",
+  "A valid envelope supports measurement. It does not prove correctness.",
+  "provider-confirmed settled payment",
+  'href="/ai-agent-cost-reliability-snapshot/"',
+];
+
+const forbiddenStructuredOutputReliabilityPageMarkers = [
   "<form",
   "fetch(",
   "XMLHttpRequest",
@@ -887,6 +932,10 @@ const missingCostAttributionPage = missing(
   costAttributionPage,
   requiredCostAttributionPageMarkers,
 );
+const missingStructuredOutputReliabilityPage = missing(
+  structuredOutputReliabilityPage,
+  requiredStructuredOutputReliabilityPageMarkers,
+);
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
 
 if (missingApp.length) {
@@ -1065,6 +1114,18 @@ for (const marker of forbiddenCostAttributionPageMarkers) {
   }
 }
 
+if (missingStructuredOutputReliabilityPage.length) {
+  failures.push(
+    `Structured-output reliability guide is missing: ${missingStructuredOutputReliabilityPage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenStructuredOutputReliabilityPageMarkers) {
+  if (structuredOutputReliabilityPage.includes(marker)) {
+    failures.push(`Structured-output reliability guide must remain read-only: ${marker}`);
+  }
+}
+
 if (missingCostSample.length) {
   failures.push(`Cost sample is missing: ${missingCostSample.join(", ")}`);
 }
@@ -1086,6 +1147,7 @@ for (const marker of forbiddenMarkers) {
     bountyChecklistPage.includes(marker) ||
     costPage.includes(marker) ||
     costAttributionPage.includes(marker) ||
+    structuredOutputReliabilityPage.includes(marker) ||
     costSample.includes(marker)
   ) {
     failures.push(`Forbidden legacy marker remains: ${marker}`);
@@ -1197,6 +1259,24 @@ if (!sitemap.includes(costAttributionUrl)) {
 
 if (!llms.includes(costAttributionUrl)) {
   failures.push("llms.txt is missing the AI-agent cost-attribution checklist.");
+}
+
+const structuredOutputReliabilityUrl =
+  "https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/";
+if (!sitemap.includes(structuredOutputReliabilityUrl)) {
+  failures.push("Sitemap is missing the structured-output reliability checklist.");
+}
+
+if (!llms.includes(structuredOutputReliabilityUrl)) {
+  failures.push("llms.txt is missing the structured-output reliability checklist.");
+}
+
+if (
+  !costPage.includes(
+    'href="/ai-agent-structured-output-reliability-checklist/"',
+  )
+) {
+  failures.push("The $495 snapshot is missing its structured-output checklist path.");
 }
 
 const bountyReviewLandingUrl = "https://zachwright.xyz/bounty-go-no-go-review/";
@@ -1530,6 +1610,7 @@ for (const file of [
   "ai-agent-cost-reliability-snapshot/index.html",
   "ai-agent-cost-reliability-snapshot/styles.css",
   "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
+  "ai-agent-structured-output-reliability-checklist/index.html",
 ]) {
   if (!fs.existsSync(path.join(root, "public", file))) {
     failures.push(`Public asset is missing: ${file}`);
@@ -1590,6 +1671,10 @@ console.log(
       costAttributionPageMarkers: requiredCostAttributionPageMarkers.length,
       costAttributionPageForbiddenMarkers:
         forbiddenCostAttributionPageMarkers.length,
+      structuredOutputReliabilityPageMarkers:
+        requiredStructuredOutputReliabilityPageMarkers.length,
+      structuredOutputReliabilityPageForbiddenMarkers:
+        forbiddenStructuredOutputReliabilityPageMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       singleFileCorrectionSampleMarkers:
         requiredSingleFileCorrectionSampleMarkers.length,
@@ -1598,7 +1683,7 @@ console.log(
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 22,
+      publicAssets: 23,
     },
     null,
     2,

@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta
+      name="description"
+      content="A practical AI-agent structured-output reliability checklist for valid JSON, closed outcomes, machine-readable termination, retries, and evidence coverage."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link
+      rel="canonical"
+      href="https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/"
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="WrightOps" />
+    <meta property="og:title" content="AI Agent Structured-Output Reliability Checklist" />
+    <meta
+      property="og:description"
+      content="Eight evidence gates for valid JSON, explicit outcomes, machine-readable termination, retry attribution, and honest coverage."
+    />
+    <meta
+      property="og:url"
+      content="https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/"
+    />
+    <meta property="og:image" content="https://zachwright.xyz/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="WrightOps — evidence before automation" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AI Agent Structured-Output Reliability Checklist" />
+    <meta
+      name="twitter:description"
+      content="Eight prompt-free evidence gates for reliable machine-readable agent outcomes."
+    />
+    <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
+    <title>AI Agent Structured-Output Reliability Checklist | WrightOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="/agent-ready-repository-audit/styles.css" />
+    <style>
+      .output-hero {
+        background:
+          radial-gradient(circle at 77% 27%, rgba(183, 243, 74, 0.13), transparent 24%),
+          linear-gradient(135deg, var(--midnight) 0%, #060a11 100%);
+      }
+
+      .contract-window { min-width: 0; }
+
+      .contract-lines {
+        display: grid;
+        margin: 0;
+        padding: 1.2rem 1.5rem 1.45rem;
+        gap: 0.7rem;
+        border-top: 1px solid var(--line-dark);
+        border-bottom: 1px solid var(--line-dark);
+        background: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 100% 2.35rem;
+      }
+
+      .contract-lines div {
+        display: grid;
+        min-width: 0;
+        grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1fr);
+        gap: 1rem;
+      }
+
+      .contract-lines dt,
+      .contract-lines dd {
+        margin: 0;
+        font: 0.72rem/1.55 Inter, sans-serif;
+      }
+
+      .contract-lines dt { color: var(--signal); font-weight: 800; }
+      .contract-lines dd { color: #dce3eb; }
+
+      .gate-grid {
+        display: grid;
+        margin-top: clamp(3rem, 6vw, 5rem);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-top: 1px solid var(--line-light);
+        border-left: 1px solid var(--line-light);
+      }
+
+      .gate-grid article {
+        display: grid;
+        min-width: 0;
+        padding: clamp(1.4rem, 3vw, 2.25rem);
+        grid-template-columns: 2.4rem minmax(0, 1fr);
+        gap: 1rem;
+        border-right: 1px solid var(--line-light);
+        border-bottom: 1px solid var(--line-light);
+        background: var(--paper);
+      }
+
+      .gate-grid article > span {
+        color: #6c7888;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+
+      .gate-grid h3 { margin: 0 0 0.7rem; font-size: clamp(1.05rem, 2vw, 1.45rem); }
+      .gate-grid p { margin: 0; color: #536173; font-size: 0.83rem; line-height: 1.7; }
+
+      .outcome-section { background: var(--signal); }
+
+      .outcome-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.72fr) minmax(28rem, 1fr);
+        align-items: start;
+        gap: clamp(3rem, 8vw, 7rem);
+      }
+
+      .outcome-copy h2 {
+        margin: 0;
+        font-size: clamp(2.8rem, 5.7vw, 5.7rem);
+        letter-spacing: -0.065em;
+        line-height: 0.94;
+      }
+
+      .outcome-copy > p:not(.eyebrow) {
+        max-width: 35rem;
+        margin: 1.4rem 0 0;
+        color: #263416;
+        line-height: 1.75;
+      }
+
+      .outcome-table-wrap {
+        min-width: 0;
+        overflow-x: auto;
+        border: 1px solid rgba(11, 18, 32, 0.17);
+        background: var(--paper);
+        box-shadow: 1.2rem 1.2rem 0 rgba(11, 18, 32, 0.12);
+      }
+
+      .outcome-table {
+        width: 100%;
+        min-width: 40rem;
+        border-collapse: collapse;
+      }
+
+      .outcome-table th,
+      .outcome-table td {
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line-light);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .outcome-table tr:last-child td { border-bottom: 0; }
+      .outcome-table th {
+        color: #677487;
+        background: #f3f6f8;
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .outcome-table td { color: #3e4b5c; font-size: 0.76rem; line-height: 1.55; }
+      .outcome-table code { color: var(--midnight); font-weight: 800; }
+
+      .signal-links {
+        display: grid;
+        margin-top: clamp(2.5rem, 5vw, 4rem);
+        gap: 1rem;
+      }
+
+      .signal-links a {
+        display: grid;
+        padding: 1.25rem 1.35rem;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 1rem;
+        border: 1px solid var(--line-dark);
+        color: #fff;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.035);
+      }
+
+      .signal-links a:hover { border-color: var(--signal); }
+      .signal-links strong { display: block; margin-bottom: 0.35rem; font-size: 0.9rem; }
+      .signal-links span { color: #aeb8c6; font-size: 0.73rem; line-height: 1.5; }
+      .signal-links b { color: var(--signal); }
+
+      @media (max-width: 900px) {
+        .outcome-layout { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 700px) {
+        .gate-grid { grid-template-columns: 1fr; }
+        .contract-lines div { grid-template-columns: 1fr; gap: 0.15rem; }
+      }
+    </style>
+    <link
+      rel="icon"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="8" fill="%23b7f34a"/><text x="50%25" y="53%25" dominant-baseline="middle" text-anchor="middle" fill="%230b1220" font-family="Georgia,serif" font-style="italic" font-size="38">W</text></svg>'
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "AI Agent Structured-Output Reliability Checklist",
+        "description": "A practical checklist for valid JSON, closed outcomes, machine-readable termination, retries, and structured-output evidence coverage in AI-agent workflows.",
+        "datePublished": "2026-07-24",
+        "dateModified": "2026-07-24",
+        "mainEntityOfPage": "https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/",
+        "author": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "WrightOps",
+          "url": "https://zachwright.xyz/"
+        },
+        "about": [
+          "AI agent structured output",
+          "AI agent reliability",
+          "machine-readable agent outcomes",
+          "JSON schema validation",
+          "AI agent retries"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+      <nav aria-label="Primary navigation" class="nav-shell">
+        <a aria-label="WrightOps home" class="brand" href="/">
+          <span class="brand-mark">W</span>
+          <span><strong>WrightOps</strong><small>Evidence before automation</small></span>
+        </a>
+        <div class="nav-links">
+          <a href="#gates">Eight gates</a>
+          <a href="#outcomes">Outcome contract</a>
+          <a href="#signals">Public signals</a>
+        </div>
+        <a class="button button-small" href="/ai-agent-cost-reliability-snapshot/">
+          See the $495 snapshot <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <article>
+        <section class="audit-hero output-hero">
+          <div class="hero-grid" aria-hidden="true"></div>
+          <div class="page-shell hero-layout">
+            <div class="audit-hero-copy">
+              <a class="back-link" href="/">← WrightOps field guides</a>
+              <p class="eyebrow">Free field guide · prompt-free evidence</p>
+              <h1>Make the agent outcome machine-readable—or mark it <em>unknown.</em></h1>
+              <p class="hero-lede">
+                A process exit and a text reply are not enough for downstream
+                automation. Use these eight gates to distinguish valid completion,
+                failure, timeout, max-turn termination, refusal, and invalid output.
+              </p>
+              <div class="hero-actions">
+                <a class="button" href="#gates">
+                  Inspect the eight gates <span aria-hidden="true">↓</span>
+                </a>
+                <a class="text-link light" href="/ai-agent-cost-reliability-snapshot/">
+                  See the fixed $495 snapshot <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <p class="hero-terms">
+                Operational information only · No prompts, responses, tool payloads,
+                or production access required
+              </p>
+            </div>
+
+            <figure class="evidence-window contract-window">
+              <figcaption>
+                <span>Minimum result envelope</span>
+                <span class="window-status">schema_v1</span>
+              </figcaption>
+              <div class="window-score">
+                <span>Evidence layers</span>
+                <strong>4<span>/4</span></strong>
+              </div>
+              <dl class="contract-lines">
+                <div><dt>schema_version</dt><dd>pin the contract that was requested</dd></div>
+                <div><dt>outcome</dt><dd>use one closed machine-readable status</dd></div>
+                <div><dt>termination_reason</dt><dd>separate timeout, max-turn, and cancellation</dd></div>
+                <div><dt>validation_state</dt><dd>report valid, invalid, or not observed</dd></div>
+              </dl>
+              <p class="window-revision">
+                rule <code>requested → observed → validated → attributed</code>
+              </p>
+              <a class="window-link" href="#outcomes">
+                See the outcome contract <span aria-hidden="true">↓</span>
+              </a>
+            </figure>
+          </div>
+        </section>
+
+        <section class="summary-strip" aria-label="Structured-output summary">
+          <div class="page-shell summary-grid">
+            <div><span>Contract</span><strong>Versioned schema</strong></div>
+            <div><span>Outcome</span><strong>Closed vocabulary</strong></div>
+            <div><span>Failure</span><strong>Machine-readable</strong></div>
+            <div><span>Truth rule</span><strong>Unknown ≠ success</strong></div>
+          </div>
+        </section>
+
+        <section class="content-section" id="gates">
+          <div class="page-shell">
+            <div class="section-intro">
+              <p class="eyebrow">Eight evidence gates</p>
+              <h2>Reliability begins at the output boundary.</h2>
+              <p>
+                Passing these gates does not prove that an agent is correct. It
+                makes completion, termination, validation, and retry evidence
+                explicit enough to measure without scraping terminal prose.
+              </p>
+            </div>
+
+            <div class="gate-grid">
+              <article><span>01</span><div><h3>Version one result envelope</h3><p>Pin the schema requested for every attempt instead of letting each caller infer a shape.</p></div></article>
+              <article><span>02</span><div><h3>Keep JSON stdout clean</h3><p>When structured output is requested, send progress and terminal decoration elsewhere.</p></div></article>
+              <article><span>03</span><div><h3>Close the outcome vocabulary</h3><p>Use completed, failed, refused, cancelled, timed_out, max_turns, invalid_output, and unknown.</p></div></article>
+              <article><span>04</span><div><h3>Separate exit from outcome</h3><p>Preserve process exit code without treating a zero exit as proof of a valid agent result.</p></div></article>
+              <article><span>05</span><div><h3>Make termination explicit</h3><p>Expose timeout, max-turn, cancellation, and external-stop evidence in the envelope.</p></div></article>
+              <article><span>06</span><div><h3>Validate before accepting</h3><p>Record schema validation state and a bounded error class; never repair silently.</p></div></article>
+              <article><span>07</span><div><h3>Attribute every retry</h3><p>Keep attempt number and prior-attempt relationship so first-pass reliability stays measurable.</p></div></article>
+              <article><span>08</span><div><h3>Publish evidence coverage</h3><p>Report the share of attempts with known outcome, termination, validation, latency, and cost evidence.</p></div></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section outcome-section" id="outcomes">
+          <div class="page-shell outcome-layout">
+            <div class="outcome-copy">
+              <p class="eyebrow">Minimum result contract</p>
+              <h2>Keep status, termination, and validation separate.</h2>
+              <p>
+                This is a field map, not a universal schema. Keys can remain
+                pseudonymous. Prompts, responses, tool payloads, credentials,
+                direct identifiers, and customer data do not belong in the
+                prompt-free measurement row.
+              </p>
+            </div>
+
+            <div class="outcome-table-wrap" role="region" aria-label="Minimum structured-output result contract" tabindex="0">
+              <table class="outcome-table">
+                <thead><tr><th>Field</th><th>Purpose</th><th>Truth rule</th></tr></thead>
+                <tbody>
+                  <tr><td><code>schema_version</code></td><td>Identify the requested result contract.</td><td>Pin it per attempt.</td></tr>
+                  <tr><td><code>run_key</code>, <code>attempt_no</code></td><td>Attribute one observed execution and its retries.</td><td>Pseudonymous and stable.</td></tr>
+                  <tr><td><code>outcome</code></td><td>State the closed machine-readable result.</td><td>Unknown is not completed.</td></tr>
+                  <tr><td><code>termination_reason</code></td><td>Distinguish timeout, max-turn, cancellation, and external stop.</td><td>Null only when not applicable.</td></tr>
+                  <tr><td><code>validation_state</code></td><td>Report whether the observed envelope matched the requested schema.</td><td>Invalid is preserved, not repaired.</td></tr>
+                  <tr><td><code>error_class</code></td><td>Group failures without storing sensitive payloads.</td><td>Bounded vocabulary; no stack trace required.</td></tr>
+                  <tr><td><code>latency_ms</code>, <code>cost</code></td><td>Compare supplied runtime and spend evidence with outcomes.</td><td>Missing is null, not zero.</td></tr>
+                  <tr><td><code>observed_at</code></td><td>Support bounded windows and contract changes.</td><td>Use one documented timezone.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="evidence-section" id="signals">
+          <div class="page-shell evidence-layout">
+            <aside class="evidence-rail">
+              <p class="eyebrow">Current public demand signals</p>
+              <h2>Teams are asking for machine-readable outcomes.</h2>
+              <p>
+                These public third-party issues are examples—not WrightOps
+                customers, endorsements, or claimed results. They show why a
+                structured-output contract and retry evidence matter.
+              </p>
+              <a class="text-link light" href="/ai-agent-cost-reliability-snapshot/">
+                See the $495 fixed-scope snapshot <span aria-hidden="true">↗</span>
+              </a>
+            </aside>
+
+            <div class="signal-links">
+              <a href="https://github.com/langchain-ai/deepagents/issues/4612" rel="noopener noreferrer">
+                <span><strong>Headless JSON result contract</strong>LangChain deepagents issue #4612 asks for valid JSON, final response, process outcome, timeout, max-turn, and structured failure information.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a href="https://github.com/Extra-Chill/homeboy/issues/9653" rel="noopener noreferrer">
+                <span><strong>Missing structured result triggered another execution</strong>Extra Chill Homeboy issue #9653 documents successful executions whose normalized outcomes omitted required output, adding retry, latency, and cost uncertainty.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="boundary-section" id="boundaries">
+          <div class="page-shell boundary-layout">
+            <div>
+              <p class="eyebrow">Evidence boundaries</p>
+              <h2>A valid envelope supports measurement. It does not prove correctness.</h2>
+            </div>
+            <div class="boundary-columns">
+              <div>
+                <h3>It can support</h3>
+                <ul>
+                  <li>Structured completion and failure counts</li>
+                  <li>First-pass and retry rates</li>
+                  <li>Timeout and max-turn attribution</li>
+                  <li>Schema-valid output coverage</li>
+                  <li>Latency and cost by supplied outcome</li>
+                </ul>
+              </div>
+              <div>
+                <h3>It cannot prove</h3>
+                <ul>
+                  <li>That the agent response is factually correct</li>
+                  <li>That a zero process exit means completed work</li>
+                  <li>That missing output or cost was zero</li>
+                  <li>That a retry caused an improved business result</li>
+                  <li>Any guaranteed reliability or savings improvement</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="final-cta">
+          <div class="page-shell final-layout">
+            <div>
+              <p class="eyebrow">One workflow, one decision</p>
+              <h2>Need the prompt-free baseline before implementation?</h2>
+              <p>
+                The WrightOps AI Agent Cost &amp; Reliability Snapshot turns up
+                to 50 normalized attempts into deterministic aggregate JSON and
+                Markdown, evidence gaps, and up to five human-reviewed priorities.
+              </p>
+            </div>
+            <div class="final-actions">
+              <a class="button" href="/ai-agent-cost-reliability-snapshot/">
+                Inspect the $495 scope <span aria-hidden="true">↗</span>
+              </a>
+              <p>
+                Three business days after accepted inputs and
+                provider-confirmed settled payment. No implementation,
+                production access, or outcome guarantee.
+              </p>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell footer-layout">
+        <div class="brand footer-brand">
+          <span class="brand-mark">W</span>
+          <span><strong>WrightOps</strong><small>Evidence before automation</small></span>
+        </div>
+        <p>AI-operated on behalf of Zachary Wright, the accountable human owner.</p>
+        <a href="/ai-agent-cost-reliability-snapshot/">
+          Inspect the $495 snapshot <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
