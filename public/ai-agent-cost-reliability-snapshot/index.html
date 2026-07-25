@@ -94,6 +94,7 @@
           </span>
         </a>
         <div class="nav-links">
+          <a href="#calculator">Estimate</a>
           <a href="#proof">Proof</a>
           <a href="#delivery">Delivery</a>
           <a href="#boundaries">Boundaries</a>
@@ -193,6 +194,134 @@
           <div><span>Input ceiling</span><strong>50 attempts</strong></div>
           <div><span>Outputs</span><strong>JSON + Markdown</strong></div>
           <div><span>Readout</span><strong>30 minutes</strong></div>
+        </div>
+      </section>
+
+      <section class="calculator-section" id="calculator">
+        <div class="page-shell calculator-layout">
+          <div class="calculator-intro">
+            <p class="eyebrow">Browser-local estimator</p>
+            <h2>Put a monthly range around retry and failure cost.</h2>
+            <p>
+              Use directional aggregates to decide whether the evidence gap is
+              worth measuring. Calculator inputs are not submitted, stored, or
+              transmitted by this tool.
+              The two cost signals can overlap, so they are never added together.
+            </p>
+            <details>
+              <summary>Read the formulas and limits</summary>
+              <p>
+                Monthly workflow starts = weekly starts × 4.33. Retry overhead =
+                monthly starts × (average attempts − 1) × average attempt cost.
+                Failed-task spend = monthly starts × failure rate × average
+                attempts × average attempt cost. These are planning estimates,
+                not billing evidence, causal findings, or promised savings.
+              </p>
+            </details>
+          </div>
+
+          <div class="calculator-card">
+            <form
+              id="cost-estimator"
+              aria-describedby="calculator-note"
+              novalidate
+            >
+              <div class="calculator-fields">
+                <label>
+                  <span>Workflow starts / week</span>
+                  <input
+                    id="weekly-starts"
+                    name="weekly-starts"
+                    type="number"
+                    min="0"
+                    max="10000000"
+                    step="1"
+                    value="100"
+                    inputmode="decimal"
+                    required
+                  />
+                </label>
+                <label>
+                  <span>Average cost / attempt</span>
+                  <span class="input-prefix">
+                    <span aria-hidden="true">$</span>
+                    <input
+                      id="attempt-cost"
+                      name="attempt-cost"
+                      type="number"
+                      min="0"
+                      max="1000000"
+                      step="0.01"
+                      value="0.50"
+                      inputmode="decimal"
+                      required
+                    />
+                  </span>
+                </label>
+                <label>
+                  <span>Average attempts / task</span>
+                  <input
+                    id="average-attempts"
+                    name="average-attempts"
+                    type="number"
+                    min="1"
+                    max="100"
+                    step="0.01"
+                    value="1.25"
+                    inputmode="decimal"
+                    required
+                  />
+                </label>
+                <label>
+                  <span>Failed tasks</span>
+                  <span class="input-suffix">
+                    <input
+                      id="failure-rate"
+                      name="failure-rate"
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                      value="10"
+                      inputmode="decimal"
+                      required
+                    />
+                    <span aria-hidden="true">%</span>
+                  </span>
+                </label>
+              </div>
+
+              <div class="calculator-results" aria-live="polite">
+                <div>
+                  <span>Estimated monthly attempt spend</span>
+                  <strong id="monthly-spend">$270.63</strong>
+                </div>
+                <div>
+                  <span>Estimated monthly retry overhead</span>
+                  <strong id="retry-overhead">$54.13</strong>
+                </div>
+                <div>
+                  <span>Estimated failed-task spend</span>
+                  <strong id="failed-task-spend">$27.06</strong>
+                </div>
+                <div class="calculator-decision">
+                  <span>$495 fee / larger monthly cost signal</span>
+                  <strong id="fee-equivalent">9.1 months</strong>
+                </div>
+              </div>
+
+              <p class="calculator-note" id="calculator-note">
+                Directional estimate only. Retry and failed-task figures may
+                overlap and are not combined.
+              </p>
+              <a
+                class="button calculator-cta"
+                href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml"
+              >
+                Turn the estimate into evidence <span aria-hidden="true">↗</span>
+              </a>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -360,5 +489,6 @@
         <a href="/">All WrightOps services <span aria-hidden="true">↗</span></a>
       </div>
     </footer>
+    <script src="./calculator.js" defer></script>
   </body>
 </html>

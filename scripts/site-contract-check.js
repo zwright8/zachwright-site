@@ -107,6 +107,15 @@ const costCss = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "styles.css"),
   "utf8",
 );
+const costCalculator = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "ai-agent-cost-reliability-snapshot",
+    "calculator.js",
+  ),
+  "utf8",
+);
 const costSample = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "synthetic-sample.md"),
   "utf8",
@@ -280,6 +289,42 @@ const requiredCostPageMarkers = [
   "Savings, reliability, revenue, or profit guarantees",
   "mailto:zach@zachwright.xyz?subject=WrightOps%20%24495%20cost%20reliability%20scope%20request",
   "Email scope without GitHub",
+  'id="calculator"',
+  'id="cost-estimator"',
+  "Put a monthly range around retry and failure cost.",
+  "Calculator inputs are not submitted, stored, or",
+  "transmitted by this tool.",
+  "The two cost signals can overlap, so they are never added together.",
+  'id="weekly-starts"',
+  'id="attempt-cost"',
+  'id="average-attempts"',
+  'id="failure-rate"',
+  'id="monthly-spend"',
+  'id="retry-overhead"',
+  'id="failed-task-spend"',
+  'id="fee-equivalent"',
+  "Turn the estimate into evidence",
+  '<script src="./calculator.js" defer></script>',
+];
+
+const requiredCostCalculatorMarkers = [
+  "weeklyStarts * 4.33",
+  "Math.max(averageAttempts - 1, 0)",
+  "monthlyStarts * failureRate * averageAttempts * attemptCost",
+  "Math.max(retryOverhead, failedTaskSpend)",
+  "Retry and failed-task figures may overlap and are not combined.",
+  "A paid snapshot is unlikely to fit this decision.",
+  'outputs.feeEquivalent.textContent = "Complete inputs"',
+  "Enter four values within the displayed limits",
+];
+
+const forbiddenCostCalculatorMarkers = [
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
 ];
 
 const requiredCostAttributionPageMarkers = [
@@ -928,6 +973,10 @@ const missingBountyChecklistPage = missing(
   requiredBountyChecklistMarkers,
 );
 const missingCostPage = missing(costPage, requiredCostPageMarkers);
+const missingCostCalculator = missing(
+  costCalculator,
+  requiredCostCalculatorMarkers,
+);
 const missingCostAttributionPage = missing(
   costAttributionPage,
   requiredCostAttributionPageMarkers,
@@ -1100,6 +1149,18 @@ for (const marker of forbiddenBountyChecklistMarkers) {
 
 if (missingCostPage.length) {
   failures.push(`Cost page is missing: ${missingCostPage.join(", ")}`);
+}
+
+if (missingCostCalculator.length) {
+  failures.push(
+    `Cost calculator is missing: ${missingCostCalculator.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenCostCalculatorMarkers) {
+  if (costCalculator.includes(marker)) {
+    failures.push(`Cost calculator must remain browser-local: ${marker}`);
+  }
 }
 
 if (missingCostAttributionPage.length) {
@@ -1668,6 +1729,8 @@ console.log(
       bountyChecklistMarkers: requiredBountyChecklistMarkers.length,
       bountyChecklistForbiddenMarkers: forbiddenBountyChecklistMarkers.length,
       costPageMarkers: requiredCostPageMarkers.length,
+      costCalculatorMarkers: requiredCostCalculatorMarkers.length,
+      costCalculatorForbiddenMarkers: forbiddenCostCalculatorMarkers.length,
       costAttributionPageMarkers: requiredCostAttributionPageMarkers.length,
       costAttributionPageForbiddenMarkers:
         forbiddenCostAttributionPageMarkers.length,
@@ -1683,7 +1746,7 @@ console.log(
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 23,
+      publicAssets: 24,
     },
     null,
     2,
