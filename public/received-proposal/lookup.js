@@ -3,14 +3,6 @@
 
   const proposals = [
     {
-      issue: "https://github.com/Liatrio-Labs/claude-code-gauntlet/issues/37",
-      label: "Liatrio Labs / claude-code-gauntlet #37",
-      offer: "Agent-Ready Repository Audit",
-      price: "$750 USD",
-      offerUrl: "/agent-ready-repository-audit/",
-      scopeUrl: "/agent-ready-repository-audit/#scope-builder",
-    },
-    {
       issue: "https://github.com/RESOStandards/reso-tools/issues/240",
       label: "RESOStandards / reso-tools #240",
       offer: "Agent-Ready Repository Audit",
@@ -29,15 +21,6 @@
     {
       issue: "https://github.com/Extra-Chill/homeboy/issues/9653",
       label: "Extra-Chill / homeboy #9653",
-      offer: "AI Agent Cost & Reliability Snapshot",
-      price: "$495 USD",
-      offerUrl: "/ai-agent-cost-reliability-snapshot/",
-      scopeUrl:
-        "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
-    },
-    {
-      issue: "https://github.com/momentiq-ai/cerebe/issues/58",
-      label: "Momentiq AI / cerebe #58",
       offer: "AI Agent Cost & Reliability Snapshot",
       price: "$495 USD",
       offerUrl: "/ai-agent-cost-reliability-snapshot/",
@@ -105,6 +88,20 @@
 
   const normalizeKnownIssue = (issue) => issue.toLowerCase();
 
+  const isSelfServeAudit = (proposal) =>
+    proposal.offerUrl === "/agent-ready-repository-audit/";
+
+  const buildScopeUrl = (proposal) => {
+    if (!isSelfServeAudit(proposal)) return proposal.scopeUrl;
+    const issueUrl = new URL(proposal.issue);
+    const [owner, repository] = issueUrl.pathname.split("/").filter(Boolean);
+    const parameters = new URLSearchParams({
+      repository: `https://github.com/${owner}/${repository}`,
+      pain: `Prioritize the agent-readiness gap documented in ${proposal.issue}.`,
+    });
+    return `${proposal.offerUrl}?${parameters.toString()}#scope-builder`;
+  };
+
   const buildAcceptanceBrief = (proposal) =>
     [
       "WrightOps proposal — request for written scope confirmation",
@@ -123,7 +120,9 @@
       "",
       "I understand this is a non-binding request for written scope confirmation. It is not authorization to start work and creates no payment obligation.",
       "",
-      "Please confirm the exact scope, exclusions, delivery timing, and correct private PayPal Business Goods & Services checkout through the existing business reply channel.",
+      isSelfServeAudit(proposal)
+        ? "Open the listed public scope route to review and confirm the fixed terms, verify the public repository revision, retain the generated reference, and reveal the authorized PayPal Business checkout. No private pre-sale reply is required."
+        : "Please confirm the exact scope, exclusions, delivery timing, and correct private PayPal Business Goods & Services checkout through the existing business reply channel.",
       "",
       "Do not include credentials, payment details, private files, personal data, customer data, production access, security work, regulated work, or professional-advice requests.",
     ].join("\n");
@@ -181,7 +180,7 @@
     issueLink.textContent = proposal.issue;
     offer.textContent = proposal.offer;
     price.textContent = proposal.price;
-    scopeLink.href = proposal.scopeUrl;
+    scopeLink.href = buildScopeUrl(proposal);
     offerLink.href = proposal.offerUrl;
     acceptanceBrief.value = buildAcceptanceBrief(proposal);
     acceptanceState.textContent = "ready_to_copy";

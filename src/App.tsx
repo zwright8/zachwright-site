@@ -62,10 +62,10 @@ const preflightCheckLabels = [
 
 const engagementOptions = [
   {
-    eyebrow: "New orders paused",
+    eyebrow: "Audit-gated self-serve",
     title: "Agent-Ready Repo Fix Plan",
     price: "$149",
-    timing: "Checkout and intake terms are being realigned",
+    timing: "1 business day after settled payment and complete public inputs",
     description:
       "Three prioritized fix cards for one public repository, each pinned to evidence and written so a maintainer or coding agent can execute it.",
     bullets: [
@@ -75,9 +75,9 @@ const engagementOptions = [
       "Executable acceptance check",
     ],
     intakeNote:
-      "No automated checkout is available. The existing PayPal item requires a completed WrightOps free audit and written confirmation, so WrightOps has paused new Fix Plan orders until the public intake and payment terms match.",
-    primaryLabel: "Read the paused-offer notice",
-    primaryHref: FIX_PLAN_LANDING_URL,
+      "Checkout appears only after the browser-local gate verifies a completed WrightOps free audit, the current immutable public revision, requester authority, fixed scope, ordinary-software boundaries, and settlement/refund acknowledgements. A successful check is WrightOps' automated written fit confirmation.",
+    primaryLabel: "Confirm the $149 fixed scope",
+    primaryHref: `${FIX_PLAN_LANDING_URL}#scope-builder`,
     secondaryLabel: "Inspect the complete sample",
     secondaryHref: FIX_PLAN_SAMPLE_URL,
     featured: false,
@@ -233,7 +233,7 @@ const faqs = [
   {
     question: "When should I use the $149 Fix Plan?",
     answer:
-      "New Fix Plan orders are paused while WrightOps realigns the public intake with the PayPal item terms. The complete sample remains available, and the $750 repository audit is the active self-serve paid path.",
+      "Use it after completing the WrightOps free audit when you need exactly three evidence-linked fix cards for one public repository, without implementation or repository changes. Checkout appears only after the audit-gated fit check succeeds.",
   },
   {
     question: "Do I pay before scope is confirmed?",
@@ -415,8 +415,11 @@ function Hero() {
 
           <p className="hero-starter-prompt">
             Need the three-card Fix Plan?{" "}
-            <a className="hero-starter-link" href={FIX_PLAN_LANDING_URL}>
-              Read the new-order pause notice <Arrow />
+            <a
+              className="hero-starter-link"
+              href={`${FIX_PLAN_LANDING_URL}#scope-builder`}
+            >
+              Confirm the audit-gated $149 scope <Arrow />
             </a>
           </p>
 
@@ -923,7 +926,7 @@ function Offers() {
               Buy the smallest useful <span>next step.</span>
             </>
           }
-          text="Every paid engagement begins with confirmed scope and public evidence. The $750 repository audit is the active self-serve paid path; new $149 Fix Plan orders are paused while its intake and payment terms are realigned."
+          text="Every paid engagement begins with confirmed scope and public evidence. The $149 Fix Plan requires a completed WrightOps free audit and automated written fit confirmation; the $750 repository audit has its own fixed-scope confirmation path."
         />
 
         <div className="offer-grid">

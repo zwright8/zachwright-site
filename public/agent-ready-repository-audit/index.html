@@ -802,6 +802,40 @@
           };
         };
 
+        const loadScopePrefill = () => {
+          const parameters = new URLSearchParams(window.location.search);
+          const requestedRepository = parameters.get("repository");
+          const requestedPain = parameters.get("pain");
+          const loadedFields = [];
+
+          if (requestedRepository && !repositoryInput.value) {
+            try {
+              const repository = parseCanonicalRepositoryUrl(requestedRepository);
+              repositoryInput.value = repository.canonicalUrl;
+              loadedFields.push("repository");
+            } catch {
+              // Ignore malformed or non-canonical prefill values.
+            }
+          }
+
+          if (requestedPain && !painInput.value) {
+            const boundedPain = requestedPain
+              .replace(/[\u0000-\u001f\u007f]/g, " ")
+              .replace(/\s+/g, " ")
+              .trim()
+              .slice(0, 500);
+            if (boundedPain) {
+              painInput.value = boundedPain;
+              loadedFields.push("priority");
+            }
+          }
+
+          if (loadedFields.length) {
+            status.textContent =
+              `Proposal context loaded (${loadedFields.join(" and ")}). Review every field and acknowledgement, then confirm the fixed scope. Checkout remains unavailable.`;
+          }
+        };
+
         const apiUrl = (path) => `${API_BASE}${path}`;
 
         const fetchGitHubJson = async (url) => {
@@ -970,6 +1004,7 @@
           control.addEventListener("input", revokeConfirmedScope);
           control.addEventListener("change", revokeConfirmedScope);
         }
+        loadScopePrefill();
       })();
     </script>
   </body>

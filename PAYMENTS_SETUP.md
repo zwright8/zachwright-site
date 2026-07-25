@@ -1,4 +1,11 @@
-# Stripe Payment Setup — Production Checklist (AI Operator Kit)
+# Stripe Payment Setup — Retired AI Operator Kit
+
+> The AI Operator Kit is retired and is not accepting new purchases.
+> `/api/payments/config` must return HTTP 410 with no payment links. The
+> remaining webhook and fulfillment notes are retained only for reconciling a
+> provider-confirmed historical or unexpected payment. Do not reactivate a
+> Stripe checkout, payment link, or alternate receipt path without the
+> WrightOps owner-confirmation and operating-record controls.
 
 This site uses **Stripe Payment Links** with **automatic fulfillment hooks**:
 
@@ -186,9 +193,9 @@ When you update deliverables in `zw-business-assets`, sync the corresponding fil
 
 ## 10) Verification checklist (before announcing)
 
-- [ ] `/api/payments/config` returns all 3 live links.
-- [ ] `/products/ai-operator-kit/` main CTA opens Lite checkout.
-- [ ] Pro and Agency buttons open the correct checkout links.
+- [ ] `/api/payments/config` returns HTTP 410 and no payment links.
+- [ ] `/products/ai-operator-kit/` remains the retired moved page.
+- [ ] No current WrightOps page advertises a Stripe checkout.
 - [ ] `checkout.session.completed` reaches `/api/payments/webhook` and returns 200.
 - [ ] Fulfillment record is created in `payment_fulfillments`.
 - [ ] Customer receives fulfillment email with bundle links.
