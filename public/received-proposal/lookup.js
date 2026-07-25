@@ -8,8 +8,7 @@
       offer: "Agent-Ready Repository Audit",
       price: "$750 USD",
       offerUrl: "/agent-ready-repository-audit/",
-      scopeUrl:
-        "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+      scopeUrl: "/agent-ready-repository-audit/#scope-builder",
     },
     {
       issue: "https://github.com/RESOStandards/reso-tools/issues/240",
@@ -17,8 +16,7 @@
       offer: "Agent-Ready Repository Audit",
       price: "$750 USD",
       offerUrl: "/agent-ready-repository-audit/",
-      scopeUrl:
-        "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+      scopeUrl: "/agent-ready-repository-audit/#scope-builder",
     },
     {
       issue: "https://github.com/AIClarityAU/minspec/issues/889",
@@ -26,8 +24,7 @@
       offer: "Agent-Ready Repository Audit",
       price: "$750 USD",
       offerUrl: "/agent-ready-repository-audit/",
-      scopeUrl:
-        "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=human-audit-scope-request.yml",
+      scopeUrl: "/agent-ready-repository-audit/#scope-builder",
     },
     {
       issue: "https://github.com/Extra-Chill/homeboy/issues/9653",

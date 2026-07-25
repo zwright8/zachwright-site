@@ -593,6 +593,7 @@ const requiredProposalLookupMarkers = [
   'price: "$750 USD"',
   'price: "$495 USD"',
   'price: "$149 USD"',
+  'scopeUrl: "/agent-ready-repository-audit/#scope-builder"',
   "normalizeIssueUrl",
   "not in the current WrightOps proposal register",
   "buildAcceptanceBrief",
@@ -1344,6 +1345,78 @@ if (missingProposalLookup.length) {
   failures.push(
     `Proposal verification lookup is missing: ${missingProposalLookup.join(", ")}`,
   );
+}
+
+const auditProposalScopeBuilderCount =
+  proposalLookup.match(
+    /scopeUrl: "\/agent-ready-repository-audit\/#scope-builder"/g,
+  )?.length || 0;
+if (auditProposalScopeBuilderCount !== 3) {
+  failures.push(
+    `Expected exactly three $750 proposal routes to use the self-serve audit scope builder; found ${auditProposalScopeBuilderCount}.`,
+  );
+}
+
+const expectedProposalRoutes = [
+  {
+    issue: "https://github.com/Liatrio-Labs/claude-code-gauntlet/issues/37",
+    price: "$750 USD",
+    scopeUrl: "/agent-ready-repository-audit/#scope-builder",
+  },
+  {
+    issue: "https://github.com/RESOStandards/reso-tools/issues/240",
+    price: "$750 USD",
+    scopeUrl: "/agent-ready-repository-audit/#scope-builder",
+  },
+  {
+    issue: "https://github.com/AIClarityAU/minspec/issues/889",
+    price: "$750 USD",
+    scopeUrl: "/agent-ready-repository-audit/#scope-builder",
+  },
+  {
+    issue: "https://github.com/Extra-Chill/homeboy/issues/9653",
+    price: "$495 USD",
+    scopeUrl:
+      "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+  },
+  {
+    issue: "https://github.com/momentiq-ai/cerebe/issues/58",
+    price: "$495 USD",
+    scopeUrl:
+      "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+  },
+  {
+    issue: "https://github.com/BasedHardware/omi/issues/10338",
+    price: "$495 USD",
+    scopeUrl:
+      "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+  },
+  {
+    issue: "https://github.com/DYB-Development/event_engine/issues/235",
+    price: "$149 USD",
+    scopeUrl: "/single-file-agent-instructions-correction/#scope-builder",
+  },
+];
+
+for (const expected of expectedProposalRoutes) {
+  const issueMarker = `issue: "${expected.issue}",`;
+  const issueCount = proposalLookup.split(issueMarker).length - 1;
+  const recordStart = proposalLookup.indexOf(issueMarker);
+  const recordEnd = proposalLookup.indexOf("\n    },", recordStart);
+  const record =
+    recordStart >= 0 && recordEnd > recordStart
+      ? proposalLookup.slice(recordStart, recordEnd)
+      : "";
+  const normalizedRecord = record.replace(/\s+/g, " ");
+  if (
+    issueCount !== 1 ||
+    !normalizedRecord.includes(`price: "${expected.price}"`) ||
+    !normalizedRecord.includes(`scopeUrl: "${expected.scopeUrl}"`)
+  ) {
+    failures.push(
+      `Proposal route contract mismatch for ${expected.issue}: expected ${expected.price} via ${expected.scopeUrl}.`,
+    );
+  }
 }
 
 for (const marker of forbiddenProposalLookupMarkers) {
