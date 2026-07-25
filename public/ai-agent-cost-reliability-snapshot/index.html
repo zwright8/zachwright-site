@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A $495 prompt-free snapshot and free browser-local reconciliation checker for AI-agent workflows with conflicting cost estimates, retries, trace gaps, or missing evidence."
+      content="A $495 prompt-free snapshot and free reconciliation tools for AI-agent workflows, including Amazon Bedrock per-user, per-application, and per-request cost-attribution decisions."
     />
     <meta
       name="robots"
@@ -24,7 +24,7 @@
     />
     <meta
       property="og:description"
-      content="Measure parent-child trace continuity, timeout, completion, retry, latency, and cost evidence for one long-running agent workflow—without sending prompts, responses, or direct identifiers."
+      content="Test whether one AI-agent workflow has the evidence grain needed for a cost decision, including Amazon Bedrock IAM principal, application-profile, and request-metadata paths."
     />
     <meta
       property="og:url"
@@ -41,7 +41,7 @@
     />
     <meta
       name="twitter:description"
-      content="A fixed-scope, prompt-free aggregate review of one AI-agent workflow."
+      content="A fixed-scope, prompt-free aggregate review for one AI-agent cost or reliability decision, including Amazon Bedrock attribution paths."
     />
     <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
     <title>AI Agent Cost & Reliability Snapshot | WrightOps</title>
@@ -63,7 +63,7 @@
         "@type": "Service",
         "name": "AI Agent Cost & Reliability Snapshot",
         "url": "https://zachwright.xyz/ai-agent-cost-reliability-snapshot/",
-        "description": "A fixed-scope, prompt-free aggregate cost and reliability snapshot for one long-running AI-agent workflow with parent-child trace, timeout, dropped-reply, retry, latency, or evidence uncertainty.",
+        "description": "A fixed-scope, prompt-free aggregate cost and reliability snapshot for one long-running AI-agent workflow, including Amazon Bedrock per-user, per-application, and per-request cost-attribution decisions.",
         "provider": {
           "@type": "ProfessionalService",
           "name": "WrightOps",
@@ -124,8 +124,9 @@
             <p class="hero-lede">
               A fixed-scope aggregate snapshot for long-running agent workflows
               with parent-child trace, timeout, completion, retry, latency, or
-              conflicting cost evidence—without prompts, responses, tool
-              payloads, or direct identifiers.
+              conflicting cost evidence—including Amazon Bedrock attribution
+              paths—without prompts, responses, tool payloads, or direct
+              identifiers.
             </p>
             <div class="hero-fit" aria-label="Common workflow symptoms">
               <span>Hard timeouts &amp; dropped replies</span>
@@ -462,6 +463,65 @@
               </a>
             </form>
           </div>
+        </div>
+      </section>
+
+      <section class="evidence-section" id="bedrock-attribution">
+        <div class="page-shell delivery-layout">
+          <div>
+            <p class="eyebrow">Amazon Bedrock attribution fit</p>
+            <h2>Match the cost question to the evidence grain.</h2>
+            <p>
+              Bedrock now exposes different attribution paths for different
+              decisions. The snapshot tests whether your supplied,
+              prompt-free aggregates preserve the principal, workload, or
+              request grain needed for one decision—and marks a missing join
+              as unknown, never zero.
+            </p>
+            <p>
+              WrightOps does not connect to your AWS account, configure IAM,
+              activate billing tags, inspect Cost Explorer or CUR, or implement
+              logging. The output is a bounded evidence map and up to five
+              measurement priorities.
+            </p>
+            <a
+              class="text-link light"
+              href="https://docs.aws.amazon.com/bedrock/latest/userguide/cost-management.html"
+            >
+              Verify the current Bedrock mechanisms in AWS documentation
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <ol class="delivery-steps">
+            <li>
+              <span>01</span>
+              <div>
+                <h3>Per-user billed dollars</h3>
+                <p>Check whether IAM principal attribution supplies the identity grain your decision needs.</p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <h3>Per-application billed dollars</h3>
+                <p>Check whether application inference profile tags preserve the workload boundary.</p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <h3>Per-request token detail</h3>
+                <p>Check whether request metadata and invocation logs preserve a joinable request grain.</p>
+              </div>
+            </li>
+            <li>
+              <span>04</span>
+              <div>
+                <h3>Invoice and request reconciliation</h3>
+                <p>Keep billed aggregates and request-level estimates separate, then expose the smallest missing join.</p>
+              </div>
+            </li>
+          </ol>
         </div>
       </section>
 
