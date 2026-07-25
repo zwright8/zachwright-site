@@ -28,7 +28,7 @@ Agent-Ready Storefront Repository Checklist: https://zachwright.xyz/agent-ready-
 Agent Instructions Correction owned-repository sample: https://github.com/wrightops-ai/bounty-red-flag-card/pull/1
 
 WrightOps proposal verification:
-- Browser-local exact lookup for the six current WrightOps proposals tied to public GitHub issue references.
+- Browser-local exact lookup for the seven current WrightOps proposals tied to public GitHub issue references.
 - Returns the recorded fixed offer, published price, relevant scope route, and a copyable non-binding acceptance brief.
 - A match proves only that WrightOps recorded a proposal against the public issue. It does not claim a customer, endorsement, contract, acceptance, authorization, purchase, payment, revenue, or settlement.
 - An unlisted result fails closed and instructs the visitor not to pay or share private information.
