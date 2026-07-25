@@ -360,7 +360,7 @@ const requiredCostPageMarkers = [
   "Prompt-free",
   "Hard timeouts &amp; dropped replies",
   "Retry &amp; first-pass uncertainty",
-  "Missing progress &amp; cost evidence",
+  "Parent-child trace &amp; cost gaps",
   "83.33",
   "27.27",
   "2ec0de17",
@@ -368,6 +368,10 @@ const requiredCostPageMarkers = [
   "Three business days",
   "provider-confirmed settled payment",
   "not a customer or claimed business result",
+  "accepted v2 evidence supplies pseudonymous parent links",
+  "Missing lineage is never reconstructed or guessed.",
+  "Optional v2 pseudonymous parent-run links",
+  "Reconstruction of missing parent-child lineage",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md",
@@ -1485,6 +1489,12 @@ const expectedProposalRoutes = [
     issue: "https://github.com/DYB-Development/event_engine/issues/235",
     price: "$149 USD",
     scopeUrl: "/single-file-agent-instructions-correction/#scope-builder",
+  },
+  {
+    issue: "https://github.com/Arize-ai/coding-harness-tracing/issues/97",
+    price: "$495 USD",
+    scopeUrl:
+      "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
   },
 ];
 

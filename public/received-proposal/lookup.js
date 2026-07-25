@@ -61,6 +61,15 @@
       offerUrl: "/single-file-agent-instructions-correction/",
       scopeUrl: "/single-file-agent-instructions-correction/#scope-builder",
     },
+    {
+      issue: "https://github.com/Arize-ai/coding-harness-tracing/issues/97",
+      label: "Arize AI / coding-harness-tracing #97",
+      offer: "AI Agent Cost & Reliability Snapshot",
+      price: "$495 USD",
+      offerUrl: "/ai-agent-cost-reliability-snapshot/",
+      scopeUrl:
+        "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+    },
   ];
 
   const issueInput = document.querySelector("#proposal-issue-url");

@@ -146,6 +146,7 @@ AI Agent Cost & Reliability Snapshot:
 - $495 for one workflow, up to 20 pseudonymous task IDs and 50 normalized attempts.
 - Prompt-free JSONL or CSV only; no prompts, responses, tool payloads, credentials, direct identifiers, customer data, or production access.
 - Deterministic aggregate JSON and Markdown, up to five human-reviewed priorities, a 30-minute readout, and one factual correction round.
+- With accepted v2 parent links, reports parent-link coverage, linked-child counts, observed link depth, and cost by trace position; missing lineage stays unknown.
 - Three-business-day delivery after written scope confirmation, complete accepted inputs, and provider-confirmed settled payment.
 - The public GitHub form or prefilled WrightOps business-email path collects field names and scope only—not run records, values, prompts, outputs, or payment data—and does not create a contract or payment obligation.
 - Observational summary only; not causal attribution, billing reconciliation, implementation, professional advice, or a savings, reliability, revenue, or profit guarantee.
