@@ -10,7 +10,7 @@ Human-reviewed audit scope: https://github.com/wrightops-ai/agent-ready-repo-aud
 Human-reviewed audit service page: https://zachwright.xyz/agent-ready-repository-audit/
 WrightOps proposal verification: https://zachwright.xyz/received-proposal/
 Human-reviewed audit terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-repository-audit.md
-AI Agent Cost & Reliability Snapshot service page, including Amazon Bedrock cost-attribution fit: https://zachwright.xyz/ai-agent-cost-reliability-snapshot/
+AI Agent Cost & Reliability Snapshot service page, including hosted-loop economics and Amazon Bedrock cost-attribution fit: https://zachwright.xyz/ai-agent-cost-reliability-snapshot/
 AI Agent Cost & Reliability Snapshot scope: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml
 AI Agent Cost & Reliability Snapshot terms: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-snapshot.md
 AI Agent Cost & Reliability normalized run contract: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md
@@ -146,6 +146,7 @@ AI Agent Cost & Reliability Snapshot:
 - $495 for one workflow, up to 20 pseudonymous task IDs and 50 normalized attempts.
 - Prompt-free JSONL or CSV only; no prompts, responses, tool payloads, credentials, direct identifiers, customer data, or production access.
 - Includes a free browser-local cost-reconciliation checker that compares two cost paths for the same run, quantifies the absolute and relative gap, and projects the discrepancy over a monthly run volume without submitting or storing inputs.
+- For local-versus-hosted agent loops, keeps gate availability, hosted round count, wall-clock burden, known cost, and outcome clarity separate; missing local or billing evidence remains unknown.
 - For Amazon Bedrock decisions, maps supplied prompt-free evidence to the grain required by IAM principal attribution, application inference profile tags, or per-request metadata and invocation logs; WrightOps does not access or configure AWS accounts.
 - The checker cites synlynk issue 510 as a current public conflicting-cost problem signal only; the issue owner is not a WrightOps customer, lead, endorsement, paid engagement, or verified billing result.
 - Deterministic aggregate JSON and Markdown, up to five human-reviewed priorities, a 30-minute readout, and one factual correction round.
