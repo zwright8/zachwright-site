@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="Correct one existing AGENTS.md, CLAUDE.md, or Copilot instructions file for $149. Review-ready Markdown, unified diff, evidence notes, and acceptance checks."
+      content="Correct one existing AGENTS.md, CLAUDE.md, or Copilot instructions file for $149. Separate durable repository guidance from stale commands, contradictions, and owner-specific diary entries."
     />
     <meta
       name="robots"
@@ -288,7 +288,7 @@
                 name="workflow"
                 rows="4"
                 maxlength="500"
-                placeholder="Example: replace the stale test command and document the current verification gate."
+                placeholder="Example: keep durable repository guidance and remove owner-specific diary entries that do not guide contributors or coding agents."
                 required
               ></textarea>
             </label>
@@ -417,6 +417,13 @@
             </li>
             <li>
               <span>04</span>
+              <div>
+                <h3>Product guidance mixed with development notes</h3>
+                <p>The file combines durable repository guidance with changelog-like narrative, temporary implementation notes, or owner-specific diary entries.</p>
+              </div>
+            </li>
+            <li>
+              <span>05</span>
               <div>
                 <h3>One-file correction—not a rebuild</h3>
                 <p>The file already exists and the correction fits within 250 source lines and 75 total WrightOps labor minutes.</p>
