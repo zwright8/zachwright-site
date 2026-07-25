@@ -134,7 +134,7 @@ const engagementOptions = [
       "One 30-minute recorded or live handoff",
     ],
     intakeNote:
-      "Confirm one active public repository in the browser. The fail-closed gate pins its current default-branch revision, requires every fixed-scope acknowledgement, and then enables the existing PayPal Business checkout.",
+      "No GitHub sign-in or pre-sale email is required. Confirm one active public repository in the browser, copy the pinned scope reference, and use the existing PayPal Business checkout.",
     primaryLabel: "Confirm the $750 self-serve scope",
     primaryHref: HUMAN_AUDIT_LANDING_URL,
     secondaryLabel: "Read the fixed audit terms",

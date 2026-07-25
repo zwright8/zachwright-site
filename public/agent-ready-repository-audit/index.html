@@ -152,8 +152,9 @@
               </a>
             </div>
             <p class="hero-terms">
-              <strong>$750 USD</strong> · Three business days after complete
-              public inputs and provider-confirmed settled payment.
+              <strong>$750 USD</strong> · No GitHub sign-in or pre-sale email
+              required for the self-serve path · Three business days after
+              complete public inputs and provider-confirmed settled payment.
             </p>
             <p class="hero-fit" aria-label="Common audit triggers">
               <span>AGENTS.md / CLAUDE.md drift</span>
@@ -234,12 +235,13 @@
           <div class="scope-builder-copy">
             <p class="eyebrow">Self-serve written scope</p>
             <h2 id="scope-builder-heading">
-              Pin one public repository before checkout appears.
+              Confirm in your browser. Copy the reference. Check out.
             </h2>
             <p>
               Confirm the canonical repository, immutable default-branch
               revision, priority, handoff, and fixed boundaries in your
-              browser. This uses unauthenticated GitHub API reads only.
+              browser. This uses unauthenticated GitHub API reads only. No
+              GitHub account or pre-sale email is required.
             </p>
             <ul>
               <li><span>✓</span> Nothing is uploaded, stored, tracked, or authenticated</li>
@@ -344,7 +346,7 @@
                 type="button"
                 disabled
               >
-                Copy order-note reference
+                Copy reference and enable checkout
               </button>
             </div>
 
@@ -354,8 +356,9 @@
               role="status"
               aria-live="polite"
             >
-              No purchase obligation, checkout, payment, or work starts before
-              successful browser-local confirmation.
+              Step 1 of 2: confirm the public repository and fixed scope.
+              Checkout remains unavailable until the reference is copied or
+              emailed.
             </p>
 
             <textarea
@@ -761,7 +764,7 @@
           checkoutLink.removeAttribute("aria-disabled");
           checkoutLink.removeAttribute("tabindex");
           status.textContent =
-            "Scope reference prepared. Send it to zach@zachwright.xyz from the PayPal buyer email or retain the copied reference, then continue to checkout. Work starts only after provider-confirmed settlement.";
+            "Checkout enabled. Retain the copied reference with your PayPal receipt; no pre-sale email is required. Work starts only after provider-confirmed settlement.";
         };
 
         const revokeConfirmedScope = () => {
@@ -914,7 +917,7 @@
             confirmedScopeEmail.removeAttribute("tabindex");
             checkoutPanel.hidden = false;
             status.textContent =
-              `WrightOps fixed $750 scope is confirmed for ${parsed.repository.canonicalUrl} at ${headSha}. Email or copy the order reference to enable checkout.`;
+              `Step 2 of 2: WrightOps fixed $750 scope is confirmed for ${parsed.repository.canonicalUrl} at ${headSha}. Copy the reference to enable checkout; no pre-sale email is required.`;
           } catch (error) {
             if (confirmationRevision !== scopeRevision) return;
             hideCheckout();
@@ -941,8 +944,21 @@
             enableCheckout();
           } catch {
             if (copyRevision !== scopeRevision) return;
+            orderNote.hidden = false;
+            orderNote.focus();
+            orderNote.select();
+            const copiedWithFallback = document.execCommand("copy");
+            orderNote.setSelectionRange(0, 0);
+            if (
+              copiedWithFallback &&
+              copyRevision === scopeRevision &&
+              copiedNote === orderNote.value
+            ) {
+              enableCheckout();
+              return;
+            }
             status.textContent =
-              "Clipboard access is unavailable. Use Email confirmed scope to prepare the reference and enable checkout.";
+              "Clipboard access is unavailable. Select and retain the visible reference, or use Email confirmed scope; checkout remains unavailable.";
           }
         });
         for (const control of [
