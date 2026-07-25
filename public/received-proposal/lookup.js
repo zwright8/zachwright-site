@@ -39,6 +39,15 @@
         "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
     },
     {
+      issue: "https://github.com/momentiq-ai/cerebe/issues/58",
+      label: "Momentiq AI / cerebe #58",
+      offer: "AI Agent Cost & Reliability Snapshot",
+      price: "$495 USD",
+      offerUrl: "/ai-agent-cost-reliability-snapshot/",
+      scopeUrl:
+        "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml",
+    },
+    {
       issue: "https://github.com/DYB-Development/event_engine/issues/235",
       label: "DYB-Development / event_engine #235",
       offer: "Single-File Agent Instructions Correction",
