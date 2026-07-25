@@ -19,6 +19,26 @@ const auditCss = fs.readFileSync(
   path.join(root, "public", "agent-ready-repository-audit", "styles.css"),
   "utf8",
 );
+const auditSamplePage = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "agent-ready-repository-audit",
+    "sample",
+    "index.html",
+  ),
+  "utf8",
+);
+const auditSampleCss = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "agent-ready-repository-audit",
+    "sample",
+    "styles.css",
+  ),
+  "utf8",
+);
 const instructionsPage = fs.readFileSync(
   path.join(root, "public", "agent-ready-instructions-pr", "index.html"),
   "utf8",
@@ -291,6 +311,44 @@ const requiredAuditPageMarkers = [
   "Use the storefront evidence checklist",
   'href="/received-proposal/"',
   "Received this proposal? Verify it",
+  'href="/agent-ready-repository-audit/sample/"',
+  "Inspect the human-reviewed sample",
+];
+
+const requiredAuditSampleMarkers = [
+  "<title>Human-Reviewed Repository Audit Sample | WrightOps</title>",
+  'href="https://zachwright.xyz/agent-ready-repository-audit/sample/"',
+  '"@type": "Article"',
+  '"datePublished": "2026-07-25"',
+  "not a customer",
+  "7a507bc0cb42f8c04fb18e53a46371b37b5bd56f",
+  "90/100 evidence coverage",
+  "State the runtime-configuration boundary in the root README.",
+  "Keep instruction and verification evidence linked",
+  "Treat the score as evidence coverage",
+  "Acceptance evidence:",
+  "30-minute handoff agenda",
+  "Inspection limits",
+  "does not clone or execute repository code",
+  "vulnerability, security,",
+  'href="../#scope-builder"',
+  "Confirm $750 scope",
+  'href="/#preflight"',
+  "Run the free preflight first",
+];
+
+const forbiddenAuditSampleMarkers = [
+  "customer testimonial",
+  "guaranteed outcome",
+  "guaranteed savings",
+  "guaranteed revenue",
+  "buy.stripe.com",
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
 ];
 
 const requiredCostPageMarkers = [
@@ -1053,6 +1111,10 @@ for (const marker of [
 const missingApp = missing(app, requiredAppMarkers);
 const missingHtml = missing(html, requiredHtmlMarkers);
 const missingAuditPage = missing(auditPage, requiredAuditPageMarkers);
+const missingAuditSamplePage = missing(
+  auditSamplePage,
+  requiredAuditSampleMarkers,
+);
 const missingInstructionsPage = missing(instructionsPage, requiredInstructionsPageMarkers);
 const missingSingleFileCorrectionPage = missing(
   singleFileCorrectionPage,
@@ -1129,6 +1191,30 @@ if (missingApp.length) {
 
 if (missingHtml.length) {
   failures.push(`HTML is missing: ${missingHtml.join(", ")}`);
+}
+
+if (missingAuditSamplePage.length) {
+  failures.push(
+    `Audit sample page is missing: ${missingAuditSamplePage.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenAuditSampleMarkers) {
+  if (auditSamplePage.includes(marker)) {
+    failures.push(`Audit sample page contains forbidden marker: ${marker}`);
+  }
+}
+
+for (const marker of [
+  ".sample-hero",
+  ".priority-list",
+  ".handoff-layout",
+  ".limits-layout",
+  "@media (max-width: 640px)",
+]) {
+  if (!auditSampleCss.includes(marker)) {
+    failures.push(`Audit sample CSS is missing: ${marker}`);
+  }
 }
 
 if (missingAuditPage.length) {
@@ -1914,6 +2000,8 @@ for (const file of [
   "og.png",
   "agent-ready-repository-audit/index.html",
   "agent-ready-repository-audit/styles.css",
+  "agent-ready-repository-audit/sample/index.html",
+  "agent-ready-repository-audit/sample/styles.css",
   "agent-ready-instructions-pr/index.html",
   "single-file-agent-instructions-correction/index.html",
   "single-file-agent-instructions-correction/sample.md",
@@ -1975,6 +2063,8 @@ console.log(
       appMarkers: requiredAppMarkers.length,
       htmlMarkers: requiredHtmlMarkers.length,
       auditPageMarkers: requiredAuditPageMarkers.length,
+      auditSamplePageMarkers: requiredAuditSampleMarkers.length,
+      auditSampleForbiddenMarkers: forbiddenAuditSampleMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
       instructionsGuideMarkers: requiredInstructionsGuideMarkers.length,
       instructionsGuideWorksheetMarkers:

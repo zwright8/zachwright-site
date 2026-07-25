@@ -8,9 +8,15 @@
   </url>
   <url>
     <loc>https://zachwright.xyz/agent-ready-repository-audit/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://zachwright.xyz/agent-ready-repository-audit/sample/</loc>
+    <lastmod>2026-07-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://zachwright.xyz/received-proposal/</loc>

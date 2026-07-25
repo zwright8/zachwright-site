@@ -133,12 +133,14 @@ Agent Instructions Correction:
 Human-reviewed Agent-Ready Repository Audit:
 - $750 for one public GitHub repository at one immutable default-branch revision.
 - Dedicated service page: https://zachwright.xyz/agent-ready-repository-audit/
+- Complete WrightOps-owned human-review sample: https://zachwright.xyz/agent-ready-repository-audit/sample/
 - Evidence-linked Markdown and JSON reports, up to five priorities, and a 30-minute handoff.
 - Three-business-day delivery after provider-confirmed settled payment and complete public inputs.
 - The browser-local gate confirms one active public repository, pins its default-branch revision, and requires every fixed-scope acknowledgement without uploading or storing the inputs.
 - After the gate passes, the matching existing PayPal Business Goods & Services checkout becomes usable.
 - Paid work begins only after provider-confirmed settlement.
 - No private data, credentials, production access, repository cloning, code execution, or security, privacy, legal, or compliance assessment.
+- The public sample is a product-format demonstration, not a customer result, testimonial, endorsement, or business-outcome claim.
 
 AI Agent Cost & Reliability Snapshot:
 - $495 for one workflow, up to 20 pseudonymous task IDs and 50 normalized attempts.
