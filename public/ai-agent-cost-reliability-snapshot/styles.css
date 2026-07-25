@@ -176,11 +176,17 @@
   font-weight: 800;
 }
 
-.calculator-section {
+.calculator-section,
+.reconciliation-section {
   padding: clamp(4.5rem, 9vw, 8rem) 0;
   background: #edf1e3;
   color: var(--midnight);
   scroll-margin-top: var(--header-height);
+}
+
+.reconciliation-section {
+  border-top: 1px solid #cbd2bf;
+  background: #f8faf2;
 }
 
 .calculator-layout {
@@ -225,6 +231,12 @@
   color: #526173;
   font-size: 0.88rem;
   line-height: 1.7;
+}
+
+.calculator-intro details a {
+  color: #304d05;
+  font-weight: 800;
+  text-underline-offset: 0.18em;
 }
 
 .calculator-card {

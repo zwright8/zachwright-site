@@ -145,6 +145,8 @@ Human-reviewed Agent-Ready Repository Audit:
 AI Agent Cost & Reliability Snapshot:
 - $495 for one workflow, up to 20 pseudonymous task IDs and 50 normalized attempts.
 - Prompt-free JSONL or CSV only; no prompts, responses, tool payloads, credentials, direct identifiers, customer data, or production access.
+- Includes a free browser-local cost-reconciliation checker that compares two cost paths for the same run, quantifies the absolute and relative gap, and projects the discrepancy over a monthly run volume without submitting or storing inputs.
+- The checker cites synlynk issue 510 as a current public conflicting-cost problem signal only; the issue owner is not a WrightOps customer, lead, endorsement, paid engagement, or verified billing result.
 - Deterministic aggregate JSON and Markdown, up to five human-reviewed priorities, a 30-minute readout, and one factual correction round.
 - With accepted v2 parent links, reports parent-link coverage, linked-child counts, observed link depth, and cost by trace position; missing lineage stays unknown.
 - Three-business-day delivery after written scope confirmation, complete accepted inputs, and provider-confirmed settled payment.

@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A $495 prompt-free snapshot for long-running AI-agent workflows with hard timeouts, dropped replies, retry uncertainty, parent-child trace gaps, or missing cost evidence."
+      content="A $495 prompt-free snapshot and free browser-local reconciliation checker for AI-agent workflows with conflicting cost estimates, retries, trace gaps, or missing evidence."
     />
     <meta
       name="robots"
@@ -95,6 +95,7 @@
         </a>
         <div class="nav-links">
           <a href="#calculator">Estimate</a>
+          <a href="#reconcile">Reconcile</a>
           <a href="#proof">Proof</a>
           <a href="#delivery">Delivery</a>
           <a href="#boundaries">Boundaries</a>
@@ -123,8 +124,8 @@
             <p class="hero-lede">
               A fixed-scope aggregate snapshot for long-running agent workflows
               with parent-child trace, timeout, completion, retry, latency, or
-              cost uncertainty—without prompts, responses, tool payloads, or
-              direct identifiers.
+              conflicting cost evidence—without prompts, responses, tool
+              payloads, or direct identifiers.
             </p>
             <div class="hero-fit" aria-label="Common workflow symptoms">
               <span>Hard timeouts &amp; dropped replies</span>
@@ -324,6 +325,140 @@
                 href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml"
               >
                 Turn the estimate into evidence <span aria-hidden="true">↗</span>
+              </a>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="reconciliation-section" id="reconcile">
+        <div class="page-shell calculator-layout">
+          <div class="calculator-intro">
+            <p class="eyebrow">Browser-local reconciliation checker</p>
+            <h2>Measure the gap before choosing a cost source.</h2>
+            <p>
+              Compare two cost paths for the same run, quantify the discrepancy,
+              and project how far that gap can drift over a monthly volume. The
+              values stay in this browser and are never submitted, stored, or
+              transmitted by WrightOps.
+            </p>
+            <details>
+              <summary>Why this control exists</summary>
+              <p>
+                One current public AI-agent issue reports the same run at
+                $1.69 through a live dispatch path and $6.6434 through its
+                sanctioned reconstruction path. That is a public problem
+                signal—not a WrightOps customer, lead, endorsement, paid
+                engagement, or verified billing result.
+                <a
+                  href="https://github.com/nikhilsoman/synlynk/issues/510"
+                >Inspect the source issue.</a>
+              </p>
+            </details>
+          </div>
+
+          <div class="calculator-card">
+            <form
+              id="cost-reconciliation"
+              aria-describedby="reconciliation-note"
+              novalidate
+            >
+              <div class="calculator-fields">
+                <label>
+                  <span>Cost path A / run</span>
+                  <span class="input-prefix">
+                    <span aria-hidden="true">$</span>
+                    <input
+                      id="cost-path-a"
+                      name="cost-path-a"
+                      type="number"
+                      min="0"
+                      max="1000000"
+                      step="0.0001"
+                      value="1.69"
+                      inputmode="decimal"
+                      required
+                    />
+                  </span>
+                </label>
+                <label>
+                  <span>Cost path B / run</span>
+                  <span class="input-prefix">
+                    <span aria-hidden="true">$</span>
+                    <input
+                      id="cost-path-b"
+                      name="cost-path-b"
+                      type="number"
+                      min="0"
+                      max="1000000"
+                      step="0.0001"
+                      value="6.6434"
+                      inputmode="decimal"
+                      required
+                    />
+                  </span>
+                </label>
+                <label>
+                  <span>Comparable runs / month</span>
+                  <input
+                    id="reconciliation-runs"
+                    name="reconciliation-runs"
+                    type="number"
+                    min="0"
+                    max="10000000"
+                    step="1"
+                    value="100"
+                    inputmode="numeric"
+                    required
+                  />
+                </label>
+                <label>
+                  <span>Decision threshold / month</span>
+                  <span class="input-prefix">
+                    <span aria-hidden="true">$</span>
+                    <input
+                      id="reconciliation-threshold"
+                      name="reconciliation-threshold"
+                      type="number"
+                      min="0"
+                      max="1000000000"
+                      step="0.01"
+                      value="495"
+                      inputmode="decimal"
+                      required
+                    />
+                  </span>
+                </label>
+              </div>
+
+              <div class="calculator-results" aria-live="polite">
+                <div>
+                  <span>Absolute gap / run</span>
+                  <strong id="reconciliation-gap">$4.95</strong>
+                </div>
+                <div>
+                  <span>Larger path / smaller path</span>
+                  <strong id="reconciliation-multiple">3.93×</strong>
+                </div>
+                <div>
+                  <span>Projected monthly gap</span>
+                  <strong id="reconciliation-monthly">$495.34</strong>
+                </div>
+                <div class="calculator-decision">
+                  <span>Threshold status</span>
+                  <strong id="reconciliation-status">Above by $0.34</strong>
+                </div>
+              </div>
+
+              <p class="calculator-note" id="reconciliation-note">
+                A mismatch is a control signal. It does not prove which path
+                matches an invoice, nor does it prove savings.
+              </p>
+              <a
+                class="button calculator-cta"
+                href="https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=cost-reliability-snapshot-request.yml"
+              >
+                Reconcile one workflow <span aria-hidden="true">↗</span>
               </a>
             </form>
           </div>

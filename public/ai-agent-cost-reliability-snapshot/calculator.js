@@ -78,4 +78,86 @@
 
   form.addEventListener("input", update);
   update();
+
+  const reconciliationForm = document.querySelector("#cost-reconciliation");
+  if (!reconciliationForm) return;
+
+  const reconciliationFields = {
+    pathA: reconciliationForm.querySelector("#cost-path-a"),
+    pathB: reconciliationForm.querySelector("#cost-path-b"),
+    runs: reconciliationForm.querySelector("#reconciliation-runs"),
+    threshold: reconciliationForm.querySelector("#reconciliation-threshold"),
+  };
+  const reconciliationOutputs = {
+    gap: reconciliationForm.querySelector("#reconciliation-gap"),
+    multiple: reconciliationForm.querySelector("#reconciliation-multiple"),
+    monthly: reconciliationForm.querySelector("#reconciliation-monthly"),
+    status: reconciliationForm.querySelector("#reconciliation-status"),
+    note: reconciliationForm.querySelector("#reconciliation-note"),
+  };
+
+  function updateReconciliation() {
+    const pathA = read(reconciliationFields.pathA, 0, 1_000_000);
+    const pathB = read(reconciliationFields.pathB, 0, 1_000_000);
+    const runs = read(reconciliationFields.runs, 0, 10_000_000);
+    const threshold = read(
+      reconciliationFields.threshold,
+      0,
+      1_000_000_000,
+    );
+
+    if (
+      pathA === null ||
+      pathB === null ||
+      runs === null ||
+      threshold === null
+    ) {
+      reconciliationOutputs.gap.textContent = "—";
+      reconciliationOutputs.multiple.textContent = "—";
+      reconciliationOutputs.monthly.textContent = "—";
+      reconciliationOutputs.status.textContent = "Complete inputs";
+      reconciliationOutputs.note.textContent =
+        "Enter four non-negative values within the displayed limits to compare the two cost paths.";
+      return;
+    }
+
+    const gap = Math.abs(pathA - pathB);
+    const smaller = Math.min(pathA, pathB);
+    const larger = Math.max(pathA, pathB);
+    const monthlyGap = gap * runs;
+    const thresholdDelta = monthlyGap - threshold;
+
+    reconciliationOutputs.gap.textContent = money.format(gap);
+    reconciliationOutputs.monthly.textContent = money.format(monthlyGap);
+    reconciliationOutputs.multiple.textContent =
+      smaller === 0
+        ? larger === 0
+          ? "No ratio"
+          : "∞"
+        : `${(larger / smaller).toFixed(2)}×`;
+
+    if (Math.abs(thresholdDelta) < 0.005) {
+      reconciliationOutputs.status.textContent = "At threshold";
+    } else if (thresholdDelta > 0) {
+      reconciliationOutputs.status.textContent =
+        `Above by ${money.format(thresholdDelta)}`;
+    } else {
+      reconciliationOutputs.status.textContent =
+        `Below by ${money.format(Math.abs(thresholdDelta))}`;
+    }
+
+    if (gap === 0) {
+      reconciliationOutputs.note.textContent =
+        "The two paths agree for these inputs. Agreement does not independently verify either path against provider billing.";
+      return;
+    }
+
+    const higherPath = pathA > pathB ? "Path A" : "Path B";
+    reconciliationOutputs.note.textContent =
+      `${higherPath} is ${money.format(gap)} higher per comparable run. ` +
+      "The mismatch is a control signal; it does not prove which path matches an invoice or prove savings.";
+  }
+
+  reconciliationForm.addEventListener("input", updateReconciliation);
+  updateReconciliation();
 })();
