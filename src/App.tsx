@@ -48,6 +48,7 @@ const BOUNTY_CARD_OPEN_URL =
 const BOUNTY_CARD_RELEASE_URL =
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0";
 const BOUNTY_CHECKLIST_URL = "/coding-bounty-payout-checklist/";
+const PROPOSAL_VERIFICATION_URL = "/received-proposal/";
 
 const preflightCheckLabels = [
   "README and setup guidance",
@@ -368,6 +369,7 @@ function Navbar() {
           <a href="#offers">Offers</a>
           <a href="#bounty-review">Bounty review</a>
           <a href="#proof">Proof</a>
+          <a href={PROPOSAL_VERIFICATION_URL}>Proposal lookup</a>
           <a href="#faq">FAQ</a>
         </div>
 
@@ -1266,6 +1268,7 @@ function Footer() {
           </div>
           <div>
             <strong>Verify</strong>
+            <a href={PROPOSAL_VERIFICATION_URL}>Verify a WrightOps proposal</a>
             <ExternalLink href={GITHUB_ORG_URL}>WrightOps on GitHub</ExternalLink>
             <ExternalLink href={AUDITOR_RELEASE_URL}>Public release</ExternalLink>
             <ExternalLink href={AUDITOR_CI_URL}>Hosted CI run</ExternalLink>

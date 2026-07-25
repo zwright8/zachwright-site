@@ -129,6 +129,18 @@ const costSample = fs.readFileSync(
   path.join(root, "public", "ai-agent-cost-reliability-snapshot", "synthetic-sample.md"),
   "utf8",
 );
+const proposalPage = fs.readFileSync(
+  path.join(root, "public", "received-proposal", "index.html"),
+  "utf8",
+);
+const proposalLookup = fs.readFileSync(
+  path.join(root, "public", "received-proposal", "lookup.js"),
+  "utf8",
+);
+const proposalCss = fs.readFileSync(
+  path.join(root, "public", "received-proposal", "styles.css"),
+  "utf8",
+);
 
 const requiredAppMarkers = [
   "WrightOps",
@@ -204,6 +216,9 @@ const requiredAppMarkers = [
   "https://github.com/wrightops-ai/bounty-red-flag-card/blob/main/bounty-red-flag-card/BOUNTY-RED-FLAG-CARD.md",
   "https://github.com/wrightops-ai/bounty-red-flag-card/releases/tag/v1.0.0",
   'const BOUNTY_CHECKLIST_URL = "/coding-bounty-payout-checklist/"',
+  'const PROPOSAL_VERIFICATION_URL = "/received-proposal/"',
+  "Proposal lookup",
+  "Verify a WrightOps proposal",
   "Run the free payout checklist",
   "Paid review retired",
   "The former $49 review produced no qualified requests or settled",
@@ -273,6 +288,8 @@ const requiredAuditPageMarkers = [
   "Request scope on GitHub",
   'href="/agent-ready-storefront-checklist/"',
   "Use the storefront evidence checklist",
+  'href="/received-proposal/"',
+  "Received this proposal? Verify it",
 ];
 
 const requiredCostPageMarkers = [
@@ -314,6 +331,8 @@ const requiredCostPageMarkers = [
   'id="fee-equivalent"',
   "Turn the estimate into evidence",
   '<script src="./calculator.js" defer></script>',
+  'href="/received-proposal/"',
+  "Received this proposal? Verify it",
 ];
 
 const requiredCostCalculatorMarkers = [
@@ -478,6 +497,8 @@ const requiredInstructionsPageMarkers = [
   "window.location.href = buildMailto(scopeText)",
   'query.get("tier") === "single-file"',
   'tierInput.value = "$149 single-file correction"',
+  'href="/received-proposal/"',
+  "Received this proposal? Verify it",
 ];
 
 const requiredSingleFileCorrectionPageMarkers = [
@@ -534,6 +555,65 @@ const requiredSingleFileCorrectionPageMarkers = [
   'href="#scope-builder"',
   'href="/agents-md-vs-claude-md/"',
   'href="/#preflight"',
+  'href="/received-proposal/"',
+  "Received this proposal? Verify it",
+];
+
+const requiredProposalPageMarkers = [
+  "<title>Verify a WrightOps Proposal</title>",
+  'href="https://zachwright.xyz/received-proposal/"',
+  '"@type": "WebPage"',
+  "Verify the proposal before you <em>respond.</em>",
+  "Public issue → fixed scope",
+  "5 current public references",
+  "One public issue. One clear answer.",
+  'id="proposal-issue-url"',
+  'id="verify-proposal"',
+  'id="proposal-result"',
+  'id="proposal-acceptance-brief"',
+  'id="copy-acceptance"',
+  "A match proves only that WrightOps recorded one proposal",
+  "not claim that the issue owner is a",
+  "No response or purchase is required",
+  "No repeated follow-up sequence",
+  "No work before written scope and settled payment",
+  "No customer or endorsement claim from a proposal",
+  'src="/received-proposal/lookup.js"',
+];
+
+const requiredProposalLookupMarkers = [
+  '"use strict"',
+  "https://github.com/Liatrio-Labs/claude-code-gauntlet/issues/37",
+  "https://github.com/RESOStandards/reso-tools/issues/240",
+  "https://github.com/AIClarityAU/minspec/issues/889",
+  "https://github.com/Extra-Chill/homeboy/issues/9653",
+  "https://github.com/DYB-Development/event_engine/issues/235",
+  'price: "$750 USD"',
+  'price: "$495 USD"',
+  'price: "$149 USD"',
+  "normalizeIssueUrl",
+  "not in the current WrightOps proposal register",
+  "buildAcceptanceBrief",
+  "navigator.clipboard.writeText",
+  "I understand this is a non-binding request for written scope confirmation.",
+  "Do not include credentials, payment details, private files",
+];
+
+const forbiddenProposalLookupMarkers = [
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
+];
+
+const forbiddenProposalPageMarkers = [
+  "mailto:",
+  "paypal.com",
+  "paypal.me",
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
 ];
 
 const requiredSingleFileCorrectionSampleMarkers = [
@@ -1030,6 +1110,11 @@ const missingStructuredOutputReliabilityPage = missing(
   requiredStructuredOutputReliabilityPageMarkers,
 );
 const missingCostSample = missing(costSample, requiredCostSampleMarkers);
+const missingProposalPage = missing(proposalPage, requiredProposalPageMarkers);
+const missingProposalLookup = missing(
+  proposalLookup,
+  requiredProposalLookupMarkers,
+);
 
 if (missingApp.length) {
   failures.push(`App is missing: ${missingApp.join(", ")}`);
@@ -1247,6 +1332,30 @@ if (missingCostSample.length) {
   failures.push(`Cost sample is missing: ${missingCostSample.join(", ")}`);
 }
 
+if (missingProposalPage.length) {
+  failures.push(
+    `Proposal verification page is missing: ${missingProposalPage.join(", ")}`,
+  );
+}
+
+if (missingProposalLookup.length) {
+  failures.push(
+    `Proposal verification lookup is missing: ${missingProposalLookup.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenProposalLookupMarkers) {
+  if (proposalLookup.includes(marker)) {
+    failures.push(`Proposal verification must remain browser-local: ${marker}`);
+  }
+}
+
+for (const marker of forbiddenProposalPageMarkers) {
+  if (proposalPage.includes(marker)) {
+    failures.push(`Proposal verification must not expose private contact or checkout routes: ${marker}`);
+  }
+}
+
 for (const marker of forbiddenMarkers) {
   if (
     app.includes(marker) ||
@@ -1265,7 +1374,9 @@ for (const marker of forbiddenMarkers) {
     costPage.includes(marker) ||
     costAttributionPage.includes(marker) ||
     structuredOutputReliabilityPage.includes(marker) ||
-    costSample.includes(marker)
+    costSample.includes(marker) ||
+    proposalPage.includes(marker) ||
+    proposalLookup.includes(marker)
   ) {
     failures.push(`Forbidden legacy marker remains: ${marker}`);
   }
@@ -1293,6 +1404,10 @@ if (!costCss.includes("@media (prefers-reduced-motion: reduce)")) {
 
 if (!costCss.includes("box-shadow: 0 0 0 6px var(--midnight)")) {
   failures.push("Cost page two-color keyboard focus contract is missing.");
+}
+
+if (!proposalCss.includes("@media (prefers-reduced-motion: reduce)")) {
+  failures.push("Proposal verification reduced-motion contract is missing.");
 }
 
 const auditLandingUrl = "https://zachwright.xyz/agent-ready-repository-audit/";
@@ -1348,6 +1463,15 @@ if (!llms.includes(storefrontGuideUrl)) {
 
 if (!llms.includes(auditLandingUrl)) {
   failures.push("llms.txt is missing the audit landing page.");
+}
+
+const proposalVerificationUrl = "https://zachwright.xyz/received-proposal/";
+if (!sitemap.includes(proposalVerificationUrl)) {
+  failures.push("Sitemap is missing the proposal verification page.");
+}
+
+if (!llms.includes(proposalVerificationUrl)) {
+  failures.push("llms.txt is missing the proposal verification page.");
 }
 
 const fixPlanLandingUrl = "https://zachwright.xyz/agent-ready-fix-plan/";
@@ -1729,6 +1853,9 @@ for (const file of [
   "ai-agent-cost-reliability-snapshot/styles.css",
   "ai-agent-cost-reliability-snapshot/synthetic-sample.md",
   "ai-agent-structured-output-reliability-checklist/index.html",
+  "received-proposal/index.html",
+  "received-proposal/lookup.js",
+  "received-proposal/styles.css",
 ]) {
   if (!fs.existsSync(path.join(root, "public", file))) {
     failures.push(`Public asset is missing: ${file}`);
@@ -1799,6 +1926,9 @@ console.log(
         requiredStructuredOutputReliabilityPageMarkers.length,
       structuredOutputReliabilityPageForbiddenMarkers:
         forbiddenStructuredOutputReliabilityPageMarkers.length,
+      proposalPageMarkers: requiredProposalPageMarkers.length,
+      proposalLookupMarkers: requiredProposalLookupMarkers.length,
+      proposalLookupForbiddenMarkers: forbiddenProposalLookupMarkers.length,
       costSampleMarkers: requiredCostSampleMarkers.length,
       singleFileCorrectionSampleMarkers:
         requiredSingleFileCorrectionSampleMarkers.length,
@@ -1807,7 +1937,7 @@ console.log(
       preflightCtas: preflightCtaCount,
       auditScopeRequestCtas: auditScopeRequestCtaCount,
       auditTermsCtas: auditTermsCtaCount,
-      publicAssets: 24,
+      publicAssets: 27,
     },
     null,
     2,
