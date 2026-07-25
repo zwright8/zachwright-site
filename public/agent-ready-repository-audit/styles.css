@@ -1073,6 +1073,214 @@ h1 em {
   line-height: 1.75;
 }
 
+.drift-workspace {
+  padding: clamp(5.5rem, 9vw, 9rem) 0;
+  background:
+    linear-gradient(135deg, rgba(183, 243, 74, 0.07), transparent 42%),
+    #f4f6f2;
+}
+
+.drift-workspace-heading {
+  display: grid;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: end;
+  grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.62fr);
+  gap: 2rem clamp(3rem, 8vw, 8rem);
+}
+
+.drift-workspace-heading h2 {
+  max-width: 60rem;
+  margin: 0.8rem 0 0;
+  font-size: clamp(2.8rem, 5.8vw, 5.8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.94;
+}
+
+.drift-workspace-heading > p {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--slate);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.drift-tool {
+  overflow: hidden;
+  border: 1px solid #c9d0c5;
+  background: #fff;
+  box-shadow: 0 1.6rem 5rem rgba(11, 18, 32, 0.08);
+}
+
+.drift-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.drift-inputs label {
+  display: grid;
+  padding: clamp(1.4rem, 3vw, 2.3rem);
+  gap: 0.45rem;
+}
+
+.drift-inputs label + label {
+  border-left: 1px solid #dce1d9;
+}
+
+.drift-inputs span,
+.drift-verdict > span {
+  color: #6a7a8d;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.drift-inputs strong {
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  letter-spacing: -0.035em;
+}
+
+.drift-inputs textarea {
+  width: 100%;
+  min-height: 19rem;
+  margin-top: 0.8rem;
+  padding: 1rem;
+  resize: vertical;
+  border: 1px solid #c9d0c5;
+  border-radius: 0;
+  color: var(--ink);
+  background: #f9faf7;
+  font: 0.78rem/1.65 "SFMono-Regular", Consolas, monospace;
+}
+
+.drift-inputs textarea:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.drift-results {
+  display: grid;
+  padding: clamp(1.4rem, 3vw, 2.3rem);
+  border-top: 1px solid #dce1d9;
+  color: #fff;
+  background: var(--midnight);
+  grid-template-columns: minmax(15rem, 0.7fr) minmax(24rem, 1.3fr);
+  gap: 2rem clamp(3rem, 7vw, 7rem);
+}
+
+.drift-verdict {
+  align-self: center;
+}
+
+.drift-verdict strong {
+  display: block;
+  margin-top: 0.65rem;
+  color: var(--signal);
+  font-size: clamp(1.8rem, 3vw, 3.1rem);
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.drift-tool[data-state="review"] .drift-verdict strong {
+  color: #ffcf70;
+}
+
+.drift-verdict p {
+  max-width: 32rem;
+  margin: 1rem 0 0;
+  color: #bac4d0;
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.drift-metrics {
+  display: grid;
+  margin: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.drift-metrics div {
+  padding: 0.6rem 1rem;
+  border-left: 1px solid #263347;
+}
+
+.drift-metrics dt {
+  min-height: 2.4rem;
+  color: #8d9aac;
+  font: 0.64rem/1.35 "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.drift-metrics dd {
+  margin: 0.65rem 0 0;
+  font-size: clamp(1.35rem, 2.6vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.drift-actions {
+  display: flex;
+  min-height: 3.2rem;
+  margin-top: 1.6rem;
+  align-items: center;
+  grid-column: 2;
+  gap: 0.8rem 1.2rem;
+  flex-wrap: wrap;
+}
+
+.drift-actions .button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.drift-clear {
+  padding: 0.7rem 0;
+  border: 0;
+  border-bottom: 1px solid #738196;
+  color: #dce3eb;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+}
+
+.drift-clear:hover,
+.drift-clear:focus-visible {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
+#drift-action-status {
+  color: #bac4d0;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.drift-boundary {
+  display: grid;
+  padding: 1.5rem 0 0;
+  align-items: center;
+  grid-template-columns: auto minmax(18rem, 1fr) auto auto;
+  gap: 0.8rem 2rem;
+}
+
+.drift-boundary strong {
+  font-size: 0.78rem;
+}
+
+.drift-boundary p {
+  max-width: 50rem;
+  margin: 0;
+  color: var(--slate);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.drift-boundary .text-link {
+  white-space: nowrap;
+}
+
 .boundary-section {
   padding: clamp(5.5rem, 9vw, 9rem) 0;
   color: #fff;
@@ -1279,12 +1487,28 @@ footer {
   }
 
   .section-intro,
-  .faq-layout {
+  .faq-layout,
+  .drift-workspace-heading,
+  .drift-results {
     grid-template-columns: 1fr;
   }
 
   .section-intro .eyebrow {
     grid-column: auto;
+  }
+
+  .drift-actions {
+    grid-column: 1;
+  }
+
+  .drift-boundary {
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .drift-boundary p {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 }
 
@@ -1336,6 +1560,10 @@ footer {
 
   .process-list li p {
     grid-column: 2;
+  }
+
+  .drift-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .proof-ledger a {
@@ -1432,6 +1660,56 @@ footer {
 
   .process-list li {
     grid-template-columns: 2.25rem 1fr;
+  }
+
+  .drift-inputs,
+  .drift-metrics,
+  .drift-boundary {
+    grid-template-columns: 1fr;
+  }
+
+  .drift-inputs label + label {
+    border-top: 1px solid #dce1d9;
+    border-left: 0;
+  }
+
+  .drift-inputs textarea {
+    min-height: 15rem;
+  }
+
+  .drift-metrics div {
+    display: flex;
+    min-height: 4.2rem;
+    padding: 0.8rem 0;
+    align-items: center;
+    border-top: 1px solid #263347;
+    border-left: 0;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .drift-metrics dt {
+    min-height: 0;
+  }
+
+  .drift-metrics dd {
+    margin: 0;
+  }
+
+  .drift-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .drift-actions .button,
+  .drift-clear {
+    width: 100%;
+  }
+
+  .drift-boundary p,
+  .drift-boundary .text-link {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .proof-ledger a {

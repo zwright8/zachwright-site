@@ -57,7 +57,7 @@
         "headline": "AGENTS.md vs CLAUDE.md vs Copilot instructions",
         "description": "A practical guide to choosing repository-level coding-agent instruction files without duplicating shared rules.",
         "datePublished": "2026-07-19",
-        "dateModified": "2026-07-19",
+        "dateModified": "2026-07-25",
         "mainEntityOfPage": "https://zachwright.xyz/agents-md-vs-claude-md/",
         "author": {
           "@type": "Organization",
@@ -93,7 +93,7 @@
         <div class="nav-links">
           <a href="#choose">Choose a file</a>
           <a href="#rule">One-source rule</a>
-          <a href="#checklist">Checklist</a>
+          <a href="#worksheet">Local worksheet</a>
           <a href="#boundaries">Boundaries</a>
         </div>
         <a class="button button-small" href="/agent-ready-instructions-pr/">
@@ -118,11 +118,11 @@
                 shared source of repository truth with thin, tool-specific adapters.
               </p>
               <div class="hero-actions">
-                <a class="button" href="/agents-md-starter-template/">
-                  Copy the free AGENTS.md starter <span aria-hidden="true">↗</span>
+                <a class="button" href="#worksheet">
+                  Run the local drift worksheet <span aria-hidden="true">↓</span>
                 </a>
-                <a class="text-link" href="#choose">
-                  Choose the right file <span aria-hidden="true">↓</span>
+                <a class="text-link" href="/agents-md-starter-template/">
+                  Copy the free AGENTS.md starter <span aria-hidden="true">↗</span>
                 </a>
               </div>
               <p class="hero-terms">
@@ -289,6 +289,103 @@
           </div>
         </section>
 
+        <section class="drift-workspace" id="worksheet">
+          <div class="page-shell">
+            <div class="drift-workspace-heading">
+              <div>
+                <p class="eyebrow">Browser-local evidence worksheet</p>
+                <h2>Find copied policy before it becomes conflicting policy.</h2>
+              </div>
+              <p>
+                Paste one canonical file and one companion adapter. The worksheet
+                counts exact repeated rules, calls out volatile duplicates, and
+                checks whether the adapter names its canonical source. It does not
+                upload, store, or semantically validate either file.
+              </p>
+            </div>
+
+            <div class="drift-tool" data-state="empty">
+              <div class="drift-inputs">
+                <label>
+                  <span>Canonical shared instructions</span>
+                  <strong>AGENTS.md</strong>
+                  <textarea
+                    id="canonical-instructions"
+                    rows="14"
+                    spellcheck="false"
+                    autocomplete="off"
+                    placeholder="# Repository rules&#10;&#10;- Run `npm test` before merge.&#10;- Ask before publishing a release."
+                  ></textarea>
+                </label>
+                <label>
+                  <span>Tool-specific companion</span>
+                  <strong>CLAUDE.md or Copilot instructions</strong>
+                  <textarea
+                    id="companion-instructions"
+                    rows="14"
+                    spellcheck="false"
+                    autocomplete="off"
+                    placeholder="# Claude adapter&#10;&#10;Shared repository rules live in AGENTS.md.&#10;Use the Claude-specific hook below."
+                  ></textarea>
+                </label>
+              </div>
+
+              <div class="drift-results" aria-live="polite">
+                <div class="drift-verdict">
+                  <span>Worksheet state</span>
+                  <strong id="drift-verdict">Add both files</strong>
+                  <p id="drift-summary">
+                    Nothing leaves this browser. Add both instruction files to
+                    inspect their relationship.
+                  </p>
+                </div>
+                <dl class="drift-metrics">
+                  <div>
+                    <dt>Exact repeated rules</dt>
+                    <dd id="duplicate-rule-count">—</dd>
+                  </div>
+                  <div>
+                    <dt>Volatile duplicates</dt>
+                    <dd id="volatile-rule-count">—</dd>
+                  </div>
+                  <div>
+                    <dt>Canonical pointer</dt>
+                    <dd id="canonical-pointer-state">—</dd>
+                  </div>
+                  <div>
+                    <dt>Combined bytes</dt>
+                    <dd id="combined-byte-count">—</dd>
+                  </div>
+                </dl>
+                <div class="drift-actions">
+                  <button class="button" id="copy-drift-summary" type="button" disabled>
+                    Copy evidence summary
+                  </button>
+                  <button class="drift-clear" id="clear-drift-worksheet" type="button">
+                    Clear local inputs
+                  </button>
+                  <span id="drift-action-status" role="status"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="drift-boundary">
+              <strong>Bounded signal, not an automated audit.</strong>
+              <p>
+                Exact-line comparison cannot prove two differently worded rules
+                agree. Review commands, branch policy, release gates, approval
+                boundaries, and file ownership at one immutable revision.
+              </p>
+              <a class="text-link" href="/agent-ready-instructions-pr/">
+                Inspect the $149 / $249 correction scope <span aria-hidden="true">↗</span>
+              </a>
+              <a class="text-link" href="/agent-ready-repository-audit/">
+                Inspect the $750 repository audit <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
         <section class="boundary-section" id="boundaries">
           <div class="page-shell boundary-layout">
             <div>
@@ -389,5 +486,6 @@
         <span>Public repositories only · No secrets · No production access</span>
       </div>
     </footer>
+    <script src="/agents-md-vs-claude-md/worksheet.js" defer></script>
   </body>
 </html>

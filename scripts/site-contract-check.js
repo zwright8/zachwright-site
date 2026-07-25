@@ -50,6 +50,15 @@ const instructionsGuidePath = path.join(
 const instructionsGuidePage = fs.existsSync(instructionsGuidePath)
   ? fs.readFileSync(instructionsGuidePath, "utf8")
   : "";
+const instructionsGuideWorksheet = fs.readFileSync(
+  path.join(
+    root,
+    "public",
+    "agents-md-vs-claude-md",
+    "worksheet.js",
+  ),
+  "utf8",
+);
 const storefrontGuidePage = fs.readFileSync(
   path.join(root, "public", "agent-ready-storefront-checklist", "index.html"),
   "utf8",
@@ -582,10 +591,38 @@ const requiredInstructionsGuideMarkers = [
   "Run the free repository preflight",
   "See the $149 / $249 correction scope",
   "Instructions correction scope",
+  'id="worksheet"',
+  "Browser-local evidence worksheet",
+  "Exact repeated rules",
+  "Volatile duplicates",
+  "It does not",
+  "upload, store, or semantically validate either file",
+  'src="/agents-md-vs-claude-md/worksheet.js"',
   "AI-operated public-repository engineering with a human-accountable owner",
   'href="/agent-ready-instructions-pr/"',
   'href="/#preflight"',
   'href="/agents-md-starter-template/"',
+];
+
+const requiredInstructionsGuideWorksheetMarkers = [
+  '"use strict"',
+  "new TextEncoder()",
+  "normalizedRules",
+  "volatileRulePattern",
+  "No exact repeated rule was found",
+  "navigator.clipboard.writeText",
+  "exact-line evidence only",
+  "canonicalInput.addEventListener",
+  "companionInput.addEventListener",
+];
+
+const forbiddenInstructionsGuideWorksheetMarkers = [
+  "fetch(",
+  "XMLHttpRequest",
+  "navigator.sendBeacon",
+  "localStorage",
+  "sessionStorage",
+  "document.cookie",
 ];
 
 const requiredStorefrontGuideMarkers = [
@@ -942,6 +979,10 @@ const missingInstructionsGuidePage = missing(
   instructionsGuidePage,
   requiredInstructionsGuideMarkers,
 );
+const missingInstructionsGuideWorksheet = missing(
+  instructionsGuideWorksheet,
+  requiredInstructionsGuideWorksheetMarkers,
+);
 const missingStorefrontGuidePage = missing(
   storefrontGuidePage,
   requiredStorefrontGuideMarkers,
@@ -1028,6 +1069,18 @@ if (missingInstructionsGuidePage.length) {
   failures.push(
     `Instructions guide is missing: ${missingInstructionsGuidePage.join(", ")}`,
   );
+}
+
+if (missingInstructionsGuideWorksheet.length) {
+  failures.push(
+    `Instructions guide worksheet is missing: ${missingInstructionsGuideWorksheet.join(", ")}`,
+  );
+}
+
+for (const marker of forbiddenInstructionsGuideWorksheetMarkers) {
+  if (instructionsGuideWorksheet.includes(marker)) {
+    failures.push(`Instructions guide worksheet must remain browser-local: ${marker}`);
+  }
 }
 
 if (missingStorefrontGuidePage.length) {
@@ -1662,6 +1715,7 @@ for (const file of [
   "single-file-agent-instructions-correction/index.html",
   "single-file-agent-instructions-correction/sample.md",
   "agents-md-vs-claude-md/index.html",
+  "agents-md-vs-claude-md/worksheet.js",
   "agents-md-starter-template/index.html",
   "agents-md-size-budget-checker/index.html",
   "agent-ready-storefront-checklist/index.html",
@@ -1717,6 +1771,10 @@ console.log(
       auditPageMarkers: requiredAuditPageMarkers.length,
       instructionsPageMarkers: requiredInstructionsPageMarkers.length,
       instructionsGuideMarkers: requiredInstructionsGuideMarkers.length,
+      instructionsGuideWorksheetMarkers:
+        requiredInstructionsGuideWorksheetMarkers.length,
+      instructionsGuideWorksheetForbiddenMarkers:
+        forbiddenInstructionsGuideWorksheetMarkers.length,
       storefrontGuideMarkers: requiredStorefrontGuideMarkers.length,
       storefrontGuideForbiddenMarkers: forbiddenStorefrontGuideMarkers.length,
       instructionsStarterMarkers: requiredInstructionsStarterMarkers.length,
