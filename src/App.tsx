@@ -90,7 +90,7 @@ const engagementOptions = [
     description:
       "A review-ready correction pack for one existing instruction file in one public repository, without requiring a WrightOps GitHub identity.",
     bullets: [
-      "One existing root AGENTS.md, root CLAUDE.md, or Copilot instructions file",
+      "One existing root AGENTS.md, root CLAUDE.md, Copilot instructions, or skill/SKILL.md file",
       "Replacement Markdown, unified diff, evidence notes, and acceptance checks",
       "Maximum 250 source lines and 75 minutes of total WrightOps labor",
       "No application-code, CI, dependency, security, or deployment changes",

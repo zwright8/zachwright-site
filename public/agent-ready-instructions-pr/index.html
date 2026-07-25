@@ -278,13 +278,14 @@
               <select name="target-file" required>
                 <option value="">Select one</option>
                 <option value="root AGENTS.md">Root AGENTS.md</option>
-                  <option value="root CLAUDE.md">Root CLAUDE.md</option>
-                  <option value=".github/copilot-instructions.md">.github/copilot-instructions.md</option>
+                <option value="root CLAUDE.md">Root CLAUDE.md</option>
+                <option value=".github/copilot-instructions.md">.github/copilot-instructions.md</option>
+                <option value="skill/SKILL.md">skill/SKILL.md</option>
               </select>
               <small>
                 For $149, choose the one existing file to correct. For $249,
                 root AGENTS.md is included; choose CLAUDE.md or Copilot as the
-                companion.
+                companion. The SKILL.md path is eligible only for the $149 tier.
               </small>
             </label>
 
@@ -352,9 +353,10 @@
               <h3>Exact instruction paths</h3>
               <p>
                 The $149 tier corrects one existing root
-                <code>AGENTS.md</code>, root <code>CLAUDE.md</code>, or
-                <code>.github/copilot-instructions.md</code>. The $249 tier
-                covers root <code>AGENTS.md</code> plus one companion.
+                <code>AGENTS.md</code>, root <code>CLAUDE.md</code>,
+                <code>.github/copilot-instructions.md</code>, or
+                <code>skill/SKILL.md</code>. The $249 tier covers root
+                <code>AGENTS.md</code> plus one companion.
               </p>
             </article>
             <article>
@@ -755,7 +757,10 @@
           targetFileInput.setCustomValidity("");
           if (
             getValue("tier") === "$249 two-file foundation" &&
-            getValue("target-file") === "root AGENTS.md"
+            ![
+              "root CLAUDE.md",
+              ".github/copilot-instructions.md",
+            ].includes(getValue("target-file"))
           ) {
             targetFileInput.setCustomValidity(
               "For the $249 two-file tier, choose root CLAUDE.md or .github/copilot-instructions.md as the companion.",

@@ -113,7 +113,7 @@ Agent-Ready Repo Fix Plan:
 - The existing PayPal item requires a completed WrightOps free audit and written WrightOps confirmation; the former automated gate is not offered.
 
 Agent Instructions Correction:
-- $149 for one existing root AGENTS.md, root CLAUDE.md, or .github/copilot-instructions.md in one public repository.
+- $149 for one existing root AGENTS.md, root CLAUDE.md, .github/copilot-instructions.md, or skill/SKILL.md in one public repository.
 - $249 for root AGENTS.md plus root CLAUDE.md or .github/copilot-instructions.md.
 - Dedicated $149 single-file page: https://zachwright.xyz/single-file-agent-instructions-correction/
 - Complete historical WrightOps-owned single-file correction pack: https://zachwright.xyz/single-file-agent-instructions-correction/sample.md
