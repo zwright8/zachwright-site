@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A practical AI-agent cost-attribution checklist: the run, agent, attempt, fan-out, outcome, token, and cost evidence to capture before enforcing budgets."
+      content="A practical AI-agent cost-attribution checklist for daily and weekly reporting: capture run, agent, attempt, fan-out, outcome, latency, token, and cost evidence before enforcing budgets."
     />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://zachwright.xyz/ai-agent-cost-attribution-checklist/" />
@@ -15,7 +15,7 @@
     <meta property="og:title" content="AI Agent Cost Attribution Checklist" />
     <meta
       property="og:description"
-      content="Capture the evidence that makes per-agent cost, retries, fan-out, and reliability measurable before adding budget caps."
+      content="Capture the evidence that makes per-workspace cost, failures, latency, token trends, retries, and fan-out measurable before adding budget caps."
     />
     <meta property="og:url" content="https://zachwright.xyz/ai-agent-cost-attribution-checklist/" />
     <meta property="og:image" content="https://zachwright.xyz/og.png" />
@@ -26,7 +26,7 @@
     <meta name="twitter:title" content="AI Agent Cost Attribution Checklist" />
     <meta
       name="twitter:description"
-      content="Eight evidence gates for measurable AI-agent cost, fan-out, retries, and reliability."
+      content="Eight evidence gates plus daily and weekly rollups for measurable AI-agent cost, latency, token trends, retries, and reliability."
     />
     <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
     <title>AI Agent Cost Attribution Checklist | WrightOps</title>
@@ -180,6 +180,71 @@
 
       .ledger-table code { color: var(--midnight); font-weight: 800; }
 
+      .reporting-section { background: #f3f6f8; }
+
+      .reporting-grid {
+        display: grid;
+        margin-top: clamp(2.5rem, 5vw, 4rem);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .reporting-card {
+        min-width: 0;
+        padding: clamp(1.5rem, 3vw, 2.35rem);
+        border: 1px solid var(--line-light);
+        background: var(--paper);
+      }
+
+      .reporting-card span {
+        color: #687587;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .reporting-card h3 {
+        margin: 0.6rem 0 1rem;
+        font-size: clamp(1.15rem, 2vw, 1.55rem);
+      }
+
+      .reporting-card ul {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        gap: 0.7rem;
+        list-style: none;
+      }
+
+      .reporting-card li {
+        padding-left: 1rem;
+        color: #536173;
+        font-size: 0.82rem;
+        line-height: 1.6;
+        position: relative;
+      }
+
+      .reporting-card li::before {
+        position: absolute;
+        top: 0.62rem;
+        left: 0;
+        width: 0.35rem;
+        height: 0.35rem;
+        background: #5d8a0b;
+        content: "";
+      }
+
+      .reporting-rule {
+        margin: 1rem 0 0;
+        padding: 1.2rem 1.35rem;
+        border-left: 0.35rem solid #5d8a0b;
+        color: #354254;
+        background: #e8eef2;
+        font-size: 0.82rem;
+        line-height: 1.65;
+      }
+
       .public-signals {
         display: grid;
         margin-top: clamp(2.5rem, 5vw, 4rem);
@@ -270,6 +335,7 @@
 
       @media (max-width: 700px) {
         .attribution-grid { grid-template-columns: 1fr; }
+        .reporting-grid { grid-template-columns: 1fr; }
         .schema-lines div { grid-template-columns: 1fr; gap: 0.15rem; }
         .boundary-columns { grid-template-columns: 1fr; }
       }
@@ -283,9 +349,9 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "AI Agent Cost Attribution Checklist",
-        "description": "A practical checklist for the run, agent, attempt, fan-out, outcome, token, and cost evidence needed before enforcing AI-agent budgets.",
+        "description": "A practical checklist for the run, agent, attempt, fan-out, outcome, latency, token, and cost evidence needed for daily and weekly AI-agent performance reporting.",
         "datePublished": "2026-07-24",
-        "dateModified": "2026-07-24",
+        "dateModified": "2026-07-25",
         "mainEntityOfPage": "https://zachwright.xyz/ai-agent-cost-attribution-checklist/",
         "author": {
           "@type": "Organization",
@@ -322,6 +388,7 @@
         <div class="nav-links">
           <a href="#gates">Eight gates</a>
           <a href="#ledger">Minimum ledger</a>
+          <a href="#reporting">Reporting cadence</a>
           <a href="#signals">Public signals</a>
         </div>
         <a class="button button-small" href="/ai-agent-cost-reliability-snapshot/">
@@ -387,7 +454,7 @@
           <div class="page-shell summary-grid">
             <div><span>Identity</span><strong>Workflow → attempt</strong></div>
             <div><span>Usage</span><strong>Provider + model</strong></div>
-            <div><span>Control</span><strong>Retry + fan-out</strong></div>
+            <div><span>Reporting</span><strong>Daily → weekly</strong></div>
             <div><span>Truth rule</span><strong>Unknown ≠ zero</strong></div>
           </div>
         </section>
@@ -451,6 +518,51 @@
           </div>
         </section>
 
+        <section class="content-section reporting-section" id="reporting">
+          <div class="page-shell">
+            <div class="section-intro">
+              <p class="eyebrow">Reporting cadence</p>
+              <h2>Use one daily operator view and one weekly decision view.</h2>
+              <p>
+                Both views should query the same normalized ledger. The cadence
+                changes the decision window—not the definitions, denominators,
+                evidence coverage, or boundary between observed and allocated cost.
+              </p>
+            </div>
+
+            <div class="reporting-grid">
+              <article class="reporting-card">
+                <span>Daily · operator view</span>
+                <h3>Find today’s reliability and spend exceptions.</h3>
+                <ul>
+                  <li>Attempt count, first-pass completion, retries, failures, and unknown outcomes</li>
+                  <li>Observed and allocated cost by workflow or workspace, with billing basis visible</li>
+                  <li>Median and tail latency plus the share of attempts with known latency</li>
+                  <li>Input and output token totals, missing-usage count, and material day-over-day deltas</li>
+                </ul>
+              </article>
+
+              <article class="reporting-card">
+                <span>Weekly · decision view</span>
+                <h3>Choose the next instrumentation or control change.</h3>
+                <ul>
+                  <li>Cost per supplied completion outcome and failure rate by workflow or workspace</li>
+                  <li>Retry, fan-out, latency, and token-usage trends using stable definitions</li>
+                  <li>Top evidence gaps that make cost or reliability comparisons unsafe</li>
+                  <li>One bounded priority for the next week—without claiming causality or guaranteed savings</li>
+                </ul>
+              </article>
+            </div>
+
+            <p class="reporting-rule">
+              A chat or <code>/stats</code> command can be a read-only shortcut
+              to these aggregates. It should return the reporting window,
+              denominators, evidence coverage, and billing basis; it should not
+              become a second ledger or an authoritative invoice.
+            </p>
+          </div>
+        </section>
+
         <section class="evidence-section" id="signals">
           <div class="page-shell evidence-layout">
             <aside class="evidence-rail">
@@ -477,6 +589,10 @@
               </a>
               <a href="https://github.com/paperclipai/paperclip/issues/498" rel="noopener noreferrer">
                 <span><strong>Subscription versus metered billing</strong>Paperclip issue #498 describes mixed agent fleets where flat-plan runs should not be reported as per-token cash spend.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a href="https://github.com/kevin91nl/mindlens/issues/16" rel="noopener noreferrer">
+                <span><strong>Daily and weekly performance reporting</strong>Mindlens issue #16 asks for cost by workspace, failure rate, average latency, token-usage trends, and a chat-based stats view.</span>
                 <b aria-hidden="true">↗</b>
               </a>
               <a href="https://github.com/sipyourdrink-ltd/bernstein/issues/2918" rel="noopener noreferrer">
