@@ -775,6 +775,18 @@ const requiredInstructionsGuideMarkers = [
   "Browser-local evidence worksheet",
   "Exact repeated rules",
   "Volatile duplicates",
+  'id="reference-check"',
+  "Public-reference integrity check",
+  "Find GitHub repositories that agent instructions can no longer reach.",
+  "up to ten public GitHub repository references",
+  "exact public search match",
+  "Nothing leaves this browser until you run the public check.",
+  "No token or login",
+  "PSModule/docs issue 83",
+  "https://github.com/PSModule/docs/issues/83",
+  "not a WrightOps customer, endorsement",
+  "Inspect the fixed $149 one-file correction",
+  'href="/single-file-agent-instructions-correction/"',
   "It does not",
   "upload, store, or semantically validate either file",
   'src="/agents-md-vs-claude-md/worksheet.js"',
@@ -794,15 +806,27 @@ const requiredInstructionsGuideWorksheetMarkers = [
   "exact-line evidence only",
   "canonicalInput.addEventListener",
   "companionInput.addEventListener",
+  "extractPublicGitHubRepositories",
+  "readPublicRepository",
+  "checkPublicReferences",
+  "https://api.github.com/search/repositories",
+  'credentials: "omit"',
+  "repositories.slice(0, 10)",
+  "Missing references found",
+  "Do not treat unavailable as missing.",
+  "exact public repository search only",
+  "referenceCheckButton.addEventListener",
 ];
 
 const forbiddenInstructionsGuideWorksheetMarkers = [
-  "fetch(",
   "XMLHttpRequest",
   "navigator.sendBeacon",
   "localStorage",
   "sessionStorage",
   "document.cookie",
+  "Authorization",
+  "github_pat_",
+  "Bearer ",
 ];
 
 const requiredStorefrontGuideMarkers = [
@@ -1292,8 +1316,26 @@ if (missingInstructionsGuideWorksheet.length) {
 
 for (const marker of forbiddenInstructionsGuideWorksheetMarkers) {
   if (instructionsGuideWorksheet.includes(marker)) {
-    failures.push(`Instructions guide worksheet must remain browser-local: ${marker}`);
+    failures.push(`Instructions guide worksheet must preserve its credential-free public-read boundary: ${marker}`);
   }
+}
+
+const publicReferenceFetchCount = (
+  instructionsGuideWorksheet.match(/\bfetch\(/g) || []
+).length;
+if (publicReferenceFetchCount !== 1) {
+  failures.push(
+    `Expected exactly one user-triggered public GitHub reference fetch; found ${publicReferenceFetchCount}.`,
+  );
+}
+
+const publicReferenceApiHostCount = (
+  instructionsGuideWorksheet.match(/https:\/\/api\.github\.com\/search\/repositories/g) || []
+).length;
+if (publicReferenceApiHostCount !== 1) {
+  failures.push(
+    `Expected exactly one fixed public GitHub repository API host; found ${publicReferenceApiHostCount}.`,
+  );
 }
 
 if (missingStorefrontGuidePage.length) {

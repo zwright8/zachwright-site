@@ -94,6 +94,7 @@
           <a href="#choose">Choose a file</a>
           <a href="#rule">One-source rule</a>
           <a href="#worksheet">Local worksheet</a>
+          <a href="#reference-check">Reference check</a>
           <a href="#boundaries">Boundaries</a>
         </div>
         <a class="button button-small" href="/agent-ready-instructions-pr/">
@@ -369,12 +370,127 @@
               </div>
             </div>
 
+            <div class="reference-tool" id="reference-check" data-state="empty">
+              <div class="reference-tool-copy">
+                <p class="eyebrow">Public-reference integrity check</p>
+                <h3>Find GitHub repositories that agent instructions can no longer reach.</h3>
+                <p>
+                  Paste one public-repository instruction file. The checker extracts
+                  up to ten public GitHub repository references and looks for exact
+                  matches in GitHub’s public repository search only after you choose
+                  to run it.
+                </p>
+                <label for="reference-instructions">
+                  <span>Instruction file Markdown</span>
+                  <strong>AGENTS.md, CLAUDE.md, or one workflow template</strong>
+                </label>
+                <textarea
+                  id="reference-instructions"
+                  rows="15"
+                  maxlength="100000"
+                  spellcheck="false"
+                  autocomplete="off"
+                  placeholder="# Repository setup&#10;&#10;Clone https://github.com/example/project before running the documented workflow."
+                ></textarea>
+                <p class="reference-input-note">
+                  Browser-local parsing · Public repository URLs only · No token or login
+                </p>
+              </div>
+
+              <div
+                class="reference-tool-results"
+                aria-live="polite"
+                aria-busy="false"
+              >
+                <div class="drift-verdict">
+                  <span>Reference state</span>
+                  <strong id="reference-verdict">Add one file</strong>
+                  <p id="reference-summary">
+                    Nothing leaves this browser until you run the public check.
+                  </p>
+                </div>
+                <dl class="drift-metrics">
+                  <div>
+                    <dt>Repository refs</dt>
+                    <dd id="reference-count">—</dd>
+                  </div>
+                  <div>
+                    <dt>Exact match</dt>
+                    <dd id="reference-reachable-count">—</dd>
+                  </div>
+                  <div>
+                    <dt>No exact match</dt>
+                    <dd id="reference-missing-count">—</dd>
+                  </div>
+                  <div>
+                    <dt>Unavailable</dt>
+                    <dd id="reference-unavailable-count">—</dd>
+                  </div>
+                </dl>
+                <ol class="reference-result-list" id="reference-result-list"></ol>
+                <div class="drift-actions">
+                  <button
+                    class="button"
+                    id="check-public-github-references"
+                    type="button"
+                    disabled
+                  >
+                    Check public repository names
+                  </button>
+                  <button
+                    class="drift-clear"
+                    id="copy-reference-summary"
+                    type="button"
+                    disabled
+                  >
+                    Copy evidence summary
+                  </button>
+                  <button
+                    class="drift-clear"
+                    id="clear-reference-check"
+                    type="button"
+                  >
+                    Clear local input
+                  </button>
+                  <span id="reference-action-status" role="status"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="reference-signal">
+              <div>
+                <span>Fresh public signal · not a customer result</span>
+                <strong>PSModule/docs issue 83</strong>
+              </div>
+              <p>
+                A PSModule member reports that root <code>AGENTS.md</code> directs
+                agents to a GitHub repository that returns 404. The issue is a
+                public problem example—not a WrightOps customer, endorsement,
+                written scope, testimonial, or purchase signal.
+              </p>
+              <a
+                class="text-link"
+                href="https://github.com/PSModule/docs/issues/83"
+                rel="noopener noreferrer"
+              >
+                Inspect the public issue <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                class="text-link"
+                href="/single-file-agent-instructions-correction/"
+              >
+                Inspect the fixed $149 one-file correction <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+
             <div class="drift-boundary">
               <strong>Bounded signal, not an automated audit.</strong>
               <p>
                 Exact-line comparison cannot prove two differently worded rules
-                agree. Review commands, branch policy, release gates, approval
-                boundaries, and file ownership at one immutable revision.
+                agree. An exact public search match cannot prove that a referenced
+                repository is accessible to every collaborator or is the right
+                dependency. Review commands, paths, branch policy, release gates,
+                approval boundaries, and file ownership at one immutable revision.
               </p>
               <a class="text-link" href="/agent-ready-instructions-pr/">
                 Inspect the $149 / $249 correction scope <span aria-hidden="true">↗</span>
