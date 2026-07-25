@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A practical AI-agent cost-attribution checklist for daily and weekly reporting: capture run, agent, attempt, fan-out, outcome, latency, token, and cost evidence before enforcing budgets."
+      content="A practical AI-agent cost-attribution and metering-contract checklist: define stable per-stage and per-cycle token, cost, duration, model, outcome, and evidence fields before enforcing budgets."
     />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://zachwright.xyz/ai-agent-cost-attribution-checklist/" />
@@ -15,7 +15,7 @@
     <meta property="og:title" content="AI Agent Cost Attribution Checklist" />
     <meta
       property="og:description"
-      content="Capture the evidence that makes per-workspace cost, failures, latency, token trends, retries, and fan-out measurable before adding budget caps."
+      content="Define a versioned metering contract and capture the evidence that makes per-workspace cost, failures, latency, token trends, retries, and fan-out measurable."
     />
     <meta property="og:url" content="https://zachwright.xyz/ai-agent-cost-attribution-checklist/" />
     <meta property="og:image" content="https://zachwright.xyz/og.png" />
@@ -26,7 +26,7 @@
     <meta name="twitter:title" content="AI Agent Cost Attribution Checklist" />
     <meta
       name="twitter:description"
-      content="Eight evidence gates plus daily and weekly rollups for measurable AI-agent cost, latency, token trends, retries, and reliability."
+      content="Eight evidence gates, a stable per-stage/per-cycle metering contract, and daily and weekly rollups for measurable AI-agent cost and reliability."
     />
     <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
     <title>AI Agent Cost Attribution Checklist | WrightOps</title>
@@ -365,6 +365,7 @@
         },
         "about": [
           "AI agent cost attribution",
+          "AI agent metering contract",
           "LLM token cost",
           "AI agent reliability",
           "multi-agent fan-out",
@@ -388,6 +389,7 @@
         <div class="nav-links">
           <a href="#gates">Eight gates</a>
           <a href="#ledger">Minimum ledger</a>
+          <a href="#contract">Stable contract</a>
           <a href="#reporting">Reporting cadence</a>
           <a href="#signals">Public signals</a>
         </div>
@@ -409,7 +411,8 @@
               <p class="hero-lede">
                 A budget limit cannot repair a ledger that cannot identify the
                 run, agent, attempt, retry, or fan-out path that spent the money.
-                Capture these eight evidence gates first.
+                Capture these eight evidence gates, then lock the fields, units,
+                aggregation rules, and compatibility boundary as a versioned contract.
               </p>
               <div class="hero-actions">
                 <a class="button" href="#gates">
@@ -454,7 +457,7 @@
           <div class="page-shell summary-grid">
             <div><span>Identity</span><strong>Workflow → attempt</strong></div>
             <div><span>Usage</span><strong>Provider + model</strong></div>
-            <div><span>Reporting</span><strong>Daily → weekly</strong></div>
+            <div><span>Contract</span><strong>Stage → cycle</strong></div>
             <div><span>Truth rule</span><strong>Unknown ≠ zero</strong></div>
           </div>
         </section>
@@ -515,6 +518,70 @@
                 </tbody>
               </table>
             </div>
+          </div>
+        </section>
+
+        <section class="content-section reporting-section" id="contract">
+          <div class="page-shell">
+            <div class="section-intro">
+              <p class="eyebrow">Stable metering contract</p>
+              <h2>Document what emitters guarantee before dashboards depend on it.</h2>
+              <p>
+                A field map becomes a contract only when every spending stage
+                emits the same versioned envelope, units and aggregation rules
+                are explicit, and consumers reject unsupported semantics instead
+                of silently guessing.
+              </p>
+            </div>
+
+            <div class="reporting-grid">
+              <article class="reporting-card">
+                <span>Envelope · every record</span>
+                <h3>Name the grain before naming the metric.</h3>
+                <ul>
+                  <li><code>schema_version</code>, <code>record_kind</code>, and <code>pipeline_key</code> identify the contract, stage-or-cycle grain, and emitting pipeline.</li>
+                  <li>Workflow, run, task, agent, attempt, parent-attempt, provider, and model keys retain attribution across retries and fan-out.</li>
+                  <li>Each pipeline publishes an inventory of stages that can spend; every inventoried stage must emit or explicitly report why it could not.</li>
+                </ul>
+              </article>
+
+              <article class="reporting-card">
+                <span>Units · never implicit</span>
+                <h3>Make type, unit, and null behavior inseparable.</h3>
+                <ul>
+                  <li>Token counts are non-negative integers split by documented kinds; missing counts are null, not zero.</li>
+                  <li>Money is a decimal amount plus ISO 4217 currency and a declared observed-or-allocated basis.</li>
+                  <li>Duration is an integer in milliseconds; timestamps use RFC 3339 UTC; model identifiers retain the provider-qualified value when supplied.</li>
+                </ul>
+              </article>
+
+              <article class="reporting-card">
+                <span>Aggregation · stage to cycle</span>
+                <h3>Roll up without erasing evidence gaps.</h3>
+                <ul>
+                  <li>Cycle totals sum conforming stage records once, including retries and repair attempts as separate spend.</li>
+                  <li>Counts, known-value sums, and evidence-coverage denominators travel together; an incomplete cycle remains incomplete.</li>
+                  <li>Observed and allocated cost roll up separately, and neither is promoted to an invoice or settled-cash claim.</li>
+                </ul>
+              </article>
+
+              <article class="reporting-card">
+                <span>Compatibility · explicit policy</span>
+                <h3>Version semantic changes, not just payload shapes.</h3>
+                <ul>
+                  <li>Additive optional fields may stay within a major version when older consumers can ignore them safely.</li>
+                  <li>Renames, removals, type changes, unit changes, and changed metric meaning require a new major version.</li>
+                  <li>Emitters validate fixtures for every spending stage; dashboards read documented fields only and fail closed on unsupported major versions.</li>
+                </ul>
+              </article>
+            </div>
+
+            <p class="reporting-rule">
+              Contract acceptance test: one fixture per spending stage validates
+              against the declared schema, one cycle fixture proves the rollup,
+              and a consumer-field audit proves the dashboard reads no
+              undocumented field.
+            </p>
           </div>
         </section>
 
@@ -579,6 +646,10 @@
             </aside>
 
             <div class="public-signals">
+              <a href="https://github.com/Poetic-Poems/agent-ops/issues/81" rel="noopener noreferrer">
+                <span><strong>Stable per-stage and per-cycle metering contract</strong>Poetic Poems issue #81 asks for documented token, cost, duration, model, aggregation, and compatibility semantics that both pipelines emit and the dashboard consumes.</span>
+                <b aria-hidden="true">↗</b>
+              </a>
               <a href="https://github.com/dimagi/open-chat-studio/issues/3906" rel="noopener noreferrer">
                 <span><strong>Evaluation-run cost visibility</strong>Open Chat Studio issue #3906 asks how much one evaluation run cost and which evaluator was most expensive.</span>
                 <b aria-hidden="true">↗</b>
