@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-26",
+    "slug": "2026-07-26",
+    "title": "Swarm Daily: MCP Needs a Stateless Core",
+    "url": "/updates/2026-07-26.html",
+    "preview": "MCP's July 28 revision removes protocol sessions, making remote tool transport horizontally scalable while moving state into explicit application handles and conformance tests."
+  },
+  {
     "date": "2026-07-25",
     "slug": "2026-07-25",
     "title": "Swarm Daily: Storage Needs an Edge Gate",

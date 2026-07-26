@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: MCP Needs a Stateless Core | zachwright.xyz</title>
+  <meta name="description" content="MCP's July 28 revision removes protocol sessions, making remote tool transport horizontally scalable while moving state into explicit application handles and conformance tests." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: MCP Needs a Stateless Core</h1>
+          <p>MCP's July 28 revision removes protocol sessions, making remote tool transport horizontally scalable while moving state into explicit application handles and conformance tests.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The next MCP revision removes a hidden infrastructure tax: remote tool servers no longer need protocol sessions, sticky routing, or a shared session store just to handle ordinary calls.</strong></p>
+          <p>The MCP `2026-07-28` release candidate removes the <code>initialize</code>/<code>initialized</code> handshake and <code>Mcp-Session-Id</code>. A request can land on any healthy instance behind a normal load balancer, while gateways can route and observe from protocol headers. This is a transport simplification, not a state deletion: a browser, basket, or long-running job still needs an explicit application handle that the model passes between calls.</p>
+          <p>GitHub's MCP Server is already running the new shape. It removed Redis session reads and writes, moved logging and secret-scanning inspection to guaranteed HTTP headers, and upgraded elicitation for separate request/response steps. The operator move is clear: migrate the wire contract, then prove it with conformance tests.</p>
+          <ul>
+            <li>MCP's release candidate makes the core stateless, adds extensions for MCP Apps and Tasks, hardens authorization, and sets a formal deprecation policy. Final publication is scheduled for July 28.
+            <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/">https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/</a></li>
+            <li>GitHub MCP Server supports the revision early, eliminating Redis sessions and deep packet inspection while adding official conformance-test guidance.
+            <a href="https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/">https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub MCP Server</strong> - study the migration pattern: remove protocol-session storage, read stable headers for logging and secret scanning, and keep old/new clients compatible through the official Go SDK.
+            <a href="https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/">https://github.blog/changelog/2026-07-23-github-mcp-server-supports-the-next-mcp-specification/</a></li>
+            <li><strong>MCP Conformance Test Framework</strong> - run client and server scenarios in CI, keep expected failures explicit, and make protocol upgrades fail loudly instead of discovering them in production.
+            <a href="https://github.com/modelcontextprotocol/conformance">https://github.com/modelcontextprotocol/conformance</a></li>
+            <li><strong>MCP C# SDK stateless mode</strong> - use stateless transport for `2026-07-28`, then carry required state as application data; subscriptions and unsolicited server-to-client requests remain stateful concerns.
+            <a href="https://csharp.sdk.modelcontextprotocol.io/concepts/stateless/stateless.html">https://csharp.sdk.modelcontextprotocol.io/concepts/stateless/stateless.html</a></li>
+            <li><strong>Official MCP Go SDK</strong> - use the maintained SDK path that GitHub's server has adopted, rather than hand-rolling the new transport semantics.
+            <a href="https://github.com/modelcontextprotocol/go-sdk">https://github.com/modelcontextprotocol/go-sdk</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Stateless transport moves state into the product contract.</strong> IDs for browsers, carts, jobs, and approvals now need ownership, expiry, replay rules, and observability.</li>
+            <li><strong>Gateways get simpler and more useful.</strong> Round-robin routing, header-based policy, cacheable tool discovery, and ordinary HTTP tracing reduce special infrastructure, but auth assumptions must be re-audited.</li>
+            <li><strong>Conformance becomes the release gate.</strong> SDK compatibility is a starting claim; scenario results are the evidence that a client or server survives the breaking revision.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Protocol</strong> - the protocol is finally simpler; the humans are still the stateful part of the system.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/protocol.png">https://imgs.xkcd.com/comics/protocol.png</a><br>Post: <a href="https://xkcd.com/1323/">https://xkcd.com/1323/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
