@@ -640,21 +640,29 @@
       <section class="next-step" aria-labelledby="next-step-title">
         <div>
           <p class="eyebrow">One-file paid next step</p>
-          <h2 id="next-step-title">Over budget and unsure what to remove?</h2>
-          <p>
-            The fixed $149 Single-File Agent Instructions Correction returns a
-            review-ready replacement, unified diff, evidence notes, and
-            acceptance checks for one existing public-repository instruction
-            file. Written scope and settled PayPal Business payment are
-            required before work.
+          <h2 id="next-step-title">Measure first, then use the bounded route.</h2>
+          <p id="next-step-copy">
+            Paste the file to check the line-count boundary. The fixed $149
+            correction is capped at one existing public file and 250 source
+            lines; larger or repository-wide instruction drift starts with the
+            $750 diagnostic audit. Written scope and settled PayPal Business
+            payment are required before work.
           </p>
         </div>
         <div class="next-step-actions">
-          <a class="cta" href="/single-file-agent-instructions-correction/">
-            See the $149 scope &amp; sample
+          <a
+            class="cta"
+            id="primary-next-step"
+            href="/single-file-agent-instructions-correction/"
+          >
+            Review the $149 correction boundary
           </a>
-          <a class="cta cta-secondary" href="/agent-ready-repository-audit/#scope-builder">
-            Open the active $750 self-serve audit
+          <a
+            class="cta cta-secondary"
+            id="secondary-next-step"
+            href="/agent-ready-repository-audit/#scope-builder"
+          >
+            Review the $750 diagnostic audit
           </a>
         </div>
       </section>
@@ -711,7 +719,12 @@
         const copySummary = document.querySelector("#copy-summary");
         const clearText = document.querySelector("#clear-text");
         const copyStatus = document.querySelector("#copy-status");
+        const nextStepTitle = document.querySelector("#next-step-title");
+        const nextStepCopy = document.querySelector("#next-step-copy");
+        const primaryNextStep = document.querySelector("#primary-next-step");
+        const secondaryNextStep = document.querySelector("#secondary-next-step");
         const encoder = new TextEncoder();
+        const singleFileLineCap = 250;
 
         let currentSummary = "";
 
@@ -722,6 +735,50 @@
         function readBudget() {
           const parsed = Number.parseInt(byteBudget.value, 10);
           return Number.isFinite(parsed) && parsed > 0 ? parsed : 32768;
+        }
+
+        function updateNextStep(lines) {
+          if (lines === 0) {
+            nextStepTitle.textContent = "Measure first, then use the bounded route.";
+            nextStepCopy.textContent =
+              "Paste the file to check the line-count boundary. The fixed $149 correction is capped at one existing public file and 250 source lines; larger or repository-wide instruction drift starts with the $750 diagnostic audit. Written scope and settled PayPal Business payment are required before work.";
+            primaryNextStep.href =
+              "/single-file-agent-instructions-correction/";
+            primaryNextStep.textContent =
+              "Review the $149 correction boundary";
+            secondaryNextStep.href =
+              "/agent-ready-repository-audit/#scope-builder";
+            secondaryNextStep.textContent =
+              "Review the $750 diagnostic audit";
+            return "Measure the file before selecting a paid route";
+          }
+
+          if (lines <= singleFileLineCap) {
+            nextStepTitle.textContent =
+              "Line count fits the $149 single-file boundary.";
+            nextStepCopy.textContent =
+              `This file has ${formatNumber(lines)} source ${lines === 1 ? "line" : "lines"}. The line count fits the fixed $149 correction boundary; final fit still requires one existing public instruction file, public evidence, and no application-code or repository-write scope.`;
+            primaryNextStep.href =
+              "/single-file-agent-instructions-correction/";
+            primaryNextStep.textContent = "See the $149 scope and sample";
+            secondaryNextStep.href =
+              "/agent-ready-repository-audit/#scope-builder";
+            secondaryNextStep.textContent =
+              "Need repository-wide evidence? Review $750";
+            return "$149 correction candidate; final scope confirmation required";
+          }
+
+          nextStepTitle.textContent =
+            "Too large for the $149 correction; start with the audit.";
+          nextStepCopy.textContent =
+            `This file has ${formatNumber(lines)} source lines, above the 250-line correction cap. The $750 audit can map repository truth, instruction drift, verification evidence, and a bounded repair order. It is a diagnostic and does not promise a rewritten file or repository changes.`;
+          primaryNextStep.href =
+            "/agent-ready-repository-audit/#scope-builder";
+          primaryNextStep.textContent = "Review the $750 diagnostic audit";
+          secondaryNextStep.href =
+            "/single-file-agent-instructions-correction/#boundaries";
+          secondaryNextStep.textContent = "See why the $149 route does not fit";
+          return "$750 diagnostic audit candidate; $149 line cap exceeded";
         }
 
         function measure() {
@@ -759,6 +816,7 @@
             statusDetail.textContent = `${formatNumber(remaining)} ${remaining === 1 ? "byte remains" : "bytes remain"} before ${formatNumber(budget)}.`;
           }
 
+          const recommendedNextStep = updateNextStep(lines);
           currentSummary = [
             "AGENTS.md size budget summary",
             `UTF-8 bytes: ${bytes}`,
@@ -766,6 +824,7 @@
             `Lines: ${lines}`,
             `Selected budget: ${budget}`,
             `Budget delta: ${remaining}`,
+            `Recommended next step: ${recommendedNextStep}`,
           ].join("\n");
         }
 
