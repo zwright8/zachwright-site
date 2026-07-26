@@ -107,11 +107,11 @@ const engagementOptions = [
     price: "$249",
     timing: "Private PayPal G&S checkout after written scope confirmation",
     description:
-      "A two-file correction pack for root AGENTS.md plus one companion, grounded in public evidence at one immutable revision.",
+      "A two-file correction pack for root AGENTS.md plus one agent or contributor workflow companion, grounded in public evidence at one immutable revision.",
     bullets: [
-      "Root AGENTS.md plus root CLAUDE.md or Copilot instructions",
+      "Root AGENTS.md plus root CLAUDE.md, Copilot instructions, or a concise root CONTRIBUTING.md workflow checklist",
       "Replacement Markdown, unified diff, evidence notes, and acceptance checks",
-      "One factual correction round requested within seven days",
+      "Maximum 120 total WrightOps labor minutes, including one factual correction round",
       "No branch, pull request, merge, adoption, or outcome guarantee",
     ],
     primaryLabel: "See the $249 foundation scope",
