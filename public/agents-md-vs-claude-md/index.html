@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="A practical guide to choosing AGENTS.md, CLAUDE.md, or .github/copilot-instructions.md without duplicating repository rules."
+      content="Choose AGENTS.md, CLAUDE.md, or Copilot instructions, fix case-sensitive filenames, and keep repository rules from drifting."
     />
     <meta
       name="robots"
@@ -57,7 +57,7 @@
         "headline": "AGENTS.md vs CLAUDE.md vs Copilot instructions",
         "description": "A practical guide to choosing repository-level coding-agent instruction files without duplicating shared rules.",
         "datePublished": "2026-07-19",
-        "dateModified": "2026-07-25",
+        "dateModified": "2026-07-26",
         "mainEntityOfPage": "https://zachwright.xyz/agents-md-vs-claude-md/",
         "author": {
           "@type": "Organization",
@@ -286,6 +286,7 @@
               <li><span>02</span><h3>Commands are evidenced</h3><p>Setup and verification commands come from committed public sources, not convention or memory.</p></li>
               <li><span>03</span><h3>Rules do not conflict</h3><p>Branch, commit, testing, release, and approval instructions agree across the files agents can read.</p></li>
               <li><span>04</span><h3>One source owns change</h3><p>A future maintainer can tell where to edit each shared rule without updating three copies.</p></li>
+              <li><span>05</span><h3>Filename case is exact</h3><p>Use the documented filename exactly. On a case-sensitive filesystem, <code>claude.md</code> and <code>CLAUDE.md</code> are different paths.</p></li>
             </ol>
           </div>
         </section>
@@ -544,6 +545,20 @@
               <details>
                 <summary>Should undocumented commands be added as recommendations?</summary>
                 <p>No. Mark the evidence gap and ask a maintainer to establish the command in a canonical public source first.</p>
+              </details>
+              <details>
+                <summary>Does the filename’s capitalization matter?</summary>
+                <p>
+                  Yes. Claude Code documents the project instruction file as
+                  <code>CLAUDE.md</code>. A lowercase <code>claude.md</code> is a
+                  different path on case-sensitive systems, so rename it with
+                  history preserved, remove the stale duplicate, and confirm the
+                  expected file appears in <code>/memory</code>.
+                  <a
+                    href="https://code.claude.com/docs/en/memory"
+                    rel="noopener noreferrer"
+                  >Check the official loading rules.</a>
+                </p>
               </details>
               <details>
                 <summary>Does the free preflight execute repository code?</summary>
