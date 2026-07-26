@@ -1035,6 +1035,8 @@ const requiredFixPlanPageMarkers = [
   'id="scope-builder"',
   'id="fix-plan-scope-builder"',
   "A successful check is WrightOps' automated written fit confirmation",
+  "Return to this page after the GitHub Actions audit report appears.",
+  "Ignore any older repository request or checkout link",
   "completed WrightOps audit issue",
   "Confirm $149 fixed scope",
   'id="paypal-checkout-panel" hidden',
@@ -1047,8 +1049,9 @@ const requiredFixPlanPageMarkers = [
   "let scopeRevision = 0",
   "confirmationRevision !== scopeRevision",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=audit-request.yml",
-  "https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml",
   "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md",
+  'href="#terms"',
+  'id="terms"',
 ];
 
 const requiredBountyReviewPageMarkers = [
@@ -2070,9 +2073,28 @@ for (const marker of [
   }
 }
 
-if (fixPlanScopeCtaCount !== 3) {
+if (fixPlanScopeCtaCount !== 0) {
   failures.push(
-    `Expected the active Fix Plan page to preserve exactly three audit-gated request fallbacks; found ${fixPlanScopeCtaCount}.`,
+    `Expected the active Fix Plan page to remove the contradictory legacy request route; found ${fixPlanScopeCtaCount}.`,
+  );
+}
+
+if (
+  fixPlanPage.includes(
+    "https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/agent-ready-fix-plan.md",
+  )
+) {
+  failures.push(
+    "The active Fix Plan page must not send buyers to legacy terms that expose a contradictory checkout route.",
+  );
+}
+
+const fixPlanSelfServeCtaCount = (
+  fixPlanPage.match(/href="#scope-builder"/g) || []
+).length;
+if (fixPlanSelfServeCtaCount < 3) {
+  failures.push(
+    `Expected the Fix Plan offer to preserve at least three self-serve confirmation routes; found ${fixPlanSelfServeCtaCount}.`,
   );
 }
 

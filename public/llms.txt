@@ -16,8 +16,7 @@ AI Agent Cost & Reliability Snapshot terms: https://github.com/wrightops-ai/agen
 AI Agent Cost & Reliability normalized run contract: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/ai-agent-cost-reliability-run-contract.md
 AI Agent Cost Attribution Checklist: https://zachwright.xyz/ai-agent-cost-attribution-checklist/
 AI Agent Structured-Output Reliability Checklist: https://zachwright.xyz/ai-agent-structured-output-reliability-checklist/
-Fix Plan request: https://github.com/wrightops-ai/agent-ready-repo-auditor/issues/new?template=fix-plan-request.yml
-Fix Plan service page: https://zachwright.xyz/agent-ready-fix-plan/
+Fix Plan audit-gated confirmation and service page: https://zachwright.xyz/agent-ready-fix-plan/#scope-builder
 Complete sample: https://github.com/wrightops-ai/agent-ready-repo-auditor/blob/main/docs/sample-fix-plan-claude-code.md
 Terms: https://zachwright.xyz/agent-ready-fix-plan/#terms
 Agent Instructions Correction scope builder and service page: https://zachwright.xyz/agent-ready-instructions-pr/
@@ -110,7 +109,9 @@ Agent-Ready Repo Fix Plan:
 - At most 45 minutes of human review; no implementation or repository changes.
 - The complete demonstration remains public for scope transparency.
 - The authorized PayPal Business Goods & Services link remains hidden until the gate verifies the exact public repository, immutable revision, trusted automated audit report, requester authority, fixed scope, ordinary-software boundary, and settlement/refund acknowledgements.
-- A GitHub or business-email fallback is a non-binding request and requires a manual written WrightOps fit confirmation before payment.
+- After the GitHub Actions audit report appears, return to the service page and use its browser-local confirmation gate.
+- Ignore older repository Fix Plan request or checkout links; only the service page's successful evidence gate reveals the active checkout path.
+- A business-email fallback is a non-binding request and requires a manual written WrightOps fit confirmation before payment.
 - A page view, failed or successful confirmation attempt, scope request, or checkout opening is not a customer, contract, payment, revenue, or settlement. Work begins only after provider-confirmed settled payment.
 
 Agent Instructions Correction:
