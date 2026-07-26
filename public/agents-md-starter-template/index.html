@@ -6,14 +6,14 @@
     <meta name="theme-color" content="#0b1220" />
     <meta
       name="description"
-      content="Build, copy, or download a free AGENTS.md file from repository facts you provide. Browser-local, no login, analytics, input upload, or invented commands."
+      content="Build, copy, or download a free AGENTS.md file from repository facts, commands, and verification obligations you provide. Browser-local, no login, analytics, input upload, or invented commands."
     />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://zachwright.xyz/agents-md-starter-template/" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="WrightOps" />
     <meta property="og:title" content="Free AGENTS.md Builder & Starter Template" />
-    <meta property="og:description" content="Build a cautious AGENTS.md from your own repository facts, with local completeness checks and no invented commands." />
+    <meta property="og:description" content="Build a cautious AGENTS.md from your repository facts, commands, and multi-environment verification obligations, with no invented evidence." />
     <meta property="og:url" content="https://zachwright.xyz/agents-md-starter-template/" />
     <meta property="og:image" content="https://zachwright.xyz/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -21,7 +21,7 @@
     <meta property="og:image:alt" content="WrightOps — evidence before automation" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Free AGENTS.md Builder & Starter Template" />
-    <meta name="twitter:description" content="Generate a repository instruction starter locally from facts and commands you provide." />
+    <meta name="twitter:description" content="Generate repository instructions locally from facts, commands, and verification obligations you provide." />
     <meta name="twitter:image" content="https://zachwright.xyz/og.png" />
     <title>Free AGENTS.md Builder & Starter Template | WrightOps</title>
     <link rel="stylesheet" href="/agent-ready-repository-audit/styles.css" />
@@ -36,7 +36,7 @@
             "headline": "Free AGENTS.md builder and starter template",
             "description": "An evidence-first builder for repository-level coding-agent instructions.",
             "datePublished": "2026-07-21",
-            "dateModified": "2026-07-23",
+            "dateModified": "2026-07-26",
             "mainEntityOfPage": "https://zachwright.xyz/agents-md-starter-template/",
             "author": { "@type": "Organization", "name": "WrightOps", "url": "https://zachwright.xyz/" },
             "publisher": { "@type": "Organization", "name": "WrightOps", "url": "https://zachwright.xyz/" },
@@ -138,6 +138,12 @@
 [verified test, lint, typecheck, or build command]
 ```
 
+## Verification requirements
+
+&lt;!-- Name distinct environments, generated-output checks, or full-suite obligations that a generic green run does not prove. --&gt;
+
+- [environment or output] — [required evidence]
+
 ## Change boundaries
 
 - Ask before destructive, irreversible, production, credentialed, or paid actions.
@@ -178,7 +184,7 @@
                 <div class="builder-progress" aria-live="polite">
                   <div>
                     <span>Evidence supplied</span>
-                    <strong id="builder-score">0 / 5</strong>
+                    <strong id="builder-score">0 / 6</strong>
                   </div>
                   <div class="builder-meter" aria-hidden="true"><span id="builder-meter"></span></div>
                   <p id="builder-guidance">Add a purpose, repository map, and verified commands to strengthen the file.</p>
@@ -213,6 +219,12 @@
                   <span>Exact test, lint, typecheck, or build commands. Optional.</span>
                 </label>
                 <textarea id="verification-commands" name="verification-commands" maxlength="1200" rows="5" spellcheck="false" placeholder="npm test&#10;npm run build"></textarea>
+
+                <label for="verification-requirements">
+                  Verification requirements
+                  <span>Multi-backend, generated-output, and full-suite obligations that a generic green run does not prove. Optional.</span>
+                </label>
+                <textarea id="verification-requirements" name="verification-requirements" maxlength="1400" rows="5" placeholder="MongoDB — run the complete database suite&#10;Postgres — run the complete database suite&#10;Generated output — rebuild lib/ before testing"></textarea>
 
                 <label for="project-boundaries">
                   Project-specific boundaries

@@ -36,6 +36,12 @@
 [verified test, lint, typecheck, or build command]
 ```
 
+## Verification requirements
+
+<!-- Name distinct environments, generated-output checks, or full-suite obligations that a generic green run does not prove. Delete this section if none apply. -->
+
+- [environment or output] — [required evidence]
+
 ## Change boundaries
 
 - Ask before destructive, irreversible, production, credentialed, or paid actions.
@@ -47,4 +53,3 @@
 - Summarize the files changed and the behavior affected.
 - Report the exact verification performed and its result.
 - Call out anything not tested, any unresolved risk, and any follow-up that still needs an owner.
-

@@ -26,6 +26,7 @@ assert.match(empty, /## Completion/);
 assert.doesNotMatch(empty, /## Purpose/);
 assert.doesNotMatch(empty, /## Setup/);
 assert.doesNotMatch(empty, /## Verification/);
+assert.doesNotMatch(empty, /## Verification requirements/);
 assert.doesNotMatch(empty, /\[verified/);
 
 const completeInput = {
@@ -34,6 +35,8 @@ const completeInput = {
   repositoryMap: "src/ — application source\n* tests/ — automated checks",
   setupCommands: "npm ci",
   verificationCommands: "npm test\nnpm run build",
+  verificationRequirements:
+    "MongoDB — run the complete database suite\nPostgres — run the complete database suite\nGenerated output — rebuild lib/ before testing",
   projectBoundaries:
     "Do not edit generated/ by hand.\nAsk before changing the public API.",
   nestedInstructions: true,
@@ -53,8 +56,12 @@ assert.match(
   complete,
   /## Verification\n\n```sh\nnpm test\nnpm run build\n```/,
 );
+assert.match(
+  complete,
+  /## Verification requirements\n\n- MongoDB — run the complete database suite\n- Postgres — run the complete database suite\n- Generated output — rebuild lib\/ before testing/,
+);
 assert.match(complete, /## Project-specific boundaries/);
-assert.equal(evidenceScore(completeInput), 5);
+assert.equal(evidenceScore(completeInput), 6);
 assert.equal(evidenceScore({ purpose: "Known purpose" }), 1);
 assert.deepEqual(nonEmptyLines(" one \n\n two\r\n"), ["one", "two"]);
 
@@ -66,9 +73,11 @@ for (const marker of [
   'id="builder-score"',
   'id="builder-meter"',
   'id="builder-status"',
+  'id="verification-requirements"',
   'src="/agents-md-starter-template/builder.js"',
   "Nothing is submitted, stored, or sent to WrightOps",
   "Missing evidence stays out of the generated file",
+  "Multi-backend, generated-output, and full-suite obligations",
   "WrightOps AGENTS.md Builder",
   '"@type": "WebApplication"',
 ]) {
@@ -97,5 +106,5 @@ assert.ok(script.includes('anchor.download = "AGENTS.md"'));
 assert.ok(script.includes('new Blob([output], { type: "text/markdown;charset=utf-8" })'));
 
 console.log(
-  "AGENTS.md builder check passed: 2 generation cases, 5 evidence gates, browser-local contract.",
+  "AGENTS.md builder check passed: 2 generation cases, 6 evidence gates, browser-local contract.",
 );

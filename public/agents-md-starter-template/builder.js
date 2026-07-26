@@ -66,6 +66,7 @@
     const name = cleanText(input.projectName);
     const purpose = cleanText(input.purpose);
     const map = bulletLines(input.repositoryMap);
+    const verificationRequirements = bulletLines(input.verificationRequirements);
     const projectBoundaries = bulletLines(input.projectBoundaries);
     const heading = name ? `# ${name} repository instructions` : "# Repository instructions";
     const output = [heading, ""];
@@ -97,6 +98,15 @@
       ...commandBlock("Verification", input.verificationCommands),
     );
 
+    if (verificationRequirements.length) {
+      output.push(
+        "## Verification requirements",
+        "",
+        ...verificationRequirements,
+        "",
+      );
+    }
+
     if (projectBoundaries.length) {
       output.push("## Project-specific boundaries", "", ...projectBoundaries, "");
     }
@@ -120,6 +130,7 @@
       nonEmptyLines(input.repositoryMap).length,
       nonEmptyLines(input.setupCommands).length,
       nonEmptyLines(input.verificationCommands).length,
+      nonEmptyLines(input.verificationRequirements).length,
       nonEmptyLines(input.projectBoundaries).length,
     ].filter(Boolean).length;
   }
@@ -136,6 +147,7 @@
       repositoryMap: document.querySelector("#repository-map"),
       setupCommands: document.querySelector("#setup-commands"),
       verificationCommands: document.querySelector("#verification-commands"),
+      verificationRequirements: document.querySelector("#verification-requirements"),
       projectBoundaries: document.querySelector("#project-boundaries"),
       nestedInstructions: document.querySelector("#nested-instructions"),
       output: document.querySelector("#generated-agents"),
@@ -155,6 +167,7 @@
         repositoryMap: elements.repositoryMap.value,
         setupCommands: elements.setupCommands.value,
         verificationCommands: elements.verificationCommands.value,
+        verificationRequirements: elements.verificationRequirements.value,
         projectBoundaries: elements.projectBoundaries.value,
         nestedInstructions: elements.nestedInstructions.checked,
       };
@@ -167,12 +180,12 @@
       const lineCount = output.trimEnd().split("\n").length;
 
       elements.output.textContent = output;
-      elements.score.textContent = `${score} / 5`;
-      elements.meter.style.width = `${score * 20}%`;
+      elements.score.textContent = `${score} / 6`;
+      elements.meter.style.width = `${(score / 6) * 100}%`;
       elements.lines.textContent = `${lineCount} ${lineCount === 1 ? "line" : "lines"}`;
       elements.guidance.textContent =
-        score === 5
-          ? "All five evidence areas are represented. Verify the generated file before committing it."
+        score === 6
+          ? "All six evidence areas are represented. Verify the generated file before committing it."
           : "Missing evidence stays omitted. Add only facts and commands you have verified.";
       return output;
     }
