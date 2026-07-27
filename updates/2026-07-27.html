@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Production Builds Need a Rehearsal | zachwright.xyz</title>
+  <meta name="description" content="Production-build test harnesses, rollback workflows, and agent-assisted CI repair turn deployment into a rehearsable, reversible operating loop." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Production Builds Need a Rehearsal</h1>
+          <p>Production-build test harnesses, rollback workflows, and agent-assisted CI repair turn deployment into a rehearsable, reversible operating loop.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>“Works locally” is losing its status as a useful release signal. The operator unit is becoming: build the shipped artifact, exercise its real runtime, and keep a scripted recovery path ready.</strong></p>
+          <p>Cloudflare’s new <code>createTestHarness()</code> runs integration tests against Workers built by Wrangler or the Cloudflare Vite plugin. The harness can route across multiple Workers, reset storage, inspect runtime logs, mock upstream fetches, and serve Playwright tests. That is production parity turned into a repeatable fixture instead of a best-effort staging environment.</p>
+          <p>Vercel’s rollback workflow closes the other half of the loop: restore service first, compare logs, bisect the bad deployment, verify a preview, then promote the fix. A deployment that cannot be rehearsed or reversed is not finished; it is merely live.</p>
+          <ul>
+            <li>Cloudflare’s test harness uses the production build output and exposes the runtime surfaces that integration tests actually need: <a href="https://developers.cloudflare.com/workers/testing/test-harness/configure/">https://developers.cloudflare.com/workers/testing/test-harness/configure/</a></li>
+            <li>Vercel documents rollback, status checks, log comparison, binary search, preview verification, and promotion as one recovery sequence: <a href="https://vercel.com/docs/deployments/rollback-production-deployment">https://vercel.com/docs/deployments/rollback-production-deployment</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Cloudflare <code>createTestHarness()</code></strong> - build first, then run multi-Worker integration tests with storage reset, mocked fetches, and runtime-log inspection. Make the production bundle the test target.
+            <a href="https://developers.cloudflare.com/workers/testing/test-harness/configure/">https://developers.cloudflare.com/workers/testing/test-harness/configure/</a></li>
+            <li><strong>Vercel rollback and bisect</strong> - use <code>vercel rollback</code> to restore service, then compare deployments or automate a good/bad search with <code>vercel bisect</code> before redeploying the fix.
+            <a href="https://vercel.com/docs/deployments/rollback-production-deployment">https://vercel.com/docs/deployments/rollback-production-deployment</a></li>
+            <li><strong>Vercel Workflow extended durations</strong> - let workflow steps use the plan’s longer function duration when a tool chain, document job, or agent run cannot be made into a short request. Budget the time explicitly.
+            <a href="https://vercel.com/changelog/workflow-steps-now-support-extended-function-durations">https://vercel.com/changelog/workflow-steps-now-support-extended-function-durations</a></li>
+            <li><strong>GitHub Mobile Fix with Copilot</strong> - launch a repair PR from a failed Actions check, then inspect the diff and rerun the evidence before merging. Fast recovery still needs a reviewer.
+            <a href="https://github.blog/changelog/2026-07-23-github-mobile-fix-failing-actions-checks-with-copilot-cloud-agent/">https://github.blog/changelog/2026-07-23-github-mobile-fix-failing-actions-checks-with-copilot-cloud-agent/</a></li>
+            <li><strong>AI Gateway WebSockets</strong> - keep a Responses API connection open and continue turns with <code>previous_response_id</code> when long tool-call chains make repeated context transfer the bottleneck.
+            <a href="https://vercel.com/changelog/websocket-support-for-openai-responses-api-live-on-ai-gateway">https://vercel.com/changelog/websocket-support-for-openai-responses-api-live-on-ai-gateway</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>The build artifact becomes the test target.</strong> “Green” is weaker evidence when local bundling, bindings, runtime flags, and production packaging differ from the thing users receive.</li>
+            <li><strong>Recovery is part of shipping quality.</strong> A release without a known rollback, bisect, and verification path is an incomplete release—especially when agents can create changes faster than humans can inspect them.</li>
+            <li><strong>Long-running agents make time semantics product behavior.</strong> Timeout, retry, interruption, and partial-progress rules need explicit budgets and tests, not just a larger max duration.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Tests</strong> - the test suite passes, the labels look familiar, and the fixture is absolutely not what you thought you shipped.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/tests.png">https://imgs.xkcd.com/comics/tests.png</a><br>Post: <a href="https://xkcd.com/1151/">https://xkcd.com/1151/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

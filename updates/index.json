@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-27",
+    "slug": "2026-07-27",
+    "title": "Swarm Daily: Production Builds Need a Rehearsal",
+    "url": "/updates/2026-07-27.html",
+    "preview": "Production-build test harnesses, rollback workflows, and agent-assisted CI repair turn deployment into a rehearsable, reversible operating loop."
+  },
+  {
     "date": "2026-07-26",
     "slug": "2026-07-26",
     "title": "Swarm Daily: MCP Needs a Stateless Core",
