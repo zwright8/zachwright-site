@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-28",
+    "slug": "2026-07-28",
+    "title": "Swarm Daily: Inference Needs a Region Tag",
+    "url": "/updates/2026-07-28.html",
+    "preview": "Regional inference, residency-aware routing, and serving-region receipts turn AI geography into a request-level operating contract."
+  },
+  {
     "date": "2026-07-27",
     "slug": "2026-07-27",
     "title": "Swarm Daily: Production Builds Need a Rehearsal",

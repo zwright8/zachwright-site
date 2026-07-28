@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Inference Needs a Region Tag | zachwright.xyz</title>
+  <meta name="description" content="Regional inference, residency-aware routing, and serving-region receipts turn AI geography into a request-level operating contract." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Inference Needs a Region Tag</h1>
+          <p>Regional inference, residency-aware routing, and serving-region receipts turn AI geography into a request-level operating contract.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>“In-region AI” is moving from a procurement promise to a runtime field. If the request does not declare a region and the response does not prove where it ran, the residency claim is incomplete.</strong></p>
+          <p>Vercel’s AI Gateway now accepts <code>inferenceRegion</code> for US, EU, or global routing. A pinned request fails if no provider can serve it in that region instead of silently escaping the boundary, and every response reports the region that actually served it. That is the useful shift: geography becomes a testable property of a request, not a slide in a vendor deck.</p>
+          <p>OpenAI’s current API data controls show the necessary fine print. Storage and processing depend on the region, endpoint, model, and retention mode; external integrations, customer infrastructure, and system data can still sit outside the selected customer-content boundary. “Regional” is therefore a scoped assertion that needs a data-flow map.</p>
+          <ul>
+            <li>Vercel documents pinned <code>us</code>/<code>eu</code> inference, fail-closed routing, serving-region receipts, and provider-specific regional pricing: <a href="https://vercel.com/changelog/regional-inference-now-available-on-ai-gateway">https://vercel.com/changelog/regional-inference-now-available-on-ai-gateway</a></li>
+            <li>OpenAI lists which API endpoints support regional storage and processing, plus the data that residency does not cover: <a href="https://platform.openai.com/docs/models/default-usage-policies-by-endpoint">https://platform.openai.com/docs/models/default-usage-policies-by-endpoint</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>AI Gateway <code>inferenceRegion</code></strong> - pin sensitive requests to <code>us</code> or <code>eu</code>, then assert the returned serving region in logs and tests. Treat omitted region as an explicit global-routing decision.
+            <a href="https://vercel.com/changelog/regional-inference-now-available-on-ai-gateway">https://vercel.com/changelog/regional-inference-now-available-on-ai-gateway</a></li>
+            <li><strong>AI Gateway routing rules</strong> - rewrite or deny models at the gateway when a provider changes, a model retires, or a team policy changes. Keep the application contract stable while the control plane moves traffic.
+            <a href="https://vercel.com/changelog/ai-gateway-routing-rules">https://vercel.com/changelog/ai-gateway-routing-rules</a></li>
+            <li><strong>Kimi K3 on US providers with ZDR</strong> - combine US inference, provider failover, and per-request <code>zeroDataRetention</code>. Query the endpoint list before assuming every fallback has the same price, latency, or policy.
+            <a href="https://vercel.com/changelog/kimi-k3-and-kimi-k3-fast-on-ai-gateway">https://vercel.com/changelog/kimi-k3-and-kimi-k3-fast-on-ai-gateway</a></li>
+            <li><strong>Cloudflare Worker egress through Gateway</strong> - send generated workloads through logged, policy-controlled outbound traffic with <code>env.EGRESS.fetch()</code>. The same boundary should cover the code that calls the model and the model call itself.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-06-05-gateway-egress/">https://developers.cloudflare.com/changelog/post/2026-06-05-gateway-egress/</a></li>
+            <li><strong>Cloudflare AI Search sync jobs</strong> - trigger and inspect asynchronous index refreshes from CI with <code>wrangler ai-search jobs</code> and <code>--json</code>. Freshness and location are both pipeline evidence, not background assumptions.
+            <a href="https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/">https://developers.cloudflare.com/changelog/post/2026-07-02-manage-sync-jobs/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Residency becomes a runtime invariant.</strong> Put <code>region</code>, <code>provider</code>, <code>retention</code>, and <code>fallback</code> in the request trace and test them like auth and billing.</li>
+            <li><strong>Failover is now a policy decision.</strong> A fallback that crosses a region, provider, or retention mode should fail closed or produce a reviewable exception; invisible failover is a compliance bug waiting to happen.</li>
+            <li><strong>“In-region” has a scope boundary.</strong> Tool calls, web search, customer infrastructure, and system metadata need separate data-flow maps. One regional inference flag cannot certify the whole workflow.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Dependency</strong> - the diagram says “US only,” but one tiny package underneath still phones home globally.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/dependency.png">https://imgs.xkcd.com/comics/dependency.png</a><br>Post: <a href="https://xkcd.com/2347/">https://xkcd.com/2347/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
