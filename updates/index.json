@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-29",
+    "slug": "2026-07-29",
+    "title": "Swarm Daily: Build Inputs Need a Quarantine",
+    "url": "/updates/2026-07-29.html",
+    "preview": "Malicious-package alerts, pre-run workflow holds, provenance, and trusted publishing make build-input quarantine an operator surface."
+  },
+  {
     "date": "2026-07-28",
     "slug": "2026-07-28",
     "title": "Swarm Daily: Inference Needs a Region Tag",

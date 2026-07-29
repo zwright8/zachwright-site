@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Build Inputs Need a Quarantine | zachwright.xyz</title>
+  <meta name="description" content="Malicious-package alerts, pre-run workflow holds, provenance, and trusted publishing make build-input quarantine an operator surface." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Build Inputs Need a Quarantine</h1>
+          <p>Malicious-package alerts, pre-run workflow holds, provenance, and trusted publishing make build-input quarantine an operator surface.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The first question for an automated build is no longer only “does this change pass?” It is “is this input allowed to execute at all?”</strong></p>
+          <p>GitHub just widened Dependabot’s malicious-package coverage by ingesting OpenSSF malware advisories across more ecosystems. Separately, GitHub Actions can hold suspicious workflow runs in public repositories until a collaborator reviews them. Those are different controls for different entry points: dependency detection contains what gets installed; workflow admission contains what gets a runner and its credentials.</p>
+          <p>That separation is the useful operating model. Quarantine the input, inspect the provenance, run the checks, then release an artifact whose origin can be verified. A green test result is not a trust receipt if the package or workflow that produced it was never admitted deliberately.</p>
+          <ul>
+            <li>GitHub’s malware feed expansion adds OpenSSF malicious-package reports to Dependabot’s Advisory Database coverage: <a href="https://github.blog/changelog/2026-07-28-dependabot-alerts-on-malicious-packages-across-more-ecosystems/">https://github.blog/changelog/2026-07-28-dependabot-alerts-on-malicious-packages-across-more-ecosystems/</a></li>
+            <li>GitHub Actions now holds potentially malicious workflow runs for authenticated approval before execution: <a href="https://github.blog/changelog/2026-07-28-github-actions-holds-unproven-workflows-for-approval/">https://github.blog/changelog/2026-07-28-github-actions-holds-unproven-workflows-for-approval/</a></li>
+            <li>npm trusted publishing replaces long-lived publish tokens with workflow-scoped OIDC and can generate provenance automatically: <a href="https://docs.npmjs.com/trusted-publishers/">https://docs.npmjs.com/trusted-publishers/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Dependabot malware alerts</strong> - enable the malware category and use the <code>type:malware</code> view to separate compromised packages from ordinary CVE triage. <a href="https://docs.github.com/en/code-security/concepts/supply-chain-security/malware-alerts">https://docs.github.com/en/code-security/concepts/supply-chain-security/malware-alerts</a></li>
+            <li><strong>Dependency Review Action</strong> - fail pull requests on vulnerability severity, license, or dependency scope before a new package reaches the merge path. <a href="https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/customize-dependency-review-action">https://docs.github.com/en/code-security/tutorials/secure-your-dependencies/customize-dependency-review-action</a></li>
+            <li><strong>npm trusted publishing</strong> - exchange short-lived OIDC credentials from the authorized workflow, then keep package provenance attached to the publish. <a href="https://docs.npmjs.com/trusted-publishers/">https://docs.npmjs.com/trusted-publishers/</a></li>
+            <li><strong><code>gh attestation verify</code></strong> - verify that a release artifact came from the expected repository and workflow before deployment. <a href="https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations">https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations</a></li>
+            <li><strong>OpenSSF Scorecard Action</strong> - continuously check pinned dependencies, dangerous workflows, token permissions, and release hygiene as repository signals. <a href="https://github.com/ossf/scorecard-action">https://github.com/ossf/scorecard-action</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Dependency updates and executable inputs need separate queues.</strong> A package alert is an inventory problem; a suspicious workflow is an execution-containment problem. They should not share one generic “security backlog.”</li>
+            <li><strong>Agents make remediation cheaper, not automatically trustworthy.</strong> Keep agent-generated fixes in draft or quarantine until provenance, tests, and human review agree.</li>
+            <li><strong>Measure containment, not alert volume.</strong> Track time from detection to isolation and the share of released artifacts with a verifiable source commit, workflow, and digest.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Containers</strong> - the build is isolated; the dependency entering it still wants to be trusted on vibes.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/containers.png">https://imgs.xkcd.com/comics/containers.png</a><br>Post: <a href="https://xkcd.com/1988/">https://xkcd.com/1988/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
