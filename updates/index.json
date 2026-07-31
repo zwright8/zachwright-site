@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-07-31",
+    "slug": "2026-07-31",
+    "title": "Swarm Daily: Parallel Agents Need Separate Identities",
+    "url": "/updates/2026-07-31.html",
+    "preview": "Per-agent users, explicit collaboration groups, separate sandboxes, and cross-client policy turn multi-agent concurrency into an identity-boundary problem."
+  },
+  {
     "date": "2026-07-29",
     "slug": "2026-07-29",
     "title": "Swarm Daily: Build Inputs Need a Quarantine",

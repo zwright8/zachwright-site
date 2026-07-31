@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Parallel Agents Need Separate Identities | zachwright.xyz</title>
+  <meta name="description" content="Per-agent users, explicit collaboration groups, separate sandboxes, and cross-client policy turn multi-agent concurrency into an identity-boundary problem." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Parallel Agents Need Separate Identities</h1>
+          <p>Per-agent users, explicit collaboration groups, separate sandboxes, and cross-client policy turn multi-agent concurrency into an identity-boundary problem.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Parallel agents are becoming a normal execution shape, but “same container” is not the same as “same trust domain.”</strong></p>
+          <p>Vercel’s new Sandbox support lets multiple agents share one sandbox while running as separate Linux users. Each gets a private home directory; collaboration is an explicit group with a shared workspace. That is a better default than cloning a process and hoping permissions sort themselves out.</p>
+          <p>Cloudflare’s Sandbox guidance draws the boundary even more sharply: sessions share filesystem and process space, so sessions are not a security boundary. Use a separate sandbox when users, credentials, or untrusted work must stay apart. GitHub is applying the same logic to policy: managed settings now follow Copilot from CLI and VS Code into the Copilot app and cloud-agent tasks.</p>
+          <ul>
+            <li>Vercel Sandbox adds per-agent Linux users and opt-in shared groups: <a href="https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox">https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox</a></li>
+            <li>Cloudflare documents that sessions share files and processes and recommends separate sandboxes for separate users: <a href="https://developers.cloudflare.com/sandbox/concepts/sessions/">https://developers.cloudflare.com/sandbox/concepts/sessions/</a></li>
+            <li>GitHub’s managed settings now cover the Copilot app and cloud agent as well as existing clients: <a href="https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/">https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Vercel Sandbox <code>createUser</code> / <code>createGroup</code></strong> - give each agent its own Linux identity, then create the smallest shared directory needed for handoffs. <a href="https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox">https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox</a></li>
+            <li><strong>Cloudflare Sandbox <code>getSandbox(binding, `user-${userId}`)</code></strong> - map user or tenant identity to the sandbox ID when filesystem, memory, network, or data must be isolated. <a href="https://developers.cloudflare.com/sandbox/concepts/containers/">https://developers.cloudflare.com/sandbox/concepts/containers/</a></li>
+            <li><strong>Cloudflare explicit sessions</strong> - use session IDs to separate shell state, but do not treat them as a security boundary; sessions still share the sandbox’s files and processes. <a href="https://developers.cloudflare.com/sandbox/concepts/sessions/">https://developers.cloudflare.com/sandbox/concepts/sessions/</a></li>
+            <li><strong>GitHub <code>copilot/managed-settings.json</code></strong> - centralize plugin, marketplace, approval-bypass, and model defaults across the clients that can act on your repositories. <a href="https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/">https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/</a></li>
+            <li><strong>Turborepo and Vercel Remote Cache OIDC</strong> - bind CI cache access to workflow identity instead of handing every runner a static token. <a href="https://vercel.com/changelog/turborepo-and-remote-cache-now-support-openid-connect-oidc">https://vercel.com/changelog/turborepo-and-remote-cache-now-support-openid-connect-oidc</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Parallelism without identity is shared blast radius.</strong> Test cross-agent read/write attempts, credential exposure, and shared-directory writes as boundary failures—not as bugs discovered after a merge.</li>
+            <li><strong>Shared workspaces should be allowlisted artifacts.</strong> Keep secrets, package caches, and generated credentials outside the collaboration group. The default should be private; handoff should be explicit.</li>
+            <li><strong>Containment belongs in evaluation too.</strong> The recent Hugging Face model-evaluation incident shows why agents with broad cyber capability need bounded credentials, isolated environments, and an observable stop path before they touch real infrastructure: <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI’s incident report</a>.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Sandboxing Cycle</strong> - everyone wants a secure system where it is still easy to do anything they want.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/sandboxing_cycle.png">https://imgs.xkcd.com/comics/sandboxing_cycle.png</a><br>Post: <a href="https://xkcd.com/2044/">https://xkcd.com/2044/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
