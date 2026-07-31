@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swarm Daily: Parallel Agents Need Separate Identities | zachwright.xyz</title>
-  <meta name="description" content="Per-agent users, explicit collaboration groups, separate sandboxes, and cross-client policy turn multi-agent concurrency into an identity-boundary problem." />
+  <title>Swarm Daily: Responses Need Receipts | zachwright.xyz</title>
+  <meta name="description" content="Client-visible sources, server timing, and trace configuration turn agent output into evidence an operator can inspect at the point of use." />
   <link rel="stylesheet" href="/updates/post-ui.css" />
 </head>
 <body>
@@ -31,38 +31,38 @@
         <article class="post-card">
           <a href="/updates/index.html" class="back-link">All Updates</a>
           <p>Here is what you missed while you were shipping.</p>
-          <h1>Swarm Daily: Parallel Agents Need Separate Identities</h1>
-          <p>Per-agent users, explicit collaboration groups, separate sandboxes, and cross-client policy turn multi-agent concurrency into an identity-boundary problem.</p>
+          <h1>Swarm Daily: Responses Need Receipts</h1>
+          <p>Client-visible sources, server timing, and trace configuration turn agent output into evidence an operator can inspect at the point of use.</p>
 
           <h2>The Big Thing</h2>
-          <p><strong>Parallel agents are becoming a normal execution shape, but “same container” is not the same as “same trust domain.”</strong></p>
-          <p>Vercel’s new Sandbox support lets multiple agents share one sandbox while running as separate Linux users. Each gets a private home directory; collaboration is an explicit group with a shared workspace. That is a better default than cloning a process and hoping permissions sort themselves out.</p>
-          <p>Cloudflare’s Sandbox guidance draws the boundary even more sharply: sessions share filesystem and process space, so sessions are not a security boundary. Use a separate sandbox when users, credentials, or untrusted work must stay apart. GitHub is applying the same logic to policy: managed settings now follow Copilot from CLI and VS Code into the Copilot app and cloud-agent tasks.</p>
+          <p><strong>Agent output is becoming an operator surface: the response should carry enough evidence to explain what happened where the user experiences it.</strong></p>
+          <p>Vercel will stop stripping <code>Server-Timing</code> at its CDN on August 10. Database duration, cache hits, and other backend phases will show up in the browser’s network panel and through the Performance API. That turns “the app feels slow” into a client-readable breakdown instead of a dashboard scavenger hunt.</p>
+          <p>Cloudflare’s new AI Search adapters make the same move for grounded answers. The AI SDK path returns retrieved chunks as <code>sources</code>, can stream source parts before answer text, and can expose search as a normal tool. The claim “this answer is grounded” now has a payload that can travel with the answer. GitHub’s expanded OpenTelemetry configuration for Copilot’s JetBrains client reinforces the pattern: traces need to be configured at the surface that actually runs the agent.</p>
           <ul>
-            <li>Vercel Sandbox adds per-agent Linux users and opt-in shared groups: <a href="https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox">https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox</a></li>
-            <li>Cloudflare documents that sessions share files and processes and recommends separate sandboxes for separate users: <a href="https://developers.cloudflare.com/sandbox/concepts/sessions/">https://developers.cloudflare.com/sandbox/concepts/sessions/</a></li>
-            <li>GitHub’s managed settings now cover the Copilot app and cloud agent as well as existing clients: <a href="https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/">https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/</a></li>
+            <li>Vercel will pass <code>Server-Timing</code> through to clients on August 10, exposing backend metrics in browser tooling: <a href="https://vercel.com/changelog/server-timing-header">https://vercel.com/changelog/server-timing-header</a></li>
+            <li>Cloudflare AI Search now has direct adapters for AI SDK, LangChain, and Agents SDK, including source-returning and tool-call paths: <a href="https://developers.cloudflare.com/changelog/post/2026-07-30-ai-search-agent-sdks/">https://developers.cloudflare.com/changelog/post/2026-07-30-ai-search-agent-sdks/</a></li>
+            <li>GitHub Copilot for JetBrains adds improved OpenTelemetry configuration and model management: <a href="https://github.blog/changelog/2026-07-27-github-copilot-for-jetbrains-adds-improvved-opentelemetry-configuration-and-model-management/">https://github.blog/changelog/2026-07-27-github-copilot-for-jetbrains-adds-improvved-opentelemetry-configuration-and-model-management/</a></li>
           </ul>
 
           <h2>Code &amp; Tools</h2>
           <ol>
-            <li><strong>Vercel Sandbox <code>createUser</code> / <code>createGroup</code></strong> - give each agent its own Linux identity, then create the smallest shared directory needed for handoffs. <a href="https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox">https://vercel.com/changelog/run-multiple-isolated-agents-in-a-single-sandbox</a></li>
-            <li><strong>Cloudflare Sandbox <code>getSandbox(binding, `user-${userId}`)</code></strong> - map user or tenant identity to the sandbox ID when filesystem, memory, network, or data must be isolated. <a href="https://developers.cloudflare.com/sandbox/concepts/containers/">https://developers.cloudflare.com/sandbox/concepts/containers/</a></li>
-            <li><strong>Cloudflare explicit sessions</strong> - use session IDs to separate shell state, but do not treat them as a security boundary; sessions still share the sandbox’s files and processes. <a href="https://developers.cloudflare.com/sandbox/concepts/sessions/">https://developers.cloudflare.com/sandbox/concepts/sessions/</a></li>
-            <li><strong>GitHub <code>copilot/managed-settings.json</code></strong> - centralize plugin, marketplace, approval-bypass, and model defaults across the clients that can act on your repositories. <a href="https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/">https://github.blog/changelog/2026-07-27-enterprise-managed-settings-now-apply-to-the-github-copilot-app/</a></li>
-            <li><strong>Turborepo and Vercel Remote Cache OIDC</strong> - bind CI cache access to workflow identity instead of handing every runner a static token. <a href="https://vercel.com/changelog/turborepo-and-remote-cache-now-support-openid-connect-oidc">https://vercel.com/changelog/turborepo-and-remote-cache-now-support-openid-connect-oidc</a></li>
+            <li><strong><code>Server-Timing</code> + <code>PerformanceServerTiming</code></strong> - emit database, cache, and model phases, then read them in browser performance entries and attach them to client telemetry. <a href="https://vercel.com/changelog/server-timing-header">https://vercel.com/changelog/server-timing-header</a></li>
+            <li><strong>Cloudflare <code>ai-search-provider</code></strong> - use <code>instance.chat()</code> for grounded generation or <code>instance.search()</code> as an AI SDK tool; preserve <code>sources</code> at the HTTP boundary. <a href="https://developers.cloudflare.com/ai-search/agent-sdks/ai-sdk/">https://developers.cloudflare.com/ai-search/agent-sdks/ai-sdk/</a></li>
+            <li><strong>Cloudflare <code>CloudflareAISearchRetriever</code></strong> - use the standard LangChain retriever directly, as a tool, or inside a RAG chain; test hybrid retrieval and source identifiers. <a href="https://developers.cloudflare.com/ai-search/agent-sdks/langchain/">https://developers.cloudflare.com/ai-search/agent-sdks/langchain/</a></li>
+            <li><strong>Cloudflare AI Search Agents SDK guide</strong> - provision, index, and search through a typed tool surface, with an explicit stop condition for tool loops. <a href="https://developers.cloudflare.com/ai-search/agent-sdks/agents-sdk/">https://developers.cloudflare.com/ai-search/agent-sdks/agents-sdk/</a></li>
+            <li><strong>GitHub Copilot JetBrains OpenTelemetry</strong> - configure trace export and model metadata at the client that actually runs the agent, not only in a central service. <a href="https://github.blog/changelog/2026-07-27-github-copilot-for-jetbrains-adds-improvved-opentelemetry-configuration-and-model-management/">https://github.blog/changelog/2026-07-27-github-copilot-for-jetbrains-adds-improvved-opentelemetry-configuration-and-model-management/</a></li>
           </ol>
 
           <h2>Tech Impact</h2>
           <ul>
-            <li><strong>Parallelism without identity is shared blast radius.</strong> Test cross-agent read/write attempts, credential exposure, and shared-directory writes as boundary failures—not as bugs discovered after a merge.</li>
-            <li><strong>Shared workspaces should be allowlisted artifacts.</strong> Keep secrets, package caches, and generated credentials outside the collaboration group. The default should be private; handoff should be explicit.</li>
-            <li><strong>Containment belongs in evaluation too.</strong> The recent Hugging Face model-evaluation incident shows why agents with broad cyber capability need bounded credentials, isolated environments, and an observable stop path before they touch real infrastructure: <a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI’s incident report</a>.</li>
+            <li><strong>Evidence becomes part of the product contract.</strong> A CDN, model, retriever, or SDK change can alter what the user can verify, even when the response schema still compiles.</li>
+            <li><strong>“Grounded” and “fast” need different receipts.</strong> Return source identifiers and retrieval time for the first; return phase timings and model metadata for the second.</li>
+            <li><strong>Client-visible evidence needs a disclosure policy.</strong> Redact sensitive identifiers and decide which source paths, cache details, and timing data are safe to expose before turning observability into UI.</li>
           </ul>
 
           <h2>Meme of the Day</h2>
-          <p><strong>xkcd: Sandboxing Cycle</strong> - everyone wants a secure system where it is still easy to do anything they want.</p>
-          <p>Image URL: <a href="https://imgs.xkcd.com/comics/sandboxing_cycle.png">https://imgs.xkcd.com/comics/sandboxing_cycle.png</a><br>Post: <a href="https://xkcd.com/2044/">https://xkcd.com/2044/</a></p>
+          <p><strong>xkcd: The General Problem</strong> - proving the system is helping can take longer than doing the original task.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/the_general_problem.png">https://imgs.xkcd.com/comics/the_general_problem.png</a><br>Post: <a href="https://xkcd.com/974/">https://xkcd.com/974/</a></p>
         </article>
       </section>
     </main>
