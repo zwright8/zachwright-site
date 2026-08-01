@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Ops Need a Control Room | zachwright.xyz</title>
+  <meta name="description" content="Budgets, request logs, workflow search, and verified deployment identity turn AI operations into a platform control room." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Ops Need a Control Room</h1>
+          <p>Budgets, request logs, workflow search, and verified deployment identity turn AI operations into a platform control room.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The platform is starting to own AI operations, not just AI inference.</strong></p>
+          <p>Vercel’s July 31 releases put hard spend limits at team, project, and API-key scope. A request has to pass every applicable budget; alerts warn at 50%, 75%, and 100%, but the limit is what actually stops traffic. That is policy in the request path, not a finance report after the fact.</p>
+          <p>The same release adds a dedicated AI Gateway Logs page with cost, token counts, duration, model, provider, region, and the complete fallback path. Add structured, shareable workflow-run search and Vercel Passport’s verified OIDC identity at the deployment boundary, and the operator loop gets concrete: know who entered, what the workload was allowed to spend, what it did, and where to find the run when it breaks.</p>
+          <ul>
+            <li>Team, project, and key budgets can enforce spend caps and inherit defaults: <a href="https://vercel.com/changelog/ai-gateway-spend-budgets-and-alerts">https://vercel.com/changelog/ai-gateway-spend-budgets-and-alerts</a></li>
+            <li>AI Gateway Logs exposes request cost, routing, fallback, duration, and region details with filtered CSV/JSON export: <a href="https://vercel.com/changelog/ai-gateway-logs">https://vercel.com/changelog/ai-gateway-logs</a></li>
+            <li>Workflow Observability adds structured filters and shareable run queries: <a href="https://vercel.com/changelog/expanded-search-for-workflow-runs-in-vercel-observability">https://vercel.com/changelog/expanded-search-for-workflow-runs-in-vercel-observability</a></li>
+            <li>Passport gates deployments with an external OIDC provider and forwards verified identity to application code: <a href="https://vercel.com/changelog/vercel-passport-generally-available">https://vercel.com/changelog/vercel-passport-generally-available</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>AI Gateway budgets</strong> - set a team cap, project cap, or inherited default with <code>vercel ai-gateway budgets set team --limit 500 --refresh-period monthly</code>; remember one over-limit scope rejects the request. <a href="https://vercel.com/changelog/ai-gateway-spend-budgets-and-alerts">https://vercel.com/changelog/ai-gateway-spend-budgets-and-alerts</a></li>
+            <li><strong>AI Gateway Logs</strong> - filter by provider, model, modality, credential, status, or request ID, then export the exact view as CSV or JSON for incident handoff. <a href="https://vercel.com/changelog/ai-gateway-logs">https://vercel.com/changelog/ai-gateway-logs</a></li>
+            <li><strong>Workflow Observability queries</strong> - search with fields such as <code>workflow:sendEmail environment:preview region:iad1</code> and share the URL instead of sending a screenshot. <a href="https://vercel.com/changelog/expanded-search-for-workflow-runs-in-vercel-observability">https://vercel.com/changelog/expanded-search-for-workflow-runs-in-vercel-observability</a></li>
+            <li><strong><code>@vercel/passport</code> <code>getIdentity()</code></strong> - read the verified visitor subject in application code; do not trust a client-supplied identity header. <a href="https://vercel.com/changelog/vercel-passport-generally-available">https://vercel.com/changelog/vercel-passport-generally-available</a></li>
+            <li><strong>Stable model IDs, moving behavior</strong> - DeepSeek V4 Flash now picks up updated weights behind the same model string, while Laguna S 2.1 gets 10x more capacity; pin evaluation baselines and watch the logs when provider behavior changes. <a href="https://vercel.com/changelog/deepseek-v4-flash-now-runs-updated-weights-on-ai-gateway">DeepSeek V4 Flash</a> · <a href="https://vercel.com/changelog/10x-more-capacity-for-laguna-s-2-1-on-ai-gateway">Laguna S 2.1</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Control planes are moving from dashboards into enforcement.</strong> A budget that can reject a request belongs in the same design review as auth, rate limits, and deployment policy.</li>
+            <li><strong>Observability is becoming a handoff artifact.</strong> A filtered URL or exported request row can carry an incident from operator to developer without a bespoke reproduction.</li>
+            <li><strong>Stable identifiers matter more than stable screens.</strong> Tie identity, project, model, provider, budget, and workflow-run IDs together so the control room can explain one workload end to end.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: The Cloud</strong> - the control room has a budget, a log, and a query; the cable is still stretched across the floor.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/the_cloud.png">https://imgs.xkcd.com/comics/the_cloud.png</a><br>Post: <a href="https://xkcd.com/908/">https://xkcd.com/908/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
