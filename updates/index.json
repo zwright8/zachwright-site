@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-02",
+    "slug": "2026-08-02",
+    "title": "Swarm Daily: Agent Stacks Need a Migration Calendar",
+    "url": "/updates/2026-08-02.html",
+    "preview": "API sunsets, model shutdowns, runtime breaks, and replacement paths turn agent dependencies into a dated operating queue."
+  },
+  {
     "date": "2026-08-01",
     "slug": "2026-08-01",
     "title": "Swarm Daily: Agent Ops Need a Control Room",

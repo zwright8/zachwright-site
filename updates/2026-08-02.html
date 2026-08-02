@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Stacks Need a Migration Calendar | zachwright.xyz</title>
+  <meta name="description" content="API sunsets, model shutdowns, runtime breaks, and replacement paths turn agent dependencies into a dated operating queue." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Stacks Need a Migration Calendar</h1>
+          <p>API sunsets, model shutdowns, runtime breaks, and replacement paths turn agent dependencies into a dated operating queue.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Agent infrastructure is becoming deadline-driven.</strong></p>
+          <p>OpenAI's current Assistants API FAQ says the API will be removed in August 2026 and points developers toward the Responses API and Agents SDK. Google's Gemini deprecation table publishes shutdown dates and replacement model IDs, including the August 17 retirement of Imagen models. GitHub's Copilot Billing Preview app retires tomorrow, August 3, in favor of billing settings, usage reports, budgets, and the billing API.</p>
+          <p>These are not ordinary dependency bumps. Each one changes a contract: API objects, model behavior, runtime requirements, packaging, or the place operators pull spend data. The move is to keep a dated compatibility ledger with an owner, replacement, test path, and last safe migration window for every agent dependency.</p>
+          <ul>
+            <li>OpenAI's current Assistants API FAQ and migration direction: <a href="https://help.openai.com/en/articles/8550641-assistants-api">https://help.openai.com/en/articles/8550641-assistants-api</a></li>
+            <li>Google's Gemini model shutdown dates and replacement IDs: <a href="https://ai.google.dev/gemini-api/docs/deprecations">https://ai.google.dev/gemini-api/docs/deprecations</a></li>
+            <li>Imagen's August 17 shutdown and Nano Banana migration path: <a href="https://ai.google.dev/gemini-api/docs/image-generation">https://ai.google.dev/gemini-api/docs/image-generation</a></li>
+            <li>GitHub's August 3 Copilot Billing Preview retirement: <a href="https://github.blog/changelog/2026-07-07-copilot-billing-preview-app-will-be-retired-on-august-3/">https://github.blog/changelog/2026-07-07-copilot-billing-preview-app-will-be-retired-on-august-3/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>AI SDK 7 migration</strong> - Node.js 22 and ESM are requirements; use the codemod, then review runtime and semantic changes manually. <a href="https://vercel.com/changelog/ai-sdk-7">AI SDK 7</a></li>
+            <li><strong>Migration skill</strong> - start with <code>npx skills add vercel/ai --skill migrate-ai-sdk-v6-to-v7</code>, then inspect the diff for telemetry, tool context, approvals, and multi-step result changes. <a href="https://vercel.com/changelog/ai-sdk-7">Vercel migration path</a></li>
+            <li><strong>Harness portability</strong> - Vercel's experimental <code>HarnessAgent</code> gives Claude Code, Codex, and Pi a common adapter surface. <a href="https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk">HarnessAgent</a></li>
+            <li><strong>Compatibility window</strong> - Cloudflare's Agents packages support AI SDK 6 and 7, allowing an incremental upgrade instead of a flag day. <a href="https://developers.cloudflare.com/changelog/">Cloudflare Changelog</a></li>
+            <li><strong>Replacement lookup</strong> - use Google's deprecation table to map every model ID to a supported replacement before the shutdown date. <a href="https://ai.google.dev/gemini-api/docs/deprecations">Gemini deprecations</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Deprecation is now queue work.</strong> Track it like an incident: owner, deadline, blast radius, migration branch, contract tests, and rollback.</li>
+            <li><strong>Compatibility means semantics, not imports.</strong> A replacement can change tool schemas, model outputs, billing exports, or durable objects while keeping the headline capability.</li>
+            <li><strong>Agents are good at the first draft of a migration.</strong> The human review surface should be the semantic diff across runtime, package format, model behavior, and operator workflows.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Dependency</strong> - the dependency graph is the calendar; one missing package can become the whole incident.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/dependency.png">https://imgs.xkcd.com/comics/dependency.png</a><br>Post: <a href="https://xkcd.com/2347/">https://xkcd.com/2347/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
