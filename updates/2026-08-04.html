@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Work Needs an Intent Envelope | zachwright.xyz</title>
+  <meta name="description" content="Issue trackers are becoming the agent control surface, carrying owners, delegates, branches, confidence, rationale, and review paths as one handoff contract." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Work Needs an Intent Envelope</h1>
+          <p>Issue trackers are becoming the agent control surface, carrying owners, delegates, branches, confidence, rationale, and review paths as one handoff contract.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The unit of agent work is becoming an issue intent, not a prompt.</strong></p>
+          <p>GitHub Issues now lets automations suggest or apply supported changes with a confidence level and a rationale. Medium- and low-confidence actions can wait as searchable suggestions, while an operator decides what crosses the threshold. That is a small feature with a large implication: triage metadata is becoming a reviewable execution surface.</p>
+          <p>GitHub’s Copilot cloud agent for Linear makes the other half explicit. Assign an issue to the agent, choose the model and custom agent, set the base and working branches, and steer the session through comments. Linear keeps the human as the primary owner while the agent acts as a delegate. The work item now carries the operating context instead of handing the agent a naked sentence and hoping the runtime fills in the blanks.</p>
+          <p>Define that context as an intent envelope: accountable owner, delegated agent, allowed mutation, repository and branch, confidence threshold, and review destination. If those fields are absent, the agent is not under-specified; the workflow is.</p>
+          <ul>
+            <li>GitHub Issues adds approvals, confidence, rationale, and searchable suggestions for agent automations: <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
+            <li>Copilot cloud agent for Linear adds model, custom-agent, branch, and live-steering controls to delegated issues: <a href="https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/">https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/</a></li>
+            <li>Linear’s agent model keeps the human accountable while agents receive delegated issues, guidance, and scoped access: <a href="https://linear.app/docs/agents-in-linear">https://linear.app/docs/agents-in-linear</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub issue intents</strong> - enable <code>issue-intents: true</code> for supported agentic workflow outputs, then use <code>has:suggestions</code> to find changes waiting for review. Keep the action set narrow: labels, fields, type, close, and assignment. <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
+            <li><strong>Copilot for Linear</strong> - set the model, custom agent, base branch, working branch, and team guidance before delegating an issue; mention Copilot in a comment to steer a run already in flight. <a href="https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/">https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/</a></li>
+            <li><strong>Linear agent scopes</strong> - request <code>app:assignable</code> and <code>app:mentionable</code> only when the integration needs to be delegated work or invoked from issue surfaces. <a href="https://linear.app/developers/agents">https://linear.app/developers/agents</a></li>
+            <li><strong>AI SDK 7 <code>HarnessAgent</code></strong> - keep the product interface stable while swapping Codex, Claude Code, Deep Agents, OpenCode, or Pi underneath it. <a href="https://vercel.com/changelog/ai-sdk-7">https://vercel.com/changelog/ai-sdk-7</a></li>
+            <li><strong>Cloudflare Code Mode runtime</strong> - call <code>search()</code>, <code>describe()</code>, and <code>execute()</code> from a non-AI-SDK host, and preserve <code>requiresApproval</code> before executing protected connector methods. <a href="https://developers.cloudflare.com/changelog/post/2026-07-22-mcp-codemode-updates/">https://developers.cloudflare.com/changelog/post/2026-07-22-mcp-codemode-updates/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>The work item becomes the integration boundary.</strong> Prompts can change, but the issue needs to carry the constraints that make a run attributable and reviewable.</li>
+            <li><strong>Confidence is routing policy, not trust.</strong> High-confidence metadata edits can flow; low-confidence changes should remain suggestions with an explicit owner and review destination.</li>
+            <li><strong>Portability will be won at the envelope layer.</strong> Normalized intents, scoped permissions, and stable handoffs matter more than picking one permanent agent harness.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Git</strong> - the agent has been assigned the issue; now someone has to explain what the branches mean.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/git.png">https://imgs.xkcd.com/comics/git.png</a><br>Post: <a href="https://xkcd.com/1597/">https://xkcd.com/1597/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
