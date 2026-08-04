@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swarm Daily: Agent Work Needs an Intent Envelope | zachwright.xyz</title>
-  <meta name="description" content="Issue trackers are becoming the agent control surface, carrying owners, delegates, branches, confidence, rationale, and review paths as one handoff contract." />
+  <title>Swarm Daily: Agents Need a Capability Registry | zachwright.xyz</title>
+  <meta name="description" content="ARD registries, ranked discovery, on-demand skills, and governed activations turn an agent's toolset into a runtime capability layer." />
   <link rel="stylesheet" href="/updates/post-ui.css" />
 </head>
 <body>
@@ -31,39 +31,39 @@
         <article class="post-card">
           <a href="/updates/index.html" class="back-link">All Updates</a>
           <p>Here is what you missed while you were shipping.</p>
-          <h1>Swarm Daily: Agent Work Needs an Intent Envelope</h1>
-          <p>Issue trackers are becoming the agent control surface, carrying owners, delegates, branches, confidence, rationale, and review paths as one handoff contract.</p>
+          <h1>Swarm Daily: Agents Need a Capability Registry</h1>
+          <p>ARD registries, ranked discovery, on-demand skills, and governed activations turn an agent's toolset into a runtime capability layer.</p>
 
           <h2>The Big Thing</h2>
-          <p><strong>The unit of agent work is becoming an issue intent, not a prompt.</strong></p>
-          <p>GitHub Issues now lets automations suggest or apply supported changes with a confidence level and a rationale. Medium- and low-confidence actions can wait as searchable suggestions, while an operator decides what crosses the threshold. That is a small feature with a large implication: triage metadata is becoming a reviewable execution surface.</p>
-          <p>GitHub’s Copilot cloud agent for Linear makes the other half explicit. Assign an issue to the agent, choose the model and custom agent, set the base and working branches, and steer the session through comments. Linear keeps the human as the primary owner while the agent acts as a delegate. The work item now carries the operating context instead of handing the agent a naked sentence and hoping the runtime fills in the blanks.</p>
-          <p>Define that context as an intent envelope: accountable owner, delegated agent, allowed mutation, repository and branch, confidence threshold, and review destination. If those fields are absent, the agent is not under-specified; the workflow is.</p>
+          <p><strong>The next agent bottleneck is not adding more tools. It is finding the right capability at runtime, verifying it, and loading only what the task requires.</strong></p>
+          <p>Google's Agentic Resource Discovery specification gives that problem a protocol-shaped home: publish, discover, and verify tools, skills, agents, and other callable resources across organizational boundaries. The important shift is architectural. An agent no longer needs every integration wired into its host before it can start; it needs a trusted answer to what is available now.</p>
+          <p>GitHub Agent Finder is the first operator-friendly version of that loop. Point Copilot at a public or private registry, describe the task, and it returns ranked capabilities it can pull in on demand. Managed settings scope what may be discovered, and there is no silent installation. Cloudflare's Agent Skills show the runtime pattern underneath: advertise a cheap catalog, activate a matching skill, load its resources, and optionally run a bounded script.</p>
+          <p>Treat the registry as production infrastructure. Allowlist sources, review publishers, budget context, and log every activation. “Install a plugin” is becoming four separate operations: discover, verify, activate, and observe.</p>
           <ul>
-            <li>GitHub Issues adds approvals, confidence, rationale, and searchable suggestions for agent automations: <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
-            <li>Copilot cloud agent for Linear adds model, custom-agent, branch, and live-steering controls to delegated issues: <a href="https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/">https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/</a></li>
-            <li>Linear’s agent model keeps the human accountable while agents receive delegated issues, guidance, and scoped access: <a href="https://linear.app/docs/agents-in-linear">https://linear.app/docs/agents-in-linear</a></li>
+            <li>Google and industry partners announced ARD, an open specification for publishing, discovering, and verifying AI capabilities: <a href="https://developers.googleblog.com/announcing-the-agentic-resource-discovery-specification/">https://developers.googleblog.com/announcing-the-agentic-resource-discovery-specification/</a></li>
+            <li>GitHub Agent Finder searches a chosen catalog, ranks matches, respects managed settings, and does not auto-install resources: <a href="https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/">https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/</a></li>
+            <li>Cloudflare Agent Skills load instructions, resources, and scripts on demand instead of bloating every prompt: <a href="https://developers.cloudflare.com/agents/runtime/execution/agent-skills/">https://developers.cloudflare.com/agents/runtime/execution/agent-skills/</a></li>
           </ul>
 
           <h2>Code &amp; Tools</h2>
           <ol>
-            <li><strong>GitHub issue intents</strong> - enable <code>issue-intents: true</code> for supported agentic workflow outputs, then use <code>has:suggestions</code> to find changes waiting for review. Keep the action set narrow: labels, fields, type, close, and assignment. <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
-            <li><strong>Copilot for Linear</strong> - set the model, custom agent, base branch, working branch, and team guidance before delegating an issue; mention Copilot in a comment to steer a run already in flight. <a href="https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/">https://github.blog/changelog/2026-07-23-copilot-cloud-agent-for-linear-is-now-generally-available/</a></li>
-            <li><strong>Linear agent scopes</strong> - request <code>app:assignable</code> and <code>app:mentionable</code> only when the integration needs to be delegated work or invoked from issue surfaces. <a href="https://linear.app/developers/agents">https://linear.app/developers/agents</a></li>
-            <li><strong>AI SDK 7 <code>HarnessAgent</code></strong> - keep the product interface stable while swapping Codex, Claude Code, Deep Agents, OpenCode, or Pi underneath it. <a href="https://vercel.com/changelog/ai-sdk-7">https://vercel.com/changelog/ai-sdk-7</a></li>
-            <li><strong>Cloudflare Code Mode runtime</strong> - call <code>search()</code>, <code>describe()</code>, and <code>execute()</code> from a non-AI-SDK host, and preserve <code>requiresApproval</code> before executing protected connector methods. <a href="https://developers.cloudflare.com/changelog/post/2026-07-22-mcp-codemode-updates/">https://developers.cloudflare.com/changelog/post/2026-07-22-mcp-codemode-updates/</a></li>
+            <li><strong>GitHub Agent Finder + ARD</strong> - search a selected registry for MCP servers, skills, canvases, agents, and tools; keep the returned match separate from the approval to connect it. <a href="https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/">https://github.blog/changelog/2026-06-17-agent-finder-for-github-copilot-now-available/</a></li>
+            <li><strong>Cloudflare <code>SkillRegistry</code></strong> - expose <code>activate_skill</code>, <code>read_skill_resource</code>, and optional <code>run_skill_script</code>; use source ordering and allowlists to control which duplicate wins. <a href="https://developers.cloudflare.com/agents/runtime/execution/agent-skills/">https://developers.cloudflare.com/agents/runtime/execution/agent-skills/</a></li>
+            <li><strong>GitHub Agent Apps</strong> - install bounded agents from the Marketplace, admin-enable them, then invoke them from issues, pull requests, or the Agents UI. <a href="https://github.blog/changelog/2026-06-02-extend-github-with-agent-apps/">https://github.blog/changelog/2026-06-02-extend-github-with-agent-apps/</a></li>
+            <li><strong>Vercel coding-agent plugin</strong> - rank, deduplicate, and budget project-aware skills, then use <code>PostToolUse</code> validation to catch stale APIs as the agent works. <a href="https://vercel.com/changelog/introducing-vercel-plugin-for-coding-agents">https://vercel.com/changelog/introducing-vercel-plugin-for-coding-agents</a></li>
+            <li><strong>Chrome DevTools for agents</strong> - use MCP, CLI batching, agent skills, Lighthouse audits, and third-party developer tools to give agents bounded runtime context. <a href="https://developer.chrome.com/blog/devtools-for-agents-v1">https://developer.chrome.com/blog/devtools-for-agents-v1</a></li>
           </ol>
 
           <h2>Tech Impact</h2>
           <ul>
-            <li><strong>The work item becomes the integration boundary.</strong> Prompts can change, but the issue needs to carry the constraints that make a run attributable and reviewable.</li>
-            <li><strong>Confidence is routing policy, not trust.</strong> High-confidence metadata edits can flow; low-confidence changes should remain suggestions with an explicit owner and review destination.</li>
-            <li><strong>Portability will be won at the envelope layer.</strong> Normalized intents, scoped permissions, and stable handoffs matter more than picking one permanent agent harness.</li>
+            <li><strong>Discovery becomes a supply-chain boundary.</strong> Registry identity, publisher verification, allowlists, and revocation matter as much as tool quality.</li>
+            <li><strong>Context becomes an operating budget.</strong> Keep catalogs cheap; load full instructions, scripts, and connectors only after a task match.</li>
+            <li><strong>Governance must follow the capability.</strong> A plugin policy that covers the IDE but not the cloud agent is not a policy; it is a gap.</li>
           </ul>
 
           <h2>Meme of the Day</h2>
-          <p><strong>xkcd: Git</strong> - the agent has been assigned the issue; now someone has to explain what the branches mean.</p>
-          <p>Image URL: <a href="https://imgs.xkcd.com/comics/git.png">https://imgs.xkcd.com/comics/git.png</a><br>Post: <a href="https://xkcd.com/1597/">https://xkcd.com/1597/</a></p>
+          <p><strong>xkcd: Standards</strong> - the industry has finally agreed on one discovery standard, plus seventeen incompatible registries.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/standards.png">https://imgs.xkcd.com/comics/standards.png</a><br>Post: <a href="https://xkcd.com/927/">https://xkcd.com/927/</a></p>
         </article>
       </section>
     </main>
