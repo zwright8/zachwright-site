@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Automations Need a Trigger Contract | zachwright.xyz</title>
+  <meta name="description" content="Comment triggers, push events, reasoning budgets, team policy, and timeout paths turn agent automation into an explicit operating contract." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Automations Need a Trigger Contract</h1>
+          <p>Comment triggers, push events, reasoning budgets, team policy, and timeout paths turn agent automation into an explicit operating contract.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Agent automation is moving from an explicit prompt to event-triggered execution. The production contract now needs a named trigger, a bounded reasoning budget, the policy scope that applies, and an executable stop or approval path.</strong></p>
+          <p>GitHub now lets a pull-request or issue comment launch a Copilot cloud-agent automation when the comment matches configured text. Cloudflare’s new Artifacts integration does the same for CI: a typed <code>cf.artifacts.repo.pushed</code> event starts an isolated Workflow that can lint, test, typecheck, build, and deploy.</p>
+          <p>The trigger is only the front door. GitHub exposes reasoning level per task, making extra model effort a visible credit and quality choice. Vercel’s AI SDK 7 exposes total, per-step, per-chunk, default-tool, and per-tool timeout budgets for durable runs. A useful automation record therefore says more than “it ran”: it names what fired it, how much intelligence it was allowed to spend, which policy applied, and why it stopped.</p>
+          <p>Operator move: treat trigger grammar and actor permissions like an API surface. Store the trigger, model/reasoning selection, policy scope, timeout, approval result, and final mutation together.</p>
+          <ul>
+            <li>GitHub Copilot cloud-agent automations can start from exact issue or pull-request comment text: <a href="https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/">https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/</a></li>
+            <li>Cloudflare Artifacts repos can trigger isolated CI Workflows on push events with deployment credentials limited to the deploy step: <a href="https://developers.cloudflare.com/changelog/post/2026-08-04-build-and-deploy-on-push/">https://developers.cloudflare.com/changelog/post/2026-08-04-build-and-deploy-on-push/</a></li>
+            <li>GitHub and Vercel expose reasoning controls and executable timeout budgets for agent runs: <a href="https://github.blog/changelog/2026-08-03-customize-the-reasoning-level-for-copilot-cloud-agent/">GitHub reasoning levels</a> · <a href="https://vercel.com/changelog/ai-sdk-7">AI SDK 7</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>GitHub Copilot comment automations</strong> - match exact issue or pull-request comment text to launch a repeatable cloud-agent task; keep the actor and repository policy in the run record. <a href="https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/">https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/</a></li>
+            <li><strong>Copilot reasoning selector</strong> - choose model reasoning depth per cloud-agent task and price the extra credits before delegating. <a href="https://github.blog/changelog/2026-08-03-customize-the-reasoning-level-for-copilot-cloud-agent/">https://github.blog/changelog/2026-08-03-customize-the-reasoning-level-for-copilot-cloud-agent/</a></li>
+            <li><strong>GitHub team mappings</strong> - apply additive team settings while keeping enterprise-critical managed keys locked; specialize tools without dropping the governance floor. <a href="https://github.blog/changelog/2026-08-03-enterprise-team-specialization-for-managed-settings/">https://github.blog/changelog/2026-08-03-enterprise-team-specialization-for-managed-settings/</a></li>
+            <li><strong>Cloudflare <code>cf.artifacts.repo.pushed</code></strong> - wire a push event to an isolated CI Workflow, parallelize checks, cache on the lockfile, and grant deploy credentials only at the end. <a href="https://developers.cloudflare.com/changelog/post/2026-08-04-build-and-deploy-on-push/">https://developers.cloudflare.com/changelog/post/2026-08-04-build-and-deploy-on-push/</a></li>
+            <li><strong>AI SDK 7 timeout budgets</strong> - set total, per-step, per-chunk, default-tool, and per-tool limits for durable agent runs that must survive restarts. <a href="https://vercel.com/changelog/ai-sdk-7">https://vercel.com/changelog/ai-sdk-7</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Event triggers move automation risk upstream.</strong> Review the trigger grammar, actor permissions, and replay behavior with the same care as the agent prompt.</li>
+            <li><strong>Reasoning depth becomes a capacity knob.</strong> Route routine triggers to fast budgets and reserve deeper reasoning for ambiguous or high-value work.</li>
+            <li><strong>Policy and timeout are coupled.</strong> A team can specialize its model or tools, but the run still needs a hard stop and an approval boundary before it can mutate production.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Automation</strong> - every “just one little trigger” eventually needs a policy file, a budget, and a dashboard.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/automation.png">https://imgs.xkcd.com/comics/automation.png</a><br>Post: <a href="https://xkcd.com/1319/">https://xkcd.com/1319/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
