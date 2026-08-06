@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-06",
+    "slug": "2026-08-06",
+    "title": "Swarm Daily: Agents Need an Approval Gate",
+    "url": "/updates/2026-08-06.html",
+    "preview": "Durable approvals, confidence thresholds, sandbox boundaries, and resumable handoffs turn agent autonomy into a controlled operating loop."
+  },
+  {
     "date": "2026-08-05",
     "slug": "2026-08-05",
     "title": "Swarm Daily: Agent Automations Need a Trigger Contract",

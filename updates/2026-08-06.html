@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agents Need an Approval Gate | zachwright.xyz</title>
+  <meta name="description" content="Durable approvals, confidence thresholds, sandbox boundaries, and resumable handoffs turn agent autonomy into a controlled operating loop." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agents Need an Approval Gate</h1>
+          <p>Durable approvals, confidence thresholds, sandbox boundaries, and resumable handoffs turn agent autonomy into a controlled operating loop.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>As agents move from chat into durable workflows, the important control is not a vague “human in the loop.” It is a typed pause point with a scoped approver, a verified decision, a timeout, an audit trail, and a resumable execution state.</strong></p>
+          <p>Vercel’s Chat SDK now makes that pause a workflow primitive. One <code>requestApproval</code> call posts an Approve/Deny card and suspends the Workflow for seconds or days; the wait survives deploys and restarts, the approver set can be scoped, the click is signature-verified, and the card is edited with the outcome.</p>
+          <p>GitHub is applying the same shape to agent-written issue metadata: confidence and rationale decide whether a label, field, assignment, or close action applies immediately or waits as a suggestion. OpenAI’s Codex guidance supplies the operating rule underneath both: keep low-risk actions frictionless, but make higher-risk actions stop at a real sandbox, network, or approval boundary.</p>
+          <p>Operator move: require every mutation-capable agent to declare its approval policy, approver scope, timeout, decision identity, and resume behavior before it runs. Approval UX is not authorization by itself; permissions and execution boundaries still have to hold.</p>
+          <ul>
+            <li>Vercel Chat SDK pauses a durable Workflow with scoped, verified approval and resumes it after the decision: <a href="https://vercel.com/changelog/chat-sdk-durable-approvals">https://vercel.com/changelog/chat-sdk-durable-approvals</a></li>
+            <li>GitHub Issues holds medium- and low-confidence automation changes as reviewable suggestions with rationale: <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
+            <li>OpenAI’s Codex deployment model pairs frictionless low-risk work with approval, sandbox, and network boundaries for higher-risk actions: <a href="https://openai.com/index/running-codex-safely/">https://openai.com/index/running-codex-safely/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Chat SDK durable approvals</strong> - use <code>requestApproval</code> for a deploy gate that survives restarts; do not build a parallel approvals table or polling loop. <a href="https://vercel.com/changelog/chat-sdk-durable-approvals">https://vercel.com/changelog/chat-sdk-durable-approvals</a></li>
+            <li><strong>GitHub Issues automation controls</strong> - use confidence, rationale, and suggestions for reversible triage; remember GitHub explicitly says these approvals are a workflow convenience, not a security boundary. <a href="https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/">https://github.blog/changelog/2026-07-23-agent-automation-controls-in-github-issues-in-public-preview/</a></li>
+            <li><strong>Cloudflare Browser Run Human in the Loop</strong> - hand a live session to a person for login, MFA, or an edge case, then return control to the script and retain a recording. <a href="https://developers.cloudflare.com/changelog/post/2026-04-15-br-observability/">https://developers.cloudflare.com/changelog/post/2026-04-15-br-observability/</a></li>
+            <li><strong>Vercel AI Gateway Trace Drains</strong> - export routing, fallback, cost, latency, and status to OTLP without exporting prompt or completion content. <a href="https://vercel.com/changelog/export-ai-gateway-traces-with-vercel-drains">https://vercel.com/changelog/export-ai-gateway-traces-with-vercel-drains</a></li>
+            <li><strong>Vercel Sandbox dynamic quotas</strong> - burst parallel test/build agents to 10,000 sandboxes and 5,000 vCPUs per minute when the queue needs width. <a href="https://vercel.com/changelog/vercel-sandbox-now-supports-10-000-concurrent-sandboxes-and-5-000-vcpus-per-minute">https://vercel.com/changelog/vercel-sandbox-now-supports-10-000-concurrent-sandboxes-and-5-000-vcpus-per-minute</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Approval becomes a protocol surface.</strong> “Human review” needs identity, scope, timeout, outcome, and resumability to be operationally useful.</li>
+            <li><strong>The best automation will have two lanes.</strong> Auto-apply low-risk, high-confidence mutations; pause ambiguous or high-impact work for review.</li>
+            <li><strong>Approval is not authorization.</strong> Keep permissions and sandbox/network boundaries enforced underneath the UX, and export the decision plus execution trace for audit.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Automation</strong> - every “just one little approval” eventually needs a policy file, an approver list, a timeout, and a resume path.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/automation.png">https://imgs.xkcd.com/comics/automation.png</a><br>Post: <a href="https://xkcd.com/1319/">https://xkcd.com/1319/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
