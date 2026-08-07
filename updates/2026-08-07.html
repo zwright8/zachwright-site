@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Sessions Need a Durable Wire | zachwright.xyz</title>
+  <meta name="description" content="Persistent connections, continuation handles, durable background runs, and session budgets turn long-running agent work into an operator-owned protocol." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Sessions Need a Durable Wire</h1>
+          <p>Persistent connections, continuation handles, durable background runs, and session budgets turn long-running agent work into an operator-owned protocol.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Long-running agent work is becoming a session protocol, not a chain of requests.</strong></p>
+          <p>Vercel AI Gateway’s Responses WebSocket keeps a persistent connection open and continues each turn with new input plus <code>previous_response_id</code>, instead of resending the full context over a fresh HTTP request. Vercel cites up to roughly 40% faster end-to-end execution for agentic rollouts with 20 or more tool calls. The optimization is useful, but the operating shift is bigger: the continuation handle is now part of the work.</p>
+          <p>Cloudflare’s Agents SDK makes the other half durable. Detached sub-agent runs return handles, persist progress and milestones, survive deploys and evictions, and expose <code>maxBudgetMs</code> and cancellation. Its <code>runTurn</code> facade makes wait, submit, and stream explicit modes. The live wire can carry interaction while durable state owns recovery, bounded execution, and what happens after the socket disappears.</p>
+          <p>Design the session before optimizing the prompt. Every long run needs an owner, a non-guessable handle, a continuation policy, a budget, a cancellation path, a retention limit, and a reconnect test. If those are absent, a dropped connection is not a network edge case; it is an undefined job state.</p>
+          <ul>
+            <li>AI Gateway supports persistent WebSocket Responses sessions with <code>previous_response_id</code>, <code>store:false</code>, and Zero Data Retention compatibility: <a href="https://vercel.com/changelog/websocket-support-for-openai-responses-api-live-on-ai-gateway">https://vercel.com/changelog/websocket-support-for-openai-responses-api-live-on-ai-gateway</a></li>
+            <li>Cloudflare detached sub-agents provide durable handles, progress, milestones, budgets, and cancellation across deploys and evictions: <a href="https://developers.cloudflare.com/changelog/product/agents/">https://developers.cloudflare.com/changelog/product/agents/</a></li>
+            <li>OpenAI’s WebSocket Mode documents the persistent connection and event protocol for multi-turn Responses API sessions: <a href="https://developers.openai.com/api/docs/guides/websocket-mode">https://developers.openai.com/api/docs/guides/websocket-mode</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>AI Gateway Responses WebSocket</strong> - connect to <code>wss://ai-gateway.vercel.sh/v1/responses</code>, send <code>response.create</code>, and continue with the prior response ID; test reconnect and stale-handle behavior explicitly. <a href="https://vercel.com/changelog/websocket-support-for-openai-responses-api-live-on-ai-gateway">https://vercel.com/changelog/websocket-support-for-openai-responses-api-live-on-ai-gateway</a></li>
+            <li><strong>Cloudflare <code>runAgentTool</code></strong> - dispatch detached work with a returned handle, bounded <code>maxBudgetMs</code>, progress, and a durable finish callback that survives eviction. <a href="https://developers.cloudflare.com/changelog/product/agents/">https://developers.cloudflare.com/changelog/product/agents/</a></li>
+            <li><strong>Cloudflare <code>runTurn</code></strong> - make admission explicit with <code>mode: "wait"</code>, <code>"submit"</code>, or <code>"stream"</code> instead of hiding queueing and continuation behind separate code paths. <a href="https://developers.cloudflare.com/changelog/product/agents/">https://developers.cloudflare.com/changelog/product/agents/</a></li>
+            <li><strong>GitHub Copilot session limits</strong> - use <code>--max-ai-credits</code> for noninteractive runs or <code>/limits</code> in the CLI; the cap covers model calls, sub-agents, and compaction. <a href="https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/">https://github.blog/changelog/2026-07-01-set-ai-credit-session-limits-in-copilot-cli-and-sdk/</a></li>
+            <li><strong>Copilot usage records streaming</strong> - send prompts, responses, and tool calls to an event collector or SIEM so session state is visible outside the client that owns the connection. <a href="https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/">https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>The session handle becomes the authority.</strong> Scope it, make it non-guessable and revocable, tie it to an owner and budget, and reject stale continuations.</li>
+            <li><strong>Live transport and durable state split apart.</strong> A dropped socket should not erase the run, while a stale handle should not resurrect it forever.</li>
+            <li><strong>Cost follows the session.</strong> Tool calls, sub-agents, retries, and compaction spend inside one run, so a per-prompt estimate is no longer a sufficient budget.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Is It Worth the Time?</strong> - persistent sessions are useful until the reconnect and context bookkeeping costs more than the work.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/is_it_worth_the_time.png">https://imgs.xkcd.com/comics/is_it_worth_the_time.png</a><br>Post: <a href="https://xkcd.com/1205/">https://xkcd.com/1205/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

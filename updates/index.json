@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-07",
+    "slug": "2026-08-07",
+    "title": "Swarm Daily: Agent Sessions Need a Durable Wire",
+    "url": "/updates/2026-08-07.html",
+    "preview": "Persistent connections, continuation handles, durable background runs, and session budgets turn long-running agent work into an operator-owned protocol."
+  },
+  {
     "date": "2026-08-06",
     "slug": "2026-08-06",
     "title": "Swarm Daily: Agents Need an Approval Gate",
