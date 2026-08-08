@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-08",
+    "slug": "2026-08-08",
+    "title": "Swarm Daily: Agent Workspaces Need an Egress Gate",
+    "url": "/updates/2026-08-08.html",
+    "preview": "Per-agent sandboxes, reviewed patches, temporary accounts, and claim paths make workspace egress the new control surface for agent work."
+  },
+  {
     "date": "2026-08-07",
     "slug": "2026-08-07",
     "title": "Swarm Daily: Agent Sessions Need a Durable Wire",

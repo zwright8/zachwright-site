@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Workspaces Need an Egress Gate | zachwright.xyz</title>
+  <meta name="description" content="Per-agent sandboxes, reviewed patches, temporary accounts, and claim paths make workspace egress the new control surface for agent work." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Workspaces Need an Egress Gate</h1>
+          <p>Per-agent sandboxes, reviewed patches, temporary accounts, and claim paths make workspace egress the new control surface for agent work.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Agent execution is moving into disposable workspaces; the production boundary is how work gets out.</strong></p>
+          <p>Vercel’s Herdr integration gives Claude Code, Codex, and OpenCode separate Sandbox microVMs. The plugin shows the file set before upload, returns machine-readable JSON, and brings changes back as a Git patch that you apply only when you choose. Even deletion is an explicit human action: type <code>DELETE</code>.</p>
+          <p>Cloudflare’s temporary-account flow applies the same idea to deployment. An agent or platform can deploy and verify a generated Worker before the user authenticates, then expose a preview URL and a time-limited claim URL. The backend keeps temporary credentials; the user decides whether the preview becomes owned infrastructure.</p>
+          <p>That is an egress gate. Treat sandbox creation, input manifest, patch application, deployment target, claim, retention, and deletion as separate transitions. Isolation without a narrow exit is just a remote filesystem with better branding.</p>
+          <ul>
+            <li>Herdr runs each terminal agent in its own Vercel Sandbox, with dry-run uploads, JSON actions, patch apply, and human-confirmed deletion: <a href="https://vercel.com/changelog/give-every-agent-in-herdr-its-own-vercel-sandbox">https://vercel.com/changelog/give-every-agent-in-herdr-its-own-vercel-sandbox</a></li>
+            <li>Cloudflare temporary accounts support preview, redeploy, and claim while keeping temporary credentials in the backend: <a href="https://developers.cloudflare.com/workers/platform/claim-deployments/">https://developers.cloudflare.com/workers/platform/claim-deployments/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Herdr Vercel Sandbox plugin</strong> - install with <code>herdr plugin install vercel-labs/herdr-vercel-sandbox-plugin</code>; make the first call a dry run, then use <code>apply</code> to receive a Git patch instead of mutating the host directly. <a href="https://vercel.com/changelog/give-every-agent-in-herdr-its-own-vercel-sandbox">https://vercel.com/changelog/give-every-agent-in-herdr-its-own-vercel-sandbox</a></li>
+            <li><strong><code>wrangler deploy --temporary</code></strong> - let an unauthenticated agent deploy a preview, then hand the intended owner a claim URL; do not treat the temporary account as production. <a href="https://developers.cloudflare.com/workers/platform/claim-deployments/">https://developers.cloudflare.com/workers/platform/claim-deployments/</a></li>
+            <li><strong><code>Sandbox.fork()</code></strong> - branch from a saved snapshot for parallel agent variants, tenant copies, or test matrices; remember the fork sees the latest saved state, not live memory. <a href="https://vercel.com/changelog/vercel-sandbox-supports-forking">https://vercel.com/changelog/vercel-sandbox-supports-forking</a></li>
+            <li><strong>Cloudflare Sandbox SDK 1.0 preview</strong> - use <code>sandbox.exec()</code> with explicit handles for output, waiting, and signals; each launch is independent, so hidden shell state does not leak across steps. <a href="https://developers.cloudflare.com/changelog/product-group/ai/">https://developers.cloudflare.com/changelog/product-group/ai/</a></li>
+            <li><strong>AI Search public endpoints</strong> - put a custom domain, authentication, and instance namespace in front of retrieval when a prototype becomes a user-facing service. <a href="https://developers.cloudflare.com/changelog/post/2026-08-06-public-endpoint-custom-domains-and-namespaces/">https://developers.cloudflare.com/changelog/post/2026-08-06-public-endpoint-custom-domains-and-namespaces/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>The important control is egress.</strong> Define exactly which files, credentials, URLs, and mutations can leave the workspace, then make the boundary reviewable.</li>
+            <li><strong>Disposable compute changes retention math.</strong> Snapshots, temporary accounts, patches, and claim links all need owners, expiry, and cleanup paths.</li>
+            <li><strong>Review is shifting from keystrokes to crossings.</strong> The useful record is the input manifest, diff, deploy target, claim event, and deletion event.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Longer Than Usual</strong> - every agent tool adds another tool to manage the tool that manages the sandbox.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/longer_than_usual.png">https://imgs.xkcd.com/comics/longer_than_usual.png</a><br>Post: <a href="https://xkcd.com/1631/">https://xkcd.com/1631/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
