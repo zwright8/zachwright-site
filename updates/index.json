@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-09",
+    "slug": "2026-08-09",
+    "title": "Swarm Daily: Agent Adoption Needs a Portfolio View",
+    "url": "/updates/2026-08-09.html",
+    "preview": "Per-agent usage, modeled ROI, review effort, and MCP policy turn AI adoption from a seat count into an operator-owned portfolio."
+  },
+  {
     "date": "2026-08-08",
     "slug": "2026-08-08",
     "title": "Swarm Daily: Agent Workspaces Need an Egress Gate",

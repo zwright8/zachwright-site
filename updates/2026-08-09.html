@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Adoption Needs a Portfolio View | zachwright.xyz</title>
+  <meta name="description" content="Per-agent usage, modeled ROI, review effort, and MCP policy turn AI adoption from a seat count into an operator-owned portfolio." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Adoption Needs a Portfolio View</h1>
+          <p>Per-agent usage, modeled ROI, review effort, and MCP policy turn AI adoption from a seat count into an operator-owned portfolio.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>AI adoption is moving from a seat decision to a portfolio decision.</strong></p>
+          <p>GitHub's Copilot impact dashboard now puts estimated cost per developer beside pull requests per developer, comparing passive and agent-first adoption phases. The salary selector is explicitly a modeling input, not payroll truth, but that is still a meaningful operator surface: the question is no longer only whether people use Copilot. It is which adoption pattern produces enough output to justify the spend.</p>
+          <p>The companion usage metrics API adds a per-agent view. A new <code>totals_by_3rd_party_agent</code> array carries a stable <code>agent_id</code>, user-initiated job starts, and session counts in enterprise and organization reports. Claude, Codex, and other agent apps no longer disappear into one blended usage bucket. You can compare a rollout against a known baseline, then decide which agent deserves budget, which job class it should own, and which tool access it needs.</p>
+          <p>Do not treat the dashboard as causal proof. Treat it as the beginning of an operating loop: define the job, choose the agent, set the review depth, allow the tools, measure the output, and keep the model honest about what it actually knows.</p>
+          <ul>
+            <li>Copilot's impact dashboard now compares estimated cost per developer with pull requests per developer across adoption phases: <a href="https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section">https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section</a></li>
+            <li>The Copilot usage metrics API reports recognized third-party agent activity by stable <code>agent_id</code>, job starts, and sessions: <a href="https://github.blog/changelog/2026-08-07-copilot-usage-metrics-api-adds-agent-app-activity">https://github.blog/changelog/2026-08-07-copilot-usage-metrics-api-adds-agent-app-activity</a></li>
+            <li>GitHub marks the ROI figures as estimates and the salary selector as a directional model, not actual payroll data: <a href="https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section">https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>Copilot impact dashboard</strong> - compare cost/dev/month and pull requests/month across passive and agent-first cohorts; use the salary selector for scenarios, not finance reporting. <a href="https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section">https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section</a></li>
+            <li><strong>Copilot usage metrics API</strong> - join <code>totals_by_3rd_party_agent</code> on <code>agent_id</code>; keep <code>agent_name</code> display-only and do not sum nested and top-level interaction counts. <a href="https://github.blog/changelog/2026-08-07-copilot-usage-metrics-api-adds-agent-app-activity">https://github.blog/changelog/2026-08-07-copilot-usage-metrics-api-adds-agent-app-activity</a></li>
+            <li><strong>Copilot code review effort levels</strong> - use Lite for routine changes, Balanced for complex or sensitive changes, set an organization default, and inspect the level that ran in the PR. <a href="https://github.blog/changelog/2026-08-07-copilot-code-review-effort-levels-are-generally-available">https://github.blog/changelog/2026-08-07-copilot-code-review-effort-levels-are-generally-available</a></li>
+            <li><strong>Copilot MCP allowlists</strong> - configure <code>allowedMcpServers</code> and <code>deniedMcpServers</code> in <code>copilot/managed-settings.json</code>; match remote URLs or local commands and keep the policy fail-closed. <a href="https://github.blog/changelog/2026-08-06-mcp-allowlists-in-enterprise-managed-settings">https://github.blog/changelog/2026-08-06-mcp-allowlists-in-enterprise-managed-settings</a></li>
+            <li><strong>Cloudflare Local Explorer</strong> - let an agent query read-only local traces and correlated logs from <code>/cdn-cgi/explorer/api</code>, fix the failing operation, rerun it, and verify before deployment. <a href="https://developers.cloudflare.com/changelog/post/2026-08-04-local-tracing/">https://developers.cloudflare.com/changelog/post/2026-08-04-local-tracing/</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Agent selection becomes a portfolio problem.</strong> Compare job starts, sessions, shipped output, and cost by stable agent identity instead of buying another undifferentiated seat.</li>
+            <li><strong>Reasoning depth becomes a risk-and-budget dial.</strong> Review effort should follow change complexity, with the chosen level visible for later policy and quality analysis.</li>
+            <li><strong>ROI dashboards are decision aids, not proof.</strong> Keep a pre-rollout baseline and separate adoption correlation from shipped impact before changing budgets.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Automation</strong> - the program was supposed to save time; now it needs a portfolio review, a budget, and an owner.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/automation.png">https://imgs.xkcd.com/comics/automation.png</a><br>Post: <a href="https://xkcd.com/1319/">https://xkcd.com/1319/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
