@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Websites Need an Agent Readiness Check | zachwright.xyz</title>
+  <meta name="description" content="Agent-readiness scans, crawler controls, and machine-readable delivery turn a website into an operator-owned interface for automated visitors." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Websites Need an Agent Readiness Check</h1>
+          <p>Agent-readiness scans, crawler controls, and machine-readable delivery turn a website into an operator-owned interface for automated visitors.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>Your website is becoming an API for machine visitors.</strong></p>
+          <p>Cloudflare's Agent Readiness report now scores a URL across basic web presence, discoverability, content accessibility, bot access control, protocol discovery, and commerce. That is a useful shift in framing: “can an agent use this site?” becomes a launch check with named failure modes, not a vague SEO question.</p>
+          <p>The operator move is to add a machine-interface preflight to every important surface. Check that the page can be found, parsed, and traversed; expose the right protocol or action path; and decide which crawlers can use which content. Google-Extended is deliberately separate from Google Search, while OpenAI's crawler guidance distinguishes search discovery from ad landing-page validation. Access is no longer one global allow/deny switch.</p>
+          <p>Run the scan in CI or a scheduled job, keep the score next to uptime and Core Web Vitals, and fix the lowest-scoring surface before you invite more agents to it.</p>
+          <ul>
+            <li>Cloudflare's URL Scanner adds six Agent Readiness categories and an API path to retrieve the scores: <a href="https://developers.cloudflare.com/changelog/post/2026-05-12-url-scanner-report-agent-readiness/">https://developers.cloudflare.com/changelog/post/2026-05-12-url-scanner-report-agent-readiness/</a></li>
+            <li>Google-Extended lets publishers control eligible Gemini training and grounding without removing content from Google Search: <a href="https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers">https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers</a></li>
+            <li>OpenAI's crawler guidance separates OAI-SearchBot from OAI-AdsBot and calls out both robots.txt and firewall verification: <a href="https://help.openai.com/en/articles/20001243-advertiser-guidance-for-allowing-openai-web-crawlers">https://help.openai.com/en/articles/20001243-advertiser-guidance-for-allowing-openai-web-crawlers</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>URL Scanner Agent Readiness</strong> - call the API with <code>agentReadiness: true</code> and store the result as a regression artifact for important URLs. <a href="https://developers.cloudflare.com/api/resources/url_scanner/subresources/scans/methods/create/">https://developers.cloudflare.com/api/resources/url_scanner/subresources/scans/methods/create/</a></li>
+            <li><strong>AI Crawl Control robots.txt analytics</strong> - inspect crawler identity, response codes, disallowed-path attempts, and referrer trends instead of assuming your directives are followed. <a href="https://developers.cloudflare.com/changelog/26/">https://developers.cloudflare.com/changelog/26/</a></li>
+            <li><strong>OAI-SearchBot and OAI-AdsBot</strong> - test provider-specific robots.txt rules and firewall allowlists separately; search discovery and ad validation are different jobs. <a href="https://help.openai.com/en/articles/20001243-advertiser-guidance-for-allowing-openai-web-crawlers">https://help.openai.com/en/articles/20001243-advertiser-guidance-for-allowing-openai-web-crawlers</a></li>
+            <li><strong>Google-Extended</strong> - use the robots.txt token when you want to control Gemini training or grounding without blocking Google Search. <a href="https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers">https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers</a></li>
+            <li><strong>Robots meta and X-Robots-Tag</strong> - use page-level and text-level controls for content that should not be indexed or surfaced in AI Search features. <a href="https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag">https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>SEO becomes one consumer of a wider machine-interface contract.</strong> Protocol discovery, accessible output, and transaction paths now belong in launch criteria.</li>
+            <li><strong>A 200 response is not enough.</strong> The right crawler, content type, payload size, and referral path matter more than raw crawl volume.</li>
+            <li><strong>Machine delivery can be optimized like an API.</strong> Track response codes, crawler mix, content size, and task completion before widening access.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Trolley Problem</strong> - every automated request arrives at the lever; the operator still has to decide which path gets access.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/trolley_problem.png">https://imgs.xkcd.com/comics/trolley_problem.png</a><br>Post: <a href="https://xkcd.com/1455/">https://xkcd.com/1455/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
