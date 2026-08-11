@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agent Work Needs a Harness Benchmark | zachwright.xyz</title>
+  <meta name="description" content="Agent scaffolding, tool interfaces, sandboxes, and turn budgets can dominate cost and reliability, so operators need a benchmark for the full harness." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agent Work Needs a Harness Benchmark</h1>
+          <p>Agent scaffolding, tool interfaces, sandboxes, and turn budgets can dominate cost and reliability, so operators need a benchmark for the full harness.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The model is only one variable. The agent harness is becoming the performance surface.</strong></p>
+          <p>A controlled study published August 9 ran one fixed software task across seven agent scaffoldings and five language models, then verified the repository state instead of trusting the agent's self-report. The dominant effect was the scaffolding: in the tested task, CLI-only runs were 5x to 28x cheaper than the MCP-enabled scaffoldings, and paired MCP-to-CLI cost ratios ranged from 0.43x to 29x. The result is not a universal MCP verdict. It is a warning against treating tool-interface benchmarks as portable facts.</p>
+          <p>The platform response is already visible. Vercel's <code>HarnessAgent</code> puts Claude Code, Codex, Deep Agents, OpenCode, and Pi behind a common agent interface. That makes the runtime swappable, but it also makes the runtime a production dependency. Change the harness and you may change context handling, permissions, retries, compaction, sandbox behavior, and the amount of work required to reach the same artifact.</p>
+          <p>Run a harness benchmark before you optimize the prompt. Pin the model, harness, tool interface, sandbox, permission mode, and turn budget. Measure cost, latency, completion, retries, changed files, and human review effort. Validate the output in the repository or application. A transcript that sounds finished is not a finished run.</p>
+          <ul>
+            <li>The August 9 controlled comparison measured MCP and CLI use across seven agent scaffoldings and five models, with the scaffold driving cost and completion behavior: <a href="https://arxiv.org/abs/2608.08654">https://arxiv.org/abs/2608.08654</a></li>
+            <li>Vercel's HarnessAgent normalizes established harnesses including Claude Code, Codex, Deep Agents, OpenCode, and Pi behind one interface: <a href="https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk">https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>AI SDK HarnessAgent</strong> - use a common <code>generate</code>/<code>stream</code> surface while swapping the harness underneath; keep the adapter, sandbox, and permission settings in the benchmark record. <a href="https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk">https://vercel.com/changelog/program-agent-harnesses-with-ai-sdk</a></li>
+            <li><strong>OpenAI Agents SDK SandboxAgent</strong> - run file inspection, shell commands, and edits inside a controlled sandbox, then use snapshots and rehydration when the original container fails or expires. <a href="https://openai.com/index/the-next-evolution-of-the-agents-sdk/">https://openai.com/index/the-next-evolution-of-the-agents-sdk/</a></li>
+            <li><strong>GitHub Copilot sandboxes</strong> - compare local isolation with ephemeral cloud execution; inherit cloud-agent policies and record whether session state must survive across machines. <a href="https://docs.github.com/en/copilot/concepts/about-cloud-and-local-sandboxes">https://docs.github.com/en/copilot/concepts/about-cloud-and-local-sandboxes</a></li>
+            <li><strong>Claude Code CLI controls</strong> - use <code>--output-format json</code>, <code>--max-turns</code>, explicit permission modes, and resume/continue to make scripted harness runs bounded and inspectable. <a href="https://docs.anthropic.com/en/docs/claude-code/cli-usage">https://docs.anthropic.com/en/docs/claude-code/cli-usage</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Benchmarks move up a layer.</strong> “Model X costs less” is incomplete without the scaffold, tools, sandbox, and failure policy that produced the number.</li>
+            <li><strong>Portability has a measurement tax.</strong> A common harness interface makes switching easier, but every adapter can change context, retries, approvals, and review burden.</li>
+            <li><strong>Safety controls are performance variables.</strong> Sandboxes, permission prompts, and turn caps protect the system while also changing completion time and success rate; record them as first-class run metadata.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Good Code</strong> - the benchmark keeps asking whether to go fast or do it right, then discovers the harness is part of the loop.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/good_code.png">https://imgs.xkcd.com/comics/good_code.png</a><br>Post: <a href="https://xkcd.com/844/">https://xkcd.com/844/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>
