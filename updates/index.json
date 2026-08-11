@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-11",
+    "slug": "2026-08-11",
+    "title": "Swarm Daily: Agent Work Needs a Harness Benchmark",
+    "url": "/updates/2026-08-11.html",
+    "preview": "Agent scaffolding, tool interfaces, sandboxes, and turn budgets can dominate cost and reliability, so operators need a benchmark for the full harness."
+  },
+  {
     "date": "2026-08-10",
     "slug": "2026-08-10",
     "title": "Swarm Daily: Websites Need an Agent Readiness Check",
@@ -14,13 +21,6 @@
     "preview": "Per-agent usage, modeled ROI, review effort, and MCP policy turn AI adoption from a seat count into an operator-owned portfolio."
   },
   {
-    "date": "2026-08-08",
-    "slug": "2026-08-08",
-    "title": "Swarm Daily: Agent Workspaces Need an Egress Gate",
-    "url": "/updates/2026-08-08.html",
-    "preview": "Per-agent sandboxes, reviewed patches, temporary accounts, and claim paths make workspace egress the new control surface for agent work."
-  },
-  {
     "date": "2026-08-07",
     "slug": "2026-08-07",
     "title": "Swarm Daily: Agent Sessions Need a Durable Wire",
@@ -28,39 +28,11 @@
     "preview": "Persistent connections, continuation handles, durable background runs, and session budgets turn long-running agent work into an operator-owned protocol."
   },
   {
-    "date": "2026-08-06",
-    "slug": "2026-08-06",
-    "title": "Swarm Daily: Agents Need an Approval Gate",
-    "url": "/updates/2026-08-06.html",
-    "preview": "Durable approvals, confidence thresholds, sandbox boundaries, and resumable handoffs turn agent autonomy into a controlled operating loop."
-  },
-  {
-    "date": "2026-08-05",
-    "slug": "2026-08-05",
-    "title": "Swarm Daily: Agent Automations Need a Trigger Contract",
-    "url": "/updates/2026-08-05.html",
-    "preview": "Comment triggers, push events, reasoning budgets, team policy, and timeout paths turn agent automation into an explicit operating contract."
-  },
-  {
     "date": "2026-08-04",
     "slug": "2026-08-04",
-    "title": "Swarm Daily: Agents Need a Capability Registry",
+    "title": "Swarm Daily: Agent Work Needs an Intent Envelope",
     "url": "/updates/2026-08-04.html",
-    "preview": "ARD registries, ranked discovery, on-demand skills, and governed activations turn an agent's toolset into a runtime capability layer."
-  },
-  {
-    "date": "2026-08-02",
-    "slug": "2026-08-02",
-    "title": "Swarm Daily: Agent Stacks Need a Migration Calendar",
-    "url": "/updates/2026-08-02.html",
-    "preview": "API sunsets, model shutdowns, runtime breaks, and replacement paths turn agent dependencies into a dated operating queue."
-  },
-  {
-    "date": "2026-08-01",
-    "slug": "2026-08-01",
-    "title": "Swarm Daily: Agent Ops Need a Control Room",
-    "url": "/updates/2026-08-01.html",
-    "preview": "Budgets, request logs, workflow search, and verified deployment identity turn AI operations into a platform control room."
+    "preview": "Issue trackers are becoming the agent control surface, carrying owners, delegates, branches, confidence, rationale, and review paths as one handoff contract."
   },
   {
     "date": "2026-07-31",
@@ -105,53 +77,11 @@
     "preview": "Blob WAF rules, private storage, signed URLs, consistent reads, and managed edge detections make object delivery an operator-owned policy boundary."
   },
   {
-    "date": "2026-07-24",
-    "slug": "2026-07-24",
-    "title": "Swarm Daily: Rollouts Need a Forensic Trail",
-    "url": "/updates/2026-07-24.html",
-    "preview": "Feature-flag evaluations, semantic diffs, confidence scores, rationale, and review queues make autonomous changes reconstructable."
-  },
-  {
-    "date": "2026-07-23",
-    "slug": "2026-07-23",
-    "title": "Swarm Daily: Live Agents Need a Canonical Transcript",
-    "url": "/updates/2026-07-23.html",
-    "preview": "Streaming transcription, server-owned history, replay, interrupted-tool repair, and audit export turn the agent transcript into an operating record."
-  },
-  {
-    "date": "2026-07-22",
-    "slug": "2026-07-22",
-    "title": "Swarm Daily: Agents Need an Execution Envelope",
-    "url": "/updates/2026-07-22.html",
-    "preview": "Purchases, isolated sandboxes, scoped connectors, regional run state, and per-request model lanes turn agent autonomy into a bounded operating unit."
-  },
-  {
     "date": "2026-07-21",
     "slug": "2026-07-21",
     "title": "Swarm Daily: Feedback Needs a Runtime",
     "url": "/updates/2026-07-21.html",
     "preview": "Slack-native agent feedback, delivered-email previews, PR quality gates, and usage metrics move correction into the execution surface."
-  },
-  {
-    "date": "2026-07-20",
-    "slug": "2026-07-20",
-    "title": "Swarm Daily: Quality Is Now a Budget Line",
-    "url": "/updates/2026-07-20.html",
-    "preview": "GitHub Code Quality pricing, repository-level Copilot metrics, AI security detections, and review firewalls make code health measurable where agents work."
-  },
-  {
-    "date": "2026-07-19",
-    "slug": "2026-07-19",
-    "title": "Swarm Daily: Platforms Need a Sunset Plan",
-    "url": "/updates/2026-07-19.html",
-    "preview": "GitHub Models' shutdown clock, Astro DB's removal, Astro 7.1 controls, Projects retention, Kimi Code skills, and runtime defaults make platform lifecycle an operator-owned surface."
-  },
-  {
-    "date": "2026-07-18",
-    "slug": "2026-07-18",
-    "title": "Swarm Daily: Prompts Need a Build Pipeline",
-    "url": "/updates/2026-07-18.html",
-    "preview": "Google's prompt transpilation, Conductor's portable specs, Copilot review head-branch instructions, ADK Go graphs, Vercel skill plugins, and Slack agent UX make agent behavior buildable."
   },
   {
     "date": "2026-07-17",
