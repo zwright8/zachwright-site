@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm Daily: Agents Need an Incident Ledger | zachwright.xyz</title>
+  <meta name="description" content="Agent security is getting an incident loop: preserve evidence, report near misses, and convert failures into reusable controls." />
+  <link rel="stylesheet" href="/updates/post-ui.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <div class="wrap">
+    <header class="site-top" aria-label="Primary">
+      <a href="/" class="brand" aria-label="Zach Wright home">
+        <span class="brand-mark"><span class="brand-initials">ZW</span></span>
+        <span class="brand-name">Zach Wright</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="/">Home</a>
+        <a href="/#work">Capabilities</a>
+        <a href="/updates/index.html" aria-current="page">Updates</a>
+      </nav>
+      <a class="btn btn-ghost" href="mailto:zach@zachwright.xyz?subject=AI%20strategy%20inquiry">
+        <span class="btn-label">Email Zach &#8599;</span>
+      </a>
+    </header>
+
+    <main id="main" class="narrow">
+      <section class="post-shell" data-reveal>
+        <article class="post-card">
+          <a href="/updates/index.html" class="back-link">All Updates</a>
+          <p>Here is what you missed while you were shipping.</p>
+          <h1>Swarm Daily: Agents Need an Incident Ledger</h1>
+          <p>Agent security is getting an incident loop: preserve evidence, report near misses, and convert failures into reusable controls.</p>
+
+          <h2>The Big Thing</h2>
+          <p><strong>The next agent-security primitive is not another guardrail. It is a shared incident loop.</strong></p>
+          <p>The Open Secure AI Alliance is circulating a proposal for a Shared AI Findings Exchange (SAFE). Its reporting compact covers unauthorized third-party access, sandbox or network escapes, confidential-data exposure, and continued probing after the operator knows the activity is out of scope. It also treats near misses as worth reporting.</p>
+          <p>The important detail is the evidence contract. SAFE asks members to preserve prompts, traces, tool calls, logs, configurations, model and safeguard versions, agent identities, permissions, credentials, approval events, created artifacts, containment actions, and a complete timeline. Proposed deadlines run from immediate notification to a confidential report within four business days, a preliminary factual report within 30 days, and remediation status within 90 days.</p>
+          <p>That is an operating pattern, not a finished standard. But the direction is clear: agent security teams will need an incident ledger that turns a strange run into a reproducible case, then into a regression test and a control. Start the ledger before the first serious incident. Define near misses, capture the run evidence automatically, and rehearse the path from detection to containment to a verified fix.</p>
+          <ul>
+            <li>The SAFE draft proposes shared reporting for agent incidents and near misses, including evidence preservation and machine-readable updates while material risk remains unresolved: <a href="https://github.com/OpenSecureAIAlliance/RFCs/blob/main/rfc-safe-proposal.md">https://github.com/OpenSecureAIAlliance/RFCs/blob/main/rfc-safe-proposal.md</a></li>
+            <li>The Open Secure AI Alliance is building an open defense stack across identity, isolation, harnesses, logs, evaluation, safe model formats, and secure coding workflows: <a href="https://blogs.nvidia.com/blog/open-secure-ai-alliance/">https://blogs.nvidia.com/blog/open-secure-ai-alliance/</a></li>
+          </ul>
+
+          <h2>Code &amp; Tools</h2>
+          <ol>
+            <li><strong>SAFE RFC</strong> - use its evidence list and notification timeline as a starting schema for agent incident records; treat it as a proposal, not a settled standard. <a href="https://github.com/OpenSecureAIAlliance/RFCs/blob/main/rfc-safe-proposal.md">https://github.com/OpenSecureAIAlliance/RFCs/blob/main/rfc-safe-proposal.md</a></li>
+            <li><strong>OWASP GenAI Incident Response Guide</strong> - adapt a general response lifecycle for incidents involving prompts, tools, models, and agent boundaries. <a href="https://genai.owasp.org/resource/genai-incident-response-guide-1-0/">https://genai.owasp.org/resource/genai-incident-response-guide-1-0/</a></li>
+            <li><strong>Google Cloud Agent Observability</strong> - instrument logs, metrics, traces, tool calls, prompt/response data, policy events, token usage, and latency before production delegation. <a href="https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability">https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability</a></li>
+            <li><strong>Microsoft ASSERT + ACS</strong> - convert organization-specific policies into targeted evaluations, then place deterministic controls at the checkpoints where the agent can fail. <a href="https://devblogs.microsoft.com/foundry/build-2026-open-trust-stack-ai-agents/">https://devblogs.microsoft.com/foundry/build-2026-open-trust-stack-ai-agents/</a></li>
+            <li><strong>OpenSRE</strong> - test AI incident responders against synthetic and cloud-backed failures, scoring root-cause accuracy, required evidence, and adversarial red herrings. <a href="https://github.com/tracer-cloud/opensre">https://github.com/tracer-cloud/opensre</a></li>
+          </ol>
+
+          <h2>Tech Impact</h2>
+          <ul>
+            <li><strong>Near misses become product data.</strong> An agent that touched the wrong target but caused no damage still exposes a control failure worth turning into a test.</li>
+            <li><strong>Forensics becomes a runtime contract.</strong> If traces, tool calls, identities, permissions, and versions are not captured by default, the postmortem will be guesswork.</li>
+            <li><strong>Open versus closed is not the operating decision.</strong> The practical question is whether the stack can be inspected, contained, replayed, and improved without waiting for a vendor narrative.</li>
+          </ul>
+
+          <h2>Meme of the Day</h2>
+          <p><strong>xkcd: Security</strong> - after all the agent guardrails, the fastest path around the system may still be the human with the credentials.</p>
+          <p>Image URL: <a href="https://imgs.xkcd.com/comics/security.png">https://imgs.xkcd.com/comics/security.png</a><br>Post: <a href="https://xkcd.com/538/">https://xkcd.com/538/</a></p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="narrow">
+      <div class="footer-grid">
+        <section>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/updates/index.html">Updates</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Channels</h4>
+          <ul>
+            <li><a href="mailto:zach@zachwright.xyz">Email</a></li>
+            <li><a href="/dashboard.html">Dashboard</a></li>
+          </ul>
+        </section>
+        <section>
+          <h4>Focus</h4>
+          <ul>
+            <li>Daily Drops</li>
+            <li>Daily Intelligence</li>
+            <li>Build Planning</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="copyright">
+        <span><strong>Zach Wright</strong> - AI operator, builder, and founder.</span>
+        <span>Copyright <span id="year"></span> Zach Wright</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/assets/hide-nav-on-scroll.js"></script>
+  <script>
+    (function () {
+      document.getElementById('year').textContent = String(new Date().getFullYear());
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var nodes = document.querySelectorAll('[data-reveal]');
+      if (!reduced && 'IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+        nodes.forEach(function (n) { io.observe(n); });
+      } else {
+        nodes.forEach(function (n) { n.classList.add('in'); });
+      }
+    })();
+  </script>
+</body>
+</html>

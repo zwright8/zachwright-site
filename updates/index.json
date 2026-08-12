@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-08-12",
+    "slug": "2026-08-12",
+    "title": "Swarm Daily: Agents Need an Incident Ledger",
+    "url": "/updates/2026-08-12.html",
+    "preview": "Agent security is getting an incident loop: preserve evidence, report near misses, and convert failures into reusable controls."
+  },
+  {
     "date": "2026-08-11",
     "slug": "2026-08-11",
     "title": "Swarm Daily: Agent Work Needs a Harness Benchmark",
